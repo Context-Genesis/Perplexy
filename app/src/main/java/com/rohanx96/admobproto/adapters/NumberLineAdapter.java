@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.SequenceAnswersDetails;
+import com.rohanx96.admobproto.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,8 @@ public class NumberLineAdapter extends BaseAdapter {
     public NumberLineAdapter(Context context, ArrayList<SequenceAnswersDetails> sequenceAnswersDetails) {
         this.context = context;
         this.sequenceAnswersDetails = sequenceAnswersDetails;
+        this.sequenceAnswersDetails.add(0, new SequenceAnswersDetails(-1, Constants.CORRECT, false, false, false));
+        this.sequenceAnswersDetails.add(sequenceAnswersDetails.size(), new SequenceAnswersDetails(-1, Constants.CORRECT, false, false, false));
     }
 
     @Override

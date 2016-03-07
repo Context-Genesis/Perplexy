@@ -1,6 +1,7 @@
 package com.rohanx96.admobproto.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,7 +55,7 @@ public class HomeActivity extends Activity {
             Log.d(TAG, sq.toString());
         }
 
-
+        startActivity(new Intent(HomeActivity.this, NumberLineActivity.class));
     }
 
     private void onFirstRun() {
