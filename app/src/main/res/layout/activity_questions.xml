@@ -5,7 +5,7 @@
     android:id="@+id/questions_activity_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/chambray"
+    android:background="@color/blue_d_chambray"
     android:clipChildren="false"
     tools:context="link.fls.swipestacksample.MainActivity">
 
@@ -19,6 +19,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/back_questions"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="5dp"

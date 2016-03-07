@@ -24,7 +24,7 @@ public class FallingDrawables {
     private int mNoOfDrawables = 15;
     private int mDrawablesInRow;
     private int mDrawableSize = 40;
-    private final int NO_OF_COLORS = 7;
+    private static final int NO_OF_COLORS = 9;
     private int mWindowWidth;
     private Handler mainThread;
     private Thread workerThread;
@@ -191,21 +191,25 @@ public class FallingDrawables {
     public static int getBackgoundColor(int count, Context mContext){
         switch (count){
             case 0:
-                return  mContext.getResources().getColor(R.color.colorPrimary);
+                return  mContext.getResources().getColor(R.color.blue_d_chambray);
             case 1:
-                return  mContext.getResources().getColor(R.color.midnight_blue);
+                return  mContext.getResources().getColor(R.color.pink_d_material);
             case 2:
-                return  mContext.getResources().getColor(R.color.chambray);
+                return  mContext.getResources().getColor(R.color.black_d_material);
             case 3:
-                return  mContext.getResources().getColor(R.color.material_black);
+                return  mContext.getResources().getColor(R.color.purple_d_honey_flower);
             case 4:
-                return  mContext.getResources().getColor(R.color.honey_flower);
+                return  mContext.getResources().getColor(R.color.blue_d_ebony_clay);
             case 5:
-                return  mContext.getResources().getColor(R.color.dark_grey);
+                return  mContext.getResources().getColor(R.color.purple_d_rebecca);
             case 6:
-                return mContext.getResources().getColor(R.color.colorBackgroundMetal);
+                return mContext.getResources().getColor(R.color.black_d_material_black);
+            case 7:
+                return mContext.getResources().getColor(R.color.teal_d_material);
+            case 8:
+                return mContext.getResources().getColor(R.color.black_d_blue);
             default:
-              return  mContext.getResources().getColor(R.color.colorPrimary);
+              return  mContext.getResources().getColor(R.color.blue_d_chambray);
         }
     }
 }

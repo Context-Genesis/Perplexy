@@ -84,6 +84,13 @@ public class NumberLineAdapter extends BaseAdapter {
         if (position != 0 && position != sequenceAnswersDetails.size() - 1)
             holder.tv.setText(" " + getItem(position).question_id + " ");
 
+        holder.tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return vi;
     }
 
