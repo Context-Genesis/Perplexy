@@ -6,12 +6,13 @@ import com.orm.SugarRecord;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by rish on 8/3/16.
  */
-public class SequenceAnswersDetails extends SugarRecord {
+public class SequenceAnswersDetails extends SugarRecord implements Serializable {
 
     public int question_id;
     public String status; /*correct, incorrect, unattempted*/
@@ -26,6 +27,11 @@ public class SequenceAnswersDetails extends SugarRecord {
         this.lock = lock;
         this.hint_display = hint_display;
         this.answer_display = answer_display;
+    }
+
+    @Override
+    public String toString() {
+        return question_id + ", " + status + ", " + lock + ", " + hint_display + ", " + answer_display;
     }
 
     public static void initializeDatabase(Context context) {

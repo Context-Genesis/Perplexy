@@ -3,6 +3,7 @@ package com.rohanx96.admobproto.ui;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import com.rohanx96.admobproto.R;
@@ -22,6 +23,8 @@ public class HomeActivity extends Activity {
     @Bind(R.id.home_start)
     Button start;
 
+    public String TAG = HomeActivity.this.getClass().getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,16 @@ public class HomeActivity extends Activity {
          */
         ArrayList<SequenceQuestion> sequenceQuestions = JSONUtils.getSequenceQuestionsFromJSONString(getApplicationContext());
         ArrayList<SequenceAnswersDetails> sequenceAnswersDetails = (ArrayList<SequenceAnswersDetails>) SequenceAnswersDetails.listAll(SequenceAnswersDetails.class);
+
+        Log.d(TAG, "SequenceAnswersDetails");
+        for (SequenceAnswersDetails sqa : sequenceAnswersDetails) {
+            Log.d(TAG, sqa.toString());
+        }
+
+        Log.d(TAG, "SequenceQuestion");
+        for (SequenceQuestion sq : sequenceQuestions) {
+            Log.d(TAG, sq.toString());
+        }
 
 
     }
