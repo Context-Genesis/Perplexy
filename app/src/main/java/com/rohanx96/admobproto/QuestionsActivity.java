@@ -1,11 +1,8 @@
 package com.rohanx96.admobproto;
 
-import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,20 +10,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import com.rohanx96.admobproto.R;
-
-import java.util.Random;
 
 /**
  * Created by rose on 6/3/16.
@@ -63,9 +51,9 @@ public class QuestionsActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 //See note above for why this is needed
                 ValueAnimator colorAnimator;
-                    colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
-                            FallingDrawables.getBackgoundColor(mCurrentPage % 7, QuestionsActivity.this),
-                            FallingDrawables.getBackgoundColor(position % 7, QuestionsActivity.this));
+                colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
+                        FallingDrawables.getBackgoundColor(mCurrentPage % 7, QuestionsActivity.this),
+                        FallingDrawables.getBackgoundColor(position % 7, QuestionsActivity.this));
                 colorAnimator.setDuration(500).addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {

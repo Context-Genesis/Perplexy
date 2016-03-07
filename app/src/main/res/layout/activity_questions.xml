@@ -13,9 +13,9 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="horizontal">
 
         <ImageView
@@ -36,14 +36,13 @@
 
     </RelativeLayout>
 
-    <android.support.v4.view.ViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/linearLayout"
-        android:background="@color/colorTransparent"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorTransparent" />
 
     <ImageView
         android:id="@+id/fabAdd"
@@ -52,8 +51,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom|center"
+        android:layout_marginBottom="16dp"
         android:elevation="7dp"
-        android:src="@drawable/haha"
-        android:layout_marginBottom="16dp"/>
+        android:src="@drawable/haha" />
 
 </RelativeLayout>
