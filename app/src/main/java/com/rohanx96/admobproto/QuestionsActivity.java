@@ -37,6 +37,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private final int NUM_PAGES = 9;
     private ViewPager pager;
     private ScreenSlidePagerAdapter pagerAdapter;
+    private final int NO_OF_COLORS = 9;
     private ImageView character;
     private int mCurrentPage;
 
@@ -62,8 +63,8 @@ public class QuestionsActivity extends AppCompatActivity {
                 //See note above for why this is needed
                 ValueAnimator colorAnimator;
                     colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
-                            FallingDrawables.getBackgoundColor(mCurrentPage % 7, QuestionsActivity.this),
-                            FallingDrawables.getBackgoundColor(position % 7, QuestionsActivity.this));
+                            FallingDrawables.getBackgoundColor(mCurrentPage % NO_OF_COLORS, QuestionsActivity.this),
+                            FallingDrawables.getBackgoundColor(position % NO_OF_COLORS, QuestionsActivity.this));
                 colorAnimator.setDuration(500).addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {

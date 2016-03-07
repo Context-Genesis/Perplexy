@@ -4,7 +4,7 @@
     android:id="@+id/number_line_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333"
+    android:background="@color/blue_d_ebony_clay"
     tools:context="com.example.bhutanidhruv16.logic.NumberLine">
 
 
