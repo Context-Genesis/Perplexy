@@ -5,6 +5,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,9 +34,6 @@ import java.util.Random;
  */
 public class QuestionsActivity extends AppCompatActivity {
     private ViewGroup mContainer;
-    private float mInitialX;
-    private float mCurrentX;
-    private float mFinalX;
     private final int NUM_PAGES = 9;
     private ViewPager pager;
     private ScreenSlidePagerAdapter pagerAdapter;
@@ -81,12 +79,22 @@ public class QuestionsActivity extends AppCompatActivity {
                 //Unused
             }
         });
+        View back = findViewById(R.id.back_questions);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent numberLine = new Intent(QuestionsActivity.this,NumberLineActivity.class);
+                numberLine.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(numberLine);
+            }
+        });
         setupCharacter();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        /* Make the activity fullscreen */
         mContainer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE

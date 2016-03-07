@@ -21,4 +21,19 @@
     <color name="chambray">#3A539B</color>
     <color name="lighter_black">#333333</color>
     <color name="grey">#444444</color>
+    <color name="green_l_carribean">#03C9A9</color>
+    <color name="green_l_sea">#1BA39C</color>
+    <color name="green_l_jade">#00B16A</color>
+    <color name="blue_l_steel_blue">#4B77BE</color>
+    <color name="blue__d_pickeled_bluewood">#34495E</color>
+    <color name="blue_d_ebony_clay">#22313F</color>
+    <color name="blue_l_lynch">#6C7A89</color>
+    <color name="purple_d_rebecca">#663399</color>
+    <color name="purple_l_plum">#913D88</color>
+    <color name="yellow_l_lightning">#F5AB35</color>
+    <color name="yellow_d_buttercup">#F39C12</color>
+    <color name="red_l_poppy">#C0392B</color>
+    <color name="red_l_chestnut">#D24D57</color>
+    <color name="red_l_alizarin">#e74c3c</color>
+    <color name="red_d_pomegranate">#c0392b</color>
 </resources>

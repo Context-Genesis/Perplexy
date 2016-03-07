@@ -19,7 +19,8 @@ public class FrontPageFragment extends Fragment {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent questionsActivity = new Intent(getActivity(),QuestionsActivity.class);
+                Intent questionsActivity = new Intent(getActivity(),NumberLineActivity.class);
+                questionsActivity.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(questionsActivity);
             }
         });
