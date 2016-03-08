@@ -1,9 +1,11 @@
 package com.rohanx96.admobproto.ui.fragments;
 
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -214,5 +216,14 @@ public class QuestionWordFragment extends Fragment {
         answerTV.setGravity(Gravity.CENTER);
 
         return answerTV;
+    }
+
+    private int getBlankCircleSize() {
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+
+        return width / 10;
     }
 }
