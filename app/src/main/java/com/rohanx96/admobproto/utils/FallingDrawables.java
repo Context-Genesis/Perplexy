@@ -26,7 +26,7 @@ public class FallingDrawables {
     private int mNoOfDrawables = 15;
     private int mDrawablesInRow;
     private int mDrawableSize = 40;
-    private static final int NO_OF_COLORS = 9;
+    public static final int NO_OF_COLORS = 9;
     private int mWindowWidth;
     private Handler mainThread;
     private Thread workerThread;
@@ -213,5 +213,9 @@ public class FallingDrawables {
             default:
               return  mContext.getResources().getColor(R.color.blue_d_chambray);
         }
+    }
+
+    public void animateBackgroundChange(){
+
     }
 }

@@ -1,6 +1,10 @@
 package com.rohanx96.admobproto.ui;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,12 +13,14 @@ import android.widget.ListView;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.adapters.NumberLineAdapter;
 import com.rohanx96.admobproto.elements.SequenceAnswersDetails;
+import com.rohanx96.admobproto.utils.FallingDrawables;
 
 import java.util.ArrayList;
 
 public class NumberLineActivity extends AppCompatActivity {
     private View mContainer;
-
+    private int mTimeCount = 0;
+    private boolean shouldRunAnimation = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,5 +48,40 @@ public class NumberLineActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        /** Change color of background after 7 seconds */
+        Thread animationThread  = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Handler handler = new Handler(Looper.getMainLooper());
+                while (shouldRunAnimation){
+                    final ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
+                            FallingDrawables.getBackgoundColor(mTimeCount,getApplicationContext()),
+                            FallingDrawables.getBackgoundColor(mTimeCount + 1,getApplicationContext()));
+                    colorAnimator.setDuration(4000);
+                    mTimeCount++;
+                    if (mTimeCount == FallingDrawables.NO_OF_COLORS)
+                        mTimeCount = 0;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                @Override
+                                public void onAnimationUpdate(final ValueAnimator animation) {
+                                    mContainer.setBackgroundColor((int) animation.getAnimatedValue());
+                                }
+                            });
+                            colorAnimator.start();
+                        }
+                    });
+                    // sleep the thread to stop the while loop for 7 seconds
+                    try {
+                        Thread.sleep(7000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        animationThread.start();
     }
 }
