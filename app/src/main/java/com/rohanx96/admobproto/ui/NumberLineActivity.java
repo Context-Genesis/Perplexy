@@ -23,7 +23,7 @@ public class NumberLineActivity extends AppCompatActivity {
         ArrayList<SequenceAnswersDetails> sequenceAnswersDetails = (ArrayList<SequenceAnswersDetails>) SequenceAnswersDetails.listAll(SequenceAnswersDetails.class);
 
         mContainer = findViewById(R.id.activity_number_line_container);
-        NumberLineAdapter numberLineAdapter = new NumberLineAdapter(getApplication(), sequenceAnswersDetails);
+        NumberLineAdapter numberLineAdapter = new NumberLineAdapter(getApplicationContext(), sequenceAnswersDetails);
         ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
         listView.setAdapter(numberLineAdapter);
     }

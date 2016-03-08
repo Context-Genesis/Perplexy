@@ -17,15 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.rohanx96.admobproto.ui.NumberLineActivity;
+import com.rohanx96.admobproto.utils.Constants;
+import com.rohanx96.admobproto.utils.JSONUtils;
+
 /**
  * Created by rose on 6/3/16.
  */
 public class QuestionsActivity extends AppCompatActivity {
     private ViewGroup mContainer;
-    private float mInitialX;
-    private float mCurrentX;
-    private float mFinalX;
-    private final int NUM_PAGES = 9;
     private ViewPager pager;
     private ScreenSlidePagerAdapter pagerAdapter;
     private final int NO_OF_COLORS = 9;
@@ -38,6 +38,7 @@ public class QuestionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_questions);
         mContainer = (ViewGroup) findViewById(R.id.questions_activity_container);
         pager = (ViewPager) findViewById(R.id.pager);
+
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.setPageMargin(convertDip2Pixels(this, 16));
@@ -53,9 +54,9 @@ public class QuestionsActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 //See note above for why this is needed
                 ValueAnimator colorAnimator;
-                    colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
-                            FallingDrawables.getBackgoundColor(mCurrentPage % NO_OF_COLORS, QuestionsActivity.this),
-                            FallingDrawables.getBackgoundColor(position % NO_OF_COLORS, QuestionsActivity.this));
+                colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
+                        FallingDrawables.getBackgoundColor(mCurrentPage % NO_OF_COLORS, QuestionsActivity.this),
+                        FallingDrawables.getBackgoundColor(position % NO_OF_COLORS, QuestionsActivity.this));
                 colorAnimator.setDuration(500).addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
@@ -75,7 +76,7 @@ public class QuestionsActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent numberLine = new Intent(QuestionsActivity.this,NumberLineActivity.class);
+                Intent numberLine = new Intent(QuestionsActivity.this, NumberLineActivity.class);
                 numberLine.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(numberLine);
             }
@@ -107,45 +108,14 @@ public class QuestionsActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new QuestionFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt(Constants.BUNDLE_QUESTION_POSITION, position);
+            return QuestionFragment.newInstance(bundle);
         }
 
         @Override
         public int getCount() {
-            return NUM_PAGES;
-        }
-    }
-
-    public class CrossfadePageTransformer implements ViewPager.PageTransformer {
-
-        @Override
-        public void transformPage(View page, float position) {
-            // Get the page index from the tag. This makes
-            // it possible to know which page index you're
-            // currently transforming - and that can be used
-            // to make some important performance improvements.
-            int pagePosition = (int) page.getTag();
-
-            // Here you can do all kinds of stuff, like get the
-            // width of the page and perform calculations based
-            // on how far the user has swiped the page.
-            int pageWidth = page.getWidth();
-            float pageWidthTimesPosition = pageWidth * position;
-            float absPosition = Math.abs(position);
-
-            /*View text = page.findViewById(R.id.content);
-
-            View phone = page.findViewById(R.id.phone);
-            View map = page.findViewById(R.id.map);
-            View mountain = page.findViewById(R.id.mountain);
-            View mountainNight = page.findViewById(R.id.mountain_night);
-            View rain = page.findViewById(R.id.rain);
-            View hands = page.findViewById(R.id.screenshot);*/
-
-            /*if (position <= 1) {
-                page.setTranslationX(pageWidth * -position);
-            }*/
-
+            return JSONUtils.getTotalSequenceQuestions(getApplicationContext());
         }
     }
 

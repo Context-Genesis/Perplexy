@@ -20,4 +20,6 @@ public class Constants {
     public static String INCORRECT = "INCORRECT";
     public static String UNATTEMPTED = "UNATTEMPTED";
 
+    public static String BUNDLE_QUESTION_POSITION = "BUNDLE_QUESTION_POSITION";
+
 }

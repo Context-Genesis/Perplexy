@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.rohanx96.admobproto.ui.NumberLineActivity;
+
 public class FrontPageFragment extends Fragment {
 
     @Override
@@ -19,7 +21,7 @@ public class FrontPageFragment extends Fragment {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent questionsActivity = new Intent(getActivity(),NumberLineActivity.class);
+                Intent questionsActivity = new Intent(getActivity(), NumberLineActivity.class);
                 questionsActivity.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(questionsActivity);
             }

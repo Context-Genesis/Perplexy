@@ -1,12 +1,14 @@
 package com.rohanx96.admobproto.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
+import com.rohanx96.admobproto.QuestionsActivity;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.SequenceAnswersDetails;
 import com.rohanx96.admobproto.utils.Constants;
@@ -87,7 +89,9 @@ public class NumberLineAdapter extends BaseAdapter {
         holder.tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, QuestionsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
 

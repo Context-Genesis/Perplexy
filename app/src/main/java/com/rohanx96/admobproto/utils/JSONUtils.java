@@ -110,4 +110,34 @@ public class JSONUtils {
             return null;
         }
     }
+
+    public static int getTotalSequenceQuestions(Context context) {
+        try {
+            JSONObject listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
+            return listObject.getJSONArray("questions").length();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public static SequenceQuestion getSequenceQuestionAt(Context context, int index) {
+        JSONObject listObject = null;
+        try {
+            listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
+            JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(index);
+            int question_id = questionObj.getInt("question_id");
+            int answeroption = questionObj.getInt("answeroption");
+            String questionstring = questionObj.getString("question");
+            String hint = questionObj.getString("hint");
+            String message = questionObj.getString("message");
+            JSONArray options = questionObj.getJSONArray("options");
+
+            SequenceQuestion sequenceQuestion = new SequenceQuestion(question_id, questionstring, options, answeroption, message, hint);
+            return sequenceQuestion;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
