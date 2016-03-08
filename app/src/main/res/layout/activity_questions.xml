@@ -19,13 +19,14 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/back_questions"
+            android:id="@+id/questions_activity_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="5dp"
             android:src="@drawable/back" />
 
         <TextView
+            android:id="@+id/questions_activity_level"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -38,7 +39,7 @@
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/pager"
+        android:id="@+id/questions_activity_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/linearLayout"
@@ -46,7 +47,7 @@
         android:background="@color/colorTransparent" />
 
     <ImageView
-        android:id="@+id/fabAdd"
+        android:id="@+id/questions_activity_bubble"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"

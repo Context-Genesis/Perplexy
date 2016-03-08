@@ -30,7 +30,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         mContainer = (FrameLayout) findViewById(R.id.main_activity_container);
         // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(R.id.questions_activity_pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         circlePageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
         mPager.setAdapter(mPagerAdapter);

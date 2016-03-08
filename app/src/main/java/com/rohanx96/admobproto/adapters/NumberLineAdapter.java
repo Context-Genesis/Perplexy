@@ -47,7 +47,7 @@ public class NumberLineAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
         final ViewHolder holder;
         View vi = convertView;
         int type = getItemViewType(position);
@@ -90,6 +90,10 @@ public class NumberLineAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, QuestionsActivity.class);
+                /*
+                *send position of clicked item. Note, it sends (position-1) because there is an extra element padded at top and bottom of numberline
+                 */
+                intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, (position - 1));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

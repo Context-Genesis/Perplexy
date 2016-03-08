@@ -3,7 +3,6 @@ package com.rohanx96.admobproto;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,34 +15,47 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.rohanx96.admobproto.ui.NumberLineActivity;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by rose on 6/3/16.
  */
 public class QuestionsActivity extends AppCompatActivity {
-    private ViewGroup mContainer;
-    private ViewPager pager;
     private ScreenSlidePagerAdapter pagerAdapter;
     private final int NO_OF_COLORS = 9;
     private ImageView character;
     private int mCurrentPage;
 
+    @Bind(R.id.questions_activity_level)
+    TextView tvLevel;
+
+    @Bind(R.id.questions_activity_container)
+    ViewGroup mContainer;
+
+    @Bind(R.id.questions_activity_pager)
+    ViewPager pager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
-        mContainer = (ViewGroup) findViewById(R.id.questions_activity_container);
-        pager = (ViewPager) findViewById(R.id.pager);
+        ButterKnife.bind(this);
 
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.setPageMargin(convertDip2Pixels(this, 16));
         pager.setPageTransformer(true, new DepthPageTransformer());
-        mCurrentPage = pager.getCurrentItem();
+        mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_POSITION, 0);
+        mContainer.setBackgroundColor(FallingDrawables.getBackgoundColor(mCurrentPage, getApplicationContext()));
+        pager.setCurrentItem(mCurrentPage);
+        tvLevel.setText("Level " + (mCurrentPage + 1));
+
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -65,6 +77,7 @@ public class QuestionsActivity extends AppCompatActivity {
                 });
                 colorAnimator.start();
                 mCurrentPage = position;
+                tvLevel.setText("Level " + (mCurrentPage + 1));
             }
 
             @Override
@@ -72,13 +85,11 @@ public class QuestionsActivity extends AppCompatActivity {
                 //Unused
             }
         });
-        View back = findViewById(R.id.back_questions);
+        View back = findViewById(R.id.questions_activity_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent numberLine = new Intent(QuestionsActivity.this, NumberLineActivity.class);
-                numberLine.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(numberLine);
+                onBackPressed();
             }
         });
         setupCharacter();
@@ -198,7 +209,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     public void setupCharacter() {
-        character = (ImageView) findViewById(R.id.fabAdd);
+        character = (ImageView) findViewById(R.id.questions_activity_bubble);
         character.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
