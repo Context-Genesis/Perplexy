@@ -22,44 +22,44 @@ import butterknife.OnClick;
 /**
  * Created by rose on 7/3/16.
  */
-public class QuestionFragment extends Fragment {
+public class QuestionMCQFragment extends Fragment {
 
     int POSITION = -1;
 
-    @Bind(R.id.qcard_option1)
+    @Bind(R.id.qcard_mcq_option1)
     TextView tvOption1;
 
-    @Bind(R.id.qcard_option2)
+    @Bind(R.id.qcard_mcq_option2)
     TextView tvOption2;
 
-    @Bind(R.id.qcard_option3)
+    @Bind(R.id.qcard_mcq_option3)
     TextView tvOption3;
 
-    @Bind(R.id.qcard_option4)
+    @Bind(R.id.qcard_mcq_option4)
     TextView tvOption4;
 
-    @Bind(R.id.qcard_question)
+    @Bind(R.id.qcard_mcq_question)
     TextView tvQuestion;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.question_card, container, false);
+        View rootView = inflater.inflate(R.layout.question_mcq_card, container, false);
 
         ButterKnife.bind(this, rootView);
 
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_POSITION);
 
-        MCQQuestion MCQQuestion = JSONUtils.getSequenceQuestionAt(getActivity(), POSITION);
+        MCQQuestion mMCQQuestion = JSONUtils.getSequenceQuestionAt(getActivity(), POSITION);
 
-        tvQuestion.setText(MCQQuestion.question);
+        tvQuestion.setText(mMCQQuestion.question);
 
         String option1 = "404", option2 = "404", option3 = "404", option4 = "404";
         try {
-            option1 = MCQQuestion.options.getJSONObject(0).getString("choice");
-            option2 = MCQQuestion.options.getJSONObject(1).getString("choice");
-            option3 = MCQQuestion.options.getJSONObject(2).getString("choice");
-            option4 = MCQQuestion.options.getJSONObject(3).getString("choice");
+            option1 = mMCQQuestion.options.getJSONObject(0).getString("choice");
+            option2 = mMCQQuestion.options.getJSONObject(1).getString("choice");
+            option3 = mMCQQuestion.options.getJSONObject(2).getString("choice");
+            option4 = mMCQQuestion.options.getJSONObject(3).getString("choice");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -71,21 +71,21 @@ public class QuestionFragment extends Fragment {
         return rootView;
     }
 
-    @OnClick(R.id.qcard_next)
-    public void nextQuestion(){
+    @OnClick(R.id.qcard_mcq_next)
+    public void nextQuestion() {
         ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
-        pager.setCurrentItem(pager.getCurrentItem() + 1,true);
+        pager.setCurrentItem(pager.getCurrentItem() + 1, true);
     }
 
-    @OnClick(R.id.qcard_previous)
-    public void previousQuestion(){
+    @OnClick(R.id.qcard_mcq_previous)
+    public void previousQuestion() {
         ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
         pager.setCurrentItem(pager.getCurrentItem() - 1, true);
     }
 
-    public static QuestionFragment newInstance(Bundle args) {
+    public static QuestionMCQFragment newInstance(Bundle args) {
 
-        QuestionFragment fragment = new QuestionFragment();
+        QuestionMCQFragment fragment = new QuestionMCQFragment();
         fragment.setArguments(args);
         return fragment;
     }

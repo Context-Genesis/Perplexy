@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.rohanx96.admobproto.elements.MCQQuestion;
+import com.rohanx96.admobproto.elements.WordQuestion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -135,6 +136,59 @@ public class JSONUtils {
 
             MCQQuestion MCQQuestion = new MCQQuestion(question_id, questionstring, options, answeroption, message, hint);
             return MCQQuestion;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<WordQuestion> getRiddleQuestionsFromJSONString(Context context) {
+        ArrayList<WordQuestion> wordQuestions = new ArrayList<>();
+        try {
+            JSONObject listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
+            for (int i = 0; i < listObject.getJSONArray("questions").length(); i++) {
+                JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(i);
+                int question_id = questionObj.getInt("question_id");
+                String answeroptions = questionObj.getString("answeroptions");
+                String questionstring = questionObj.getString("question");
+                String answer = questionObj.getString("answer");
+                String hint = questionObj.getString("hint");
+                String message = questionObj.getString("message");
+
+                WordQuestion wordQuestion = new WordQuestion(question_id, questionstring, answer, answeroptions, hint, message);
+                wordQuestions.add(wordQuestion);
+            }
+            return wordQuestions;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static int getTotalRiddleQuestions(Context context) {
+        try {
+            JSONObject listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
+            return listObject.getJSONArray("questions").length();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public static WordQuestion getRiddleQuestionAt(Context context, int index) {
+        JSONObject listObject = null;
+        try {
+            listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
+            JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(index);
+            int question_id = questionObj.getInt("question_id");
+            String answeroptions = questionObj.getString("answeroptions");
+            String questionstring = questionObj.getString("question");
+            String answer = questionObj.getString("answer");
+            String hint = questionObj.getString("hint");
+            String message = questionObj.getString("message");
+
+            WordQuestion wordQuestion = new WordQuestion(question_id, questionstring, answer, answeroptions, hint, message);
+            return wordQuestion;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;

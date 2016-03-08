@@ -6,6 +6,7 @@ package com.rohanx96.admobproto.utils;
 public class Constants {
 
     public static String JSON_SEQUENCES_FILE = "sequences.json";
+    public static String JSON_RIDDLES_FILE = "riddles.json";
 
     public static String SHARED_PREFERENCES = "SHARED_PREFERENCES";
 
