@@ -41,4 +41,6 @@
     <color name="red_l_chestnut">#D24D57</color>
     <color name="red_l_alizarin">#e74c3c</color>
     <color name="red_d_pomegranate">#c0392b</color>
+    <color name="first_background_color">@color/blue_d_ebony_clay</color>
+    <color name="first_light_background_color">@color/blue_l_steel_blue</color>
 </resources>

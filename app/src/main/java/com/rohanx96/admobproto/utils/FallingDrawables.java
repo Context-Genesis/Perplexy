@@ -27,6 +27,7 @@ public class FallingDrawables {
     private int mDrawablesInRow;
     private int mDrawableSize = 40;
     public static final int NO_OF_COLORS = 9;
+    public static final int NO_OF_LIGHT_COLORS = 7;
     private int mWindowWidth;
     private Handler mainThread;
     private Thread workerThread;
@@ -193,7 +194,7 @@ public class FallingDrawables {
     public static int getBackgoundColor(int count, Context mContext){
         switch (count){
             case 0:
-                return  mContext.getResources().getColor(R.color.blue_d_chambray);
+                return  mContext.getResources().getColor(R.color.blue_d_ebony_clay);
             case 1:
                 return  mContext.getResources().getColor(R.color.pink_d_material);
             case 2:
@@ -201,7 +202,7 @@ public class FallingDrawables {
             case 3:
                 return  mContext.getResources().getColor(R.color.purple_d_honey_flower);
             case 4:
-                return  mContext.getResources().getColor(R.color.blue_d_ebony_clay);
+                return  mContext.getResources().getColor(R.color.blue_d_chambray);
             case 5:
                 return  mContext.getResources().getColor(R.color.purple_d_rebecca);
             case 6:
@@ -215,7 +216,24 @@ public class FallingDrawables {
         }
     }
 
-    public void animateBackgroundChange(){
-
+    public static int getLightBackgroundColor(int position, Context context){
+        switch (position){
+            case 0:
+                return context.getResources().getColor(R.color.blue_l_steel_blue);
+            case 1:
+                return context.getResources().getColor(R.color.purple_l_plum);
+            case 2:
+                return context.getResources().getColor(R.color.red_l_chestnut);
+            case 3:
+                return context.getResources().getColor(R.color.blue_l_lynch);
+            case 4:
+                return context.getResources().getColor(R.color.blue_d_chambray);
+            case 5:
+                return context.getResources().getColor(R.color.green_d_sea);
+            case 6:
+                return context.getResources().getColor(R.color.yellow_l_lightning);
+            default:
+                return context.getResources().getColor(R.color.blue_l_steel_blue);
+        }
     }
 }

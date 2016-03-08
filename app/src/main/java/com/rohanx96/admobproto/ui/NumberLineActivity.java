@@ -52,8 +52,14 @@ public class NumberLineActivity extends AppCompatActivity {
         Thread animationThread  = new Thread(new Runnable() {
             @Override
             public void run() {
-                Handler handler = new Handler(Looper.getMainLooper());
+                final Handler handler = new Handler(Looper.getMainLooper());
                 while (shouldRunAnimation){
+                    // sleep the thread to stop the while loop for 7 seconds
+                    try {
+                        Thread.sleep(7000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     final ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
                             FallingDrawables.getBackgoundColor(mTimeCount,getApplicationContext()),
                             FallingDrawables.getBackgoundColor(mTimeCount + 1,getApplicationContext()));
@@ -61,24 +67,23 @@ public class NumberLineActivity extends AppCompatActivity {
                     mTimeCount++;
                     if (mTimeCount == FallingDrawables.NO_OF_COLORS)
                         mTimeCount = 0;
-                    handler.post(new Runnable() {
+                    colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
-                        public void run() {
-                            colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(final ValueAnimator animation) {
+                            handler.post(new Runnable() {
                                 @Override
-                                public void onAnimationUpdate(final ValueAnimator animation) {
+                                public void run() {
                                     mContainer.setBackgroundColor((int) animation.getAnimatedValue());
                                 }
                             });
+                        }
+                    });
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
                             colorAnimator.start();
                         }
                     });
-                    // sleep the thread to stop the while loop for 7 seconds
-                    try {
-                        Thread.sleep(7000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         });

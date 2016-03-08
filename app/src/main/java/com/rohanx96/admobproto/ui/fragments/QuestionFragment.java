@@ -2,6 +2,7 @@ package com.rohanx96.admobproto.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import org.json.JSONException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by rose on 7/3/16.
@@ -67,6 +69,18 @@ public class QuestionFragment extends Fragment {
         tvOption4.setText(option4);
 
         return rootView;
+    }
+
+    @OnClick(R.id.qcard_next)
+    public void nextQuestion(){
+        ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
+        pager.setCurrentItem(pager.getCurrentItem() + 1,true);
+    }
+
+    @OnClick(R.id.qcard_previous)
+    public void previousQuestion(){
+        ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
+        pager.setCurrentItem(pager.getCurrentItem() - 1, true);
     }
 
     public static QuestionFragment newInstance(Bundle args) {

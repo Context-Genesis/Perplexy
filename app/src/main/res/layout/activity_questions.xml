@@ -5,7 +5,7 @@
     android:id="@+id/questions_activity_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_d_chambray"
+    android:background="@color/first_light_background_color"
     android:clipChildren="false"
     tools:context="link.fls.swipestacksample.MainActivity">
 

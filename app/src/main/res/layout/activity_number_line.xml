@@ -4,7 +4,7 @@
     android:id="@+id/activity_number_line_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_d_ebony_clay"
+    android:background="@color/first_background_color"
     tools:context="com.example.bhutanidhruv16.logic.NumberLine">
 
 
@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:divider="@null"
         android:dividerHeight="20dp"
-        android:padding="16dp"></ListView>
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"></ListView>
 
 
     <TextView

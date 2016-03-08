@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 public class QuestionsActivity extends AppCompatActivity {
 
     private ScreenSlidePagerAdapter pagerAdapter;
-    private final int NO_OF_COLORS = 9;
+    private final int NO_OF_COLORS = 7;
     private ImageView character;
     private int mCurrentPage;
 
@@ -56,7 +56,7 @@ public class QuestionsActivity extends AppCompatActivity {
         pager.setPageMargin(convertDip2Pixels(this, 16));
         pager.setPageTransformer(true, new DepthPageTransformer());
         mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_POSITION, 0);
-        mContainer.setBackgroundColor(FallingDrawables.getBackgoundColor(mCurrentPage, getApplicationContext()));
+        mContainer.setBackgroundColor(FallingDrawables.getLightBackgroundColor(mCurrentPage, getApplicationContext()));
         pager.setCurrentItem(mCurrentPage);
         tvLevel.setText("Level " + (mCurrentPage + 1));
 
@@ -71,8 +71,8 @@ public class QuestionsActivity extends AppCompatActivity {
                 //See note above for why this is needed
                 ValueAnimator colorAnimator;
                 colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
-                        FallingDrawables.getBackgoundColor(mCurrentPage % NO_OF_COLORS, QuestionsActivity.this),
-                        FallingDrawables.getBackgoundColor(position % NO_OF_COLORS, QuestionsActivity.this));
+                        FallingDrawables.getLightBackgroundColor(mCurrentPage % NO_OF_COLORS, QuestionsActivity.this),
+                        FallingDrawables.getLightBackgroundColor(position % NO_OF_COLORS, QuestionsActivity.this));
                 colorAnimator.setDuration(500).addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
