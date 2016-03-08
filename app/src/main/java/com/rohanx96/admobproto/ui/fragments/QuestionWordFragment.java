@@ -205,6 +205,9 @@ public class QuestionWordFragment extends Fragment {
         answerTV.setTextSize(25);
         answerTV.setTextColor(Color.BLACK);
         answerTV.setBackgroundResource(R.drawable.circle_filled);
+//        GradientDrawable gradientDrawable = (GradientDrawable) answerTV.getBackground();
+//        gradientDrawable.setColor(Color.BLUE);
+//        answerTV.setBackground(gradientDrawable);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(65, 65);
         layoutParams.setMargins(2, 2, 2, 2);
         answerTV.setLayoutParams(layoutParams);
