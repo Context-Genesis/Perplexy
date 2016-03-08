@@ -26,7 +26,7 @@
                 android:scrollbars="vertical">
 
                 <TextView
-                    android:id="@+id/qcard_question"
+                    android:id="@+id/qcard_mcq_question"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -45,9 +45,8 @@
                 android:layout_marginBottom="48dp"
                 android:orientation="vertical">
 
-
                 <TextView
-                    android:id="@+id/qcard_option1"
+                    android:id="@+id/qcard_mcq_option1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -58,7 +57,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
 
                 <TextView
-                    android:id="@+id/qcard_option2"
+                    android:id="@+id/qcard_mcq_option2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -69,7 +68,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
 
                 <TextView
-                    android:id="@+id/qcard_option3"
+                    android:id="@+id/qcard_mcq_option3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -80,7 +79,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
 
                 <TextView
-                    android:id="@+id/qcard_option4"
+                    android:id="@+id/qcard_mcq_option4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -92,7 +91,7 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/qcard_previous"
+                android:id="@+id/qcard_mcq_previous"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignParentBottom="true"
@@ -104,7 +103,7 @@
                 android:src="@drawable/left" />
 
             <ImageButton
-                android:id="@+id/qcard_next"
+                android:id="@+id/qcard_mcq_next"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignParentBottom="true"

@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
-import com.rohanx96.admobproto.ui.fragments.QuestionFragment;
+import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -125,12 +125,12 @@ public class QuestionsActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
             bundle.putInt(Constants.BUNDLE_QUESTION_POSITION, position);
-            return QuestionFragment.newInstance(bundle);
+            return QuestionWordFragment.newInstance(bundle);
         }
 
         @Override
         public int getCount() {
-            return JSONUtils.getTotalSequenceQuestions(getApplicationContext());
+            return JSONUtils.getTotalRiddleQuestions(getApplicationContext());
         }
     }
 
