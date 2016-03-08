@@ -57,16 +57,16 @@ public class NumberLineActivity extends AppCompatActivity {
                     isAnimationRunning = true;
                     final Handler handler = new Handler(Looper.getMainLooper());
                     while (isAnimationRunning) {
-                        // sleep the thread to stop the while loop for 7 seconds
+                        // sleep the thread to stop the while loop for 5 seconds
                         try {
-                            Thread.sleep(7000);
+                            Thread.sleep(5000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                         final ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
                                 FallingDrawables.getBackgroundColor(mTimeCount, getApplicationContext()),
                                 FallingDrawables.getBackgroundColor(mTimeCount + 1, getApplicationContext()));
-                        colorAnimator.setDuration(4000);
+                        colorAnimator.setDuration(3000);
                         mTimeCount++;
                         if (mTimeCount == FallingDrawables.NO_OF_COLORS)
                             mTimeCount = 0;

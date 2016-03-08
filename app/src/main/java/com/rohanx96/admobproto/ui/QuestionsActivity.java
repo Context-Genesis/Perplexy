@@ -3,6 +3,7 @@ package com.rohanx96.admobproto.ui;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,10 +12,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
+import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
@@ -214,6 +221,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
     public void setupCharacter() {
         character = (ImageView) findViewById(R.id.questions_activity_bubble);
+        setupCharacterDialog();
         character.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -224,6 +232,21 @@ public class QuestionsActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_UP:
                         character.clearAnimation();
                         character.animate().scaleX(1.0f).scaleY(1.0f).setDuration(300).start();
+                        /*
+                        View characterDialog = LayoutInflater.from(getApplicationContext()).inflate(R.layout.character_click_dialog,null);
+                        characterDialog.setX(character.getX());
+                        characterDialog.setY(character.getY());
+                        characterDialog.setScaleX(0.1f);
+                        characterDialog.setScaleY(0.1f);
+                        mContainer.addView(characterDialog);
+                        characterDialog.animate().scaleX(1.0f).scaleY(1.0f).translationX((-1*characterDialog.getWidth())/2)
+                        .translationY(characterDialog.getHeight()).setDuration(500).start();*/
+                        View characterDialog = findViewById(R.id.questions_activity_character_dialog);
+                        characterDialog.setScaleX(0.1f);
+                        characterDialog.setScaleY(0.1f);
+                        characterDialog.setVisibility(View.VISIBLE);
+                        characterDialog.animate().scaleX(1.0f).scaleY(1.0f).setDuration(500).start();
+                        //new DialogSpeakingMan(QuestionsActivity.this).show();
                 }
                 return true;
             }
@@ -232,5 +255,147 @@ public class QuestionsActivity extends AppCompatActivity {
 
     public static int convertDip2Pixels(Context context, int dip) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.getResources().getDisplayMetrics());
+
+    }
+
+    /** This sets up the click listeners for various options in character dialog. Implementation copied from DialogSpeakingMan
+     *  by Dhruv
+     */
+    public void setupCharacterDialog(){
+        final TextView showhint;
+        final LinearLayout hint, confirmhint;
+        final TextView nohint, yeshint, showhiddenhint;
+
+        final TextView showsolution;
+        final LinearLayout solution, confirmsolution;
+        final TextView nosolution, yessolution, showhiddensolution;
+
+        final TextView skipquestion;
+        final LinearLayout skip, confirmskip;
+        final TextView noskip, yesskip, showhiddenskip;
+
+        showhint = (TextView) findViewById(R.id.showhint);
+        hint = (LinearLayout) findViewById(R.id.ll_hint);
+        confirmhint = (LinearLayout) findViewById(R.id.ll_confirmhint);
+        nohint = (TextView) findViewById(R.id.nohint);
+        yeshint = (TextView) findViewById(R.id.yeshint);
+        showhiddenhint = (TextView) findViewById(R.id.showhiddenhint);
+
+        showhint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showhint.setVisibility(View.GONE);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+                confirmhint.startAnimation(in);
+                confirmhint.setVisibility(View.VISIBLE);
+            }
+        });
+
+        yeshint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmhint.setVisibility(View.GONE);
+                showhint.setVisibility(View.VISIBLE);
+
+                showhiddenhint.setVisibility(View.INVISIBLE);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.together);
+                showhiddenhint.startAnimation(in);
+                showhiddenhint.setVisibility(View.VISIBLE);
+                showhiddenhint.startAnimation(in);
+            }
+        });
+
+        nohint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmhint.setVisibility(View.GONE);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+                showhint.startAnimation(in);
+                showhint.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        showsolution = (TextView) findViewById(R.id.showsolution);
+        solution = (LinearLayout) findViewById(R.id.ll_solution);
+        confirmsolution = (LinearLayout) findViewById(R.id.ll_confirmsolution);
+        nosolution = (TextView) findViewById(R.id.nosolution);
+        yessolution = (TextView) findViewById(R.id.yessolution);
+        showhiddensolution = (TextView) findViewById(R.id.showhiddensolution);
+
+        showsolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showsolution.setVisibility(View.GONE);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+                confirmsolution.startAnimation(in);
+                confirmsolution.setVisibility(View.VISIBLE);
+            }
+        });
+
+        yessolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmsolution.setVisibility(View.GONE);
+                showsolution.setVisibility(View.VISIBLE);
+
+                showhiddensolution.setVisibility(View.INVISIBLE);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.together);
+                showhiddensolution.startAnimation(in);
+                showhiddensolution.setVisibility(View.VISIBLE);
+                showhiddensolution.startAnimation(in);
+            }
+        });
+
+        nosolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmsolution.setVisibility(View.GONE);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+                showsolution.startAnimation(in);
+                showsolution.setVisibility(View.VISIBLE);
+            }
+        });
+
+        skipquestion = (TextView) findViewById(R.id.skipquestion);
+        skip = (LinearLayout) findViewById(R.id.ll_skip);
+        confirmskip = (LinearLayout) findViewById(R.id.ll_confirmskip);
+        noskip = (TextView) findViewById(R.id.noskip);
+        yesskip = (TextView) findViewById(R.id.yesskip);
+        showhiddenskip = (TextView) findViewById(R.id.showhiddenskip);
+
+        skipquestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                skipquestion.setVisibility(View.GONE);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+                confirmskip.startAnimation(in);
+                confirmskip.setVisibility(View.VISIBLE);
+            }
+        });
+
+        yesskip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmskip.setVisibility(View.GONE);
+                skipquestion.setVisibility(View.VISIBLE);
+
+                showhiddenskip.setVisibility(View.INVISIBLE);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.together);
+                showhiddenskip.startAnimation(in);
+                showhiddenskip.setVisibility(View.VISIBLE);
+                showhiddenskip.startAnimation(in);
+            }
+        });
+
+        noskip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmskip.setVisibility(View.GONE);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+                skipquestion.startAnimation(in);
+                skipquestion.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

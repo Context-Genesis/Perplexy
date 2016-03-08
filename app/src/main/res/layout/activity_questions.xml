@@ -40,11 +40,11 @@
             android:id="@+id/questions_activity_coin_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/questions_activity_coin_image"
             android:layout_alignEnd="@+id/questions_activity_coin_image"
+            android:layout_alignRight="@+id/questions_activity_coin_image"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/white_oval"
             android:gravity="center_vertical"
             android:paddingEnd="35dp"
@@ -74,6 +74,17 @@
         android:layout_below="@id/linearLayout"
         android:layout_marginBottom="16dp"
         android:background="@color/colorTransparent" />
+
+    <include
+        android:id="@+id/questions_activity_character_dialog"
+        layout="@layout/character_click_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_above="@+id/questions_activity_bubble"
+        android:visibility="gone"></include>
 
     <ImageView
         android:id="@+id/questions_activity_bubble"
