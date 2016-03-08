@@ -6,22 +6,21 @@ import com.orm.SugarRecord;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by rish on 8/3/16.
  */
-public class SequenceAnswersDetails extends SugarRecord implements Serializable {
+public class MCQAnswersDetails extends SugarRecord{
 
     public int question_id;
     public String status; /*correct, incorrect, unattempted*/
     public boolean lock, hint_display, answer_display;
 
-    public SequenceAnswersDetails() {
+    public MCQAnswersDetails() {
     }
 
-    public SequenceAnswersDetails(int question_id, String status, boolean lock, boolean hint_display, boolean answer_display) {
+    public MCQAnswersDetails(int question_id, String status, boolean lock, boolean hint_display, boolean answer_display) {
         this.question_id = question_id;
         this.status = status;
         this.lock = lock;
@@ -43,11 +42,11 @@ public class SequenceAnswersDetails extends SugarRecord implements Serializable 
          * hint : false
          * answer : false
          */
-        ArrayList<SequenceQuestion> sequenceQuestions = JSONUtils.getSequenceQuestionsFromJSONString(context);
-        for (int i = 0; i < sequenceQuestions.size(); i++) {
-            int question_id = sequenceQuestions.get(i).question_id;
-            SequenceAnswersDetails sequenceAnswersDetails = new SequenceAnswersDetails(question_id, Constants.UNATTEMPTED, false, false, false);
-            sequenceAnswersDetails.save();
+        ArrayList<MCQQuestion> MCQQuestions = JSONUtils.getSequenceQuestionsFromJSONString(context);
+        for (int i = 0; i < MCQQuestions.size(); i++) {
+            int question_id = MCQQuestions.get(i).question_id;
+            MCQAnswersDetails MCQAnswersDetails = new MCQAnswersDetails(question_id, Constants.UNATTEMPTED, false, false, false);
+            MCQAnswersDetails.save();
         }
     }
 }

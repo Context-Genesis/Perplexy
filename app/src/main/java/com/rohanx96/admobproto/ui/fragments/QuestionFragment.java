@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
-import com.rohanx96.admobproto.elements.SequenceQuestion;
+import com.rohanx96.admobproto.elements.MCQQuestion;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
 
@@ -50,16 +50,16 @@ public class QuestionFragment extends Fragment {
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_POSITION);
 
-        SequenceQuestion sequenceQuestion = JSONUtils.getSequenceQuestionAt(getActivity(), POSITION);
+        MCQQuestion MCQQuestion = JSONUtils.getSequenceQuestionAt(getActivity(), POSITION);
 
-        tvQuestion.setText(sequenceQuestion.question);
+        tvQuestion.setText(MCQQuestion.question);
 
         String option1 = "404", option2 = "404", option3 = "404", option4 = "404";
         try {
-            option1 = sequenceQuestion.options.getJSONObject(0).getString("choice");
-            option2 = sequenceQuestion.options.getJSONObject(1).getString("choice");
-            option3 = sequenceQuestion.options.getJSONObject(2).getString("choice");
-            option4 = sequenceQuestion.options.getJSONObject(3).getString("choice");
+            option1 = MCQQuestion.options.getJSONObject(0).getString("choice");
+            option2 = MCQQuestion.options.getJSONObject(1).getString("choice");
+            option3 = MCQQuestion.options.getJSONObject(2).getString("choice");
+            option4 = MCQQuestion.options.getJSONObject(3).getString("choice");
         } catch (JSONException e) {
             e.printStackTrace();
         }

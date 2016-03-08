@@ -6,19 +6,88 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.ui.NumberLineActivity;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class FrontPageFragment extends Fragment {
+
+    @Bind(R.id.home_tv_lvl_text)
+    TextView gameTypeText;
+
+    @Bind(R.id.home_seekbar)
+    SeekBar gameSeekBar;
+
+    @Bind(R.id.home_play)
+    ImageView playButton;
+
+    @Bind(R.id.game_1)
+    ImageView gameType1;
+    @Bind(R.id.game_2)
+    ImageView gameType2;
+    @Bind(R.id.game_3)
+    ImageView gameType3;
+    @Bind(R.id.game_4)
+    ImageView gameType4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_frontpage, container, false);
-        ImageView playButton = (ImageView) rootView.findViewById(R.id.home_play);
+
+        ButterKnife.bind(this, rootView);
+
+        gameSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, final int progress, boolean fromUser) {
+                final Animation slideOut = AnimationUtils.loadAnimation(getActivity(), android.R.anim.slide_out_right);
+                final Animation slideIn = AnimationUtils.loadAnimation(getActivity(), android.R.anim.slide_in_left);
+
+                slideOut.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        gameTypeText.setText(getGameTypeText(progress));
+                        gameTypeText.startAnimation(slideIn);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                resetLevelSizes(progress);
+                gameTypeText.startAnimation(slideOut);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        gameSeekBar.setProgress(0);
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -26,6 +95,81 @@ public class FrontPageFragment extends Fragment {
                 startActivity(questionsActivity);
             }
         });
+
         return rootView;
+    }
+
+    @OnClick(R.id.game_1)
+    public void onClickGame1() {
+        gameSeekBar.setProgress(0);
+    }
+
+    @OnClick(R.id.game_2)
+    public void onClickGame2() {
+        gameSeekBar.setProgress(1);
+    }
+
+    @OnClick(R.id.game_3)
+    public void onClickGame3() {
+        gameSeekBar.setProgress(2);
+    }
+
+    @OnClick(R.id.game_4)
+    public void onClickGame4() {
+        gameSeekBar.setProgress(3);
+    }
+
+    private String getGameTypeText(int lvl) {
+        switch (lvl) {
+            case 0:
+                return "If a:b and c:d, then x: ?";
+            case 1:
+                return "Riddle Me This";
+            case 2:
+                return "Do you have the logic in you?";
+            case 3:
+                return "4 Pictures 1 Word";
+            default:
+                return "Error in selecting level";
+        }
+    }
+
+    private void resetLevelSizes(int lvl) {
+        gameType1.requestLayout();
+        gameType1.getLayoutParams().height = 40;
+        gameType1.getLayoutParams().width = 40;
+        gameType2.requestLayout();
+        gameType2.getLayoutParams().height = 40;
+        gameType2.getLayoutParams().width = 40;
+        gameType3.requestLayout();
+        gameType3.getLayoutParams().height = 40;
+        gameType3.getLayoutParams().width = 40;
+        gameType4.requestLayout();
+        gameType4.getLayoutParams().height = 40;
+        gameType4.getLayoutParams().width = 40;
+        switch (lvl) {
+            case 0:
+                gameType1.requestLayout();
+                gameType1.getLayoutParams().height = 50;
+                gameType1.getLayoutParams().width = 50;
+                return;
+            case 1:
+                gameType2.requestLayout();
+                gameType2.getLayoutParams().height = 50;
+                gameType2.getLayoutParams().width = 50;
+                return;
+            case 2:
+                gameType3.requestLayout();
+                gameType3.getLayoutParams().height = 50;
+                gameType3.getLayoutParams().width = 50;
+                return;
+            case 3:
+                gameType4.requestLayout();
+                gameType4.getLayoutParams().height = 50;
+                gameType4.getLayoutParams().width = 50;
+                return;
+            default:
+                return;
+        }
     }
 }

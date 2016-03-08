@@ -3,7 +3,7 @@ package com.rohanx96.admobproto.utils;
 import android.content.Context;
 import android.util.Log;
 
-import com.rohanx96.admobproto.elements.SequenceQuestion;
+import com.rohanx96.admobproto.elements.MCQQuestion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,8 +88,8 @@ public class JSONUtils {
         return json;
     }
 
-    public static ArrayList<SequenceQuestion> getSequenceQuestionsFromJSONString(Context context) {
-        ArrayList<SequenceQuestion> sequenceQuestions = new ArrayList<>();
+    public static ArrayList<MCQQuestion> getSequenceQuestionsFromJSONString(Context context) {
+        ArrayList<MCQQuestion> MCQQuestions = new ArrayList<>();
         try {
             JSONObject listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
             for (int i = 0; i < listObject.getJSONArray("questions").length(); i++) {
@@ -101,10 +101,10 @@ public class JSONUtils {
                 String message = questionObj.getString("message");
                 JSONArray options = questionObj.getJSONArray("options");
 
-                SequenceQuestion sequenceQuestion = new SequenceQuestion(question_id, questionstring, options, answeroption, message, hint);
-                sequenceQuestions.add(sequenceQuestion);
+                MCQQuestion MCQQuestion = new MCQQuestion(question_id, questionstring, options, answeroption, message, hint);
+                MCQQuestions.add(MCQQuestion);
             }
-            return sequenceQuestions;
+            return MCQQuestions;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -121,7 +121,7 @@ public class JSONUtils {
         }
     }
 
-    public static SequenceQuestion getSequenceQuestionAt(Context context, int index) {
+    public static MCQQuestion getSequenceQuestionAt(Context context, int index) {
         JSONObject listObject = null;
         try {
             listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
@@ -133,8 +133,8 @@ public class JSONUtils {
             String message = questionObj.getString("message");
             JSONArray options = questionObj.getJSONArray("options");
 
-            SequenceQuestion sequenceQuestion = new SequenceQuestion(question_id, questionstring, options, answeroption, message, hint);
-            return sequenceQuestion;
+            MCQQuestion MCQQuestion = new MCQQuestion(question_id, questionstring, options, answeroption, message, hint);
+            return MCQQuestion;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;

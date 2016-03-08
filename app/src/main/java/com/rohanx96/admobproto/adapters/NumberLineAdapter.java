@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import com.rohanx96.admobproto.ui.QuestionsActivity;
 import com.rohanx96.admobproto.R;
-import com.rohanx96.admobproto.elements.SequenceAnswersDetails;
+import com.rohanx96.admobproto.elements.MCQAnswersDetails;
 import com.rohanx96.admobproto.utils.Constants;
 
 import java.util.ArrayList;
@@ -21,24 +21,24 @@ import java.util.ArrayList;
 public class NumberLineAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<SequenceAnswersDetails> sequenceAnswersDetails;
+    ArrayList<MCQAnswersDetails> MCQAnswersDetails;
     LayoutInflater inflater;
 
-    public NumberLineAdapter(Context context, ArrayList<SequenceAnswersDetails> sequenceAnswersDetails) {
+    public NumberLineAdapter(Context context, ArrayList<MCQAnswersDetails> MCQAnswersDetails) {
         this.context = context;
-        this.sequenceAnswersDetails = sequenceAnswersDetails;
-        this.sequenceAnswersDetails.add(0, new SequenceAnswersDetails(-1, Constants.CORRECT, false, false, false));
-        this.sequenceAnswersDetails.add(sequenceAnswersDetails.size(), new SequenceAnswersDetails(-1, Constants.CORRECT, false, false, false));
+        this.MCQAnswersDetails = MCQAnswersDetails;
+        this.MCQAnswersDetails.add(0, new MCQAnswersDetails(-1, Constants.CORRECT, false, false, false));
+        this.MCQAnswersDetails.add(MCQAnswersDetails.size(), new MCQAnswersDetails(-1, Constants.CORRECT, false, false, false));
     }
 
     @Override
     public int getCount() {
-        return sequenceAnswersDetails.size();
+        return MCQAnswersDetails.size();
     }
 
     @Override
-    public SequenceAnswersDetails getItem(int position) {
-        return sequenceAnswersDetails.get(position);
+    public MCQAnswersDetails getItem(int position) {
+        return MCQAnswersDetails.get(position);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class NumberLineAdapter extends BaseAdapter {
         *Process answer details here and set backgrounds and lock image accordingly
          */
 
-        if (position != 0 && position != sequenceAnswersDetails.size() - 1)
+        if (position != 0 && position != MCQAnswersDetails.size() - 1)
             holder.tv.setText(" " + getItem(position).question_id + " ");
 
         holder.tv.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +106,7 @@ public class NumberLineAdapter extends BaseAdapter {
     public int getItemViewType(int position) {
         if (position == 0)
             return -1;
-        else if (position == sequenceAnswersDetails.size() - 1)
+        else if (position == MCQAnswersDetails.size() - 1)
             return -2;
 
         return position % 2;

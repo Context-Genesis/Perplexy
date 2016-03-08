@@ -15,7 +15,7 @@ import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.ui.fragments.FrontPageFragment;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.ui.fragments.StatisticsFragment;
-import com.rohanx96.admobproto.elements.SequenceAnswersDetails;
+import com.rohanx96.admobproto.elements.MCQAnswersDetails;
 import com.rohanx96.admobproto.utils.Constants;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -95,7 +95,7 @@ public class MainActivity extends FragmentActivity {
          */
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
         if (prefs.getBoolean(Constants.FIRST_RUN, true)) {
-            SequenceAnswersDetails.initializeDatabase(getApplicationContext());
+            MCQAnswersDetails.initializeDatabase(getApplicationContext());
             prefs.edit().putBoolean(Constants.FIRST_RUN, false).commit();
         }
     }
