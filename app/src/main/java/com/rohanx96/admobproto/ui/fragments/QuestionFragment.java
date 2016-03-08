@@ -1,4 +1,4 @@
-package com.rohanx96.admobproto;
+package com.rohanx96.admobproto.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.SequenceQuestion;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;

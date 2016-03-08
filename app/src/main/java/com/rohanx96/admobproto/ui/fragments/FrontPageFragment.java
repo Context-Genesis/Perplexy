@@ -1,4 +1,4 @@
-package com.rohanx96.admobproto;
+package com.rohanx96.admobproto.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.ui.NumberLineActivity;
 
 public class FrontPageFragment extends Fragment {

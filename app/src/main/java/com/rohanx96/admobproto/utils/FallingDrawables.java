@@ -1,4 +1,4 @@
-package com.rohanx96.admobproto;
+package com.rohanx96.admobproto.utils;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -12,6 +12,8 @@ import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.rohanx96.admobproto.R;
 
 import java.util.Random;
 

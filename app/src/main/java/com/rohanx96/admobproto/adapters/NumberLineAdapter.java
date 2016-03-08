@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
-import com.rohanx96.admobproto.QuestionsActivity;
+import com.rohanx96.admobproto.ui.QuestionsActivity;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.SequenceAnswersDetails;
 import com.rohanx96.admobproto.utils.Constants;
