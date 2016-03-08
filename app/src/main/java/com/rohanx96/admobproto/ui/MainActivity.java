@@ -1,5 +1,6 @@
-package com.rohanx96.admobproto;
+package com.rohanx96.admobproto.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +11,12 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.rohanx96.admobproto.utils.FallingDrawables;
+import com.rohanx96.admobproto.ui.fragments.FrontPageFragment;
+import com.rohanx96.admobproto.R;
+import com.rohanx96.admobproto.ui.fragments.StatisticsFragment;
+import com.rohanx96.admobproto.elements.SequenceAnswersDetails;
+import com.rohanx96.admobproto.utils.Constants;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class MainActivity extends FragmentActivity {
@@ -28,6 +35,7 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        onFirstRun();
         mContainer = (FrameLayout) findViewById(R.id.main_activity_container);
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.questions_activity_pager);
@@ -42,7 +50,7 @@ public class MainActivity extends FragmentActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        fallingDrawables = new FallingDrawables(this,mContainer);
+        fallingDrawables = new FallingDrawables(this, mContainer);
         fallingDrawables.createAnimation();
         fallingDrawables.setmDrawablesInRow();
     }
@@ -77,6 +85,18 @@ public class MainActivity extends FragmentActivity {
         @Override
         public int getCount() {
             return NUM_PAGES;
+        }
+    }
+
+    private void onFirstRun() {
+        /*
+        * check if app is run for the first time.
+        * Initialize SequenceAnswersDetails database with default values
+         */
+        SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+        if (prefs.getBoolean(Constants.FIRST_RUN, true)) {
+            SequenceAnswersDetails.initializeDatabase(getApplicationContext());
+            prefs.edit().putBoolean(Constants.FIRST_RUN, false).commit();
         }
     }
 }

@@ -4,15 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorTransparent"
-    android:orientation="vertical"
-    tools:context="rish.crearo.oneplustwo.HomeActivity">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/home_tv_lvl_text"
         android:gravity="center"
-        android:text="Logic Game"
+        android:text="Perplexy"
         android:textColor="@color/white"
         android:textSize="40dp" />
 
