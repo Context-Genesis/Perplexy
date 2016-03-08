@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.rohanx96.admobproto.elements.WordAnswerDetails;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.ui.fragments.FrontPageFragment;
 import com.rohanx96.admobproto.R;
@@ -96,6 +97,7 @@ public class MainActivity extends FragmentActivity {
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
         if (prefs.getBoolean(Constants.FIRST_RUN, true)) {
             MCQAnswersDetails.initializeDatabase(getApplicationContext());
+            WordAnswerDetails.initializeDatabase(getApplicationContext());
             prefs.edit().putBoolean(Constants.FIRST_RUN, false).commit();
         }
     }

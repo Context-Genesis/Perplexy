@@ -8,7 +8,7 @@ public class WordQuestion {
     public int question_id;
     public String question, hint, message, answer, answerOptions;
 
-    public WordQuestion(int question_id, String question, String hint, String message, String answer, String answerOptions) {
+    public WordQuestion(int question_id, String question, String answer, String answerOptions, String hint, String message) {
         this.question_id = question_id;
         this.question = question;
         this.hint = hint;

@@ -87,6 +87,7 @@ public class FrontPageFragment extends Fragment {
         });
 
         gameSeekBar.setProgress(0);
+        gameType1.performClick();
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override

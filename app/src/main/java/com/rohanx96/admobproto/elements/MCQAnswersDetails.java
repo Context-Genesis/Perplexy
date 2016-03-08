@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by rish on 8/3/16.
  */
-public class MCQAnswersDetails extends SugarRecord{
+public class MCQAnswersDetails extends SugarRecord {
 
     public int question_id;
     public String status; /*correct, incorrect, unattempted*/
@@ -42,11 +42,11 @@ public class MCQAnswersDetails extends SugarRecord{
          * hint : false
          * answer : false
          */
-        ArrayList<MCQQuestion> MCQQuestions = JSONUtils.getSequenceQuestionsFromJSONString(context);
-        for (int i = 0; i < MCQQuestions.size(); i++) {
-            int question_id = MCQQuestions.get(i).question_id;
-            MCQAnswersDetails MCQAnswersDetails = new MCQAnswersDetails(question_id, Constants.UNATTEMPTED, false, false, false);
-            MCQAnswersDetails.save();
+        ArrayList<MCQQuestion> mMCQQuestions = JSONUtils.getSequenceQuestionsFromJSONString(context);
+        for (int i = 0; i < mMCQQuestions.size(); i++) {
+            int question_id = mMCQQuestions.get(i).question_id;
+            MCQAnswersDetails mMCQAnswersDetail = new MCQAnswersDetails(question_id, Constants.UNATTEMPTED, false, false, false);
+            mMCQAnswersDetail.save();
         }
     }
 }
