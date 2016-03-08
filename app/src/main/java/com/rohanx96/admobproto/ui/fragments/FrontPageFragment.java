@@ -13,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
+import com.rohanx96.admobproto.ui.MainActivity;
 import com.rohanx96.admobproto.ui.NumberLineActivity;
 
 import butterknife.Bind;
@@ -89,14 +90,6 @@ public class FrontPageFragment extends Fragment {
         gameSeekBar.setProgress(0);
         gameType1.performClick();
 
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent questionsActivity = new Intent(getActivity(), NumberLineActivity.class);
-                startActivity(questionsActivity);
-            }
-        });
-
         return rootView;
     }
 
@@ -172,5 +165,13 @@ public class FrontPageFragment extends Fragment {
             default:
                 return;
         }
+    }
+
+    @OnClick(R.id.home_play)
+    public void playGame() {
+        Intent questionsActivity = new Intent(getActivity(), NumberLineActivity.class);
+        startActivity(questionsActivity);
+        // This will stop the falling drawables animation when the activity has been left. Improves performance
+        ((MainActivity)getActivity()).getFallingDrawables().stopAnimation();
     }
 }

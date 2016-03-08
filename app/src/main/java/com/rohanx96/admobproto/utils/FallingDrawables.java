@@ -31,6 +31,7 @@ public class FallingDrawables {
     private int mWindowWidth;
     private Handler mainThread;
     private Thread workerThread;
+
     private boolean isRunning = false;
 
     public FallingDrawables(Context context, ViewGroup view) {
@@ -61,7 +62,7 @@ public class FallingDrawables {
                     }
                     if (count%7 == 0){
                         final ValueAnimator colorAnimation = ValueAnimator.ofObject
-                                (new ArgbEvaluator(),getBackgoundColor(colorChange,mContext), getBackgoundColor(colorChange + 1,mContext));
+                                (new ArgbEvaluator(), getBackgroundColor(colorChange, mContext), getBackgroundColor(colorChange + 1, mContext));
                         colorAnimation.setDuration(4000);
                         colorChange++;
                         if (colorChange == NO_OF_COLORS)
@@ -191,7 +192,7 @@ public class FallingDrawables {
         }
     }
 
-    public static int getBackgoundColor(int count, Context mContext){
+    public static int getBackgroundColor(int count, Context mContext){
         switch (count){
             case 0:
                 return  mContext.getResources().getColor(R.color.blue_d_ebony_clay);
@@ -231,9 +232,22 @@ public class FallingDrawables {
             case 5:
                 return context.getResources().getColor(R.color.green_d_sea);
             case 6:
-                return context.getResources().getColor(R.color.yellow_l_lightning);
+                return context.getResources().getColor(R.color.orange_l_crusta);
             default:
                 return context.getResources().getColor(R.color.blue_l_steel_blue);
         }
+    }
+
+    /** The isRunning boolean is set to false. This causes the animation to stop as it checks this value in every iteration */
+    public void stopAnimation(){
+        isRunning = false;
+    }
+
+    public void setIsRunning(boolean isRunning) {
+        this.isRunning = isRunning;
+    }
+
+    public boolean getIsRunning(){
+        return isRunning;
     }
 }

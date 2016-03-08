@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
+import com.rohanx96.admobproto.ui.NumberLineActivity;
 import com.rohanx96.admobproto.ui.QuestionsActivity;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.MCQAnswersDetails;
@@ -20,11 +21,11 @@ import java.util.ArrayList;
  */
 public class NumberLineAdapter extends BaseAdapter {
 
-    Context context;
+    NumberLineActivity context; //Always used in this activity so we can set the context as NumberLineActivity.
     ArrayList<MCQAnswersDetails> MCQAnswersDetails;
     LayoutInflater inflater;
 
-    public NumberLineAdapter(Context context, ArrayList<MCQAnswersDetails> MCQAnswersDetails) {
+    public NumberLineAdapter(NumberLineActivity context, ArrayList<MCQAnswersDetails> MCQAnswersDetails) {
         this.context = context;
         this.MCQAnswersDetails = MCQAnswersDetails;
         this.MCQAnswersDetails.add(0, new MCQAnswersDetails(-1, Constants.CORRECT, false, false, false));
@@ -96,6 +97,7 @@ public class NumberLineAdapter extends BaseAdapter {
                 intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, (position - 1));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
+                context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
             }
         });
 
