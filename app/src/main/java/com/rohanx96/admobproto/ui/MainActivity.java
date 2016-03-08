@@ -19,6 +19,8 @@ import com.rohanx96.admobproto.elements.MCQAnswersDetails;
 import com.rohanx96.admobproto.utils.Constants;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import butterknife.ButterKnife;
+
 public class MainActivity extends FragmentActivity {
 
     private static final int NUM_PAGES = 2;
@@ -29,12 +31,14 @@ public class MainActivity extends FragmentActivity {
     private PagerAdapter mPagerAdapter;
 
     CirclePageIndicator circlePageIndicator;
+
     FallingDrawables fallingDrawables;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         onFirstRun();
         mContainer = (FrameLayout) findViewById(R.id.main_activity_container);
         // Instantiate a ViewPager and a PagerAdapter.
@@ -51,13 +55,17 @@ public class MainActivity extends FragmentActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         fallingDrawables = new FallingDrawables(this, mContainer);
-        fallingDrawables.createAnimation();
-        fallingDrawables.setmDrawablesInRow();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        // This is not done in OnCreate because the animation is stopped whenever the activity is left.
+        // So we need to restart the animation when activity resumes
+        if (!fallingDrawables.getIsRunning()) {
+            fallingDrawables.createAnimation();
+            fallingDrawables.setmDrawablesInRow();
+        }
     }
 
     @Override
@@ -96,7 +104,11 @@ public class MainActivity extends FragmentActivity {
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
         if (prefs.getBoolean(Constants.FIRST_RUN, true)) {
             MCQAnswersDetails.initializeDatabase(getApplicationContext());
-            prefs.edit().putBoolean(Constants.FIRST_RUN, false).commit();
+            prefs.edit().putBoolean(Constants.FIRST_RUN, false).apply();
         }
+    }
+
+    public FallingDrawables getFallingDrawables() {
+        return fallingDrawables;
     }
 }

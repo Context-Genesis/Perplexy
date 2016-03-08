@@ -13,8 +13,8 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="horizontal">
 
@@ -35,6 +35,35 @@
             android:textColor="#FFF"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/questions_activity_coin_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/questions_activity_coin_image"
+            android:layout_alignEnd="@+id/questions_activity_coin_image"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/white_oval"
+            android:gravity="center_vertical"
+            android:paddingEnd="35dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="35dp"
+            android:paddingStart="8dp"
+            android:text="500"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/questions_activity_coin_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/coin" />
 
     </RelativeLayout>
 

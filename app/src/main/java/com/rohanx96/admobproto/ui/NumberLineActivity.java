@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class NumberLineActivity extends AppCompatActivity {
     private View mContainer;
     private int mTimeCount = 0;
-    private boolean shouldRunAnimation = true;
+    private boolean isAnimationRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class NumberLineActivity extends AppCompatActivity {
         ArrayList<MCQAnswersDetails> mMCQAnswersDetails = (ArrayList<MCQAnswersDetails>) MCQAnswersDetails.listAll(MCQAnswersDetails.class);
 
         mContainer = findViewById(R.id.activity_number_line_container);
-        NumberLineAdapter numberLineAdapter = new NumberLineAdapter(getApplicationContext(), mMCQAnswersDetails);
+        NumberLineAdapter numberLineAdapter = new NumberLineAdapter(this, mMCQAnswersDetails);
         ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
         listView.setAdapter(numberLineAdapter);
     }
@@ -50,44 +50,52 @@ public class NumberLineActivity extends AppCompatActivity {
             actionBar.hide();
         }
         /** Change color of background after 7 seconds */
-        Thread animationThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Handler handler = new Handler(Looper.getMainLooper());
-                while (shouldRunAnimation) {
-                    // sleep the thread to stop the while loop for 7 seconds
-                    try {
-                        Thread.sleep(7000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+        if (!isAnimationRunning) {
+            Thread animationThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    isAnimationRunning = true;
+                    final Handler handler = new Handler(Looper.getMainLooper());
+                    while (isAnimationRunning) {
+                        // sleep the thread to stop the while loop for 7 seconds
+                        try {
+                            Thread.sleep(7000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        final ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
+                                FallingDrawables.getBackgroundColor(mTimeCount, getApplicationContext()),
+                                FallingDrawables.getBackgroundColor(mTimeCount + 1, getApplicationContext()));
+                        colorAnimator.setDuration(4000);
+                        mTimeCount++;
+                        if (mTimeCount == FallingDrawables.NO_OF_COLORS)
+                            mTimeCount = 0;
+                        colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(final ValueAnimator animation) {
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mContainer.setBackgroundColor((int) animation.getAnimatedValue());
+                                    }
+                                });
+                            }
+                        });
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                colorAnimator.start();
+                            }
+                        });
                     }
-                    final ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
-                            FallingDrawables.getBackgoundColor(mTimeCount, getApplicationContext()),
-                            FallingDrawables.getBackgoundColor(mTimeCount + 1, getApplicationContext()));
-                    colorAnimator.setDuration(4000);
-                    mTimeCount++;
-                    if (mTimeCount == FallingDrawables.NO_OF_COLORS)
-                        mTimeCount = 0;
-                    colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(final ValueAnimator animation) {
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mContainer.setBackgroundColor((int) animation.getAnimatedValue());
-                                }
-                            });
-                        }
-                    });
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            colorAnimator.start();
-                        }
-                    });
                 }
-            }
-        });
-        animationThread.start();
+            });
+            animationThread.start();
+        }
     }
+
+    public void setAnimationRunning(boolean animationRunning) {
+        this.isAnimationRunning = animationRunning;
+    }
+
 }
