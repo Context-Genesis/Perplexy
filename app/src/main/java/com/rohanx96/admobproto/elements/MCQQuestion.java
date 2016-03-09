@@ -9,7 +9,8 @@ import java.io.Serializable;
  * Created by rish on 8/3/16.
  */
 public class MCQQuestion implements Serializable {
-
+    // Define final static layout types here
+    // Define states for input field type
     public int question_id, answeroption;
     public String question, hint, message;
     public transient JSONArray options;

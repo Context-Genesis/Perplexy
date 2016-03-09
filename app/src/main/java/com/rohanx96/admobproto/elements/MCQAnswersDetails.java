@@ -12,10 +12,13 @@ import java.util.ArrayList;
  * Created by rish on 8/3/16.
  */
 public class MCQAnswersDetails extends SugarRecord {
-
-    public int question_id;
-    public String status; /*correct, incorrect, unattempted*/
-    public boolean lock, hint_display, answer_display;
+    // make getter setters
+    // Define state constants here
+    public int question_id; // question no , type (int) remove id
+    public String status; /*correct, incorrect, available, unavailable (int)*/
+    public boolean  lock, //remove lock
+            hint_display, answer_display;
+    //no_incorrect (int)
 
     public MCQAnswersDetails() {
     }
