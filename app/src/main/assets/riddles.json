@@ -1,0 +1,44 @@
+{
+  "questions": [
+    {
+      "question_id": 1,
+      "question": "The answer is riddle, okay?",
+      "answer": "riddle",
+      "answeroptions": "riddleqwerty",
+      "hint": "Perplexed",
+      "message": "This is an easy one"
+    },
+    {
+      "question_id": 2,
+      "question": "The answer is okay, okay?",
+      "answer": "okay",
+      "answeroptions": "answerqwerty",
+      "hint": "Perplexed",
+      "message": "This is an easy one"
+    },
+    {
+      "question_id": 3,
+      "question": "The answer is rish",
+      "answer": "rish",
+      "answeroptions": "rishleqwerty",
+      "hint": "Perplexed",
+      "message": "This is an easy one"
+    },
+    {
+      "question_id": 4,
+      "question": "Rohan whats your name?",
+      "answer": "rohan",
+      "answeroptions": "rohanaqwerty",
+      "hint": "Perplexed",
+      "message": "This is an easy one"
+    },
+    {
+      "question_id": 4,
+      "question": "Where is Bhutani from?",
+      "answer": "dhruvbhutani",
+      "answeroptions": "dhruvbhutani",
+      "hint": "Perplexed",
+      "message": "This is an easy one"
+    }
+  ]
+}

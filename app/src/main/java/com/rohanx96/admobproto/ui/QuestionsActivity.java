@@ -3,7 +3,6 @@ package com.rohanx96.admobproto.ui;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,14 +11,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
-import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +40,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private final int NO_OF_COLORS = 7;
     private ImageView character;
     private int mCurrentPage;
+    private boolean isCharacterDialogOpen =false;
 
     @Bind(R.id.questions_activity_level)
     TextView tvLevel;
@@ -232,21 +231,25 @@ public class QuestionsActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_UP:
                         character.clearAnimation();
                         character.animate().scaleX(1.0f).scaleY(1.0f).setDuration(300).start();
-                        /*
-                        View characterDialog = LayoutInflater.from(getApplicationContext()).inflate(R.layout.character_click_dialog,null);
-                        characterDialog.setX(character.getX());
-                        characterDialog.setY(character.getY());
-                        characterDialog.setScaleX(0.1f);
-                        characterDialog.setScaleY(0.1f);
-                        mContainer.addView(characterDialog);
-                        characterDialog.animate().scaleX(1.0f).scaleY(1.0f).translationX((-1*characterDialog.getWidth())/2)
-                        .translationY(characterDialog.getHeight()).setDuration(500).start();*/
-                        View characterDialog = findViewById(R.id.questions_activity_character_dialog);
-                        characterDialog.setScaleX(0.1f);
-                        characterDialog.setScaleY(0.1f);
-                        characterDialog.setVisibility(View.VISIBLE);
-                        characterDialog.animate().scaleX(1.0f).scaleY(1.0f).setDuration(500).start();
-                        //new DialogSpeakingMan(QuestionsActivity.this).show();
+                        View characterDialog;
+                        if (!isCharacterDialogOpen) {
+                            characterDialog = findViewById(R.id.questions_activity_character_dialog);
+                            ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
+                            scaleAnimation.setDuration(500);
+                            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                            characterDialog.setVisibility(View.VISIBLE);
+                            characterDialog.startAnimation(scaleAnimation);
+                            toggleIsCharacterDialogOpen();
+                        }
+                        else {
+                            characterDialog = findViewById(R.id.questions_activity_character_dialog);
+                            ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
+                            scaleAnimation.setDuration(500);
+                            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                            characterDialog.setVisibility(View.GONE);
+                            characterDialog.startAnimation(scaleAnimation);
+                            toggleIsCharacterDialogOpen();
+                        }
                 }
                 return true;
             }
@@ -298,7 +301,7 @@ public class QuestionsActivity extends AppCompatActivity {
                 showhint.setVisibility(View.VISIBLE);
 
                 showhiddenhint.setVisibility(View.INVISIBLE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.together);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
                 showhiddenhint.startAnimation(in);
                 showhiddenhint.setVisibility(View.VISIBLE);
                 showhiddenhint.startAnimation(in);
@@ -340,7 +343,7 @@ public class QuestionsActivity extends AppCompatActivity {
                 showsolution.setVisibility(View.VISIBLE);
 
                 showhiddensolution.setVisibility(View.INVISIBLE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.together);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
                 showhiddensolution.startAnimation(in);
                 showhiddensolution.setVisibility(View.VISIBLE);
                 showhiddensolution.startAnimation(in);
@@ -381,7 +384,7 @@ public class QuestionsActivity extends AppCompatActivity {
                 skipquestion.setVisibility(View.VISIBLE);
 
                 showhiddenskip.setVisibility(View.INVISIBLE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.together);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
                 showhiddenskip.startAnimation(in);
                 showhiddenskip.setVisibility(View.VISIBLE);
                 showhiddenskip.startAnimation(in);
@@ -397,5 +400,9 @@ public class QuestionsActivity extends AppCompatActivity {
                 skipquestion.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    public void toggleIsCharacterDialogOpen(){
+        isCharacterDialogOpen = !isCharacterDialogOpen;
     }
 }
