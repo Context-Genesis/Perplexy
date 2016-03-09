@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/center_of_screen"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="16dp"
         android:layout_centerInParent="true" />
 
     <TextView
@@ -23,8 +23,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/center_of_screen"
-        android:paddingTop="5dp">
+        android:layout_alignTop="@id/center_of_screen">
         <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,10 +38,9 @@
                 android:layout_gravity="center"
                 android:layout_row="0"
                 android:gravity="center"
-                android:padding="8dp"
                 android:text="COINS   500"
                 android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/white" />
 
             <TextView
                 android:layout_column="0"
@@ -50,10 +48,10 @@
                 android:layout_row="1"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:padding="8dp"
                 android:text="EARNED\n700"
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/colorPrimary" />
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:textColor="@color/colorTextSecondary" />
 
             <TextView
                 android:layout_column="1"
@@ -61,10 +59,10 @@
                 android:layout_row="1"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:padding="8dp"
                 android:text="SPENT\n200"
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/colorPrimary" />
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:textColor="@color/colorTextSecondary" />
 
             <TextView
                 android:layout_column="0"
@@ -76,17 +74,21 @@
                 android:layout_marginTop="16dp"
                 android:text="ANSWERED   500"
                 android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/orange_d_zest" />
+                android:textColor="@color/white" />
             <TextView
                 android:layout_column="0"
                 android:layout_columnSpan="1"
                 android:layout_row="3"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:padding="8dp"
                 android:text="CORRECT\n300"
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/orange_d_zest" />
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
+                android:paddingRight="16dp"
+                android:paddingEnd="16dp"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:textColor="@color/colorTextSecondary" />
 
             <TextView
                 android:layout_column="1"
@@ -94,21 +96,48 @@
                 android:layout_row="3"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:padding="8dp"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:paddingRight="8dp"
+                android:paddingEnd="8dp"
                 android:text="INCORRECT\n200"
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/orange_d_zest" />
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:textColor="@color/colorTextSecondary" />
             <TextView
                 android:layout_column="0"
                 android:layout_columnSpan="2"
                 android:layout_gravity="center"
                 android:layout_row="4"
                 android:gravity="center"
-                android:padding="8dp"
                 android:layout_marginTop="16dp"
                 android:text="ACCURACY   60%"
                 android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/blue_l_lynch" />
+                android:textColor="@color/white" />
+            <TextView
+                android:layout_column="0"
+                android:layout_columnSpan="2"
+                android:layout_gravity="center"
+                android:layout_row="5"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="AVERAGE TIME"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                android:textColor="@color/white" />
+            <TextView
+                android:layout_column="0"
+                android:layout_columnSpan="2"
+                android:layout_row="6"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:paddingRight="8dp"
+                android:paddingEnd="8dp"
+                android:text="2 minutes 30 seconds"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:textColor="@color/colorTextSecondary" />
         </GridLayout>
     </ScrollView>
 </RelativeLayout>
