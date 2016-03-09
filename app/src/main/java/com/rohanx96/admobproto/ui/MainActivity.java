@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.rohanx96.admobproto.elements.WordAnswerDetails;
+import com.rohanx96.admobproto.ui.fragments.SettingsFragment;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.ui.fragments.FrontPageFragment;
 import com.rohanx96.admobproto.R;
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends FragmentActivity {
 
-    private static final int NUM_PAGES = 2;
+    private static final int NUM_PAGES = 3;
 
     private ViewPager mPager;
     private FrameLayout mContainer;
@@ -47,6 +48,7 @@ public class MainActivity extends FragmentActivity {
         circlePageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
         mPager.setAdapter(mPagerAdapter);
         circlePageIndicator.setViewPager(mPager);
+        mPager.setCurrentItem(1,false);
         mContainer.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -70,10 +72,18 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        if (mPager.getCurrentItem() == 0) {
-            super.onBackPressed();
-        } else {
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+        switch (mPager.getCurrentItem()){
+            case 0:
+                mPager.setCurrentItem(1,true);
+                return;
+            case 1:
+                super.onBackPressed();
+                return;
+            case 2:
+                mPager.setCurrentItem(1,true);
+                return;
+            default:
+                return;
         }
     }
 
@@ -84,10 +94,16 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0)
-                return new FrontPageFragment();
-
-            return new StatisticsFragment();
+            switch (position) {
+                case 0:
+                    return new SettingsFragment();
+                case 1:
+                    return new FrontPageFragment();
+                case 2:
+                    return new StatisticsFragment();
+                default:
+                    return new FrontPageFragment();
+            }
         }
 
         @Override
@@ -105,7 +121,7 @@ public class MainActivity extends FragmentActivity {
         if (prefs.getBoolean(Constants.FIRST_RUN, true)) {
             MCQAnswersDetails.initializeDatabase(getApplicationContext());
             WordAnswerDetails.initializeDatabase(getApplicationContext());
-            prefs.edit().putBoolean(Constants.FIRST_RUN, false).commit();
+            prefs.edit().putBoolean(Constants.FIRST_RUN, false).apply();
         }
     }
 
