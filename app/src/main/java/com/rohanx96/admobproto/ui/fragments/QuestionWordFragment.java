@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -50,6 +51,8 @@ public class QuestionWordFragment extends Fragment {
 
     String answer, answerOptions;
 
+    int BLANK_CIRCLE_SIZE;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.question_word_card, container, false);
@@ -63,6 +66,8 @@ public class QuestionWordFragment extends Fragment {
 
         answer = wordQuestion.answer;
         answerOptions = wordQuestion.answerOptions;
+
+        BLANK_CIRCLE_SIZE = getBlankCircleSize();
 
         setUpJumbledCharacters();
 
@@ -191,7 +196,7 @@ public class QuestionWordFragment extends Fragment {
         answerTV.setTextSize(25);
         answerTV.setTextColor(Color.BLACK);
         answerTV.setBackgroundResource(R.drawable.circle_border);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(65, 65);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(BLANK_CIRCLE_SIZE, BLANK_CIRCLE_SIZE);
         layoutParams.setMargins(2, 2, 2, 2);
         answerTV.setLayoutParams(layoutParams);
         answerTV.setGravity(Gravity.CENTER);
@@ -210,7 +215,7 @@ public class QuestionWordFragment extends Fragment {
 //        GradientDrawable gradientDrawable = (GradientDrawable) answerTV.getBackground();
 //        gradientDrawable.setColor(Color.BLUE);
 //        answerTV.setBackground(gradientDrawable);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(65, 65);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(BLANK_CIRCLE_SIZE, BLANK_CIRCLE_SIZE);
         layoutParams.setMargins(2, 2, 2, 2);
         answerTV.setLayoutParams(layoutParams);
         answerTV.setGravity(Gravity.CENTER);
@@ -224,6 +229,13 @@ public class QuestionWordFragment extends Fragment {
         display.getSize(size);
         int width = size.x;
 
-        return width / 10;
+        answerRow.getWidth();
+        if (answerRow.getWidth() != 0) {
+            Log.d("TAG", "Size of the blank is ar " + answerRow.getWidth() / 8);
+            return answerRow.getWidth() / 8;
+        } else {
+            Log.d("TAG", "Size of the blank is sw " + width / 10);
+            return width / 10;
+        }
     }
 }

@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class NumberLineAdapter extends BaseAdapter {
 
-    NumberLineActivity context; //Always used in this activity so we can set the context as NumberLineActivity.
+    NumberLineActivity context;
     ArrayList<MCQAnswersDetails> MCQAnswersDetails;
     LayoutInflater inflater;
 

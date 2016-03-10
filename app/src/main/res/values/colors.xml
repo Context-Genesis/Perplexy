@@ -3,8 +3,8 @@
     <color name="colorPrimary">@color/yellow_l_lightning</color>
     <color name="colorPrimaryDark">@color/yellow_d_buttercup</color>
     <color name="colorAccent">@color/yellow_d_buttercup</color>
-    <color name="colorTextPrimary">#FFFFFF</color>
-    <color name="colorTextSecondary">#DDDDDD</color>
+    <color name="colorTextPrimary">#ddFFFFFF</color>
+    <color name="colorTextSecondary">#88ffffff</color>
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="black_overlay">#66000000</color>
     <color name="blue">#2980b9</color>
@@ -44,4 +44,5 @@
     <color name="red_d_pomegranate">#c0392b</color>
     <color name="first_background_color">@color/blue_d_ebony_clay</color>
     <color name="first_light_background_color">@color/blue_l_steel_blue</color>
+    <color name="purple_a_l_material">#7C4DFF</color>
 </resources>

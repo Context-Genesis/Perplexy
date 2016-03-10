@@ -1,39 +1,152 @@
-{
-	"questions": [{
-		"question_id" : 1,
-		"question": "The answer is riddle, okay?",
-		"answer": "riddle",
-		"answeroptions": "riddleqwerty",
-		"hint": "Perplexed",
-		"message": "This is an easy one"
-	},{
-		"question_id" : 2,
-		"question": "The answer is okay, okay?",
-		"answer": "okay",
-		"answeroptions": "answerqwerty",
-		"hint": "Perplexed",
-		"message": "This is an easy one"
-	},{
-		"question_id" : 3,
-		"question": "The answer is rish",
-		"answer": "rish",
-		"answeroptions": "rishleqwerty",
-		"hint": "Perplexed",
-		"message": "This is an easy one"
-	},{
-		"question_id" : 4,
-		"question": "Rohan whats your name?",
-		"answer": "rohan",
-		"answeroptions": "rohanaqwerty",
-		"hint": "Perplexed",
-		"message": "This is an easy one"
-	},{
-		"question_id" : 4,
-		"question": "Where is Bhutani from?",
-		"answer": "dhruvbhutani",
-		"answeroptions": "dhruvbhutani",
-		"hint": "Perplexed",
-		"message": "This is an easy one"
+[	
+	{
+		"questionnum" : 1 ,
+		"questionname" : "Pick the awesome one" ,
+		"category" : "riddle",
+		"hint" : "no hint baby",
+		"answer" : "a",
+		"explanation" : "For obvious reason",
+		"message" : "Hello, from the other side",
+		"padcharacters" : "RAJNFNN",
+		"options": [
+				{
+					"choice": "Dhruv"
+				},
+				{
+					"choice": "Rohan"
+				},
+				{
+					"choice": "Rishabh"
+				},
+				{
+					"choice": "All of the above"
+				}
+			],
+		"layout" : 0
+	},
+	{
+		"questionnum" : 2 ,
+		"questionname" : "Aviral is a __ boy" ,
+		"category" : "riddle",
+		"hint" : "Think more on this",
+		"answer" : "b",
+		"explanation" : "no",
+		"message" : "Its too late to apologize",
+		"padcharacters" : "DAFGEBAD",
+		"options": [
+				{
+					"choice": "happy"
+				},
+				{
+					"choice": "good"
+				},
+				{
+					"choice": "bad"
+				},
+				{
+					"choice": "sad"
+				}
+			],
+		"layout" : 0
+	},
+	{
+		"questionnum" : 3 ,
+		"questionname" : "Gauri is a __ boy" ,
+		"category" : "riddle",
+		"hint" : "Think more on this",
+		"answer" : "b",
+		"explanation" : "no",
+		"message" : "Its too late to apologize",
+		"padcharacters" : "DAFGEBAD",
+		"options": [
+				{
+					"choice": "happy"
+				},
+				{
+					"choice": "good"
+				},
+				{
+					"choice": "bad"
+				},
+				{
+					"choice": "sad"
+				}
+			],
+		"layout" : 0
+	},
+	{
+		"questionnum" : 4 ,
+		"questionname" : "Dhruv is a __ boy" ,
+		"category" : "riddle",
+		"hint" : "Think more on this",
+		"answer" : "b",
+		"explanation" : "no",
+		"message" : "Its too late to apologize",
+		"padcharacters" : "DAFGEBAD",
+		"options": [
+				{
+					"choice": "happy"
+				},
+				{
+					"choice": "good"
+				},
+				{
+					"choice": "bad"
+				},
+				{
+					"choice": "sad"
+				}
+			],
+		"layout" : 0
+	},
+	{
+		"questionnum" : 5 ,
+		"questionname" : "Aviral is a __ boy" ,
+		"category" : "riddle",
+		"hint" : "Think more on this",
+		"answer" : "b",
+		"explanation" : "no",
+		"message" : "Its too late to apologize",
+		"padcharacters" : "DAFGEBAD",
+		"options": [
+				{
+					"choice": "happy"
+				},
+				{
+					"choice": "good"
+				},
+				{
+					"choice": "bad"
+				},
+				{
+					"choice": "sad"
+				}
+			],
+		"layout" : 0
+	},
+	{
+		"questionnum" : 6 ,
+		"questionname" : "Aviral is a __ boy" ,
+		"category" : "riddle",
+		"hint" : "Think more on this",
+		"answer" : "b",
+		"explanation" : "no",
+		"message" : "Its too late to apologize",
+		"padcharacters" : "DAFGEBAD",
+		"options": [
+				{
+					"choice": "happy"
+				},
+				{
+					"choice": "good"
+				},
+				{
+					"choice": "bad"
+				},
+				{
+					"choice": "sad"
+				}
+			],
+		"layout" : 0
 	}
-	]
-}
+]

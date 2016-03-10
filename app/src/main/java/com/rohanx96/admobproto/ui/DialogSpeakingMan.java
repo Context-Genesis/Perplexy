@@ -63,7 +63,7 @@ public class DialogSpeakingMan extends Dialog {
                 showhint.setVisibility(View.VISIBLE);
 
                 showhiddenhint.setVisibility(View.INVISIBLE);
-                Animation in = AnimationUtils.loadAnimation(getContext(), R.anim.together);
+                Animation in = AnimationUtils.loadAnimation(getContext(), R.anim.scale_y_downards);
                 showhiddenhint.startAnimation(in);
                 showhiddenhint.setVisibility(View.VISIBLE);
                 showhiddenhint.startAnimation(in);
@@ -105,7 +105,7 @@ public class DialogSpeakingMan extends Dialog {
                 showsolution.setVisibility(View.VISIBLE);
 
                 showhiddensolution.setVisibility(View.INVISIBLE);
-                Animation in = AnimationUtils.loadAnimation(getContext(), R.anim.together);
+                Animation in = AnimationUtils.loadAnimation(getContext(), R.anim.scale_y_downards);
                 showhiddensolution.startAnimation(in);
                 showhiddensolution.setVisibility(View.VISIBLE);
                 showhiddensolution.startAnimation(in);
@@ -146,7 +146,7 @@ public class DialogSpeakingMan extends Dialog {
                 skipquestion.setVisibility(View.VISIBLE);
 
                 showhiddenskip.setVisibility(View.INVISIBLE);
-                Animation in = AnimationUtils.loadAnimation(getContext(), R.anim.together);
+                Animation in = AnimationUtils.loadAnimation(getContext(), R.anim.scale_y_downards);
                 showhiddenskip.startAnimation(in);
                 showhiddenskip.setVisibility(View.VISIBLE);
                 showhiddenskip.startAnimation(in);
