@@ -7,15 +7,60 @@
     android:background="@color/first_background_color"
     tools:context="com.example.bhutanidhruv16.logic.NumberLine">
 
+    <ImageView
+        android:id="@+id/activity_number_line_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:padding="5dp"
+        android:src="@drawable/back"
+        android:contentDescription="Back"/>
+
     <TextView
         android:id="@+id/activity_number_line_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/activity_number_line_back"
+        android:layout_alignTop="@id/activity_number_line_back"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/app_name"
-        android:textColor="@color/white"
+        android:text="Level 10"
+        android:textColor="#FFF"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/activity_coin_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/activity_coin_image"
+        android:layout_alignBottom="@id/activity_number_line_back"
+        android:layout_alignEnd="@+id/activity_coin_image"
+        android:layout_alignRight="@+id/activity_coin_image"
+        android:layout_alignTop="@id/activity_number_line_back"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/white_oval"
+        android:gravity="center_vertical"
+        android:paddingEnd="35dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="35dp"
+        android:paddingStart="8dp"
+        android:text="500"
+        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/activity_coin_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/coin" />
 
     <ListView
         android:id="@+id/activity_number_line_listview"

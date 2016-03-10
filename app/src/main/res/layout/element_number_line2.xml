@@ -27,7 +27,7 @@
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/l2_textView3"
             android:layout_toRightOf="@+id/l2_textView3"
-            android:background="@drawable/round_button"
+            android:background="@drawable/circle_question_number_available"
             android:padding="5dp"
             android:layout_marginLeft="3dp"
             android:text="1"

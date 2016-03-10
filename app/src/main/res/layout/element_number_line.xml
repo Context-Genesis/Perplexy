@@ -24,7 +24,7 @@
             android:id="@+id/tv_1"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/round_button"
+            android:background="@drawable/circle_question_number_available"
             android:padding="5dp"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/l1_textView3"
