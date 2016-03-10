@@ -2,6 +2,7 @@ package com.rohanx96.admobproto.ui.fragments;
 
 import android.graphics.Color;
 import android.graphics.Point;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -12,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rey.material.widget.FrameLayout;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
@@ -38,7 +41,7 @@ public class QuestionTextBoxFragment extends Fragment {
 
     int POSITION = -1;
     int CATEGORY;
-
+    FrameLayout container;
     @Bind(R.id.qcard_textbox_question)
     TextView tvQuestion;
 
@@ -62,17 +65,16 @@ public class QuestionTextBoxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.question_textbox_card, container, false);
         ButterKnife.bind(this, rootView);
-
+        //this.container = (FrameLayout) rootView.findViewById(R.id.question_card_container);
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
-
-        GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION);
+        GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION -1);
         tvQuestion.setText(genericQuestion.question);
 
         answer = genericQuestion.answer;
+        //lockQuestionIfRequired();
         answerPadCharacters = genericQuestion.pad_characters;
-
         BLANK_CIRCLE_SIZE = getBlankCircleSize();
 
         setUpJumbledCharacters();
@@ -139,7 +141,7 @@ public class QuestionTextBoxFragment extends Fragment {
                 public void onClick(View v) {
                     addThisCharacterToEditText(m);
                     setUpBlanksAndRows();
-                    isAnsweredCorrectly();
+                    // isAnsweredCorrectly();
                 }
             });
 
@@ -155,7 +157,7 @@ public class QuestionTextBoxFragment extends Fragment {
                 public void onClick(View v) {
                     addThisCharacterToEditText(m);
                     setUpBlanksAndRows();
-                    isAnsweredCorrectly();
+                    //isAnsweredCorrectly();
                 }
             });
 
@@ -174,6 +176,7 @@ public class QuestionTextBoxFragment extends Fragment {
             Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
             return true;
         } else {
+            GenericAnswerDetails.updateStatus(POSITION,CATEGORY,Constants.INCORRECT);
             return false;
         }
     }
@@ -211,4 +214,6 @@ public class QuestionTextBoxFragment extends Fragment {
             return width / 10;
         }
     }
+
+
 }

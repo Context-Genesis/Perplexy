@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/question_card_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorTransparent">
@@ -139,6 +140,16 @@
                 android:scaleType="center"
                 android:src="@drawable/lock_flat"
                 android:visibility="gone" />
+            <ImageView
+                android:id="@+id/lock_options_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/textAreaScroller"
+                android:layout_marginTop="80dp"
+                android:background="@drawable/button_background"
+                android:scaleType="center"
+                android:src="@drawable/lock_flat"
+                android:visibility="gone"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </FrameLayout>

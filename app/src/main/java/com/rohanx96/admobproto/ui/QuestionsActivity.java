@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.rey.material.widget.FrameLayout;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
@@ -86,6 +88,7 @@ public class QuestionsActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 //See note above for why this is needed
+                lockQuestionIfRequired();
                 ValueAnimator colorAnimator;
                 colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(),
                         FallingDrawables.getLightBackgroundColor(mCurrentPage % NO_OF_COLORS, QuestionsActivity.this),
@@ -141,7 +144,7 @@ public class QuestionsActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
-            bundle.putInt(Constants.BUNDLE_QUESTION_NUMBER, position);
+            bundle.putInt(Constants.BUNDLE_QUESTION_NUMBER, position + 1); // The question number is position + 1
             bundle.putInt(Constants.BUNDLE_QUESTION_CATEGORY, CATEGORY);
 
             if (JSONUtils.getQuestionAt(getApplicationContext(), CATEGORY, position).layout_type == 0) {
@@ -450,5 +453,29 @@ public class QuestionsActivity extends AppCompatActivity {
 
     public void toggleIsCharacterDialogOpen() {
         isCharacterDialogOpen = !isCharacterDialogOpen;
+    }
+
+    public void lockQuestionIfRequired(){
+        // TODO: Hide character when question is locked
+        //Log.i("question ", answer);
+        //Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION,CATEGORY));
+        switch (GenericAnswerDetails.getStatus(mCurrentPage + 1,CATEGORY)){
+            case Constants.UNAVAILABLE:
+                Log.i("textcard","unavailable");
+                ImageView lock = (ImageView) findViewById(R.id.lock_full_image);
+                lock.setVisibility(View.VISIBLE);
+                /*ImageView lock = new ImageView(getActivity());
+                FrameLayout.LayoutParams layoutParams = new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                        , ViewGroup.LayoutParams.MATCH_PARENT);
+                lock.setLayoutParams(layoutParams);
+                lock.setImageResource(R.drawable.lock_flat);
+                lock.setScaleType(ImageView.ScaleType.CENTER);
+                container.addView(lock);*/
+                break;
+            case Constants.INCORRECT:
+                ImageView options_lock = (ImageView) findViewById(R.id.lock_options_image);
+                options_lock.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }
