@@ -89,12 +89,12 @@ public class NumberLineAdapter extends BaseAdapter {
          */
         // Text and click listeners are not set for number line arrows
         if (position != 0 && position != answerDetails.size() - 1) {
-            holder.tv.setText(" " + getItem(position).question_number + " ");
+            holder.tv.setText(" " + getItem(position).questionNumber + " ");
             holder.tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, QuestionsActivity.class);
-                    intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, getItem(position).question_number);
+                    intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, getItem(position).questionNumber);
                     intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
@@ -153,7 +153,7 @@ public class NumberLineAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, QuestionsActivity.class);
-                        intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, getItem(position).question_number);
+                        intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, getItem(position).questionNumber);
                         intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
@@ -174,7 +174,7 @@ public class NumberLineAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, QuestionsActivity.class);
-                        intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, getItem(position).question_number);
+                        intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, getItem(position).questionNumber);
                         intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);

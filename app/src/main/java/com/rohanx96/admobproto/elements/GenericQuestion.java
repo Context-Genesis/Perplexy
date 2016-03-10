@@ -42,7 +42,7 @@ public class GenericQuestion {
         }
 
         return "GenericQuestion{" +
-                "question_number=" + question_number +
+                "questionNumber=" + question_number +
                 ", layout_type=" + layout_type +
                 ", category='" + category + '\'' +
                 ", question='" + question + '\'' +
