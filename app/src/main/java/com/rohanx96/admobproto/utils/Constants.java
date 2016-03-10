@@ -5,22 +5,22 @@ package com.rohanx96.admobproto.utils;
  */
 public class Constants {
 
-    public static String JSON_SEQUENCES_FILE = "sequences.json";
-    public static String JSON_RIDDLES_FILE = "riddles.json";
-    public static String JSON_LOGIC_FILE = "logic.json";
+    public static final String JSON_SEQUENCES_FILE = "sequences.json";
+    public static final String JSON_RIDDLES_FILE = "riddles.json";
+    public static final String JSON_LOGIC_FILE = "logic.json";
 
-    public static String GAME_TYPE_SEQUENCES = "GAME_TYPE_SEQUENCES";
-    public static String GAME_TYPE_RIDDLE = "GAME_TYPE_RIDDLE";
-    public static String GAME_TYPE_LOGIC = "GAME_TYPE_LOGIC";
+    public static final int GAME_TYPE_SEQUENCES = 0;
+    public static final int GAME_TYPE_RIDDLE = 1;
+    public static final int GAME_TYPE_LOGIC = 2;
 
-    public static String CORRECT = "CORRECT";
-    public static String INCORRECT = "INCORRECT";
-    public static String UNAVAILABLE = "UNAVAILABLE";
-    public static String AVAILABLE = "AVAILABLE";
+    public static final int CORRECT = 0;
+    public static final int INCORRECT = 1;
+    public static final int UNAVAILABLE = 2;
+    public static final int AVAILABLE = 3;
 
-    public static String BUNDLE_QUESTION_POSITION = "BUNDLE_QUESTION_POSITION";
-    public static String BUNDLE_QUESTION_CATEGORY = "BUNDLE_QUESTION_CATEGORY";
-    public static String SHARED_PREFERENCES = "SHARED_PREFERENCES";
-    public static String FIRST_RUN = "FIRST_RUN";
+    public static final String BUNDLE_QUESTION_POSITION = "BUNDLE_QUESTION_POSITION";
+    public static final String BUNDLE_QUESTION_CATEGORY = "BUNDLE_QUESTION_CATEGORY";
+    public static final String SHARED_PREFERENCES = "SHARED_PREFERENCES";
+    public static final String FIRST_RUN = "FIRST_RUN";
 
 }

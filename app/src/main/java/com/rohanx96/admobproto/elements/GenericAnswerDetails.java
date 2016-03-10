@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class GenericAnswerDetails extends SugarRecord {
 
     public int question_number;
-    public String category, status; /*correct, incorrect, available, unavailable (int)*/
+    public int category, status; /*correct, incorrect, available, unavailable (int)*/
     public boolean hint_displayed, answer_displayed;
     public int number_incorrect;
 
@@ -24,7 +24,7 @@ public class GenericAnswerDetails extends SugarRecord {
 
     }
 
-    public GenericAnswerDetails(int question_number, String category, String status, boolean hint_displayed, boolean answer_displayed, int number_incorrect) {
+    public GenericAnswerDetails(int question_number, int category, int status, boolean hint_displayed, boolean answer_displayed, int number_incorrect) {
         this.question_number = question_number;
         this.category = category;
         this.status = status;
@@ -56,18 +56,18 @@ public class GenericAnswerDetails extends SugarRecord {
 
         ArrayList<GenericQuestion> allQuestions = new ArrayList<>();
         allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_RIDDLE));
-        /* allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));*/
+        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
         /* allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_LOGIC));*/
 
         for (int i = 0; i < allQuestions.size(); i++) {
             int question_number = allQuestions.get(i).question_number;
-            String category = allQuestions.get(i).category;
+            int category = allQuestions.get(i).category;
             GenericAnswerDetails genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
             genericAnswerDetails.save();
         }
     }
 
-    public static ArrayList<GenericAnswerDetails> listAll(String category) {
+    public static ArrayList<GenericAnswerDetails> listAll(int category) {
         return (ArrayList<GenericAnswerDetails>) Select.from(GenericAnswerDetails.class).where(Condition.prop("category").eq(category)).list();
     }
 

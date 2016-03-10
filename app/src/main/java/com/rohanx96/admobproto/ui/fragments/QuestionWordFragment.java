@@ -34,7 +34,7 @@ import butterknife.OnClick;
 public class QuestionWordFragment extends Fragment {
 
     int POSITION = -1;
-    String CATEGORY = "";
+    int CATEGORY;
 
     @Bind(R.id.qcard_word_question)
     TextView tvQuestion;
@@ -61,7 +61,7 @@ public class QuestionWordFragment extends Fragment {
 
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_POSITION);
-        CATEGORY = args.getString(Constants.BUNDLE_QUESTION_CATEGORY);
+        CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
 
         GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION);
         tvQuestion.setText(genericQuestion.question);

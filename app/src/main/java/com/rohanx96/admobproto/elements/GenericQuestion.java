@@ -8,11 +8,11 @@ import org.json.JSONException;
  */
 public class GenericQuestion {
 
-    public int question_number, layout_type;
-    public String question_name, category, question, answer, hint, message, explanation, pad_characters;
+    public int question_number, layout_type, category;
+    public String question_name, question, answer, hint, message, explanation, pad_characters;
     public transient JSONArray options;
 
-    public GenericQuestion(int question_number, int layout_type, String category, String question_name, String question, String answer, String hint, String message, String explanation, String pad_characters, JSONArray options) {
+    public GenericQuestion(int question_number, int layout_type, int category, String question_name, String question, String answer, String hint, String message, String explanation, String pad_characters, JSONArray options) {
         this.question_number = question_number;
         this.layout_type = layout_type;
         this.category = category;

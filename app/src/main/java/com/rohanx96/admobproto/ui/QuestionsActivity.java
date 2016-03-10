@@ -43,7 +43,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private int mCurrentPage;
     private boolean isCharacterDialogOpen = false;
 
-    String CATEGORY = "";
+    int CATEGORY = -1;
 
     @Bind(R.id.questions_activity_level)
     TextView tvLevel;
@@ -61,7 +61,7 @@ public class QuestionsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_POSITION, 0);
-        CATEGORY = getIntent().getStringExtra(Constants.BUNDLE_QUESTION_CATEGORY);
+        CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY,-1);
 
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
@@ -137,7 +137,7 @@ public class QuestionsActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
             bundle.putInt(Constants.BUNDLE_QUESTION_POSITION, position);
-            bundle.putString(Constants.BUNDLE_QUESTION_CATEGORY, CATEGORY);
+            bundle.putInt(Constants.BUNDLE_QUESTION_CATEGORY, CATEGORY);
 
             if (JSONUtils.getQuestionAt(getApplicationContext(), CATEGORY, position).layout_type == 0) {
                 return QuestionMCQFragment.newInstance(bundle);

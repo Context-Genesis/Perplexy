@@ -65,7 +65,7 @@
     <ListView
         android:id="@+id/activity_number_line_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/activity_number_line_title"
         android:divider="@null"
         android:dividerHeight="20dp"

@@ -88,15 +88,15 @@ public class JSONUtils {
         return json;
     }
 
-    public static ArrayList<GenericQuestion> getQuestionsFromJSONString(Context context, String category) {
+    public static ArrayList<GenericQuestion> getQuestionsFromJSONString(Context context, int category) {
         ArrayList<GenericQuestion> genericQuestions = new ArrayList<>();
         try {
             JSONObject listObject = null;
-            if (category.equals(Constants.GAME_TYPE_RIDDLE))
+            if (category == Constants.GAME_TYPE_RIDDLE)
                 listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
-            else if (category.equals(Constants.GAME_TYPE_SEQUENCES))
+            else if (category == Constants.GAME_TYPE_SEQUENCES)
                 listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
-            else if (category.equals(Constants.GAME_TYPE_LOGIC))
+            else if (category == Constants.GAME_TYPE_LOGIC)
                 listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
 
             for (int i = 0; i < listObject.getJSONArray("questions").length(); i++) {
@@ -104,7 +104,7 @@ public class JSONUtils {
 
                 int question_number = questionObj.getInt("question_number");
                 int layout_type = questionObj.getInt("layout_type");
-                String category_string = questionObj.getString("category");
+                int category_string = questionObj.getInt("category");
                 String question_name = questionObj.getString("question_name");
                 String question_string = questionObj.getString("question");
                 String answer = questionObj.getString("answer");
@@ -124,14 +124,14 @@ public class JSONUtils {
         }
     }
 
-    public static int getTotalQuestions(Context context, String category) {
+    public static int getTotalQuestions(Context context, int category) {
         try {
             JSONObject listObject = null;
-            if (category.equals(Constants.GAME_TYPE_RIDDLE))
+            if (category == Constants.GAME_TYPE_RIDDLE)
                 listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
-            else if (category.equals(Constants.GAME_TYPE_SEQUENCES))
+            else if (category == Constants.GAME_TYPE_SEQUENCES)
                 listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
-            else if (category.equals(Constants.GAME_TYPE_LOGIC))
+            else if (category == Constants.GAME_TYPE_LOGIC)
                 listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
 
             if (listObject == null)
@@ -146,21 +146,21 @@ public class JSONUtils {
         }
     }
 
-    public static GenericQuestion getQuestionAt(Context context, String category, int index) {
+    public static GenericQuestion getQuestionAt(Context context, int category, int index) {
         try {
             JSONObject listObject = null;
-            if (category.equals(Constants.GAME_TYPE_RIDDLE))
+            if (category == Constants.GAME_TYPE_RIDDLE)
                 listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
-            else if (category.equals(Constants.GAME_TYPE_SEQUENCES))
+            else if (category == Constants.GAME_TYPE_SEQUENCES)
                 listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
-            else if (category.equals(Constants.GAME_TYPE_LOGIC))
+            else if (category == Constants.GAME_TYPE_LOGIC)
                 listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
 
             JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(index);
 
             int question_number = questionObj.getInt("question_number");
             int layout_type = questionObj.getInt("layout_type");
-            String category_string = questionObj.getString("category");
+            int category_string = questionObj.getInt("category");
             String question_name = questionObj.getString("question_name");
             String question_string = questionObj.getString("question");
             String answer = questionObj.getString("answer");

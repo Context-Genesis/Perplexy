@@ -27,7 +27,7 @@ public class NumberLineActivity extends AppCompatActivity {
     private int mTimeCount = 0;
     private boolean isAnimationRunning = false;
 
-    String CATEGORY = "";
+    int CATEGORY;
 
     @Bind(R.id.activity_number_line_title)
     TextView tvTitle;
@@ -38,8 +38,8 @@ public class NumberLineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_number_line);
         ButterKnife.bind(this);
 
-        CATEGORY = getIntent().getStringExtra(Constants.BUNDLE_QUESTION_CATEGORY);
-        tvTitle.setText(CATEGORY);
+        CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY, -1);
+        tvTitle.setText(Integer.toString(CATEGORY));
         ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(CATEGORY);
 
         mContainer = findViewById(R.id.activity_number_line_container);
