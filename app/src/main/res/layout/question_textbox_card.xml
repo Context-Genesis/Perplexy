@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTransparent">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        cardCornerRadius="@dimen/card_corner_radius"
+        cardElevation="@dimen/elevation_large"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:id="@+id/textAreaScroller"
+                android:layout_width="fill_parent"
+                android:layout_height="200px"
+                android:layout_x="0px"
+                android:layout_y="25px"
+                android:scrollbars="vertical">
+
+                <TextView
+                    android:id="@+id/qcard_textbox_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type?"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                    android:textStyle="bold" />
+            </ScrollView>
+
+            <RelativeLayout
+                android:id="@+id/qcard_textbox_ll_answerrow_q"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/qcard_textbox_ll_row1_q"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <EditText
+                    android:id="@+id/qcard_textbox_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/qcard_textbox_im_backspace"
+                    android:layout_toStartOf="@+id/qcard_textbox_im_backspace"
+                    android:clickable="false"
+                    android:editable="false" />
+
+                <ImageView
+                    android:id="@+id/qcard_textbox_im_backspace"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="5dp"
+                    android:layout_toLeftOf="@+id/qcard_textbox_im_done"
+                    android:layout_toStartOf="@+id/qcard_textbox_im_done"
+                    android:background="@drawable/button_border_metal"
+                    android:src="@drawable/back" />
+
+                <ImageView
+                    android:id="@+id/qcard_textbox_im_done"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/qcard_textbox_im_backspace"
+                    android:background="@drawable/button_border_metal"
+                    android:src="@drawable/plus" />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/qcard_textbox_ll_row1_q"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/qcard_textbox_ll_row2_q"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/qcard_textbox_ll_row2_q"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="48dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/qcard_textbox_previous"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/left" />
+
+            <ImageButton
+                android:id="@+id/qcard_textbox_next"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/right" />
+
+            <ImageView
+                android:id="@+id/lock_full_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_background"
+                android:scaleType="center"
+                android:src="@drawable/lock_flat"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>

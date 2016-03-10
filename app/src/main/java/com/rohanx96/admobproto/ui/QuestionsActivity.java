@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
+import com.rohanx96.admobproto.ui.fragments.QuestionTextBoxFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
@@ -60,8 +61,8 @@ public class QuestionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_questions);
         ButterKnife.bind(this);
 
-        mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_POSITION, 0) -1;
-        CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY,-1);
+        mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_POSITION, 0) - 1;
+        CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY, -1);
 
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
@@ -143,6 +144,8 @@ public class QuestionsActivity extends AppCompatActivity {
                 return QuestionMCQFragment.newInstance(bundle);
             } else if (JSONUtils.getQuestionAt(getApplicationContext(), CATEGORY, position).layout_type == 1) {
                 return QuestionWordFragment.newInstance(bundle);
+            } else if (JSONUtils.getQuestionAt(getApplicationContext(), CATEGORY, position).layout_type == 2) {
+                return QuestionTextBoxFragment.newInstance(bundle);
             }
             return QuestionWordFragment.newInstance(bundle);
         }

@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,24 +32,25 @@ import butterknife.OnClick;
 /**
  * Created by rish on 9/3/16.
  */
-public class QuestionWordFragment extends Fragment {
+public class QuestionTextBoxFragment extends Fragment {
 
     int POSITION = -1;
     int CATEGORY;
 
-    @Bind(R.id.qcard_word_question)
+    @Bind(R.id.qcard_textbox_question)
     TextView tvQuestion;
 
-    @Bind(R.id.q_card_word_ll_answerrow_q)
-    LinearLayout answerRow;
-
-    @Bind(R.id.q_card_word_ll_row1_q)
+    @Bind(R.id.qcard_textbox_ll_row1_q)
     LinearLayout row1;
 
-    @Bind(R.id.q_card_word_ll_row2_q)
+    @Bind(R.id.qcard_textbox_ll_row2_q)
     LinearLayout row2;
 
+    @Bind(R.id.qcard_textbox_editText)
+    EditText editText;
+
     ArrayList<Character> jumbledCharacters;
+    String enteredCharacters = "";
 
     String answer, answerPadCharacters;
 
@@ -56,7 +58,7 @@ public class QuestionWordFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.question_word_card, container, false);
+        View rootView = inflater.inflate(R.layout.question_textbox_card, container, false);
         ButterKnife.bind(this, rootView);
 
         Bundle args = getArguments();
@@ -85,27 +87,36 @@ public class QuestionWordFragment extends Fragment {
             jumbledCharacters.add(answerPadCharacters.charAt(i));
         }
         Collections.shuffle(jumbledCharacters, new Random(System.currentTimeMillis()));
-
-        for (int i = 0; i < answer.length(); i++) {
-            jumbledCharacters.add(0, '-');
-        }
     }
 
-    @OnClick(R.id.qcard_word_next)
+    @OnClick(R.id.qcard_textbox_next)
     public void nextQuestion() {
         ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
         pager.setCurrentItem(pager.getCurrentItem() + 1, true);
     }
 
-    @OnClick(R.id.qcard_word_previous)
+    @OnClick(R.id.qcard_textbox_previous)
     public void previousQuestion() {
         ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
         pager.setCurrentItem(pager.getCurrentItem() - 1, true);
     }
 
-    public static QuestionWordFragment newInstance(Bundle args) {
+    @OnClick(R.id.qcard_textbox_im_backspace)
+    public void removeCharacter() {
+        if (enteredCharacters.length() >= 1) {
+            enteredCharacters = enteredCharacters.substring(0, enteredCharacters.length() - 1);
+            editText.setText(enteredCharacters);
+        }
+    }
 
-        QuestionWordFragment fragment = new QuestionWordFragment();
+    @OnClick(R.id.qcard_textbox_im_done)
+    public void checkAnswer() {
+        isAnsweredCorrectly();
+    }
+
+    public static QuestionTextBoxFragment newInstance(Bundle args) {
+
+        QuestionTextBoxFragment fragment = new QuestionTextBoxFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -114,22 +125,8 @@ public class QuestionWordFragment extends Fragment {
 
         row1.removeAllViews();
         row2.removeAllViews();
-        answerRow.removeAllViews();
 
-        for (int i = 0; i < answer.length(); i++) {
-            final int m = i;
-            final TextView answerTV = generateBlanksTextView(i);
-
-            answerTV.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    putThisCharacterBackToOptionsRow(m);
-                    setUpBlanksAndRows();
-                }
-            });
-
-            answerRow.addView(answerTV);
-        }
+        editText.setText(enteredCharacters);
 
         for (int i = 0; i < answerPadCharacters.length() / 2; i++) {
             final int m = i;
@@ -138,7 +135,7 @@ public class QuestionWordFragment extends Fragment {
             answerTV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addThisCharacterToAnswerRow(answer.length() + m);
+                    addThisCharacterToEditText(m);
                     setUpBlanksAndRows();
                     isAnsweredCorrectly();
                 }
@@ -154,7 +151,7 @@ public class QuestionWordFragment extends Fragment {
             answerTV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addThisCharacterToAnswerRow(answer.length() + m);
+                    addThisCharacterToEditText(m);
                     setUpBlanksAndRows();
                     isAnsweredCorrectly();
                 }
@@ -164,53 +161,24 @@ public class QuestionWordFragment extends Fragment {
         }
     }
 
-    private void addThisCharacterToAnswerRow(int indexToExchange) {
-        for (int i = 0; i < answer.length(); i++) {
-            if (jumbledCharacters.get(i) == '-') {
-                Collections.swap(jumbledCharacters, indexToExchange, i);
-            }
-        }
-    }
-
-    private void putThisCharacterBackToOptionsRow(int indexToExchange) {
-        for (int i = answer.length(); i < answer.length() + answerPadCharacters.length(); i++) {
-            if (jumbledCharacters.get(i) == '-') {
-                Collections.swap(jumbledCharacters, indexToExchange, i);
-            }
-        }
+    private void addThisCharacterToEditText(int index) {
+        enteredCharacters += jumbledCharacters.get(index);
+        editText.setText(enteredCharacters);
     }
 
     public boolean isAnsweredCorrectly() {
-        for (int i = 0; i < answer.length(); i++) {
-            if (jumbledCharacters.get(i) != answer.charAt(i)) {
-                return false;
-            }
+        if (answer.equals(enteredCharacters)) {
+            Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
+            return true;
+        } else {
+            return false;
         }
-        Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
-        return true;
-    }
-
-    private TextView generateBlanksTextView(int i) {
-        final TextView answerTV = new TextView(getActivity());
-
-        answerTV.setText("" + jumbledCharacters.get(i));
-        answerTV.setId(100 + i);
-        answerTV.setTextSize(25);
-        answerTV.setTextColor(Color.BLACK);
-        answerTV.setBackgroundResource(R.drawable.circle_border);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(BLANK_CIRCLE_SIZE, BLANK_CIRCLE_SIZE);
-        layoutParams.setMargins(2, 2, 2, 2);
-        answerTV.setLayoutParams(layoutParams);
-        answerTV.setGravity(Gravity.CENTER);
-
-        return answerTV;
     }
 
     private TextView generateFilledTextView(int i) {
         final TextView answerTV = new TextView(getActivity());
 
-        answerTV.setText("" + jumbledCharacters.get(answer.length() + i));
-        answerTV.setId(100 + i);
+        answerTV.setText("" + jumbledCharacters.get(i));
         answerTV.setTextSize(25);
         answerTV.setTextColor(Color.BLACK);
         answerTV.setBackgroundResource(R.drawable.circle_filled);
