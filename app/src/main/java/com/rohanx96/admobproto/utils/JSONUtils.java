@@ -146,6 +146,7 @@ public class JSONUtils {
         }
     }
 
+    /* The index here is not question number but question position */
     public static GenericQuestion getQuestionAt(Context context, int category, int index) {
         try {
             JSONObject listObject = null;

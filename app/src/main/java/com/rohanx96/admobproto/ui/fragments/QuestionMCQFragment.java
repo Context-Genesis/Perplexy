@@ -42,7 +42,7 @@ public class QuestionMCQFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         Bundle args = getArguments();
-        POSITION = args.getInt(Constants.BUNDLE_QUESTION_POSITION);
+        POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
 
         GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION);

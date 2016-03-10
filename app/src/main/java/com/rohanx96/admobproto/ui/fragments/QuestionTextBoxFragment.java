@@ -17,11 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
+import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Random;
 
@@ -62,7 +64,7 @@ public class QuestionTextBoxFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         Bundle args = getArguments();
-        POSITION = args.getInt(Constants.BUNDLE_QUESTION_POSITION);
+        POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
 
         GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION);
@@ -168,6 +170,7 @@ public class QuestionTextBoxFragment extends Fragment {
 
     public boolean isAnsweredCorrectly() {
         if (answer.equals(enteredCharacters)) {
+            GenericAnswerDetails.updateStatus(POSITION, CATEGORY,Constants.CORRECT);
             Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
             return true;
         } else {

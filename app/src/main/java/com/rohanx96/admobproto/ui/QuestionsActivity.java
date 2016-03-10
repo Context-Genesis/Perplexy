@@ -23,12 +23,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
+import com.rohanx96.admobproto.elements.GenericAnswerDetails;
+import com.rohanx96.admobproto.elements.GenericQuestion;
 import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionTextBoxFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,8 +64,8 @@ public class QuestionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
         ButterKnife.bind(this);
-
-        mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_POSITION, 0) - 1;
+        // The page position is one less than question number. Note question number is passed instead of position
+        mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_NUMBER, 0) - 1;
         CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY, -1);
 
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
@@ -137,7 +141,7 @@ public class QuestionsActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
-            bundle.putInt(Constants.BUNDLE_QUESTION_POSITION, position);
+            bundle.putInt(Constants.BUNDLE_QUESTION_NUMBER, position);
             bundle.putInt(Constants.BUNDLE_QUESTION_CATEGORY, CATEGORY);
 
             if (JSONUtils.getQuestionAt(getApplicationContext(), CATEGORY, position).layout_type == 0) {
@@ -236,7 +240,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
     public void setupCharacter() {
         character = (ImageView) findViewById(R.id.questions_activity_bubble);
-        setupCharacterDialog();
+        //setupCharacterDialog();
         character.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -245,6 +249,7 @@ public class QuestionsActivity extends AppCompatActivity {
                         v.animate().scaleX(1.3f).scaleY(1.3f).setDuration(100).start();
                         break;
                     case MotionEvent.ACTION_UP:
+                        setupCharacterDialog(); //Dialog is reinitialised based on question every time character is clicked
                         character.clearAnimation();
                         character.animate().scaleX(1.0f).scaleY(1.0f).setDuration(300).start();
                         View characterDialog;
@@ -256,6 +261,7 @@ public class QuestionsActivity extends AppCompatActivity {
                             characterDialog.setVisibility(View.VISIBLE);
                             characterDialog.startAnimation(scaleAnimation);
                             toggleIsCharacterDialogOpen();
+                            // TODO: Remove swipe and button click listeners
                         } else {
                             characterDialog = findViewById(R.id.questions_activity_character_dialog);
                             ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
@@ -281,32 +287,48 @@ public class QuestionsActivity extends AppCompatActivity {
      * by Dhruv
      */
     public void setupCharacterDialog() {
+        GenericQuestion question = JSONUtils.getQuestionAt(getApplication(), CATEGORY, mCurrentPage);
+        final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(CATEGORY);
         final TextView showhint;
+        final TextView hintprice;
         final LinearLayout hint, confirmhint;
         final TextView nohint, yeshint, showhiddenhint;
 
         final TextView showsolution;
+        final TextView solutionprice;
         final LinearLayout solution, confirmsolution;
         final TextView nosolution, yessolution, showhiddensolution;
 
-        final TextView skipquestion;
-        final LinearLayout skip, confirmskip;
-        final TextView noskip, yesskip, showhiddenskip;
-
         showhint = (TextView) findViewById(R.id.showhint);
         hint = (LinearLayout) findViewById(R.id.ll_hint);
+        hintprice = (TextView) findViewById(R.id.hintprice);
         confirmhint = (LinearLayout) findViewById(R.id.ll_confirmhint);
         nohint = (TextView) findViewById(R.id.nohint);
         yeshint = (TextView) findViewById(R.id.yeshint);
         showhiddenhint = (TextView) findViewById(R.id.showhiddenhint);
 
+        showhiddenhint.setVisibility(View.GONE);
+        showhint.setVisibility(View.VISIBLE);
+        confirmhint.setVisibility(View.GONE);
+        showhiddenhint.setText(question.hint);
+
+        final ImageView favourite = (ImageView) findViewById(R.id.character_favourite_question);
+
+        if (ansDetails.get(mCurrentPage).hint_displayed == true) {
+            hintprice.setText("0");
+        } else {
+            hintprice.setText(Constants.HINT_PRICE);
+        }
+
         showhint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showhint.setVisibility(View.GONE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
-                confirmhint.startAnimation(in);
-                confirmhint.setVisibility(View.VISIBLE);
+                if (showhiddenhint.getVisibility() == View.GONE) {
+                    showhint.setVisibility(View.GONE);
+                    Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+                    confirmhint.startAnimation(in);
+                    confirmhint.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -321,6 +343,13 @@ public class QuestionsActivity extends AppCompatActivity {
                 showhiddenhint.startAnimation(in);
                 showhiddenhint.setVisibility(View.VISIBLE);
                 showhiddenhint.startAnimation(in);
+
+                if (ansDetails.get(mCurrentPage).hint_displayed == false) {
+                    ansDetails.get(mCurrentPage).hint_displayed = true;
+                    ansDetails.get(mCurrentPage).save();
+                    // TODO: deduct coins
+                }
+                hintprice.setText("0");
             }
         });
 
@@ -337,18 +366,32 @@ public class QuestionsActivity extends AppCompatActivity {
 
         showsolution = (TextView) findViewById(R.id.showsolution);
         solution = (LinearLayout) findViewById(R.id.ll_solution);
+        solutionprice = (TextView) findViewById(R.id.solutionprice);
         confirmsolution = (LinearLayout) findViewById(R.id.ll_confirmsolution);
         nosolution = (TextView) findViewById(R.id.nosolution);
         yessolution = (TextView) findViewById(R.id.yessolution);
         showhiddensolution = (TextView) findViewById(R.id.showhiddensolution);
 
+        showsolution.setVisibility(View.VISIBLE);
+        confirmsolution.setVisibility(View.GONE);
+        showhiddensolution.setVisibility(View.GONE);
+
+        showhiddensolution.setText(question.answer);
+        if (ansDetails.get(mCurrentPage).answer_displayed == true) {
+            solutionprice.setText("0");
+        } else {
+            solutionprice.setText(Constants.SOLUTION_PRICE);
+        }
+
         showsolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showsolution.setVisibility(View.GONE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
-                confirmsolution.startAnimation(in);
-                confirmsolution.setVisibility(View.VISIBLE);
+                if (showhiddensolution.getVisibility() == View.GONE) {
+                    showsolution.setVisibility(View.GONE);
+                    Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+                    confirmsolution.startAnimation(in);
+                    confirmsolution.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -363,6 +406,13 @@ public class QuestionsActivity extends AppCompatActivity {
                 showhiddensolution.startAnimation(in);
                 showhiddensolution.setVisibility(View.VISIBLE);
                 showhiddensolution.startAnimation(in);
+
+                if (!ansDetails.get(mCurrentPage).answer_displayed) {
+                    ansDetails.get(mCurrentPage).answer_displayed = true;
+                    ansDetails.get(mCurrentPage).save();
+                    // TODO: deduct coins
+                }
+                solutionprice.setText("0");
             }
         });
 
@@ -376,44 +426,24 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         });
 
-        skipquestion = (TextView) findViewById(R.id.skipquestion);
-        skip = (LinearLayout) findViewById(R.id.ll_skip);
-        confirmskip = (LinearLayout) findViewById(R.id.ll_confirmskip);
-        noskip = (TextView) findViewById(R.id.noskip);
-        yesskip = (TextView) findViewById(R.id.yesskip);
-        showhiddenskip = (TextView) findViewById(R.id.showhiddenskip);
+        if (!ansDetails.get(mCurrentPage).bookmarked) {
+            favourite.setBackgroundResource(R.drawable.favorite);  // color
+        } else {
+            favourite.setBackgroundResource(R.drawable.favourite_filled);
+        }
 
-        skipquestion.setOnClickListener(new View.OnClickListener() {
+        favourite.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                skipquestion.setVisibility(View.GONE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
-                confirmskip.startAnimation(in);
-                confirmskip.setVisibility(View.VISIBLE);
-            }
-        });
-
-        yesskip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmskip.setVisibility(View.GONE);
-                skipquestion.setVisibility(View.VISIBLE);
-
-                showhiddenskip.setVisibility(View.INVISIBLE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
-                showhiddenskip.startAnimation(in);
-                showhiddenskip.setVisibility(View.VISIBLE);
-                showhiddenskip.startAnimation(in);
-            }
-        });
-
-        noskip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmskip.setVisibility(View.GONE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
-                skipquestion.startAnimation(in);
-                skipquestion.setVisibility(View.VISIBLE);
+            public void onClick(View v) {
+                if (!ansDetails.get(mCurrentPage).bookmarked) {
+                    ansDetails.get(mCurrentPage).bookmarked = true;
+                    ansDetails.get(mCurrentPage).save();
+                    favourite.setBackgroundResource(R.drawable.favourite_filled);  // color
+                } else {
+                    ansDetails.get(mCurrentPage).bookmarked = false;
+                    ansDetails.get(mCurrentPage).save();
+                    favourite.setBackgroundResource(R.drawable.favorite);
+                }
             }
         });
     }

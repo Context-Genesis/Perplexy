@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
+import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -60,7 +61,7 @@ public class QuestionWordFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         Bundle args = getArguments();
-        POSITION = args.getInt(Constants.BUNDLE_QUESTION_POSITION);
+        POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
 
         GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION);
@@ -186,6 +187,8 @@ public class QuestionWordFragment extends Fragment {
                 return false;
             }
         }
+        //Update status for answer in database
+        GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
         Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
         return true;
     }

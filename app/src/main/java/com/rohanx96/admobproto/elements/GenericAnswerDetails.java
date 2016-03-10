@@ -18,32 +18,33 @@ import java.util.List;
  */
 public class GenericAnswerDetails extends SugarRecord {
 
-    public int questionNumber;
+    public int question_number;
     public int category, status; /*correct, incorrect, available, unavailable (int)*/
-    public boolean hintDisplayed, answerDisplayed;
-    public int numberIncorrect;
+    public boolean hint_displayed, answer_displayed;
+    public int number_incorrect;
+    public boolean bookmarked;
 
     public GenericAnswerDetails() {
+
     }
 
-    public GenericAnswerDetails(int questionNumber, int category, int status, boolean hintDisplayed, boolean answerDisplayed, int numberIncorrect) {
-        this.questionNumber = questionNumber;
+    public GenericAnswerDetails(int question_number, int category, int status, boolean hint_displayed, boolean answer_displayed, int number_incorrect) {
+        this.question_number = question_number;
         this.category = category;
         this.status = status;
-        this.hintDisplayed = hintDisplayed;
-        this.answerDisplayed = answerDisplayed;
-        this.numberIncorrect = numberIncorrect;
+        this.hint_displayed = hint_displayed;
+        this.answer_displayed = answer_displayed;
+        this.number_incorrect = number_incorrect;
     }
 
     @Override
     public String toString() {
         return "GenericAnswerDetails{" +
-                "questionNumber=" + questionNumber +
-                ", category='" + category + '\'' +
+                "question_number=" + question_number +
                 ", status='" + status + '\'' +
-                ", hintDisplayed=" + hintDisplayed +
-                ", answerDisplayed=" + answerDisplayed +
-                ", numberIncorrect=" + numberIncorrect +
+                ", hint_displayed=" + hint_displayed +
+                ", answer_displayed=" + answer_displayed +
+                ", number_incorrect=" + number_incorrect +
                 '}';
     }
 
@@ -54,12 +55,12 @@ public class GenericAnswerDetails extends SugarRecord {
          * status : UNAVAILABLE
          * hint : false
          * answer : false
-         * numberIncorrect : 0
+         * number_incorrect : 0
          */
 
         ArrayList<GenericQuestion> allQuestions = new ArrayList<>();
         allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_RIDDLE));
-        //        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
+        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
         /* allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_LOGIC));*/
 
         for (int i = 0; i < allQuestions.size(); i++) {
@@ -77,27 +78,38 @@ public class GenericAnswerDetails extends SugarRecord {
     }
 
     public static ArrayList<GenericAnswerDetails> listAll(int category) {
-        return (ArrayList<GenericAnswerDetails>) Select.from(GenericAnswerDetails.class).where(Condition.prop("category").eq(category)).list();
+        return (ArrayList<GenericAnswerDetails>) Select.from(GenericAnswerDetails.class)
+                .where(Condition.prop("category").eq(category))
+                .list();
     }
 
     public static void incrementNumberOfIncorrect(int question_number, int category) {
         GenericAnswerDetails genericAnswerDetail = Select.from(GenericAnswerDetails.class).where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category)).where(Condition.prop(NamingHelper.toSQLNameDefault("questionNumber")).eq(question_number)).first();
-        genericAnswerDetail.numberIncorrect++;
+        genericAnswerDetail.number_incorrect++;
         genericAnswerDetail.save();
     }
 
     public static GenericAnswerDetails getAnswerDetail(int question_number, int category) {
-        GenericAnswerDetails genericAnswerDetail = Select.from(GenericAnswerDetails.class).where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category)).where(Condition.prop(NamingHelper.toSQLNameDefault("questionNumber")).eq(question_number)).first();
+        GenericAnswerDetails genericAnswerDetail = Select.from(GenericAnswerDetails.class)
+                .where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category))
+                .where(Condition.prop(NamingHelper.toSQLNameDefault("question_number")).eq(question_number))
+                .first();
         return genericAnswerDetail;
     }
 
     public static int getStatus(int question_number, int category) {
-        GenericAnswerDetails genericAnswerDetail = Select.from(GenericAnswerDetails.class).where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category)).where(Condition.prop(NamingHelper.toSQLNameDefault("questionNumber")).eq(question_number)).first();
+        GenericAnswerDetails genericAnswerDetail = Select.from(GenericAnswerDetails.class)
+                .where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category))
+                .where(Condition.prop(NamingHelper.toSQLNameDefault("question_number")).eq(question_number))
+                .first();
         return genericAnswerDetail.status;
     }
 
     public static void updateStatus(int question_number, int category, int status) {
-        GenericAnswerDetails genericAnswerDetail = Select.from(GenericAnswerDetails.class).where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category)).where(Condition.prop(NamingHelper.toSQLNameDefault("questionNumber")).eq(question_number)).first();
+        GenericAnswerDetails genericAnswerDetail = Select.from(GenericAnswerDetails.class)
+                .where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category))
+                .where(Condition.prop(NamingHelper.toSQLNameDefault("question_number")).eq(question_number))
+                .first();
         genericAnswerDetail.status = status;
         genericAnswerDetail.save();
     }
@@ -106,7 +118,12 @@ public class GenericAnswerDetails extends SugarRecord {
     *Not sure if this is correct. Check logcat to see the SQL command that is returned.
      */
     public static GenericAnswerDetails getLastUnlockedQuestion(int category) {
-        ArrayList<GenericAnswerDetails> answerDetails = (ArrayList<GenericAnswerDetails>) Select.from(GenericAnswerDetails.class).where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category)).where(Condition.prop(NamingHelper.toSQLNameDefault("status")).eq(Constants.CORRECT)).whereOr(Condition.prop(NamingHelper.toSQLNameDefault("status")).eq(Constants.AVAILABLE)).list();
+        ArrayList<GenericAnswerDetails> answerDetails = (ArrayList<GenericAnswerDetails>) Select.from(GenericAnswerDetails.class)
+                .where(Condition.prop(NamingHelper.toSQLNameDefault("category"))
+                        .eq(category))
+                .where(Condition.prop(NamingHelper.toSQLNameDefault("status")).eq(Constants.CORRECT))
+                .whereOr(Condition.prop(NamingHelper.toSQLNameDefault("status")).eq(Constants.AVAILABLE))
+                .list();
         return answerDetails.get(answerDetails.size() - 1);
 
         /*

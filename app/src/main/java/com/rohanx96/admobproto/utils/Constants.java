@@ -18,9 +18,11 @@ public class Constants {
     public static final int UNAVAILABLE = 2;
     public static final int AVAILABLE = 3;
 
-    public static final String BUNDLE_QUESTION_POSITION = "BUNDLE_QUESTION_POSITION";
+    public static final String BUNDLE_QUESTION_NUMBER = "BUNDLE_QUESTION_NUMBER";
     public static final String BUNDLE_QUESTION_CATEGORY = "BUNDLE_QUESTION_CATEGORY";
     public static final String SHARED_PREFERENCES = "SHARED_PREFERENCES";
     public static final String FIRST_RUN = "FIRST_RUN";
 
+    public static final String HINT_PRICE = "50";
+    public static final String SOLUTION_PRICE = "100";
 }

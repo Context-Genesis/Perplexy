@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -38,15 +39,9 @@ public class NumberLineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_line);
         ButterKnife.bind(this);
-
         CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY, -1);
-        tvTitle.setText("Select level");
-        ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(CATEGORY);
-
+        tvTitle.setText("Select Level");
         mContainer = findViewById(R.id.activity_number_line_container);
-        NumberLineAdapter numberLineAdapter = new NumberLineAdapter(this, answerDetails);
-        ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
-        listView.setAdapter(numberLineAdapter);
     }
 
     @Override
@@ -63,6 +58,12 @@ public class NumberLineActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        /* Adapter list needs to be initialised here because we need to refresh list after returning to activity */
+        ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(CATEGORY);
+        NumberLineAdapter numberLineAdapter = new NumberLineAdapter(this, answerDetails);
+        ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
+        listView.setAdapter(numberLineAdapter);
+
         /** Change color of background after 7 seconds */
         if (!isAnimationRunning) {
             Thread animationThread = new Thread(new Runnable() {
@@ -116,5 +117,10 @@ public class NumberLineActivity extends AppCompatActivity {
     public void goBack(){
         onBackPressed();
     }
+
+    /*public void updateCoinsDisplay(){
+        TextView coinsText = (TextView) findViewById(R.id.activity_coin_text);
+        coinsText.setText(PreferenceManager.getDefaultSharedPreferences(this).getInt(Constants.PREF_COINS,0));
+    }*/
 
 }
