@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class NumberLineActivity extends AppCompatActivity {
     private View mContainer;
@@ -39,7 +40,7 @@ public class NumberLineActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY, -1);
-        tvTitle.setText(Integer.toString(CATEGORY));
+        tvTitle.setText("Select level");
         ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(CATEGORY);
 
         mContainer = findViewById(R.id.activity_number_line_container);
@@ -109,6 +110,11 @@ public class NumberLineActivity extends AppCompatActivity {
 
     public void setAnimationRunning(boolean animationRunning) {
         this.isAnimationRunning = animationRunning;
+    }
+
+    @OnClick(R.id.activity_number_line_back)
+    public void goBack(){
+        onBackPressed();
     }
 
 }

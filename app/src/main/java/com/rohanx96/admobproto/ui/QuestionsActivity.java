@@ -60,7 +60,7 @@ public class QuestionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_questions);
         ButterKnife.bind(this);
 
-        mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_POSITION, 0);
+        mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_POSITION, 0) -1;
         CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY,-1);
 
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());

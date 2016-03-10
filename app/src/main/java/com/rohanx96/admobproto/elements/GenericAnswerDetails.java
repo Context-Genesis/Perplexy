@@ -62,7 +62,13 @@ public class GenericAnswerDetails extends SugarRecord {
         for (int i = 0; i < allQuestions.size(); i++) {
             int question_number = allQuestions.get(i).question_number;
             int category = allQuestions.get(i).category;
-            GenericAnswerDetails genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
+            GenericAnswerDetails genericAnswerDetails;
+
+            // Initialise first three questions as available. TODO: unlock for each category
+            if (i<3)
+                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
+            else
+                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
             genericAnswerDetails.save();
         }
     }

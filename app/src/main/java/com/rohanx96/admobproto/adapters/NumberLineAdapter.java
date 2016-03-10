@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.NumberLineActivity;
@@ -89,7 +90,6 @@ public class NumberLineAdapter extends BaseAdapter {
         // Text and click listeners are not set for number line arrows
         if (position != 0 && position != answerDetails.size() - 1) {
             holder.tv.setText(" " + getItem(position).question_number + " ");
-            // Set background drawable for question number based on status
             holder.tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,6 +101,9 @@ public class NumberLineAdapter extends BaseAdapter {
                     context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
                 }
             });
+            // Set background drawable for question number based on status
+            setBackgroundDrawable(position,holder);
+            setOnClickListeners(position,holder);
         }
 
         return vi;
@@ -123,5 +126,70 @@ public class NumberLineAdapter extends BaseAdapter {
 
     public class ViewHolder {
         Button tv;
+    }
+
+    public void setBackgroundDrawable(int position, ViewHolder holder){
+        // Set background drawable for question number based on status
+        switch (answerDetails.get(position).status){
+            case Constants.CORRECT:
+                holder.tv.setBackgroundResource(R.drawable.circle_question_number_correcct);
+                break;
+            case Constants.INCORRECT:
+                holder.tv.setBackgroundResource(R.drawable.circle_question_number_incorrect);
+                break;
+            case Constants.AVAILABLE:
+                holder.tv.setBackgroundResource(R.drawable.circle_question_number_available);
+                break;
+            case Constants.UNAVAILABLE:
+                holder.tv.setBackgroundResource(R.drawable.circle_question_number_unavailable);
+                break;
+        }
+    }
+
+    public void setOnClickListeners(final int position, final ViewHolder holder){
+        switch (answerDetails.get(position).status) {
+            case Constants.CORRECT:
+                holder.tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, QuestionsActivity.class);
+                        intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, getItem(position).question_number);
+                        intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                        context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
+                    }
+                });
+                break;
+            case Constants.INCORRECT:
+                holder.tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context, "This question is locked", Toast.LENGTH_LONG).show();
+                    }
+                });
+                break;
+            case Constants.AVAILABLE:
+                holder.tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, QuestionsActivity.class);
+                        intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, getItem(position).question_number);
+                        intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                        context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
+                    }
+                });
+                break;
+            case Constants.UNAVAILABLE:
+                holder.tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context, "This question is locked", Toast.LENGTH_LONG).show();
+                    }
+                });
+                break;
+        }
     }
 }

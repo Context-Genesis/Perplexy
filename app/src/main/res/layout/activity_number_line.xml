@@ -14,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:padding="5dp"
         android:src="@drawable/back"
-        android:contentDescription="Back"/>
+        android:contentDescription="Back"
+        android:layout_margin="8dp"/>
 
     <TextView
         android:id="@+id/activity_number_line_title"
@@ -27,7 +28,8 @@
         android:text="Level 10"
         android:textColor="#FFF"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_margin="8dp"/>
 
     <TextView
         android:id="@+id/activity_coin_text"
@@ -60,7 +62,8 @@
         android:layout_alignParentRight="true"
         android:padding="5dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/coin" />
+        android:src="@drawable/coin"
+        android:layout_margin="8dp"/>
 
     <ListView
         android:id="@+id/activity_number_line_listview"
