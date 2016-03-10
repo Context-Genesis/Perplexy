@@ -94,11 +94,8 @@ public class NumberLineAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, QuestionsActivity.class);
-                /*
-                *send position of clicked item. Note, it sends (position-1) because there is an extra element padded at top and bottom of numberline
-                 */
-                    intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, (position - 1));
-                    intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position - 1).category);
+                    intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, getItem(position).question_number);
+                    intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                     context.setAnimationRunning(false); // Stop the background color change animation on leaving activity

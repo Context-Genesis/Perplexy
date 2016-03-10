@@ -138,6 +138,7 @@ public class QuestionsActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putInt(Constants.BUNDLE_QUESTION_POSITION, position);
             bundle.putString(Constants.BUNDLE_QUESTION_CATEGORY, CATEGORY);
+
             if (JSONUtils.getQuestionAt(getApplicationContext(), CATEGORY, position).layout_type == 0) {
                 return QuestionMCQFragment.newInstance(bundle);
             } else if (JSONUtils.getQuestionAt(getApplicationContext(), CATEGORY, position).layout_type == 1) {
