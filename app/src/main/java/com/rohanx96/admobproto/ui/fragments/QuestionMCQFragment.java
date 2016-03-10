@@ -4,15 +4,19 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
+import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -28,7 +32,7 @@ public class QuestionMCQFragment extends Fragment {
 
     int POSITION = -1;
     int CATEGORY ;
-
+    FrameLayout questionCard;
     @Bind(R.id.qcard_mcq_question)
     TextView tvQuestion;
 
@@ -40,11 +44,11 @@ public class QuestionMCQFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.question_mcq_card, container, false);
 
         ButterKnife.bind(this, rootView);
-
+        this.questionCard = (FrameLayout) rootView.findViewById(R.id.question_card);
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
-
+        lockQuestionIfRequired();
         GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION-1);
 
         tvQuestion.setText(genericQuestion.question);
@@ -83,10 +87,11 @@ public class QuestionMCQFragment extends Fragment {
     }
 
     private TextView generateBlanksTextView(String option) {
+        // TODO : Discuss about options be set in xml and not dynamically
         final TextView answerTV = new TextView(getActivity());
 
         answerTV.setText(option);
-        answerTV.setTextSize(25);
+        answerTV.setTextSize(20);
         answerTV.setTextColor(Color.BLACK);
         answerTV.setBackgroundResource(R.drawable.button_background);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -101,5 +106,31 @@ public class QuestionMCQFragment extends Fragment {
         QuestionMCQFragment fragment = new QuestionMCQFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void lockQuestionIfRequired(){
+        // TODO: Hide character when question is locked
+        //Log.i("question ", answer);
+        Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION, CATEGORY));
+        switch (GenericAnswerDetails.getStatus(POSITION,CATEGORY)){
+            case Constants.UNAVAILABLE:
+                Log.i("textcard","unavailable");
+                //ImageView lock = (ImageView) findViewById(R.id.lock_full_image);
+                //lock.setVisibility(View.VISIBLE);
+                ImageView lock = new ImageView(getActivity());
+                FrameLayout.LayoutParams layoutParams = new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                        , ViewGroup.LayoutParams.MATCH_PARENT);
+                lock.setLayoutParams(layoutParams);
+                lock.setImageResource(R.drawable.lock_flat);
+                lock.setBackgroundColor(getResources().getColor(R.color.white));
+                lock.setScaleType(ImageView.ScaleType.CENTER);
+                questionCard.addView(lock, questionCard.getChildCount());
+                break;
+            case Constants.INCORRECT:
+                //TODO: Lock image for locking options when incorrect
+                ImageView options_lock = (ImageView) getActivity().findViewById(R.id.lock_options_image);
+                options_lock.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }

@@ -2,7 +2,6 @@ package com.rohanx96.admobproto.ui.fragments;
 
 import android.graphics.Color;
 import android.graphics.Point;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -13,12 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rey.material.widget.FrameLayout;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
@@ -26,7 +25,6 @@ import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Random;
 
@@ -41,7 +39,7 @@ public class QuestionTextBoxFragment extends Fragment {
 
     int POSITION = -1;
     int CATEGORY;
-    FrameLayout container;
+    FrameLayout questionCard;
     @Bind(R.id.qcard_textbox_question)
     TextView tvQuestion;
 
@@ -65,7 +63,7 @@ public class QuestionTextBoxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.question_textbox_card, container, false);
         ButterKnife.bind(this, rootView);
-        //this.container = (FrameLayout) rootView.findViewById(R.id.question_card_container);
+        this.questionCard = (FrameLayout) rootView.findViewById(R.id.question_card);
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
@@ -73,7 +71,7 @@ public class QuestionTextBoxFragment extends Fragment {
         tvQuestion.setText(genericQuestion.question);
 
         answer = genericQuestion.answer;
-        //lockQuestionIfRequired();
+        lockQuestionIfRequired();
         answerPadCharacters = genericQuestion.pad_characters;
         BLANK_CIRCLE_SIZE = getBlankCircleSize();
 
@@ -215,5 +213,30 @@ public class QuestionTextBoxFragment extends Fragment {
         }
     }
 
+    public void lockQuestionIfRequired(){
+        // TODO: Hide character when question is locked
+        Log.i("question ", answer);
+        Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION,CATEGORY));
+        switch (GenericAnswerDetails.getStatus(POSITION,CATEGORY)){
+            case Constants.UNAVAILABLE:
+                Log.i("textcard","unavailable");
+                //ImageView lock = (ImageView) findViewById(R.id.lock_full_image);
+                //lock.setVisibility(View.VISIBLE);
+                ImageView lock = new ImageView(getActivity());
+                FrameLayout.LayoutParams layoutParams = new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                        , ViewGroup.LayoutParams.MATCH_PARENT);
+                lock.setLayoutParams(layoutParams);
+                lock.setImageResource(R.drawable.lock_flat);
+                lock.setBackgroundColor(getResources().getColor(R.color.white));
+                lock.setScaleType(ImageView.ScaleType.CENTER);
+                questionCard.addView(lock, questionCard.getChildCount());
+                break;
+            case Constants.INCORRECT:
+                //TODO: Lock image for locking options when incorrect
+                ImageView options_lock = (ImageView) getActivity().findViewById(R.id.lock_options_image);
+                options_lock.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
 
 }

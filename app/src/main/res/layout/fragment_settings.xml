@@ -29,16 +29,7 @@
         android:text="SOUND"
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
         android:textColor="@color/white"/>
-    <com.rey.material.widget.Switch
-        style="@style/Material.Widget.Switch"
-        android:layout_alignTop="@id/settings_sound_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:padding="16dp"
-        app:sw_thumbColor = "@color/colorPrimary"
-        android:checked="false"/>
+    <!-- TODO: Add switch -->
     <TextView
         android:id="@+id/settings_reset"
         android:padding="16dp"

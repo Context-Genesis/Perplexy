@@ -23,6 +23,15 @@ public class Constants {
     public static final String SHARED_PREFERENCES = "SHARED_PREFERENCES";
     public static final String FIRST_RUN = "FIRST_RUN";
 
-    public static final String HINT_PRICE = "50";
-    public static final String SOLUTION_PRICE = "100";
+
+    // TODO: Implement coins structure
+    // Use these strings and integers values for coins
+    public static final String PREF_COINS = "Coins";
+    public static final String PREF_COINS_EARNED = "Earned";
+    public static final String PREF_COINS_SPENT = "Spent";
+    public static final int HINT_PRICE = 75;
+    public static final int SOLUTION_PRICE = 150;
+    public static final int UNLOCK_INCORRECT_PRICE = 100;
+    public static final int UNLOCK_UNAVAILABLE_PRICE = 120;
+
 }
