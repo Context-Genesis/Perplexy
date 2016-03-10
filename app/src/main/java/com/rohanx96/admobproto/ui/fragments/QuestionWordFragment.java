@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
-import com.rohanx96.admobproto.elements.WordQuestion;
+import com.rohanx96.admobproto.elements.GenericQuestion;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
 
@@ -34,6 +34,7 @@ import butterknife.OnClick;
 public class QuestionWordFragment extends Fragment {
 
     int POSITION = -1;
+    String CATEGORY = "";
 
     @Bind(R.id.qcard_word_question)
     TextView tvQuestion;
@@ -49,7 +50,7 @@ public class QuestionWordFragment extends Fragment {
 
     ArrayList<Character> jumbledCharacters;
 
-    String answer, answerOptions;
+    String answer, answerPadCharacters;
 
     int BLANK_CIRCLE_SIZE;
 
@@ -60,12 +61,13 @@ public class QuestionWordFragment extends Fragment {
 
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_POSITION);
+        CATEGORY = args.getString(Constants.BUNDLE_QUESTION_CATEGORY);
 
-        WordQuestion wordQuestion = JSONUtils.getRiddleQuestionAt(getActivity(), POSITION);
-        tvQuestion.setText(wordQuestion.question);
+        GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION);
+        tvQuestion.setText(genericQuestion.question);
 
-        answer = wordQuestion.answer;
-        answerOptions = wordQuestion.answerOptions;
+        answer = genericQuestion.answer;
+        answerPadCharacters = genericQuestion.pad_characters;
 
         BLANK_CIRCLE_SIZE = getBlankCircleSize();
 
@@ -79,8 +81,8 @@ public class QuestionWordFragment extends Fragment {
     private void setUpJumbledCharacters() {
         jumbledCharacters = new ArrayList<>();
 
-        for (int i = 0; i < answerOptions.length(); i++) {
-            jumbledCharacters.add(answerOptions.charAt(i));
+        for (int i = 0; i < answerPadCharacters.length(); i++) {
+            jumbledCharacters.add(answerPadCharacters.charAt(i));
         }
         Collections.shuffle(jumbledCharacters, new Random(System.currentTimeMillis()));
 
@@ -129,7 +131,7 @@ public class QuestionWordFragment extends Fragment {
             answerRow.addView(answerTV);
         }
 
-        for (int i = 0; i < answerOptions.length() / 2; i++) {
+        for (int i = 0; i < answerPadCharacters.length() / 2; i++) {
             final int m = i;
             final TextView answerTV = generateFilledTextView(i);
 
@@ -145,7 +147,7 @@ public class QuestionWordFragment extends Fragment {
             row1.addView(answerTV);
         }
 
-        for (int i = answerOptions.length() / 2; i < answerOptions.length(); i++) {
+        for (int i = answerPadCharacters.length() / 2; i < answerPadCharacters.length(); i++) {
             final TextView answerTV = generateFilledTextView(i);
             final int m = i;
 
@@ -171,7 +173,7 @@ public class QuestionWordFragment extends Fragment {
     }
 
     private void putThisCharacterBackToOptionsRow(int indexToExchange) {
-        for (int i = answer.length(); i < answer.length() + answerOptions.length(); i++) {
+        for (int i = answer.length(); i < answer.length() + answerPadCharacters.length(); i++) {
             if (jumbledCharacters.get(i) == '-') {
                 Collections.swap(jumbledCharacters, indexToExchange, i);
             }

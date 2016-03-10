@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
+import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
@@ -40,7 +41,9 @@ public class QuestionsActivity extends AppCompatActivity {
     private final int NO_OF_COLORS = 7;
     private ImageView character;
     private int mCurrentPage;
-    private boolean isCharacterDialogOpen =false;
+    private boolean isCharacterDialogOpen = false;
+
+    String CATEGORY = "";
 
     @Bind(R.id.questions_activity_level)
     TextView tvLevel;
@@ -57,11 +60,14 @@ public class QuestionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_questions);
         ButterKnife.bind(this);
 
+        mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_POSITION, 0);
+        CATEGORY = getIntent().getStringExtra(Constants.BUNDLE_QUESTION_CATEGORY);
+
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.setPageMargin(convertDip2Pixels(this, 16));
         pager.setPageTransformer(true, new DepthPageTransformer());
-        mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_POSITION, 0);
+
         mContainer.setBackgroundColor(FallingDrawables.getLightBackgroundColor(mCurrentPage, getApplicationContext()));
         pager.setCurrentItem(mCurrentPage);
         tvLevel.setText("Level " + (mCurrentPage + 1));
@@ -131,12 +137,18 @@ public class QuestionsActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
             bundle.putInt(Constants.BUNDLE_QUESTION_POSITION, position);
+            bundle.putString(Constants.BUNDLE_QUESTION_CATEGORY, CATEGORY);
+            if (JSONUtils.getQuestionAt(getApplicationContext(), CATEGORY, position).layout_type == 0) {
+                return QuestionMCQFragment.newInstance(bundle);
+            } else if (JSONUtils.getQuestionAt(getApplicationContext(), CATEGORY, position).layout_type == 1) {
+                return QuestionWordFragment.newInstance(bundle);
+            }
             return QuestionWordFragment.newInstance(bundle);
         }
 
         @Override
         public int getCount() {
-            return JSONUtils.getTotalRiddleQuestions(getApplicationContext());
+            return JSONUtils.getTotalQuestions(getApplicationContext(), CATEGORY);
         }
     }
 
@@ -240,8 +252,7 @@ public class QuestionsActivity extends AppCompatActivity {
                             characterDialog.setVisibility(View.VISIBLE);
                             characterDialog.startAnimation(scaleAnimation);
                             toggleIsCharacterDialogOpen();
-                        }
-                        else {
+                        } else {
                             characterDialog = findViewById(R.id.questions_activity_character_dialog);
                             ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
                             scaleAnimation.setDuration(500);
@@ -261,10 +272,11 @@ public class QuestionsActivity extends AppCompatActivity {
 
     }
 
-    /** This sets up the click listeners for various options in character dialog. Implementation copied from DialogSpeakingMan
-     *  by Dhruv
+    /**
+     * This sets up the click listeners for various options in character dialog. Implementation copied from DialogSpeakingMan
+     * by Dhruv
      */
-    public void setupCharacterDialog(){
+    public void setupCharacterDialog() {
         final TextView showhint;
         final LinearLayout hint, confirmhint;
         final TextView nohint, yeshint, showhiddenhint;
@@ -402,7 +414,7 @@ public class QuestionsActivity extends AppCompatActivity {
         });
     }
 
-    public void toggleIsCharacterDialogOpen(){
+    public void toggleIsCharacterDialogOpen() {
         isCharacterDialogOpen = !isCharacterDialogOpen;
     }
 }

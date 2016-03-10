@@ -9,28 +9,41 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.adapters.NumberLineAdapter;
-import com.rohanx96.admobproto.elements.MCQAnswersDetails;
+import com.rohanx96.admobproto.elements.GenericAnswerDetails;
+import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 
 import java.util.ArrayList;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class NumberLineActivity extends AppCompatActivity {
     private View mContainer;
     private int mTimeCount = 0;
     private boolean isAnimationRunning = false;
 
+    String CATEGORY = "";
+
+    @Bind(R.id.activity_number_line_title)
+    TextView tvTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_line);
+        ButterKnife.bind(this);
 
-        ArrayList<MCQAnswersDetails> mMCQAnswersDetails = (ArrayList<MCQAnswersDetails>) MCQAnswersDetails.listAll(MCQAnswersDetails.class);
-
+        CATEGORY = getIntent().getStringExtra(Constants.BUNDLE_QUESTION_CATEGORY);
+        tvTitle.setText(CATEGORY);
+//        ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(CATEGORY);
+        ArrayList<GenericAnswerDetails> answerDetails = (ArrayList<GenericAnswerDetails>) GenericAnswerDetails.listAll(GenericAnswerDetails.class);
         mContainer = findViewById(R.id.activity_number_line_container);
-        NumberLineAdapter numberLineAdapter = new NumberLineAdapter(this, mMCQAnswersDetails);
+        NumberLineAdapter numberLineAdapter = new NumberLineAdapter(this, answerDetails);
         ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
         listView.setAdapter(numberLineAdapter);
     }

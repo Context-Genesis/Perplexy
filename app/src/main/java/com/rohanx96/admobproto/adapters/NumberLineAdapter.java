@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
+import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.NumberLineActivity;
 import com.rohanx96.admobproto.ui.QuestionsActivity;
 import com.rohanx96.admobproto.R;
-import com.rohanx96.admobproto.elements.MCQAnswersDetails;
 import com.rohanx96.admobproto.utils.Constants;
 
 import java.util.ArrayList;
@@ -22,24 +22,27 @@ import java.util.ArrayList;
 public class NumberLineAdapter extends BaseAdapter {
 
     NumberLineActivity context;
-    ArrayList<MCQAnswersDetails> MCQAnswersDetails;
+    ArrayList<GenericAnswerDetails> answerDetails;
     LayoutInflater inflater;
 
-    public NumberLineAdapter(NumberLineActivity context, ArrayList<MCQAnswersDetails> MCQAnswersDetails) {
+    public NumberLineAdapter(NumberLineActivity context, ArrayList<GenericAnswerDetails> answerDetails) {
         this.context = context;
-        this.MCQAnswersDetails = MCQAnswersDetails;
-        this.MCQAnswersDetails.add(0, new MCQAnswersDetails(-1, Constants.CORRECT, false, false, false));
-        this.MCQAnswersDetails.add(MCQAnswersDetails.size(), new MCQAnswersDetails(-1, Constants.CORRECT, false, false, false));
+        this.answerDetails = answerDetails;
+        /*
+        * Add for padding of the arrows on the number line
+         */
+        this.answerDetails.add(0, new GenericAnswerDetails(-1, Constants.CORRECT, Constants.UNAVAILABLE, false, false, 0));
+        this.answerDetails.add(answerDetails.size(), new GenericAnswerDetails(-1, Constants.CORRECT, Constants.UNAVAILABLE, false, false, 0));
     }
 
     @Override
     public int getCount() {
-        return MCQAnswersDetails.size();
+        return answerDetails.size();
     }
 
     @Override
-    public MCQAnswersDetails getItem(int position) {
-        return MCQAnswersDetails.get(position);
+    public GenericAnswerDetails getItem(int position) {
+        return answerDetails.get(position);
     }
 
     @Override
@@ -84,8 +87,8 @@ public class NumberLineAdapter extends BaseAdapter {
         *Process answer details here and set backgrounds and lock image accordingly
          */
 
-        if (position != 0 && position != MCQAnswersDetails.size() - 1)
-            holder.tv.setText(" " + getItem(position).question_id + " ");
+        if (position != 0 && position != answerDetails.size() - 1)
+            holder.tv.setText(" " + getItem(position).question_number + " ");
 
         holder.tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +98,7 @@ public class NumberLineAdapter extends BaseAdapter {
                 *send position of clicked item. Note, it sends (position-1) because there is an extra element padded at top and bottom of numberline
                  */
                 intent.putExtra(Constants.BUNDLE_QUESTION_POSITION, (position - 1));
+                intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position - 1).category);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
@@ -108,7 +112,7 @@ public class NumberLineAdapter extends BaseAdapter {
     public int getItemViewType(int position) {
         if (position == 0)
             return -1;
-        else if (position == MCQAnswersDetails.size() - 1)
+        else if (position == answerDetails.size() - 1)
             return -2;
 
         return position % 2;

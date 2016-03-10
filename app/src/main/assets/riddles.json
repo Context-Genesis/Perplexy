@@ -1,152 +1,82 @@
-[	
-	{
-		"questionnum" : 1 ,
-		"questionname" : "Pick the awesome one" ,
-		"category" : "riddle",
-		"hint" : "no hint baby",
-		"answer" : "a",
-		"explanation" : "For obvious reason",
-		"message" : "Hello, from the other side",
-		"padcharacters" : "RAJNFNN",
-		"options": [
-				{
-					"choice": "Dhruv"
-				},
-				{
-					"choice": "Rohan"
-				},
-				{
-					"choice": "Rishabh"
-				},
-				{
-					"choice": "All of the above"
-				}
-			],
-		"layout" : 0
-	},
-	{
-		"questionnum" : 2 ,
-		"questionname" : "Aviral is a __ boy" ,
-		"category" : "riddle",
-		"hint" : "Think more on this",
-		"answer" : "b",
-		"explanation" : "no",
-		"message" : "Its too late to apologize",
-		"padcharacters" : "DAFGEBAD",
-		"options": [
-				{
-					"choice": "happy"
-				},
-				{
-					"choice": "good"
-				},
-				{
-					"choice": "bad"
-				},
-				{
-					"choice": "sad"
-				}
-			],
-		"layout" : 0
-	},
-	{
-		"questionnum" : 3 ,
-		"questionname" : "Gauri is a __ boy" ,
-		"category" : "riddle",
-		"hint" : "Think more on this",
-		"answer" : "b",
-		"explanation" : "no",
-		"message" : "Its too late to apologize",
-		"padcharacters" : "DAFGEBAD",
-		"options": [
-				{
-					"choice": "happy"
-				},
-				{
-					"choice": "good"
-				},
-				{
-					"choice": "bad"
-				},
-				{
-					"choice": "sad"
-				}
-			],
-		"layout" : 0
-	},
-	{
-		"questionnum" : 4 ,
-		"questionname" : "Dhruv is a __ boy" ,
-		"category" : "riddle",
-		"hint" : "Think more on this",
-		"answer" : "b",
-		"explanation" : "no",
-		"message" : "Its too late to apologize",
-		"padcharacters" : "DAFGEBAD",
-		"options": [
-				{
-					"choice": "happy"
-				},
-				{
-					"choice": "good"
-				},
-				{
-					"choice": "bad"
-				},
-				{
-					"choice": "sad"
-				}
-			],
-		"layout" : 0
-	},
-	{
-		"questionnum" : 5 ,
-		"questionname" : "Aviral is a __ boy" ,
-		"category" : "riddle",
-		"hint" : "Think more on this",
-		"answer" : "b",
-		"explanation" : "no",
-		"message" : "Its too late to apologize",
-		"padcharacters" : "DAFGEBAD",
-		"options": [
-				{
-					"choice": "happy"
-				},
-				{
-					"choice": "good"
-				},
-				{
-					"choice": "bad"
-				},
-				{
-					"choice": "sad"
-				}
-			],
-		"layout" : 0
-	},
-	{
-		"questionnum" : 6 ,
-		"questionname" : "Aviral is a __ boy" ,
-		"category" : "riddle",
-		"hint" : "Think more on this",
-		"answer" : "b",
-		"explanation" : "no",
-		"message" : "Its too late to apologize",
-		"padcharacters" : "DAFGEBAD",
-		"options": [
-				{
-					"choice": "happy"
-				},
-				{
-					"choice": "good"
-				},
-				{
-					"choice": "bad"
-				},
-				{
-					"choice": "sad"
-				}
-			],
-		"layout" : 0
-	}
-]
+{
+  "questions": [
+    {
+      "question_number": 1,
+      "question": "Pick the awesome one",
+      "question_name": "Pick One",
+      "category": "GAME_TYPE_RIDDLE",
+      "hint": "no hint baby",
+      "answer": "4",
+      "explanation": "For obvious reasons",
+      "message": "Hello, from the other side",
+      "pad_characters": "",
+      "options": [
+        {
+          "choice": "Dhruv"
+        },
+        {
+          "choice": "Rohan"
+        },
+        {
+          "choice": "Rishabh"
+        },
+        {
+          "choice": "All of the above"
+        }
+      ],
+      "layout_type": 0
+    },
+    {
+      "question_number": 2,
+      "question": "Aviral is a __ boy",
+      "question_name": "Aviral",
+      "category": "GAME_TYPE_RIDDLE",
+      "hint": "Think more on this",
+      "answer": "GOOD",
+      "explanation": "well maybe I am lying here",
+      "message": "Its too late to apologize",
+      "pad_characters": "DAFGEBADWREQ",
+      "options": [],
+      "layout_type": 1
+    },
+    {
+      "question_number": 3,
+      "question": "Gauri is a __ boy",
+      "question_name": "Gauri",
+      "category": "GAME_TYPE_RIDDLE",
+      "hint": "Think more on this",
+      "answer": "3",
+      "explanation": "no",
+      "message": "Its too late to apologize",
+      "pad_characters": "",
+      "options": [
+        {
+          "choice": "happy"
+        },
+        {
+          "choice": "good"
+        },
+        {
+          "choice": "smart"
+        },
+        {
+          "choice": "sad"
+        }
+      ],
+      "layout_type": 0
+    },
+    {
+      "question_number": 4,
+      "question": "Dhruv is a __ boy",
+      "question_name": "Dhruv",
+      "category": "GAME_TYPE_RIDDLE",
+      "hint": "Think more on this",
+      "answer": "HARAMI",
+      "explanation": "no",
+      "message": "Its too late to apologize",
+      "pad_characters": "HARAMIHQWPLX",
+      "options": [],
+      "layout_type": 2
+    }
+  ]
+}

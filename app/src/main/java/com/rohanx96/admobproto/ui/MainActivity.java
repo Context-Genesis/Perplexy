@@ -11,13 +11,12 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.rohanx96.admobproto.elements.WordAnswerDetails;
+import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.fragments.SettingsFragment;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.ui.fragments.FrontPageFragment;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.ui.fragments.StatisticsFragment;
-import com.rohanx96.admobproto.elements.MCQAnswersDetails;
 import com.rohanx96.admobproto.utils.Constants;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -48,7 +47,7 @@ public class MainActivity extends FragmentActivity {
         circlePageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
         mPager.setAdapter(mPagerAdapter);
         circlePageIndicator.setViewPager(mPager);
-        mPager.setCurrentItem(1,false);
+        mPager.setCurrentItem(1, false);
         mContainer.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -72,15 +71,15 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        switch (mPager.getCurrentItem()){
+        switch (mPager.getCurrentItem()) {
             case 0:
-                mPager.setCurrentItem(1,true);
+                mPager.setCurrentItem(1, true);
                 return;
             case 1:
                 super.onBackPressed();
                 return;
             case 2:
-                mPager.setCurrentItem(1,true);
+                mPager.setCurrentItem(1, true);
                 return;
             default:
                 return;
@@ -119,8 +118,7 @@ public class MainActivity extends FragmentActivity {
          */
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
         if (prefs.getBoolean(Constants.FIRST_RUN, true)) {
-            MCQAnswersDetails.initializeDatabase(getApplicationContext());
-            WordAnswerDetails.initializeDatabase(getApplicationContext());
+            GenericAnswerDetails.initializeDatabase(getApplicationContext());
             prefs.edit().putBoolean(Constants.FIRST_RUN, false).apply();
         }
     }

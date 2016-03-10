@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.ui.MainActivity;
 import com.rohanx96.admobproto.ui.NumberLineActivity;
+import com.rohanx96.admobproto.utils.Constants;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,6 +49,14 @@ public class FrontPageFragment extends Fragment {
 
         ButterKnife.bind(this, rootView);
 
+        setUpSeekBar();
+        gameSeekBar.setProgress(0);
+        gameType1.performClick();
+
+        return rootView;
+    }
+
+    private void setUpSeekBar() {
         gameSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, final int progress, boolean fromUser) {
@@ -86,11 +95,6 @@ public class FrontPageFragment extends Fragment {
 
             }
         });
-
-        gameSeekBar.setProgress(0);
-        gameType1.performClick();
-
-        return rootView;
     }
 
     @OnClick(R.id.game_1)
@@ -111,6 +115,18 @@ public class FrontPageFragment extends Fragment {
     @OnClick(R.id.game_4)
     public void onClickGame4() {
         gameSeekBar.setProgress(3);
+    }
+
+    @OnClick(R.id.home_play)
+    public void playGame() {
+        /*
+        *Send which game type user chose with this intent
+         */
+        Intent questionsActivity = new Intent(getActivity(), NumberLineActivity.class);
+        questionsActivity.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, Constants.GAME_TYPE_RIDDLE); /*Implement switch case here once we set up code and questions*/
+        startActivity(questionsActivity);
+        /* This will stop the falling drawables animation when the activity has been left. Improves performance */
+        ((MainActivity) getActivity()).getFallingDrawables().stopAnimation();
     }
 
     private String getGameTypeText(int lvl) {
@@ -165,13 +181,5 @@ public class FrontPageFragment extends Fragment {
             default:
                 return;
         }
-    }
-
-    @OnClick(R.id.home_play)
-    public void playGame() {
-        Intent questionsActivity = new Intent(getActivity(), NumberLineActivity.class);
-        startActivity(questionsActivity);
-        // This will stop the falling drawables animation when the activity has been left. Improves performance
-        ((MainActivity)getActivity()).getFallingDrawables().stopAnimation();
     }
 }

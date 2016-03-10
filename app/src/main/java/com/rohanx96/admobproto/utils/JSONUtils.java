@@ -3,8 +3,7 @@ package com.rohanx96.admobproto.utils;
 import android.content.Context;
 import android.util.Log;
 
-import com.rohanx96.admobproto.elements.MCQQuestion;
-import com.rohanx96.admobproto.elements.WordQuestion;
+import com.rohanx96.admobproto.elements.GenericQuestion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -89,85 +88,57 @@ public class JSONUtils {
         return json;
     }
 
-    public static ArrayList<MCQQuestion> getSequenceQuestionsFromJSONString(Context context) {
-        ArrayList<MCQQuestion> MCQQuestions = new ArrayList<>();
+    public static ArrayList<GenericQuestion> getQuestionsFromJSONString(Context context, String category) {
+        ArrayList<GenericQuestion> genericQuestions = new ArrayList<>();
         try {
-            JSONObject listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
+            JSONObject listObject = null;
+            if (category.equals(Constants.GAME_TYPE_RIDDLE))
+                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
+            else if (category.equals(Constants.GAME_TYPE_SEQUENCES))
+                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
+            else if (category.equals(Constants.GAME_TYPE_LOGIC))
+                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
+
             for (int i = 0; i < listObject.getJSONArray("questions").length(); i++) {
                 JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(i);
-                int question_id = questionObj.getInt("question_id");
-                int answeroption = questionObj.getInt("answeroption");
-                String questionstring = questionObj.getString("question");
-                String hint = questionObj.getString("hint");
-                String message = questionObj.getString("message");
-                JSONArray options = questionObj.getJSONArray("options");
 
-                MCQQuestion MCQQuestion = new MCQQuestion(question_id, questionstring, options, answeroption, message, hint);
-                MCQQuestions.add(MCQQuestion);
-            }
-            return MCQQuestions;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static int getTotalSequenceQuestions(Context context) {
-        try {
-            JSONObject listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
-            return listObject.getJSONArray("questions").length();
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
-    public static MCQQuestion getSequenceQuestionAt(Context context, int index) {
-        JSONObject listObject = null;
-        try {
-            listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
-            JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(index);
-            int question_id = questionObj.getInt("question_id");
-            int answeroption = questionObj.getInt("answeroption");
-            String questionstring = questionObj.getString("question");
-            String hint = questionObj.getString("hint");
-            String message = questionObj.getString("message");
-            JSONArray options = questionObj.getJSONArray("options");
-
-            MCQQuestion MCQQuestion = new MCQQuestion(question_id, questionstring, options, answeroption, message, hint);
-            return MCQQuestion;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static ArrayList<WordQuestion> getRiddleQuestionsFromJSONString(Context context) {
-        ArrayList<WordQuestion> wordQuestions = new ArrayList<>();
-        try {
-            JSONObject listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
-            for (int i = 0; i < listObject.getJSONArray("questions").length(); i++) {
-                JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(i);
-                int question_id = questionObj.getInt("question_id");
-                String answeroptions = questionObj.getString("answeroptions");
-                String questionstring = questionObj.getString("question");
+                int question_number = questionObj.getInt("question_number");
+                int layout_type = questionObj.getInt("layout_type");
+                String category_string = questionObj.getString("category");
+                String question_name = questionObj.getString("question_name");
+                String question_string = questionObj.getString("question");
                 String answer = questionObj.getString("answer");
                 String hint = questionObj.getString("hint");
                 String message = questionObj.getString("message");
+                String explanation = questionObj.getString("explanation");
+                String pad_characters = questionObj.getString("pad_characters");
+                JSONArray options = questionObj.getJSONArray("options");
 
-                WordQuestion wordQuestion = new WordQuestion(question_id, questionstring, answer, answeroptions, hint, message);
-                wordQuestions.add(wordQuestion);
+                GenericQuestion genericQuestion = new GenericQuestion(question_number, layout_type, category_string, question_name, question_string, answer, hint, message, explanation, pad_characters, options);
+                genericQuestions.add(genericQuestion);
             }
-            return wordQuestions;
+            return genericQuestions;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static int getTotalRiddleQuestions(Context context) {
+    public static int getTotalQuestions(Context context, String category) {
         try {
-            JSONObject listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
+            JSONObject listObject = null;
+            if (category.equals(Constants.GAME_TYPE_RIDDLE))
+                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
+            else if (category.equals(Constants.GAME_TYPE_SEQUENCES))
+                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
+            else if (category.equals(Constants.GAME_TYPE_LOGIC))
+                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
+
+            if (listObject == null)
+                Log.d("JSONUtils", category + " " + listObject);
+            else
+                Log.d("JSONUtils | ", category + " " + listObject);
+
             return listObject.getJSONArray("questions").length();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -175,20 +146,32 @@ public class JSONUtils {
         }
     }
 
-    public static WordQuestion getRiddleQuestionAt(Context context, int index) {
-        JSONObject listObject = null;
+    public static GenericQuestion getQuestionAt(Context context, String category, int index) {
         try {
-            listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
+            JSONObject listObject = null;
+            if (category.equals(Constants.GAME_TYPE_RIDDLE))
+                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
+            else if (category.equals(Constants.GAME_TYPE_SEQUENCES))
+                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
+            else if (category.equals(Constants.GAME_TYPE_LOGIC))
+                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
+
             JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(index);
-            int question_id = questionObj.getInt("question_id");
-            String answeroptions = questionObj.getString("answeroptions");
-            String questionstring = questionObj.getString("question");
+
+            int question_number = questionObj.getInt("question_number");
+            int layout_type = questionObj.getInt("layout_type");
+            String category_string = questionObj.getString("category");
+            String question_name = questionObj.getString("question_name");
+            String question_string = questionObj.getString("question");
             String answer = questionObj.getString("answer");
             String hint = questionObj.getString("hint");
             String message = questionObj.getString("message");
+            String explanation = questionObj.getString("explanation");
+            String pad_characters = questionObj.getString("pad_characters");
+            JSONArray options = questionObj.getJSONArray("options");
 
-            WordQuestion wordQuestion = new WordQuestion(question_id, questionstring, answer, answeroptions, hint, message);
-            return wordQuestion;
+            GenericQuestion genericQuestion = new GenericQuestion(question_number, layout_type, category_string, question_name, question_string, answer, hint, message, explanation, pad_characters, options);
+            return genericQuestion;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
