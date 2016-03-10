@@ -123,8 +123,10 @@ public class FrontPageFragment extends Fragment {
         *Send which game type user chose with this intent
          */
         Intent questionsActivity = new Intent(getActivity(), NumberLineActivity.class);
-        questionsActivity.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, Constants.GAME_TYPE_RIDDLE); /*Implement switch case here once we set up code and questions*/
+        /*Implement switch case here once we set up code and questions*/
+        questionsActivity.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, Constants.GAME_TYPE_RIDDLE);
         startActivity(questionsActivity);
+
         /* This will stop the falling drawables animation when the activity has been left. Improves performance */
         ((MainActivity) getActivity()).getFallingDrawables().stopAnimation();
     }

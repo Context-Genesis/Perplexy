@@ -40,8 +40,8 @@ public class NumberLineActivity extends AppCompatActivity {
 
         CATEGORY = getIntent().getStringExtra(Constants.BUNDLE_QUESTION_CATEGORY);
         tvTitle.setText(CATEGORY);
-//        ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(CATEGORY);
-        ArrayList<GenericAnswerDetails> answerDetails = (ArrayList<GenericAnswerDetails>) GenericAnswerDetails.listAll(GenericAnswerDetails.class);
+        ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(CATEGORY);
+
         mContainer = findViewById(R.id.activity_number_line_container);
         NumberLineAdapter numberLineAdapter = new NumberLineAdapter(this, answerDetails);
         ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
