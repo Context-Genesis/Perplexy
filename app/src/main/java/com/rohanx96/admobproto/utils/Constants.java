@@ -29,7 +29,10 @@ public class Constants {
     public static final String PREF_COINS = "Coins";
     public static final String PREF_COINS_EARNED = "Earned";
     public static final String PREF_COINS_SPENT = "Spent";
+
+    public static final long INITIAL_COINS = 150;
     public static final int HINT_PRICE = 75;
+    public static final int WIN_PRICE = 100;
     public static final int SOLUTION_PRICE = 150;
     public static final int UNLOCK_INCORRECT_PRICE = 100;
     public static final int UNLOCK_UNAVAILABLE_PRICE = 120;

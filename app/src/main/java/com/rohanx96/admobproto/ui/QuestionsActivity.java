@@ -3,6 +3,7 @@ package com.rohanx96.admobproto.ui;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +22,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
@@ -28,6 +30,7 @@ import com.rohanx96.admobproto.elements.GenericQuestion;
 import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionTextBoxFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
+import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -40,6 +43,7 @@ import butterknife.ButterKnife;
 /**
  * Created by rose on 6/3/16.
  */
+
 public class QuestionsActivity extends AppCompatActivity {
 
     private ScreenSlidePagerAdapter pagerAdapter;
@@ -47,6 +51,9 @@ public class QuestionsActivity extends AppCompatActivity {
     private ImageView character;
     private int mCurrentPage;
     private boolean isCharacterDialogOpen = false;
+
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
 
     int CATEGORY = -1;
 
@@ -58,6 +65,9 @@ public class QuestionsActivity extends AppCompatActivity {
 
     @Bind(R.id.questions_activity_pager)
     ViewPager pager;
+
+    @Bind(R.id.questions_activity_coin_text)
+    TextView coins_display;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +86,9 @@ public class QuestionsActivity extends AppCompatActivity {
         mContainer.setBackgroundColor(FallingDrawables.getLightBackgroundColor(mCurrentPage, getApplicationContext()));
         pager.setCurrentItem(mCurrentPage);
         tvLevel.setText("Level " + (mCurrentPage + 1));
+
+        pref = getBaseContext().getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
 
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -338,18 +351,27 @@ public class QuestionsActivity extends AppCompatActivity {
                 confirmhint.setVisibility(View.GONE);
                 showhint.setVisibility(View.VISIBLE);
 
-                showhiddenhint.setVisibility(View.INVISIBLE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
-                showhiddenhint.startAnimation(in);
-                showhiddenhint.setVisibility(View.VISIBLE);
-                showhiddenhint.startAnimation(in);
+                pref = getBaseContext().getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+                long coins = pref.getLong(Constants.PREF_COINS, 0);
+                if (coins - Integer.parseInt(hintprice.getText().toString()) >= 0) {
+                    showhiddenhint.setVisibility(View.INVISIBLE);
+                    Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
+                    showhiddenhint.startAnimation(in);
+                    showhiddenhint.setVisibility(View.VISIBLE);
+                    showhiddenhint.startAnimation(in);
 
-                if (ansDetails.get(mCurrentPage).hint_displayed == false) {
-                    ansDetails.get(mCurrentPage).hint_displayed = true;
-                    ansDetails.get(mCurrentPage).save();
-                    // TODO: deduct coins
+                    if (ansDetails.get(mCurrentPage).hint_displayed == false) {
+                        ansDetails.get(mCurrentPage).hint_displayed = true;
+                        ansDetails.get(mCurrentPage).save();
+                        // TODO: deduct coins
+                        Coins.hint_access(getApplication());
+                        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
+                    }
+                    hintprice.setText("0");
+                } else {
+                    Toast.makeText(getApplication(), "Donot have enough coins",
+                            Toast.LENGTH_LONG).show();
                 }
-                hintprice.setText("0");
             }
         });
 
@@ -380,7 +402,7 @@ public class QuestionsActivity extends AppCompatActivity {
         if (ansDetails.get(mCurrentPage).answer_displayed == true) {
             solutionprice.setText("0");
         } else {
-            solutionprice.setText(Constants.SOLUTION_PRICE+"");
+            solutionprice.setText(Constants.SOLUTION_PRICE + "");
         }
 
         showsolution.setOnClickListener(new View.OnClickListener() {
@@ -401,18 +423,27 @@ public class QuestionsActivity extends AppCompatActivity {
                 confirmsolution.setVisibility(View.GONE);
                 showsolution.setVisibility(View.VISIBLE);
 
-                showhiddensolution.setVisibility(View.INVISIBLE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
-                showhiddensolution.startAnimation(in);
-                showhiddensolution.setVisibility(View.VISIBLE);
-                showhiddensolution.startAnimation(in);
+                pref = getBaseContext().getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+                long coins = pref.getLong(Constants.PREF_COINS, 0);
+                if (coins - Integer.parseInt(solutionprice.getText().toString()) >= 0) {
+                    showhiddensolution.setVisibility(View.INVISIBLE);
+                    Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
+                    showhiddensolution.startAnimation(in);
+                    showhiddensolution.setVisibility(View.VISIBLE);
+                    showhiddensolution.startAnimation(in);
 
-                if (!ansDetails.get(mCurrentPage).answer_displayed) {
-                    ansDetails.get(mCurrentPage).answer_displayed = true;
-                    ansDetails.get(mCurrentPage).save();
-                    // TODO: deduct coins
+                    if (!ansDetails.get(mCurrentPage).answer_displayed) {
+                        ansDetails.get(mCurrentPage).answer_displayed = true;
+                        ansDetails.get(mCurrentPage).save();
+                        // TODO: deduct coins
+                        Coins.solution_access(getApplication());
+                        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
+                    }
+                    solutionprice.setText("0");
+                } else {
+                    Toast.makeText(getApplication(), "Donot have enough coins",
+                            Toast.LENGTH_LONG).show();
                 }
-                solutionprice.setText("0");
             }
         });
 

@@ -2,6 +2,7 @@ package com.rohanx96.admobproto.ui;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -34,6 +35,9 @@ public class NumberLineActivity extends AppCompatActivity {
     @Bind(R.id.activity_number_line_title)
     TextView tvTitle;
 
+    @Bind(R.id.activity_coin_text)
+    TextView coin_display;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +46,19 @@ public class NumberLineActivity extends AppCompatActivity {
         CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY, -1);
         tvTitle.setText("Select Level");
         mContainer = findViewById(R.id.activity_number_line_container);
+        SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+        coin_display.setText(prefs.getLong(Constants.PREF_COINS, 0) + "");
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         /* Make the activity fullscreen */
+
+        SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+        coin_display.setText(prefs.getLong(Constants.PREF_COINS, 0) + "");
+
         mContainer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -114,7 +125,7 @@ public class NumberLineActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.activity_number_line_back)
-    public void goBack(){
+    public void goBack() {
         onBackPressed();
     }
 

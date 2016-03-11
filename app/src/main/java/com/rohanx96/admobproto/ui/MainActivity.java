@@ -121,6 +121,8 @@ public class MainActivity extends FragmentActivity {
             GenericAnswerDetails.initializeDatabase(getApplicationContext());
             prefs.edit().putBoolean(Constants.FIRST_RUN, false).apply();
         }
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong(Constants.PREF_COINS, Constants.INITIAL_COINS).apply();
     }
 
     public FallingDrawables getFallingDrawables() {

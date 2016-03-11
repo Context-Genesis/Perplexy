@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
+import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
 
@@ -265,7 +266,6 @@ public class QuestionWordFragment extends Fragment {
                 questionCard.addView(lock, questionCard.getChildCount());
                 break;
             case Constants.INCORRECT:
-                //TODO: Lock image for locking options when incorrect
                 ImageView options_lock = (ImageView) getActivity().findViewById(R.id.lock_options_image);
                 options_lock.setVisibility(View.VISIBLE);
                 break;
