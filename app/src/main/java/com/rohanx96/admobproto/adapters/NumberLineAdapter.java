@@ -154,6 +154,7 @@ public class NumberLineAdapter extends BaseAdapter {
                 holder.tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // TODO : Add character dialog showing options to unlock Rishabh
                         Toast.makeText(context, "This question is locked", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -175,6 +176,7 @@ public class NumberLineAdapter extends BaseAdapter {
                 holder.tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // TODO : Add character dialog showing options to unlock Rishabh
                         Toast.makeText(context, "This question is locked", Toast.LENGTH_LONG).show();
                     }
                 });

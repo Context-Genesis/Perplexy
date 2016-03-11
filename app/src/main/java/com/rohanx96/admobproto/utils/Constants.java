@@ -24,7 +24,7 @@ public class Constants {
     public static final String FIRST_RUN = "FIRST_RUN";
 
 
-    // TODO: Implement coins structure
+    // TODO: Implement coins structure Dhruv (done partly)
     // Use these strings and integers values for coins
     public static final String PREF_COINS = "Coins";
     public static final String PREF_COINS_EARNED = "Earned";

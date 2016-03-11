@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
+import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
 import com.rohanx96.admobproto.utils.Coins;
@@ -40,6 +42,9 @@ public class QuestionWordFragment extends Fragment {
     int POSITION = -1;
     int CATEGORY;
     FrameLayout questionCard;
+    RelativeLayout cardContent;
+    private QuestionsCallback mCallback;
+
     @Bind(R.id.qcard_word_question)
     TextView tvQuestion;
 
@@ -63,6 +68,8 @@ public class QuestionWordFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.question_word_card, container, false);
         ButterKnife.bind(this, rootView);
         this.questionCard = (FrameLayout) rootView.findViewById(R.id.question_card);
+        this.cardContent = (RelativeLayout) rootView.findViewById(R.id.question_card_content);
+        this.mCallback = (QuestionsCallback) getActivity();
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
@@ -72,7 +79,6 @@ public class QuestionWordFragment extends Fragment {
 
         answer = genericQuestion.answer;
         answerPadCharacters = genericQuestion.pad_characters;
-        lockQuestionIfRequired();
         BLANK_CIRCLE_SIZE = getBlankCircleSize();
 
         setUpJumbledCharacters();
@@ -80,6 +86,13 @@ public class QuestionWordFragment extends Fragment {
         setUpBlanksAndRows();
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Check every time the fragment is refreshed
+        lockQuestionIfRequired();
     }
 
     private void setUpJumbledCharacters() {
@@ -248,12 +261,13 @@ public class QuestionWordFragment extends Fragment {
     }
 
     public void lockQuestionIfRequired(){
-        // TODO: Hide character when question is locked
-        Log.i("question ", answer);
-        Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION, CATEGORY));
+        // TODO: (Done) Hide character when question is locked
+        //Log.i("question ", answer);
+        Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION,CATEGORY));
         switch (GenericAnswerDetails.getStatus(POSITION,CATEGORY)){
             case Constants.UNAVAILABLE:
                 Log.i("textcard","unavailable");
+                //mCallback.setIsQuestionLocked(true);
                 //ImageView lock = (ImageView) findViewById(R.id.lock_full_image);
                 //lock.setVisibility(View.VISIBLE);
                 ImageView lock = new ImageView(getActivity());
@@ -263,11 +277,40 @@ public class QuestionWordFragment extends Fragment {
                 lock.setImageResource(R.drawable.lock_flat);
                 lock.setBackgroundColor(getResources().getColor(R.color.white));
                 lock.setScaleType(ImageView.ScaleType.CENTER);
-                questionCard.addView(lock, questionCard.getChildCount());
+                lock.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
+                        //expand the character dialog only if it is not previously visible
+                        if (characterDialog.getVisibility() == View.GONE) {
+                            mCallback.showCharacterUnlockDialog();
+                        }
+                    }
+                });
+                cardContent.addView(lock, cardContent.getChildCount());
                 break;
             case Constants.INCORRECT:
-                ImageView options_lock = (ImageView) getActivity().findViewById(R.id.lock_options_image);
-                options_lock.setVisibility(View.VISIBLE);
+                //TODO: (done) Lock image for locking options when incorrect
+                //mCallback.setIsQuestionLocked(true);
+                ImageView options_lock = new ImageView(getActivity());
+                RelativeLayout.LayoutParams layoutParams1 = new android.widget.RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                        , ViewGroup.LayoutParams.MATCH_PARENT);
+                layoutParams1.addRule(RelativeLayout.BELOW, R.id.textAreaScroller);
+                options_lock.setLayoutParams(layoutParams1);
+                options_lock.setImageResource(R.drawable.lock_flat);
+                options_lock.setBackgroundColor(getResources().getColor(R.color.white));
+                options_lock.setScaleType(ImageView.ScaleType.CENTER);
+                options_lock.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
+                        //expand the character dialog only if it is not previously visible
+                        if (characterDialog.getVisibility() == View.GONE) {
+                            mCallback.showCharacterUnlockDialog();
+                        }
+                    }
+                });
+                cardContent.addView(options_lock, cardContent.getChildCount());
                 break;
         }
     }
