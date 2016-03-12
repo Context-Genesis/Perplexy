@@ -1,0 +1,259 @@
+{
+  "questions" : 
+  [
+    {
+      "Category" : 2,
+      "Question number" : 1,
+      "Question Name" : "Alternate the glasses",
+      "Question" : "Six identical glasses are in a row. The first three glasses are filled with juice, and the last three glasses are empty.\nWhich glass should you move so that the full and the empty glasses are alternate?",
+      "Hint" : "You have to pour the contents of one glass into another",
+      "Answer" : 1,
+      "Explanation" : "After you empty the contents of glass 2 into glass 5, glasses 1, 3 and 5 will be full.",
+      "Message" : "Thirsty?",
+      "Pad Characters" : "",
+      "Options" : 
+      [
+        2,
+        3,
+        5,
+        6
+      ],
+      "Layout type" : 0
+    },
+    {
+      "Category" : 1,
+      "Question number" : 2,
+      "Question Name" : "How many months?",
+      "Question" : "Some months have 30 days, some months have 31 days. How many months have 28 days?",
+      "Hint" : "Think more",
+      "Answer" : 12,
+      "Explanation" : "All months have 28 days",
+      "Message" : "",
+      "Pad Characters" : "",
+      "Options" : "",
+      "Layout type" : 2
+    },
+    {
+      "Category" : 1,
+      "Question number" : 3,
+      "Question Name" : "Feeling ill?",
+      "Question" : "If a doctor gives you 3 pills and tells you to take one pill every half hour, how long would it be before all the pills had been taken?",
+      "Hint" : "Try it out",
+      "Answer" : 1,
+      "Explanation" : "Some time later",
+      "Message" : "",
+      "Pad Characters" : "",
+      "Options" : 
+      [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "Layout type" : 0
+    },
+    {
+      "Category" : 2,
+      "Question number" : 4,
+      "Question Name" : "Divide and conquer",
+      "Question" : "Divide 30 by half and add ten. What do you get?",
+      "Hint" : "use BODMAS",
+      "Answer" : 4,
+      "Explanation" : "30 divide by half is 60. 60+10=70",
+      "Message" : "",
+      "Pad Characters" : "",
+      "Options" : 
+      [
+        25,
+        50,
+        35,
+        70
+      ],
+      "Layout type" : 0
+    },
+    {
+      "Category" : 2,
+      "Question number" : 5,
+      "Question Name" : "Sheepish",
+      "Question" : "A farmer had 17 sheep. All but 9 died. How many live sheep were left?",
+      "Hint" : "Read second statement carefully",
+      "Answer" : 9,
+      "Explanation" : "All died except for those 9",
+      "Message" : "",
+      "Pad Characters" : "",
+      "Options" : 
+      [
+        7,
+        8,
+        9,
+        10
+      ],
+      "Layout type" : 0
+    },
+    {
+      "Category" : 2,
+      "Question number" : 6,
+      "Question Name" : "Dark room",
+      "Question" : "If you had only one match and entered a COLD and DARK room, where there was an oil heater, an oil lamp and a candle, which would you light first?",
+      "Hint" : "Think of all the possibilities",
+      "Answer" : "match",
+      "Explanation" : "You have to light the match first",
+      "Message" : "",
+      "Pad Characters" : "canhltdecm",
+      "Options" : "",
+      "Layout type" : 2
+    },
+    {
+      "Category" : 1,
+      "Question number" : 7,
+      "Question Name" : "Speling bee",
+      "Question" : "There is one eleven letter word, which can be spelled incorrectly even by the most brilliant students, what word it that?",
+      "Hint" : "Answer is in the question itself",
+      "Answer" : "incorrectly",
+      "Explanation" : "You would have got it by now",
+      "Message" : "",
+      "Pad Characters" : "inctlyrcore",
+      "Options" : "",
+      "Layout type" : 2
+    },
+    {
+      "Category" : 0,
+      "Question number" : 1,
+      "Question Name" : "S",
+      "Question" : "16, 33, 65, 131, 261, (....)",
+      "Hint" : "Multiply and add/subtract",
+      "Answer" : 523,
+      "Explanation" : "Each number is double the previous with 1 added and subtracted alternatively",
+      "Message" : "",
+      "Pad Characters" : " ",
+      "Options" : 391522523521,
+      "Layout type" : 0
+    },
+    {
+      "Category" : 0,
+      "Question number" : 2,
+      "Question Name" : "E",
+      "Question" : "8, 7, 11, 12, 14, 17, 17, 22, (....)",
+      "Hint" : "2 sequences in one?",
+      "Answer" : 20,
+      "Explanation" : "One sequence is 8, 11, 14, 17 and other is 7, 12, 17, 22",
+      "Message" : "",
+      "Pad Characters" : " ",
+      "Options" : 
+      [
+        22,
+        27,
+        25,
+        20
+      ],
+      "Layout type" : 0
+    },
+    {
+      "Category" : 0,
+      "Question number" : 3,
+      "Question Name" : "Q",
+      "Question" : "11, 13, 17, 19, 23, 29, 31, 37, 41, (....)",
+      "Hint" : "What sort of numbers are these",
+      "Answer" : 43,
+      "Explanation" : "All are prime numbers",
+      "Message" : "",
+      "Pad Characters" : " ",
+      "Options" : 
+      [
+        43,
+        45,
+        44,
+        47
+      ],
+      "Layout type" : 0
+    },
+    {
+      "Category" : 0,
+      "Question number" : 4,
+      "Question Name" : "U",
+      "Question" : "2, 6, 12, 20, 30, 42, 56, (....)",
+      "Hint" : "The 99th number is 9900 ",
+      "Answer" : 72,
+      "Explanation" : "Numbers are 1*2, 2*3,..",
+      "Message" : "",
+      "Pad Characters" : " ",
+      "Options" : 
+      [
+        70,
+        68,
+        72,
+        74
+      ],
+      "Layout type" : 0
+    },
+    {
+      "Category" : 0,
+      "Question number" : 5,
+      "Question Name" : "E",
+      "Question" : "31,28,31,30,31,30,31,31,30,31,30,(...)",
+      "Hint" : "Not numerical but maybe you see your knuckles to remember this",
+      "Answer" : 31,
+      "Explanation" : "Number of days in each month",
+      "Message" : "",
+      "Pad Characters" : " ",
+      "Options" : 
+      [
+        28,
+        29,
+        30,
+        31
+      ],
+      "Layout type" : 0
+    },
+    {
+      "Category" : 0,
+      "Question number" : 6,
+      "Question Name" : "N",
+      "Question" : "0,1,1,2,3,5,8,13,21,34,(...)",
+      "Hint" : "Do you know fibonacci?",
+      "Answer" : 55,
+      "Explanation" : "Each number is the sum of the previous two",
+      "Message" : "",
+      "Pad Characters" : " ",
+      "Options" : 
+      [
+        47,
+        34,
+        55,
+        65
+      ],
+      "Layout type" : 0
+    },
+    {
+      "Category" : 0,
+      "Question number" : 7,
+      "Question Name" : "C",
+      "Question" : "2,3,5,13,89,(...)",
+      "Hint" : "Intersection of two previous sequences",
+      "Answer" : 131,
+      "Explanation" : "These are the prime numbers in the fibonacci sequence",
+      "Message" : "",
+      "Pad Characters" : " ",
+      "Options" : 
+      [
+        91,
+        95,
+        129,
+        131
+      ],
+      "Layout type" : 0
+    },
+    {
+      "Category" : 0,
+      "Question number" : 8,
+      "Question Name" : "E",
+      "Question" : "A,E,F,K,L,M,N,(...)",
+      "Hint" : "These letters have something in common in the way they are written",
+      "Answer" : "T",
+      "Explanation" : "Letters made up of entirely straight lines",
+      "Message" : "",
+      "Pad Characters" : "OPQRSTUV",
+      "Options" : "",
+      "Layout type" : 1
+    }
+  ]}

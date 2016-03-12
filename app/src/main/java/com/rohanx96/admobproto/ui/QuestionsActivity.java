@@ -516,7 +516,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 showsolution.setVisibility(View.VISIBLE);
                 pref = getBaseContext().getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
                 long coins = pref.getLong(Constants.PREF_COINS, 0);
-                if (coins - Constants.SOLUTION_PRICE >= 0) {
+                if (coins - Integer.parseInt(solutionprice.getText().toString()) >= 0) {
                     showhiddensolution.setVisibility(View.INVISIBLE);
                     Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
                     showhiddensolution.startAnimation(in);
@@ -530,6 +530,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                         Coins.solution_access(getApplication());
                         coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
                     }
+                    solutionprice.setText("0");
                 } else {
                     Toast.makeText(getApplication(), "Donot have enough coins",
                             Toast.LENGTH_LONG).show();
