@@ -18,14 +18,14 @@
         android:paddingTop="16dp">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/card_view"
+            android:id="@+id/char_q_clicked_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             card_view:cardCornerRadius="4dp">
 
             <TextView
-                android:id="@+id/title_text"
+                android:id="@+id/char_q_clicked_title_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -39,14 +39,14 @@
         </android.support.v7.widget.CardView>
 
         <LinearLayout
-            android:id="@+id/ll_hint"
+            android:id="@+id/char_q_clicked_ll_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="8dp">
 
             <TextView
-                android:id="@+id/showhint"
+                android:id="@+id/char_q_clicked_showhint"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_gravity="center"
@@ -57,7 +57,7 @@
                 android:textColor="@color/blue_d_chambray" />
 
             <LinearLayout
-                android:id="@+id/ll_confirmhint"
+                android:id="@+id/char_q_clicked_ll_confirmhint"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_gravity="center"
@@ -67,7 +67,7 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/nohint"
+                    android:id="@+id/char_q_clicked_nohint"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -78,7 +78,7 @@
                     android:textColor="@color/red_l_poppy" />
 
                 <TextView
-                    android:id="@+id/yeshint"
+                    android:id="@+id/char_q_clicked_yeshint"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -91,7 +91,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/hintprice"
+                android:id="@+id/char_q_clicked_hintprice"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
@@ -112,7 +112,7 @@
 
 
         <TextView
-            android:id="@+id/showhiddenhint"
+            android:id="@+id/char_q_clicked_showhiddenhint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="4dp"
@@ -122,14 +122,14 @@
             android:visibility="gone" />
 
         <LinearLayout
-            android:id="@+id/ll_solution"
+            android:id="@+id/char_q_clicked_ll_solution"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="8dp">
 
             <TextView
-                android:id="@+id/showsolution"
+                android:id="@+id/char_q_clicked_showsolution"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_gravity="center"
@@ -140,7 +140,7 @@
                 android:textColor="@color/orange_d_zest" />
 
             <LinearLayout
-                android:id="@+id/ll_confirmsolution"
+                android:id="@+id/char_q_clicked_ll_confirmsolution"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_gravity="center"
@@ -150,7 +150,7 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/nosolution"
+                    android:id="@+id/char_q_clicked_nosolution"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -161,7 +161,7 @@
                     android:textColor="@color/red_l_poppy" />
 
                 <TextView
-                    android:id="@+id/yessolution"
+                    android:id="@+id/char_q_clicked_yessolution"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -174,7 +174,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/solutionprice"
+                android:id="@+id/char_q_clicked_solutionprice"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
@@ -195,7 +195,7 @@
 
 
         <TextView
-            android:id="@+id/showhiddensolution"
+            android:id="@+id/char_q_clicked_showhiddensolution"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="4dp"
@@ -205,7 +205,7 @@
             android:visibility="gone" />
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view_ad"
+            android:id="@+id/char_q_clicked_ad_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -218,7 +218,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/title_ad"
+                    android:id="@+id/char_q_clicked_title_ad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -230,7 +230,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/videoad"
+                    android:id="@+id/char_q_clicked_videoad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -245,7 +245,7 @@
         </android.support.v7.widget.CardView>
 
         <RelativeLayout
-            android:id="@+id/ll_drawable"
+            android:id="@+id/char_q_clicked_ll_drawable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -253,35 +253,33 @@
             android:padding="8dp">
 
             <ImageButton
-                android:id="@+id/character_favourite_question"
+                android:id="@+id/char_q_clicked_favourite_question"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="8dp"
                 android:background="@color/white"
                 android:scaleType="fitCenter"
-                android:src="@drawable/favorite"/>
+                android:src="@drawable/favorite" />
 
             <ImageButton
-                android:id="@+id/character_facebook_share"
+                android:id="@+id/char_q_clicked_facebook_share"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="8dp"
-                android:layout_toRightOf="@+id/character_favourite_question"
+                android:layout_toRightOf="@+id/char_q_clicked_favourite_question"
                 android:background="@color/white"
                 android:scaleType="fitCenter"
                 android:src="@drawable/facebook" />
 
             <ImageButton
-                android:id="@+id/character_whatsapp_share"
+                android:id="@+id/char_q_clicked_whatsapp_share"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="8dp"
-                android:layout_toRightOf="@id/character_facebook_share"
+                android:layout_toRightOf="@id/char_q_clicked_facebook_share"
                 android:background="@color/white"
                 android:scaleType="fitCenter"
                 android:src="@drawable/whatsapp" />
-
         </RelativeLayout>
-
     </LinearLayout>
 </ScrollView>

@@ -20,5 +20,16 @@ public class BasePath {
         return dir.getAbsolutePath();
     }
 
+    public static String getBasePathShare() {
+
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = new File(sdCard.getAbsolutePath() + "/perplexy/share");
+
+        if (!dir.exists())
+            dir.mkdirs();
+
+        return dir.getAbsolutePath();
+    }
+
 
 }

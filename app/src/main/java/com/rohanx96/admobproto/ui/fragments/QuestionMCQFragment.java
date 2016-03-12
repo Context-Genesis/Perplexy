@@ -1,11 +1,9 @@
 package com.rohanx96.admobproto.ui.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +31,7 @@ import butterknife.OnClick;
 public class QuestionMCQFragment extends Fragment {
 
     int POSITION = -1;
-    int CATEGORY ;
+    int CATEGORY;
     FrameLayout questionCard;
     RelativeLayout cardContent;
     private QuestionsCallback mCallback;
@@ -43,6 +41,16 @@ public class QuestionMCQFragment extends Fragment {
 
     @Bind(R.id.qcard_mcq_options_ll)
     LinearLayout llOptions;
+
+    @Bind(R.id.qcard_mcq_option1)
+    TextView tvOption1;
+    @Bind(R.id.qcard_mcq_option2)
+    TextView tvOption2;
+    @Bind(R.id.qcard_mcq_option3)
+    TextView tvOption3;
+    @Bind(R.id.qcard_mcq_option4)
+    TextView tvOption4;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,29 +64,51 @@ public class QuestionMCQFragment extends Fragment {
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
         lockQuestionIfRequired();
-        GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION-1);
+        GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION - 1);
 
         tvQuestion.setText(genericQuestion.question);
 
         try {
-            for (int i = 0; i < genericQuestion.options.length(); i++) {
-                String option = genericQuestion.options.getJSONObject(i).getString("choice");
-                TextView textView = generateBlanksTextView(option);
+            switch (genericQuestion.options.length()) {
+                case 2:
+                    tvOption1.setText(genericQuestion.options.getJSONObject(0).getString("choice"));
+                    tvOption2.setText(genericQuestion.options.getJSONObject(1).getString("choice"));
 
-                textView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getActivity(), "Not yet implemented!", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                llOptions.addView(textView);
+                    tvOption3.setVisibility(View.GONE);
+                    tvOption4.setVisibility(View.GONE);
+                    break;
+                case 4:
+                    tvOption1.setText(genericQuestion.options.getJSONObject(0).getString("choice"));
+                    tvOption2.setText(genericQuestion.options.getJSONObject(1).getString("choice"));
+                    tvOption3.setText(genericQuestion.options.getJSONObject(2).getString("choice"));
+                    tvOption4.setText(genericQuestion.options.getJSONObject(3).getString("choice"));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return rootView;
+    }
+
+    @OnClick(R.id.qcard_mcq_option1)
+    public void onClickOption1(View view) {
+        Toast.makeText(getActivity(), "Clicked option1", Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.qcard_mcq_option2)
+    public void onClickOption2(View view) {
+        Toast.makeText(getActivity(), "Clicked option2", Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.qcard_mcq_option3)
+    public void onClickOption3(View view) {
+        Toast.makeText(getActivity(), "Clicked option3", Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.qcard_mcq_option4)
+    public void onClickOption4(View view) {
+        Toast.makeText(getActivity(), "Clicked option4", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -100,36 +130,17 @@ public class QuestionMCQFragment extends Fragment {
         pager.setCurrentItem(pager.getCurrentItem() - 1, true);
     }
 
-    private TextView generateBlanksTextView(String option) {
-        // TODO : options be set in xml and not dynamically Rishab
-        // TODO : implement listeners for buttons accordingly Rishab
-        final TextView answerTV = new TextView(getActivity());
-
-        answerTV.setText(option);
-        answerTV.setTextSize(20);
-        answerTV.setTextColor(Color.BLACK);
-        answerTV.setBackgroundResource(R.drawable.button_background);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(5, 5, 5, 5);
-        answerTV.setLayoutParams(layoutParams);
-        answerTV.setGravity(Gravity.CENTER);
-
-        return answerTV;
-    }
-
     public static QuestionMCQFragment newInstance(Bundle args) {
         QuestionMCQFragment fragment = new QuestionMCQFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public void lockQuestionIfRequired(){
-        // TODO: (Done) Hide character when question is locked
-        //Log.i("question ", answer);
-        Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION,CATEGORY));
-        switch (GenericAnswerDetails.getStatus(POSITION,CATEGORY)){
+    public void lockQuestionIfRequired() {
+        Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION, CATEGORY));
+        switch (GenericAnswerDetails.getStatus(POSITION, CATEGORY)) {
             case Constants.UNAVAILABLE:
-                Log.i("textcard","unavailable");
+                Log.i("textcard", "unavailable");
                 //mCallback.setIsQuestionLocked(true);
                 //ImageView lock = (ImageView) findViewById(R.id.lock_full_image);
                 //lock.setVisibility(View.VISIBLE);
@@ -153,12 +164,11 @@ public class QuestionMCQFragment extends Fragment {
                 cardContent.addView(lock, cardContent.getChildCount());
                 break;
             case Constants.INCORRECT:
-                //TODO: (done) Lock image for locking options when incorrect
                 //mCallback.setIsQuestionLocked(true);
                 ImageView options_lock = new ImageView(getActivity());
                 RelativeLayout.LayoutParams layoutParams1 = new android.widget.RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                         , ViewGroup.LayoutParams.MATCH_PARENT);
-                layoutParams1.addRule(RelativeLayout.BELOW,R.id.textAreaScroller);
+                layoutParams1.addRule(RelativeLayout.BELOW, R.id.textAreaScroller);
                 options_lock.setLayoutParams(layoutParams1);
                 options_lock.setImageResource(R.drawable.lock_flat);
                 options_lock.setBackgroundColor(getResources().getColor(R.color.white));

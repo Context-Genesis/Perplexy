@@ -228,7 +228,6 @@ public class QuestionTextBoxFragment extends Fragment {
     }
 
     public void lockQuestionIfRequired(){
-        // TODO: (Done) Hide character when question is locked
         //Log.i("question ", answer);
         //Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION,CATEGORY));
         switch (GenericAnswerDetails.getStatus(POSITION,CATEGORY)){
@@ -259,7 +258,6 @@ public class QuestionTextBoxFragment extends Fragment {
                 cardContent.addView(lock, cardContent.getChildCount());
                 break;
             case Constants.INCORRECT:
-                //TODO: (done) Lock image for locking options when incorrect
                 //mCallback.setIsQuestionLocked(true);
                 ImageView options_lock = new ImageView(getActivity());
                 RelativeLayout.LayoutParams layoutParams1 = new android.widget.RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT

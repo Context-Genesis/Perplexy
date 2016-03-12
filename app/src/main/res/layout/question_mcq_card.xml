@@ -47,49 +47,49 @@
                 android:layout_marginBottom="48dp"
                 android:orientation="vertical">
 
-                <!--<TextView-->
-                <!--android:id="@+id/qcard_mcq_option1"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_margin="5dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@drawable/button_background"-->
-                <!--android:gravity="center"-->
-                <!--android:text="Option3"-->
-                <!--android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />-->
+                <TextView
+                    android:id="@+id/qcard_mcq_option1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:gravity="center"
+                    android:text="Option3"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
 
-                <!--<TextView-->
-                <!--android:id="@+id/qcard_mcq_option2"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_margin="5dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@drawable/button_background"-->
-                <!--android:gravity="center"-->
-                <!--android:text="Option4"-->
-                <!--android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />-->
+                <TextView
+                    android:id="@+id/qcard_mcq_option2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:gravity="center"
+                    android:text="Option4"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
 
-                <!--<TextView-->
-                <!--android:id="@+id/qcard_mcq_option3"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_margin="5dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@drawable/button_background"-->
-                <!--android:gravity="center"-->
-                <!--android:text="Option1"-->
-                <!--android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />-->
+                <TextView
+                    android:id="@+id/qcard_mcq_option3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:gravity="center"
+                    android:text="Option1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
 
-                <!--<TextView-->
-                <!--android:id="@+id/qcard_mcq_option4"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_margin="5dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@drawable/button_background"-->
-                <!--android:gravity="center"-->
-                <!--android:text="Option2"-->
-                <!--android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />-->
+                <TextView
+                    android:id="@+id/qcard_mcq_option4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:gravity="center"
+                    android:text="Option2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
             </LinearLayout>
 
             <ImageButton
