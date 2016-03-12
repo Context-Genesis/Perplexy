@@ -79,7 +79,6 @@ public class QuestionWordFragment extends Fragment {
 
         answer = genericQuestion.answer;
         answerPadCharacters = genericQuestion.pad_characters;
-
         BLANK_CIRCLE_SIZE = getBlankCircleSize();
 
         setUpJumbledCharacters();
@@ -261,6 +260,15 @@ public class QuestionWordFragment extends Fragment {
         }
     }
 
+<<<<<<< HEAD
+    public void lockQuestionIfRequired() {
+        // TODO: Hide character when question is locked
+        Log.i("question ", answer);
+        Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION, CATEGORY));
+        switch (GenericAnswerDetails.getStatus(POSITION, CATEGORY)) {
+            case Constants.UNAVAILABLE:
+                Log.i("textcard", "unavailable");
+=======
     public void lockQuestionIfRequired(){
         // TODO: (Done) Hide character when question is locked
         //Log.i("question ", answer);
@@ -269,6 +277,7 @@ public class QuestionWordFragment extends Fragment {
             case Constants.UNAVAILABLE:
                 Log.i("textcard","unavailable");
                 //mCallback.setIsQuestionLocked(true);
+>>>>>>> 3386affdab6b7c1d981f71a301a391333207401b
                 //ImageView lock = (ImageView) findViewById(R.id.lock_full_image);
                 //lock.setVisibility(View.VISIBLE);
                 ImageView lock = new ImageView(getActivity());

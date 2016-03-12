@@ -3,6 +3,7 @@ package com.rohanx96.admobproto.ui;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,13 +23,16 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
+import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
 import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionTextBoxFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
+import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -40,13 +45,17 @@ import butterknife.ButterKnife;
 /**
  * Created by rose on 6/3/16.
  */
-public class QuestionsActivity extends AppCompatActivity {
+public class QuestionsActivity extends AppCompatActivity implements QuestionsCallback{
 
     private ScreenSlidePagerAdapter pagerAdapter;
     private final int NO_OF_COLORS = 7;
     private ImageView character;
     private int mCurrentPage;
     private boolean isCharacterDialogOpen = false;
+    private boolean isLocked = false;
+
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
 
     int CATEGORY = -1;
 
@@ -58,6 +67,9 @@ public class QuestionsActivity extends AppCompatActivity {
 
     @Bind(R.id.questions_activity_pager)
     ViewPager pager;
+
+    @Bind(R.id.questions_activity_coin_text)
+    TextView coins_display;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +89,10 @@ public class QuestionsActivity extends AppCompatActivity {
         pager.setCurrentItem(mCurrentPage);
         tvLevel.setText("Level " + (mCurrentPage + 1));
 
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pref = getBaseContext().getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -99,6 +114,14 @@ public class QuestionsActivity extends AppCompatActivity {
                 colorAnimator.start();
                 mCurrentPage = position;
                 tvLevel.setText("Level " + (mCurrentPage + 1));
+                if (isCharacterDialogOpen) {
+                    hideCharacterDialog();
+                    hideCharacterUnlockDialog();
+                }
+                isLocked = (GenericAnswerDetails.getStatus(mCurrentPage +1,CATEGORY) == Constants.INCORRECT)
+                        || (GenericAnswerDetails.getStatus(mCurrentPage +1,CATEGORY) == Constants.UNAVAILABLE);
+                Log.i("lock status ", " position " + mCurrentPage+1 + " " + isLocked);
+                // TODO : Unlock question if status changed
             }
 
             @Override
@@ -129,6 +152,84 @@ public class QuestionsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        pager.clearOnPageChangeListeners();
+    }
+
+    @Override
+    public void toggleIsCharacterOpen() {
+        isCharacterDialogOpen = !isCharacterDialogOpen;
+    }
+
+    @Override
+    public void setIsQuestionLocked(boolean isLocked) {
+        this.isLocked = isLocked;
+    }
+
+    @Override
+    public float getCharacterX() {
+        return character.getX();
+    }
+
+    @Override
+    public float getCharacterY() {
+        return character.getY();
+    }
+
+    @Override
+    public void showCharacterDialog() {
+        View characterDialog = findViewById(R.id.questions_activity_character_dialog);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        characterDialog.setVisibility(View.VISIBLE);
+        characterDialog.startAnimation(scaleAnimation);
+        toggleIsCharacterOpen();
+    }
+
+    @Override
+    public void hideCharacterDialog() {
+        View characterDialog = findViewById(R.id.questions_activity_character_dialog);
+        // This will prevent running of animation when hiding not visible dialog.
+        // This helps because we can now call this method even if the view is not visible
+        if(characterDialog.getVisibility() == View.VISIBLE) {
+            ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
+            scaleAnimation.setDuration(500);
+            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+            characterDialog.setVisibility(View.GONE);
+            characterDialog.startAnimation(scaleAnimation);
+            toggleIsCharacterOpen();
+        }
+    }
+
+    @Override
+    public void showCharacterUnlockDialog() {
+        View characterDialog = findViewById(R.id.questions_activity_character_dialog_unlock);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        characterDialog.setVisibility(View.VISIBLE);
+        characterDialog.startAnimation(scaleAnimation);
+        toggleIsCharacterOpen();
+    }
+
+    @Override
+    public void hideCharacterUnlockDialog() {
+        View characterDialog = findViewById(R.id.questions_activity_character_dialog_unlock);
+        // This will prevent running of animation when hiding not visible dialog.
+        // This helps because we can now call this method even if the view is not visible
+        if (characterDialog.getVisibility() == View.VISIBLE) {
+            ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
+            scaleAnimation.setDuration(500);
+            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+            characterDialog.setVisibility(View.GONE);
+            characterDialog.startAnimation(scaleAnimation);
+            toggleIsCharacterOpen();
         }
     }
 
@@ -249,27 +350,26 @@ public class QuestionsActivity extends AppCompatActivity {
                         v.animate().scaleX(1.3f).scaleY(1.3f).setDuration(100).start();
                         break;
                     case MotionEvent.ACTION_UP:
+
                         setupCharacterDialog(); //Dialog is reinitialised based on question every time character is clicked
                         character.clearAnimation();
                         character.animate().scaleX(1.0f).scaleY(1.0f).setDuration(300).start();
-                        View characterDialog;
                         if (!isCharacterDialogOpen) {
-                            characterDialog = findViewById(R.id.questions_activity_character_dialog);
-                            ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
-                            scaleAnimation.setDuration(500);
-                            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                            characterDialog.setVisibility(View.VISIBLE);
-                            characterDialog.startAnimation(scaleAnimation);
-                            toggleIsCharacterDialogOpen();
-                            // TODO: Remove swipe and button click listeners
+                            if(isLocked){
+                                showCharacterUnlockDialog();
+                            }
+                            else {
+                                showCharacterDialog();
+                            }
+// TODO (done partly) : Remove swipe and button click listeners. Need to check if listeners need to be removed for options
+                            //
                         } else {
-                            characterDialog = findViewById(R.id.questions_activity_character_dialog);
-                            ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
-                            scaleAnimation.setDuration(500);
-                            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-                            characterDialog.setVisibility(View.GONE);
-                            characterDialog.startAnimation(scaleAnimation);
-                            toggleIsCharacterDialogOpen();
+                            if (isLocked){
+                                    hideCharacterUnlockDialog();
+                            }
+                            else {
+                                hideCharacterDialog();
+                            }
                         }
                 }
                 return true;
@@ -287,6 +387,7 @@ public class QuestionsActivity extends AppCompatActivity {
      * by Dhruv
      */
     public void setupCharacterDialog() {
+        // TODO: Add share intents for whatsapp, facebook Dhruv
         GenericQuestion question = JSONUtils.getQuestionAt(getApplication(), CATEGORY, mCurrentPage);
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(CATEGORY);
         final TextView showhint;
@@ -338,18 +439,27 @@ public class QuestionsActivity extends AppCompatActivity {
                 confirmhint.setVisibility(View.GONE);
                 showhint.setVisibility(View.VISIBLE);
 
-                showhiddenhint.setVisibility(View.INVISIBLE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
-                showhiddenhint.startAnimation(in);
-                showhiddenhint.setVisibility(View.VISIBLE);
-                showhiddenhint.startAnimation(in);
+                pref = getBaseContext().getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+                long coins = pref.getLong(Constants.PREF_COINS, 0);
+                if (coins - Integer.parseInt(hintprice.getText().toString()) >= 0) {
+                    showhiddenhint.setVisibility(View.INVISIBLE);
+                    Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
+                    showhiddenhint.startAnimation(in);
+                    showhiddenhint.setVisibility(View.VISIBLE);
+                    showhiddenhint.startAnimation(in);
 
-                if (ansDetails.get(mCurrentPage).hint_displayed == false) {
-                    ansDetails.get(mCurrentPage).hint_displayed = true;
-                    ansDetails.get(mCurrentPage).save();
-                    // TODO: deduct coins
+                    if (ansDetails.get(mCurrentPage).hint_displayed == false) {
+                        ansDetails.get(mCurrentPage).hint_displayed = true;
+                        ansDetails.get(mCurrentPage).save();
+                        // TODO: deduct coins (Done)
+                        Coins.hint_access(getApplication());
+                        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
+                    }
+                    hintprice.setText("0");
+                } else {
+                    Toast.makeText(getApplication(), "Donot have enough coins",
+                            Toast.LENGTH_LONG).show();
                 }
-                hintprice.setText("0");
             }
         });
 
@@ -380,7 +490,7 @@ public class QuestionsActivity extends AppCompatActivity {
         if (ansDetails.get(mCurrentPage).answer_displayed == true) {
             solutionprice.setText("0");
         } else {
-            solutionprice.setText(Constants.SOLUTION_PRICE+"");
+            solutionprice.setText(Constants.SOLUTION_PRICE + "");
         }
 
         showsolution.setOnClickListener(new View.OnClickListener() {
@@ -400,21 +510,30 @@ public class QuestionsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 confirmsolution.setVisibility(View.GONE);
                 showsolution.setVisibility(View.VISIBLE);
+                pref = getBaseContext().getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+                long coins = pref.getLong(Constants.PREF_COINS, 0);
+                if (coins - Constants.SOLUTION_PRICE >= 0) {
+                    showhiddensolution.setVisibility(View.INVISIBLE);
+                    Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
+                    showhiddensolution.startAnimation(in);
+                    showhiddensolution.setVisibility(View.VISIBLE);
+                    showhiddensolution.startAnimation(in);
 
-                showhiddensolution.setVisibility(View.INVISIBLE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
-                showhiddensolution.startAnimation(in);
-                showhiddensolution.setVisibility(View.VISIBLE);
-                showhiddensolution.startAnimation(in);
-
-                if (!ansDetails.get(mCurrentPage).answer_displayed) {
-                    ansDetails.get(mCurrentPage).answer_displayed = true;
-                    ansDetails.get(mCurrentPage).save();
-                    // TODO: deduct coins
+                    if (!ansDetails.get(mCurrentPage).answer_displayed) {
+                        ansDetails.get(mCurrentPage).answer_displayed = true;
+                        ansDetails.get(mCurrentPage).save();
+                        // TODO: deduct coins (done)
+                        Coins.solution_access(getApplication());
+                        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
+                    }
                 }
-                solutionprice.setText("0");
+                else {
+                    Toast.makeText(getApplication(), "Donot have enough coins",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
+
 
         nosolution.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -448,7 +567,8 @@ public class QuestionsActivity extends AppCompatActivity {
         });
     }
 
-    public void toggleIsCharacterDialogOpen() {
-        isCharacterDialogOpen = !isCharacterDialogOpen;
+
+    public void setupCharacterUnlockDialog(){
+        // TODO: Add click listeners and implementation of coins for unlock dialog layout Rishab
     }
 }

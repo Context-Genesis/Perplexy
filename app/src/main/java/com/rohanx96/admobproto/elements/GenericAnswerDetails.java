@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Created by rish on 10/3/16.
  */
+
 public class GenericAnswerDetails extends SugarRecord {
 
     public int question_number;
