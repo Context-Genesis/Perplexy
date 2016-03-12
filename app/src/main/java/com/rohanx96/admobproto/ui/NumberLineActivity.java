@@ -6,15 +6,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.adapters.NumberLineAdapter;
+import com.rohanx96.admobproto.callbacks.NumberLineCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
@@ -25,7 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NumberLineActivity extends AppCompatActivity {
+public class NumberLineActivity extends AppCompatActivity implements NumberLineCallback {
     private View mContainer;
     private int mTimeCount = 0;
     private boolean isAnimationRunning = false;
@@ -38,6 +40,12 @@ public class NumberLineActivity extends AppCompatActivity {
     @Bind(R.id.activity_coin_text)
     TextView coin_display;
 
+    @Bind(R.id.activity_number_line_bubble_ll)
+    LinearLayout bubbleLL;
+
+    @Bind(R.id.activity_number_line_bubble_im)
+    ImageView bubble;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +57,7 @@ public class NumberLineActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
         coin_display.setText(prefs.getLong(Constants.PREF_COINS, 0) + "");
 
+        bubbleLL.setVisibility(View.GONE);
     }
 
     @Override
@@ -71,7 +80,7 @@ public class NumberLineActivity extends AppCompatActivity {
         }
         /* Adapter list needs to be initialised here because we need to refresh list after returning to activity */
         ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(CATEGORY);
-        NumberLineAdapter numberLineAdapter = new NumberLineAdapter(this, answerDetails);
+        NumberLineAdapter numberLineAdapter = new NumberLineAdapter(this, answerDetails, this);
         ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
         listView.setAdapter(numberLineAdapter);
 
@@ -127,6 +136,42 @@ public class NumberLineActivity extends AppCompatActivity {
     @OnClick(R.id.activity_number_line_back)
     public void goBack() {
         onBackPressed();
+    }
+
+    @OnClick(R.id.activity_number_line_bubble_im)
+    public void characterDialogPressed() {
+        this.closeCharacterDialog();
+    }
+
+    @Override
+    public void toggleCharacterOpen() {
+        if (bubbleLL.getVisibility() == View.VISIBLE) {
+            bubbleLL.setVisibility(View.GONE);
+        } else if (bubbleLL.getVisibility() == View.GONE) {
+            bubbleLL.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void openCharacterDialog(int TYPE) {
+        // TODO: Add animation here. https://github.com/lgvalle/Material-Animations
+
+        bubbleLL.setVisibility(View.VISIBLE);
+        TextView titleTv = (TextView) findViewById(R.id.character_unlock_dialog_tv);
+        switch (TYPE) {
+            case Constants.UNAVAILABLE:
+                titleTv.setText("This question is unavailable");
+                break;
+            case Constants.INCORRECT:
+                titleTv.setText("This question is locked. Would you like to unlock it?");
+                break;
+        }
+    }
+
+    @Override
+    public void closeCharacterDialog() {
+        // TODO: Add animation here. https://github.com/lgvalle/Material-Animations
+        bubbleLL.setVisibility(View.GONE);
     }
 
     /*public void updateCoinsDisplay(){

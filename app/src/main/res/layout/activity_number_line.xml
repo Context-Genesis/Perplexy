@@ -12,10 +12,10 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentTop="true"
-        android:padding="5dp"
-        android:src="@drawable/back"
+        android:layout_margin="8dp"
         android:contentDescription="Back"
-        android:layout_margin="8dp"/>
+        android:padding="5dp"
+        android:src="@drawable/back" />
 
     <TextView
         android:id="@+id/activity_number_line_title"
@@ -24,12 +24,12 @@
         android:layout_alignBottom="@id/activity_number_line_back"
         android:layout_alignTop="@id/activity_number_line_back"
         android:layout_gravity="center"
+        android:layout_margin="8dp"
         android:gravity="center"
         android:text="Level 10"
         android:textColor="#FFF"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_margin="8dp"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/activity_coin_text"
@@ -60,10 +60,10 @@
         android:layout_height="48dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_margin="8dp"
         android:padding="5dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/coin"
-        android:layout_margin="8dp"/>
+        android:src="@drawable/coin" />
 
     <ListView
         android:id="@+id/activity_number_line_listview"
@@ -84,4 +84,29 @@
         android:layout_margin="18dp"
         android:background="#88ffffff" />
 
+    <LinearLayout
+        android:id="@+id/activity_number_line_bubble_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/character_click_unlock_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/activity_number_line_bubble_im"
+            android:layout_gravity="bottom|center" />
+
+        <ImageView
+            android:id="@+id/activity_number_line_bubble_im"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="bottom|center"
+            android:elevation="7dp"
+            android:src="@drawable/haha" />
+    </LinearLayout>
 </RelativeLayout>

@@ -8,8 +8,8 @@ import android.content.SharedPreferences;
  */
 public class Coins {
 
-    static SharedPreferences pref;
-    static SharedPreferences.Editor editor;
+    private static SharedPreferences pref;
+    private static SharedPreferences.Editor editor;
 
     public static void hint_access(Context context) {
         pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -53,5 +53,4 @@ public class Coins {
         long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
         editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.UNLOCK_UNAVAILABLE_PRICE).apply();
     }
-
 }

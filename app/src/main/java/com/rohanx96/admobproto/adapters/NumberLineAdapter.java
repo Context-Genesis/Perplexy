@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.rohanx96.admobproto.callbacks.NumberLineCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.NumberLineActivity;
 import com.rohanx96.admobproto.ui.QuestionsActivity;
@@ -25,10 +26,12 @@ public class NumberLineAdapter extends BaseAdapter {
     NumberLineActivity context;
     ArrayList<GenericAnswerDetails> answerDetails;
     LayoutInflater inflater;
+    NumberLineCallback numberLineCallback;
 
-    public NumberLineAdapter(NumberLineActivity context, ArrayList<GenericAnswerDetails> answerDetails) {
+    public NumberLineAdapter(NumberLineActivity context, ArrayList<GenericAnswerDetails> answerDetails, NumberLineCallback numberLineCallback) {
         this.context = context;
         this.answerDetails = answerDetails;
+        this.numberLineCallback = numberLineCallback;
         /*
         * Add for padding of the arrows on the number line
          */
@@ -79,6 +82,7 @@ public class NumberLineAdapter extends BaseAdapter {
                 vi = inflater.inflate(R.layout.element_number_line_end, null);
                 holder.tv = (Button) vi.findViewById(R.id.element_number_line_end_downarrow);
             }
+
             vi.setTag(holder);
         } else {
             holder = (ViewHolder) vi.getTag();
@@ -91,8 +95,8 @@ public class NumberLineAdapter extends BaseAdapter {
         if (position != 0 && position != answerDetails.size() - 1) {
             holder.tv.setText(" " + getItem(position).question_number + " ");
             // Set background drawable for question number based on status
-            setBackgroundDrawable(position,holder);
-            setOnClickListeners(position,holder);
+            setBackgroundDrawable(position, holder);
+            setOnClickListeners(position, holder);
         }
 
         return vi;
@@ -117,9 +121,9 @@ public class NumberLineAdapter extends BaseAdapter {
         Button tv;
     }
 
-    public void setBackgroundDrawable(int position, ViewHolder holder){
+    public void setBackgroundDrawable(int position, ViewHolder holder) {
         // Set background drawable for question number based on status
-        switch (answerDetails.get(position).status){
+        switch (answerDetails.get(position).status) {
             case Constants.CORRECT:
                 holder.tv.setBackgroundResource(R.drawable.circle_question_number_correcct);
                 break;
@@ -135,7 +139,7 @@ public class NumberLineAdapter extends BaseAdapter {
         }
     }
 
-    public void setOnClickListeners(final int position, final ViewHolder holder){
+    public void setOnClickListeners(final int position, final ViewHolder holder) {
         switch (answerDetails.get(position).status) {
             case Constants.CORRECT:
                 holder.tv.setOnClickListener(new View.OnClickListener() {
@@ -154,8 +158,8 @@ public class NumberLineAdapter extends BaseAdapter {
                 holder.tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO : Add character dialog showing options to unlock Rishabh
                         Toast.makeText(context, "This question is locked", Toast.LENGTH_LONG).show();
+                        numberLineCallback.openCharacterDialog(Constants.INCORRECT);
                     }
                 });
                 break;
@@ -176,8 +180,8 @@ public class NumberLineAdapter extends BaseAdapter {
                 holder.tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO : Add character dialog showing options to unlock Rishabh
-                        Toast.makeText(context, "This question is locked", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "This question is unavailable", Toast.LENGTH_LONG).show();
+                        numberLineCallback.openCharacterDialog(Constants.UNAVAILABLE);
                     }
                 });
                 break;
