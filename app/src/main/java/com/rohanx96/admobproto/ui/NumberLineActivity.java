@@ -157,7 +157,7 @@ public class NumberLineActivity extends AppCompatActivity implements NumberLineC
         // TODO: Add animation here. https://github.com/lgvalle/Material-Animations
 
         bubbleLL.setVisibility(View.VISIBLE);
-        TextView titleTv = (TextView) findViewById(R.id.character_unlock_dialog_tv);
+        TextView titleTv = (TextView) findViewById(R.id.char_unlock_dialog_tv);
         switch (TYPE) {
             case Constants.UNAVAILABLE:
                 titleTv.setText("This question is unavailable");
