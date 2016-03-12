@@ -23,7 +23,7 @@ public class BasePath {
     public static String getBasePathShare() {
 
         File sdCard = Environment.getExternalStorageDirectory();
-        File dir = new File(sdCard.getAbsolutePath() + "/perplexy/share");
+        File dir = new File(sdCard.getAbsolutePath() + "/perplexy");
 
         if (!dir.exists())
             dir.mkdirs();

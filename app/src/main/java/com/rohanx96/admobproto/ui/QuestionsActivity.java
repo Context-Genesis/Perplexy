@@ -77,10 +77,45 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
         ButterKnife.bind(this);
-        // The page position is one less than question number. Note question number is passed to activity instead of position
+        /* The page position is one less than question number. Note question number is passed to activity instead of position */
         mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_NUMBER, 0) - 1;
         CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY, -1);
 
+        View back = findViewById(R.id.questions_activity_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        setupCharacter();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /* Make the activity fullscreen */
+        mContainer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+        setUpViewPager();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        pager.clearOnPageChangeListeners();
+    }
+
+    private void setUpViewPager() {
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.setPageMargin(convertDip2Pixels(this, 16));
@@ -130,36 +165,6 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 //Unused
             }
         });
-        View back = findViewById(R.id.questions_activity_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        setupCharacter();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        /* Make the activity fullscreen */
-        mContainer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        pager.clearOnPageChangeListeners();
     }
 
     @Override

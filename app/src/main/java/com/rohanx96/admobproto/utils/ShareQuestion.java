@@ -17,7 +17,7 @@ import java.io.FileOutputStream;
  */
 public class ShareQuestion {
 
-
+    // TODO : (DHRUV) Check why this isnt working.
     public static void shareImageWhatsapp(Activity activity) {
         Toast.makeText(activity, "Preparing for Share", Toast.LENGTH_LONG).show();
         shareImage(activity);
@@ -40,6 +40,8 @@ public class ShareQuestion {
             basePath.mkdirs();
         }
         File myPath = new File(extr, "sharedImage" + ".jpg");
+        myPath.mkdirs();
+        myPath.mkdir();
         System.out.println(myPath);
         FileOutputStream fos = null;
         try {
