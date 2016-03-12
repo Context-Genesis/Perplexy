@@ -67,7 +67,7 @@ public class QuestionTextBoxFragment extends Fragment {
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
-        GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION -1);
+        GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION - 1);
         tvQuestion.setText(genericQuestion.question);
 
         answer = genericQuestion.answer;
@@ -170,11 +170,12 @@ public class QuestionTextBoxFragment extends Fragment {
 
     public boolean isAnsweredCorrectly() {
         if (answer.equals(enteredCharacters)) {
-            GenericAnswerDetails.updateStatus(POSITION, CATEGORY,Constants.CORRECT);
+            GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
             Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
             return true;
         } else {
-            GenericAnswerDetails.updateStatus(POSITION,CATEGORY,Constants.INCORRECT);
+            Toast.makeText(getActivity(), "Answered Incorrectly!", Toast.LENGTH_LONG).show();
+            GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.INCORRECT);
             return false;
         }
     }
@@ -213,13 +214,13 @@ public class QuestionTextBoxFragment extends Fragment {
         }
     }
 
-    public void lockQuestionIfRequired(){
+    public void lockQuestionIfRequired() {
         // TODO: Hide character when question is locked
         Log.i("question ", answer);
-        Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION,CATEGORY));
-        switch (GenericAnswerDetails.getStatus(POSITION,CATEGORY)){
+        Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION, CATEGORY));
+        switch (GenericAnswerDetails.getStatus(POSITION, CATEGORY)) {
             case Constants.UNAVAILABLE:
-                Log.i("textcard","unavailable");
+                Log.i("textcard", "unavailable");
                 //ImageView lock = (ImageView) findViewById(R.id.lock_full_image);
                 //lock.setVisibility(View.VISIBLE);
                 ImageView lock = new ImageView(getActivity());

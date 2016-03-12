@@ -246,13 +246,13 @@ public class QuestionWordFragment extends Fragment {
         }
     }
 
-    public void lockQuestionIfRequired(){
+    public void lockQuestionIfRequired() {
         // TODO: Hide character when question is locked
         Log.i("question ", answer);
         Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION, CATEGORY));
-        switch (GenericAnswerDetails.getStatus(POSITION,CATEGORY)){
+        switch (GenericAnswerDetails.getStatus(POSITION, CATEGORY)) {
             case Constants.UNAVAILABLE:
-                Log.i("textcard","unavailable");
+                Log.i("textcard", "unavailable");
                 //ImageView lock = (ImageView) findViewById(R.id.lock_full_image);
                 //lock.setVisibility(View.VISIBLE);
                 ImageView lock = new ImageView(getActivity());
