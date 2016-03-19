@@ -92,12 +92,7 @@ public class JSONUtils {
         ArrayList<GenericQuestion> genericQuestions = new ArrayList<>();
         try {
             JSONObject listObject = null;
-            if (category == Constants.GAME_TYPE_RIDDLE)
-                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
-            else if (category == Constants.GAME_TYPE_SEQUENCES)
-                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
-            else if (category == Constants.GAME_TYPE_LOGIC)
-                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
+            listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
 
             for (int i = 0; i < listObject.getJSONArray("questions").length(); i++) {
                 JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(i);

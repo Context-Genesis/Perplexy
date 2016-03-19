@@ -46,6 +46,7 @@ import butterknife.ButterKnife;
 /**
  * Created by rose on 6/3/16.
  */
+
 public class QuestionsActivity extends AppCompatActivity implements QuestionsCallback {
 
     private ScreenSlidePagerAdapter pagerAdapter;

@@ -1,5 +1,7 @@
 package com.rohanx96.admobproto.ui.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
+import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
 
@@ -44,6 +47,8 @@ public class QuestionTextBoxFragment extends Fragment {
     FrameLayout questionCard;
     RelativeLayout cardContent;
     private QuestionsCallback mCallback;
+    GenericQuestion genericQuestion;
+    SharedPreferences pref;
 
     @Bind(R.id.qcard_textbox_question)
     TextView tvQuestion;
@@ -74,8 +79,9 @@ public class QuestionTextBoxFragment extends Fragment {
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
-        GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION -1);
+        genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION - 1);
         tvQuestion.setText(genericQuestion.question);
+        pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
         answer = genericQuestion.answer;
         lockQuestionIfRequired();
@@ -183,12 +189,27 @@ public class QuestionTextBoxFragment extends Fragment {
     }
 
     public boolean isAnsweredCorrectly() {
+        GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
         if (answer.equals(enteredCharacters)) {
-            GenericAnswerDetails.updateStatus(POSITION, CATEGORY,Constants.CORRECT);
-            Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
+            if (details.status == Constants.AVAILABLE) {
+                GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
+                Coins.correct_answer(getContext());
+
+                TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
+                display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
+
+            }
+            Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_SHORT).show();
             return true;
         } else {
-            GenericAnswerDetails.updateStatus(POSITION,CATEGORY,Constants.INCORRECT);
+            if (details.status == Constants.AVAILABLE) {
+                GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.INCORRECT);
+                Coins.wrong_answer(getContext());
+
+                TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
+                display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
+            }
+            Toast.makeText(getActivity(), "Answered Incorrectly!", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -227,12 +248,12 @@ public class QuestionTextBoxFragment extends Fragment {
         }
     }
 
-    public void lockQuestionIfRequired(){
+    public void lockQuestionIfRequired() {
         //Log.i("question ", answer);
         //Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION,CATEGORY));
-        switch (GenericAnswerDetails.getStatus(POSITION,CATEGORY)){
+        switch (GenericAnswerDetails.getStatus(POSITION, CATEGORY)) {
             case Constants.UNAVAILABLE:
-                Log.i("textcard","unavailable");
+                Log.i("textcard", "unavailable");
                 /* This callback method cannot be used because this updates the value in activity even if the fragment is not visible
                     This happens when view pager is currently on an unlocked question but the next question is locked. A call to this
                     method in this situation causes lock status to be true for unlocked question
@@ -262,7 +283,7 @@ public class QuestionTextBoxFragment extends Fragment {
                 ImageView options_lock = new ImageView(getActivity());
                 RelativeLayout.LayoutParams layoutParams1 = new android.widget.RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                         , ViewGroup.LayoutParams.MATCH_PARENT);
-                layoutParams1.addRule(RelativeLayout.BELOW,R.id.textAreaScroller);
+                layoutParams1.addRule(RelativeLayout.BELOW, R.id.textAreaScroller);
                 options_lock.setLayoutParams(layoutParams1);
                 options_lock.setImageResource(R.drawable.lock_flat);
                 options_lock.setBackgroundColor(getResources().getColor(R.color.white));
