@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -49,6 +50,12 @@ public class QuestionWordFragment extends Fragment {
     private QuestionsCallback mCallback;
     GenericQuestion genericQuestion;
     SharedPreferences pref;
+
+    @Bind(R.id.qcard_word_previous)
+    ImageButton prevQuestion;
+
+    @Bind(R.id.qcard_word_next)
+    ImageButton nextQuestion;
 
     @Bind(R.id.qcard_word_question)
     TextView tvQuestion;
@@ -87,6 +94,16 @@ public class QuestionWordFragment extends Fragment {
         answerPadCharacters = genericQuestion.pad_characters;
 
         BLANK_CIRCLE_SIZE = getBlankCircleSize();
+
+
+        if (genericQuestion.question_number == 1) {
+            this.prevQuestion.setVisibility(View.GONE);
+        }
+
+        // TODO: replace 14 by count of question in that particular category
+        if (genericQuestion.question_number == 14) {
+            this.nextQuestion.setVisibility(View.GONE);
+        }
 
         setUpJumbledCharacters();
 

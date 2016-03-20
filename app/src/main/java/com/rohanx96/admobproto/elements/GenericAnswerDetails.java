@@ -20,7 +20,7 @@ import java.util.List;
 public class GenericAnswerDetails extends SugarRecord {
 
     public int question_number;
-    public int category, status; /*correct, incorrect, available, unavailable (int)*/
+    public int category, status;                                /*correct, incorrect, available, unavailable (int)*/
     public boolean hint_displayed, answer_displayed;
     public int number_incorrect;
     public boolean bookmarked;

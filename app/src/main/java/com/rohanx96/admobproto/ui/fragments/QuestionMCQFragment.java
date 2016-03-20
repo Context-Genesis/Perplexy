@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -49,6 +50,12 @@ public class QuestionMCQFragment extends Fragment {
     @Bind(R.id.qcard_mcq_options_ll)
     LinearLayout llOptions;
 
+    @Bind(R.id.qcard_mcq_previous)
+    ImageButton prevQuestion;
+
+    @Bind(R.id.qcard_mcq_next)
+    ImageButton nextQuestion;
+
     @Bind(R.id.qcard_mcq_option1)
     TextView tvOption1;
     @Bind(R.id.qcard_mcq_option2)
@@ -75,6 +82,15 @@ public class QuestionMCQFragment extends Fragment {
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
         tvQuestion.setText(genericQuestion.question);
+
+        if (genericQuestion.question_number == 1) {
+            this.prevQuestion.setVisibility(View.GONE);
+        }
+
+        // TODO: replace 14 by count of question in that particular category
+        if (genericQuestion.question_number == 14) {
+            this.nextQuestion.setVisibility(View.GONE);
+        }
 
         try {
             switch (genericQuestion.options.length()) {
