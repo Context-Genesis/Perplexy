@@ -1,5 +1,9 @@
 package com.rohanx96.admobproto.ui.fragments;
 
+/**
+ * Created by rish on 14/3/16.
+ */
+
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -11,7 +15,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,7 +40,7 @@ import butterknife.OnClick;
 /**
  * Created by rish on 9/3/16.
  */
-public class QuestionTextBoxFragment extends Fragment {
+public class QuestionImageFragment extends Fragment {
 
     int POSITION = -1;
     int CATEGORY;
@@ -45,20 +48,19 @@ public class QuestionTextBoxFragment extends Fragment {
     RelativeLayout cardContent;
     private QuestionsCallback mCallback;
 
-    @Bind(R.id.qcard_textbox_question)
-    TextView tvQuestion;
+    @Bind(R.id.qcard_image_question)
+    ImageView imQuestion;
 
-    @Bind(R.id.qcard_textbox_ll_row1_q)
+    @Bind(R.id.qcard_image_ll_answerrow_q)
+    LinearLayout answerRow;
+
+    @Bind(R.id.qcard_image_ll_row1_q)
     LinearLayout row1;
 
-    @Bind(R.id.qcard_textbox_ll_row2_q)
+    @Bind(R.id.qcard_image_ll_row2_q)
     LinearLayout row2;
 
-    @Bind(R.id.qcard_textbox_editText)
-    EditText editText;
-
     ArrayList<Character> jumbledCharacters;
-    String enteredCharacters = "";
 
     String answer, answerPadCharacters;
 
@@ -66,7 +68,7 @@ public class QuestionTextBoxFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.question_textbox_card, container, false);
+        View rootView = inflater.inflate(R.layout.question_image_card, container, false);
         ButterKnife.bind(this, rootView);
         this.questionCard = (FrameLayout) rootView.findViewById(R.id.question_card);
         this.cardContent = (RelativeLayout) rootView.findViewById(R.id.question_card_content);
@@ -74,12 +76,14 @@ public class QuestionTextBoxFragment extends Fragment {
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
+
         GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION - 1);
-        tvQuestion.setText(genericQuestion.question);
+        /* Fetch Image URI and set image accordingly */
+        imQuestion.setImageURI(JSONUtils.getQuestionImageURI(genericQuestion.question));
 
         answer = genericQuestion.answer;
-        lockQuestionIfRequired();
         answerPadCharacters = genericQuestion.pad_characters;
+
         BLANK_CIRCLE_SIZE = getBlankCircleSize();
 
         setUpJumbledCharacters();
@@ -103,36 +107,27 @@ public class QuestionTextBoxFragment extends Fragment {
             jumbledCharacters.add(answerPadCharacters.charAt(i));
         }
         Collections.shuffle(jumbledCharacters, new Random(System.currentTimeMillis()));
+
+        for (int i = 0; i < answer.length(); i++) {
+            jumbledCharacters.add(0, '-');
+        }
     }
 
-    @OnClick(R.id.qcard_textbox_next)
+    @OnClick(R.id.qcard_word_next)
     public void nextQuestion() {
         ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
         pager.setCurrentItem(pager.getCurrentItem() + 1, true);
     }
 
-    @OnClick(R.id.qcard_textbox_previous)
+    @OnClick(R.id.qcard_word_previous)
     public void previousQuestion() {
         ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
         pager.setCurrentItem(pager.getCurrentItem() - 1, true);
     }
 
-    @OnClick(R.id.qcard_textbox_im_backspace)
-    public void removeCharacter() {
-        if (enteredCharacters.length() >= 1) {
-            enteredCharacters = enteredCharacters.substring(0, enteredCharacters.length() - 1);
-            editText.setText(enteredCharacters);
-        }
-    }
+    public static QuestionWordFragment newInstance(Bundle args) {
 
-    @OnClick(R.id.qcard_textbox_im_done)
-    public void checkAnswer() {
-        isAnsweredCorrectly();
-    }
-
-    public static QuestionTextBoxFragment newInstance(Bundle args) {
-
-        QuestionTextBoxFragment fragment = new QuestionTextBoxFragment();
+        QuestionWordFragment fragment = new QuestionWordFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -141,8 +136,22 @@ public class QuestionTextBoxFragment extends Fragment {
 
         row1.removeAllViews();
         row2.removeAllViews();
+        answerRow.removeAllViews();
 
-        editText.setText(enteredCharacters);
+        for (int i = 0; i < answer.length(); i++) {
+            final int m = i;
+            final TextView answerTV = generateBlanksTextView(i);
+
+            answerTV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    putThisCharacterBackToOptionsRow(m);
+                    setUpBlanksAndRows();
+                }
+            });
+
+            answerRow.addView(answerTV);
+        }
 
         for (int i = 0; i < answerPadCharacters.length() / 2; i++) {
             final int m = i;
@@ -151,9 +160,9 @@ public class QuestionTextBoxFragment extends Fragment {
             answerTV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addThisCharacterToEditText(m);
+                    addThisCharacterToAnswerRow(answer.length() + m);
                     setUpBlanksAndRows();
-                    // isAnsweredCorrectly();
+                    isAnsweredCorrectly();
                 }
             });
 
@@ -167,9 +176,9 @@ public class QuestionTextBoxFragment extends Fragment {
             answerTV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addThisCharacterToEditText(m);
+                    addThisCharacterToAnswerRow(answer.length() + m);
                     setUpBlanksAndRows();
-                    //isAnsweredCorrectly();
+                    isAnsweredCorrectly();
                 }
             });
 
@@ -177,33 +186,61 @@ public class QuestionTextBoxFragment extends Fragment {
         }
     }
 
-    private void addThisCharacterToEditText(int index) {
-        enteredCharacters += jumbledCharacters.get(index);
-        editText.setText(enteredCharacters);
+    private void addThisCharacterToAnswerRow(int indexToExchange) {
+        for (int i = 0; i < answer.length(); i++) {
+            if (jumbledCharacters.get(i) == '-') {
+                Collections.swap(jumbledCharacters, indexToExchange, i);
+            }
+        }
+    }
+
+    private void putThisCharacterBackToOptionsRow(int indexToExchange) {
+        for (int i = answer.length(); i < answer.length() + answerPadCharacters.length(); i++) {
+            if (jumbledCharacters.get(i) == '-') {
+                Collections.swap(jumbledCharacters, indexToExchange, i);
+            }
+        }
     }
 
     public boolean isAnsweredCorrectly() {
-        if (answer.equals(enteredCharacters)) {
-            GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
-            Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
-            return true;
-        } else {
-            Toast.makeText(getActivity(), "Answered Incorrectly!", Toast.LENGTH_LONG).show();
-            GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.INCORRECT);
-            return false;
+        for (int i = 0; i < answer.length(); i++) {
+            if (jumbledCharacters.get(i) != answer.charAt(i)) {
+                return false;
+            }
         }
+        //Update status for answer in database
+        GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
+        Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
+        return true;
+    }
+
+    private TextView generateBlanksTextView(int i) {
+        final TextView answerTV = new TextView(getActivity());
+
+        answerTV.setText("" + jumbledCharacters.get(i));
+        answerTV.setId(100 + i);
+        answerTV.setTextSize(25);
+        answerTV.setTextColor(Color.BLACK);
+        answerTV.setBackgroundResource(R.drawable.circle_border);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(BLANK_CIRCLE_SIZE, BLANK_CIRCLE_SIZE);
+        layoutParams.setMargins(2, 2, 2, 2);
+        answerTV.setLayoutParams(layoutParams);
+        answerTV.setGravity(Gravity.CENTER);
+
+        return answerTV;
     }
 
     private TextView generateFilledTextView(int i) {
         final TextView answerTV = new TextView(getActivity());
 
-        answerTV.setText("" + jumbledCharacters.get(i));
+        answerTV.setText("" + jumbledCharacters.get(answer.length() + i));
+        answerTV.setId(100 + i);
         answerTV.setTextSize(25);
         answerTV.setTextColor(Color.BLACK);
         answerTV.setBackgroundResource(R.drawable.circle_filled);
 //        GradientDrawable gradientDrawable = (GradientDrawable) answerTV.getBackground();
 //        gradientDrawable.setColor(Color.BLUE);
-//          answerTV.setBackground(gradientDrawable);
+//        answerTV.setBackground(gradientDrawable);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(BLANK_CIRCLE_SIZE, BLANK_CIRCLE_SIZE);
         layoutParams.setMargins(2, 2, 2, 2);
         answerTV.setLayoutParams(layoutParams);
@@ -228,30 +265,15 @@ public class QuestionTextBoxFragment extends Fragment {
         }
     }
 
-<<<<<<< HEAD
     public void lockQuestionIfRequired() {
-        // TODO: Hide character when question is locked
-        Log.i("question ", answer);
+        //Log.i("question ", answer);
         Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION, CATEGORY));
         switch (GenericAnswerDetails.getStatus(POSITION, CATEGORY)) {
             case Constants.UNAVAILABLE:
                 Log.i("textcard", "unavailable");
+                //mCallback.setIsQuestionLocked(true);
                 //ImageView lock = (ImageView) findViewById(R.id.lock_full_image);
                 //lock.setVisibility(View.VISIBLE);
-=======
-    public void lockQuestionIfRequired(){
-        // TODO: (Done) Hide character when question is locked
-        //Log.i("question ", answer);
-        //Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION,CATEGORY));
-        switch (GenericAnswerDetails.getStatus(POSITION,CATEGORY)){
-            case Constants.UNAVAILABLE:
-                Log.i("textcard","unavailable");
-                /* This callback method cannot be used because this updates the value in activity even if the fragment is not visible
-                    This happens when view pager is currently on an unlocked question but the next question is locked. A call to this
-                    method in this situation causes lock status to be true for unlocked question
-                 */
-                //mCallback.setIsQuestionLocked(true);
->>>>>>> 3386affdab6b7c1d981f71a301a391333207401b
                 ImageView lock = new ImageView(getActivity());
                 FrameLayout.LayoutParams layoutParams = new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                         , ViewGroup.LayoutParams.MATCH_PARENT);
@@ -272,12 +294,11 @@ public class QuestionTextBoxFragment extends Fragment {
                 cardContent.addView(lock, cardContent.getChildCount());
                 break;
             case Constants.INCORRECT:
-                //TODO: (done) Lock image for locking options when incorrect
                 //mCallback.setIsQuestionLocked(true);
                 ImageView options_lock = new ImageView(getActivity());
                 RelativeLayout.LayoutParams layoutParams1 = new android.widget.RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                         , ViewGroup.LayoutParams.MATCH_PARENT);
-                layoutParams1.addRule(RelativeLayout.BELOW,R.id.textAreaScroller);
+                layoutParams1.addRule(RelativeLayout.BELOW, R.id.textAreaScroller);
                 options_lock.setLayoutParams(layoutParams1);
                 options_lock.setImageResource(R.drawable.lock_flat);
                 options_lock.setBackgroundColor(getResources().getColor(R.color.white));

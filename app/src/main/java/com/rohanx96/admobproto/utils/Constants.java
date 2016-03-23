@@ -37,4 +37,6 @@ public class Constants {
     public static final int UNLOCK_INCORRECT_PRICE = 100;
     public static final int UNLOCK_UNAVAILABLE_PRICE = 120;
 
+    public static final String ERROR = null;
+
 }
