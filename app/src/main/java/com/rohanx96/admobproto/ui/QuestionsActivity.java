@@ -163,6 +163,10 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                         || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                 Log.i("lock status ", " position " + mCurrentPage + 1 + " " + isLocked);
                 // TODO : Unlock question if status changed
+                // This removes the lock image on the fragment if question was previously locked but is now unlocked
+                if(!isLocked){
+                    removeLock();
+                }
             }
 
             @Override
@@ -180,6 +184,11 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     @Override
     public void setIsQuestionLocked(boolean isLocked) {
         this.isLocked = isLocked;
+    }
+
+    @Override
+    public void unlockNextQuestion(int category) {
+        GenericAnswerDetails.unlockNextQuestion(category);
     }
 
     @Override
@@ -610,5 +619,12 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     public void setupCharacterUnlockDialog() {
         // TODO: Add click listeners and implementation of coins for unlock dialog layout Rishabh
 
+    }
+
+    public void removeLock(){
+        ImageView lock = (ImageView) findViewById(R.id.lockImageId);
+        if (lock!=null){
+            lock.setVisibility(View.GONE);
+        }
     }
 }

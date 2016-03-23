@@ -215,6 +215,7 @@ public class QuestionTextBoxFragment extends Fragment {
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
 
             }
+            mCallback.unlockNextQuestion(CATEGORY);
             Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_SHORT).show();
             return true;
         } else {
@@ -279,6 +280,7 @@ public class QuestionTextBoxFragment extends Fragment {
                 FrameLayout.LayoutParams layoutParams = new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                         , ViewGroup.LayoutParams.MATCH_PARENT);
                 lock.setLayoutParams(layoutParams);
+                lock.setId(R.id.lockImageId);
                 lock.setImageResource(R.drawable.lock_flat);
                 lock.setBackgroundColor(getResources().getColor(R.color.white));
                 lock.setScaleType(ImageView.ScaleType.CENTER);
@@ -301,6 +303,7 @@ public class QuestionTextBoxFragment extends Fragment {
                         , ViewGroup.LayoutParams.MATCH_PARENT);
                 layoutParams1.addRule(RelativeLayout.BELOW, R.id.textAreaScroller);
                 options_lock.setLayoutParams(layoutParams1);
+                options_lock.setId(R.id.lockImageId);
                 options_lock.setImageResource(R.drawable.lock_flat);
                 options_lock.setBackgroundColor(getResources().getColor(R.color.white));
                 options_lock.setScaleType(ImageView.ScaleType.CENTER);

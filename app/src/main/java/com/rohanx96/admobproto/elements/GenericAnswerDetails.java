@@ -133,6 +133,23 @@ public class GenericAnswerDetails extends SugarRecord {
          */
     }
 
+    /** This method returns the question which is locked and has the least no */
+    public static GenericAnswerDetails getFirstLocked(int category){
+        GenericAnswerDetails genericAnswerDetail = Select.from(GenericAnswerDetails.class)
+                .where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category))
+                .where(Condition.prop(NamingHelper.toSQLNameDefault("status")).eq(Constants.UNAVAILABLE))
+                .first(); // Note this may need to change if question numbers are not ascending
+        Log.i("First Locked position"," " + genericAnswerDetail.question_number);
+        return genericAnswerDetail;
+    }
+
+    /** This unlocks the next question to be unlocked for a given category */
+    public static void unlockNextQuestion(int category){
+        GenericAnswerDetails nextQuestion = getFirstLocked(category);
+        nextQuestion.status = Constants.AVAILABLE;
+        nextQuestion.save();
+    }
+
     public static void printAll() {
         List<GenericAnswerDetails> genericAnswerDetails = Select.from(GenericAnswerDetails.class).list();
         for (GenericAnswerDetails g : genericAnswerDetails) {
