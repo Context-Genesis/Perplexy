@@ -1,5 +1,7 @@
 package com.rohanx96.admobproto.ui.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,6 +25,7 @@ import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
+import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
 
@@ -36,6 +40,7 @@ import butterknife.OnClick;
 /**
  * Created by rish on 9/3/16.
  */
+
 public class QuestionWordFragment extends Fragment {
 
     int POSITION = -1;
@@ -43,6 +48,14 @@ public class QuestionWordFragment extends Fragment {
     FrameLayout questionCard;
     RelativeLayout cardContent;
     private QuestionsCallback mCallback;
+    GenericQuestion genericQuestion;
+    SharedPreferences pref;
+
+    @Bind(R.id.qcard_word_previous)
+    ImageButton prevQuestion;
+
+    @Bind(R.id.qcard_word_next)
+    ImageButton nextQuestion;
 
     @Bind(R.id.qcard_word_question)
     TextView tvQuestion;
@@ -72,14 +85,25 @@ public class QuestionWordFragment extends Fragment {
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
+        pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
-        GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION - 1);
+        genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION - 1);
         tvQuestion.setText(genericQuestion.question);
 
         answer = genericQuestion.answer;
         answerPadCharacters = genericQuestion.pad_characters;
 
         BLANK_CIRCLE_SIZE = getBlankCircleSize();
+
+
+        if (genericQuestion.question_number == 1) {
+            this.prevQuestion.setVisibility(View.GONE);
+        }
+
+        // TODO: replace 14 by count of question in that particular category
+        if (genericQuestion.question_number == 14) {
+            this.nextQuestion.setVisibility(View.GONE);
+        }
 
         setUpJumbledCharacters();
 
@@ -198,13 +222,20 @@ public class QuestionWordFragment extends Fragment {
     }
 
     public boolean isAnsweredCorrectly() {
+        GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
         for (int i = 0; i < answer.length(); i++) {
             if (jumbledCharacters.get(i) != answer.charAt(i)) {
                 return false;
             }
         }
-        //Update status for answer in database
-        GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
+        if (details.status == Constants.AVAILABLE) {
+            GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
+            Coins.correct_answer(getContext());
+
+            TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
+            display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
+        }
+
         Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
         return true;
     }

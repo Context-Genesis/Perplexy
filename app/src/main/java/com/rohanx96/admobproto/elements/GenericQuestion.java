@@ -30,8 +30,9 @@ public class GenericQuestion {
     public String toString() {
 
         /*
-        *Must parse jsonarray to figure out all options. cant simply print JSONArray
+        *  Must parse jsonarray to figure out all options. cant simply print JSONArray
          */
+
         String optionString = "";
         try {
             for (int i = 0; i < options.length(); i++) {

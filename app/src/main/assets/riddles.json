@@ -35,7 +35,7 @@
       "answer": "GOOD",
       "explanation": "well maybe I am lying here",
       "message": "Its too late to apologize",
-      "pad_characters": "DAFGEBADWREQ",
+      "pad_characters": "GOODEBADWREQ",
       "options": [],
       "layout_type": 1
     },
@@ -77,6 +77,175 @@
       "pad_characters": "HARAMIHQWPLX",
       "options": [],
       "layout_type": 2
+    },
+    {
+      "question_number": 5,
+      "question": "Dhaval is a ___ bwoy.",
+      "question_name": "Dhaval",
+      "category": 1,
+      "hint": "Think more on this",
+      "answer": "STUDIOUS",
+      "explanation": "well maybe I am lying here",
+      "message": "Its too late to apologize",
+      "pad_characters": "LASWSTUDIOUS",
+      "options": [],
+      "layout_type": 1
+    },
+    {
+      "question_number": 6,
+      "question": "Saare ke saare ga ma ko ke lar ___ chale",
+      "question_name": "Saare Ke Saare",
+      "category": 1,
+      "hint": "Think more on this",
+      "answer": "GAATE",
+      "explanation": "no",
+      "message": "Its too late to apologize",
+      "pad_characters": "WGAATEPLKASH",
+      "options": [],
+      "layout_type": 2
+    },
+    {
+      "question_number": 7,
+      "question": "My Android Studio Version is?",
+      "question_name": "Pick One",
+      "category": 1,
+      "hint": "no hint baby",
+      "answer": "4",
+      "explanation": "For obvious reasons",
+      "message": "Hello, from the other side",
+      "pad_characters": "",
+      "options": [
+        {
+          "choice": "1.4"
+        },
+        {
+          "choice": "1.5"
+        },
+        {
+          "choice": "1.7"
+        },
+        {
+          "choice": "2.0"
+        }
+      ],
+      "layout_type": 0
+    },
+    {
+      "question_number": 8,
+      "question": "Nivea is ",
+      "question_name": "Dhruv",
+      "category": 1,
+      "hint": "Think more on this",
+      "answer": "LOTION",
+      "explanation": "no",
+      "message": "Its too late to apologize",
+      "pad_characters": "LPWRDFLOTION",
+      "options": [],
+      "layout_type": 2
+    },
+    {
+      "question_number": 9,
+      "question": "Oh sugar, you dont have to be so sweet",
+      "question_name": "Aviral",
+      "category": 1,
+      "hint": "Think more on this",
+      "answer": "GOOD",
+      "explanation": "well maybe I am lying here",
+      "message": "Its too late to apologize",
+      "pad_characters": "DAFGEBADGOOD",
+      "options": [],
+      "layout_type": 1
+    },
+    {
+      "question_number": 10,
+      "question": "Dhruv is a __ boy",
+      "question_name": "Dhruv",
+      "category": 1,
+      "hint": "Think more on this",
+      "answer": "HARAMI",
+      "explanation": "no",
+      "message": "Its too late to apologize",
+      "pad_characters": "HARAMIHQWPLX",
+      "options": [],
+      "layout_type": 2
+    },
+    {
+      "question_number": 11,
+      "question": "Dhruv is a __ boy",
+      "question_name": "Dhruv",
+      "category": 1,
+      "hint": "Think more on this",
+      "answer": "HARAMI",
+      "explanation": "no",
+      "message": "Its too late to apologize",
+      "pad_characters": "HARAMIHQWPLX",
+      "options": [],
+      "layout_type": 2
+    },
+    {
+      "question_number": 12,
+      "question": "Dhruv is a __ boy",
+      "question_name": "Dhruv",
+      "category": 1,
+      "hint": "Think more on this",
+      "answer": "HARAMI",
+      "explanation": "no",
+      "message": "Its too late to apologize",
+      "pad_characters": "HARAMIHQWPLX",
+      "options": [],
+      "layout_type": 2
+    },
+    {
+      "question_number": 13,
+      "question": "Pick the awesome one",
+      "question_name": "Pick One",
+      "category": 1,
+      "hint": "no hint baby",
+      "answer": "4",
+      "explanation": "For obvious reasons",
+      "message": "Hello, from the other side",
+      "pad_characters": "",
+      "options": [
+        {
+          "choice": "Dhruv"
+        },
+        {
+          "choice": "Rohan"
+        },
+        {
+          "choice": "Rishabh"
+        },
+        {
+          "choice": "All of the above"
+        }
+      ],
+      "layout_type": 0
+    },
+    {
+      "question_number": 14,
+      "question": "Pick the awesome one",
+      "question_name": "Pick One",
+      "category": 1,
+      "hint": "no hint baby",
+      "answer": "4",
+      "explanation": "For obvious reasons",
+      "message": "Hello, from the other side",
+      "pad_characters": "",
+      "options": [
+        {
+          "choice": "Dhruv"
+        },
+        {
+          "choice": "Rohan"
+        },
+        {
+          "choice": "Rishabh"
+        },
+        {
+          "choice": "All of the above"
+        }
+      ],
+      "layout_type": 0
     }
   ]
 }

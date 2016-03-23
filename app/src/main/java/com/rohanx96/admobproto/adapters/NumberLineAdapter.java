@@ -7,13 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.NumberLineCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.NumberLineActivity;
 import com.rohanx96.admobproto.ui.QuestionsActivity;
-import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.utils.Constants;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 /**
  * Created by bhutanidhruv16 on 07-Mar-16.
  */
+
 public class NumberLineAdapter extends BaseAdapter {
 
     NumberLineActivity context;
@@ -34,10 +37,11 @@ public class NumberLineAdapter extends BaseAdapter {
         this.numberLineCallback = numberLineCallback;
         /*
         * Add for padding of the arrows on the number line
-         */
+        */
         this.answerDetails.add(0, new GenericAnswerDetails(-1, Constants.CORRECT, Constants.UNAVAILABLE, false, false, 0));
         this.answerDetails.add(answerDetails.size(), new GenericAnswerDetails(-1, Constants.CORRECT, Constants.UNAVAILABLE, false, false, 0));
     }
+
 
     @Override
     public int getCount() {
@@ -89,11 +93,12 @@ public class NumberLineAdapter extends BaseAdapter {
         }
 
         /*
-        *Process answer details here and set backgrounds and lock image accordingly
-         */
+        * Process answer details here and set backgrounds and lock image accordingly
+        */
+
         // Text and click listeners are not set for number line arrows
         if (position != 0 && position != answerDetails.size() - 1) {
-            holder.tv.setText(" " + getItem(position).question_number + " ");
+            holder.tv.setText(position + "");
             // Set background drawable for question number based on status
             setBackgroundDrawable(position, holder);
             setOnClickListeners(position, holder);
@@ -125,10 +130,24 @@ public class NumberLineAdapter extends BaseAdapter {
         // Set background drawable for question number based on status
         switch (answerDetails.get(position).status) {
             case Constants.CORRECT:
-                holder.tv.setBackgroundResource(R.drawable.circle_question_number_correcct);
+                if (answerDetails.get(position).bookmarked) {
+                    ViewGroup.LayoutParams params = holder.tv.getLayoutParams();
+                    params.width = 140;
+                    params.height = 140;
+                    holder.tv.setLayoutParams(params);
+                    holder.tv.setBackgroundResource(R.drawable.correct_star);
+                } else
+                    holder.tv.setBackgroundResource(R.drawable.circle_question_number_correcct);
                 break;
             case Constants.INCORRECT:
-                holder.tv.setBackgroundResource(R.drawable.circle_question_number_incorrect);
+                if (answerDetails.get(position).bookmarked) {
+                    ViewGroup.LayoutParams params = holder.tv.getLayoutParams();
+                    params.width = 140;
+                    params.height = 140;
+                    holder.tv.setLayoutParams(params);
+                    holder.tv.setBackgroundResource(R.drawable.incorrect_star);
+                } else
+                    holder.tv.setBackgroundResource(R.drawable.circle_question_number_incorrect);
                 break;
             case Constants.AVAILABLE:
                 holder.tv.setBackgroundResource(R.drawable.circle_question_number_available);
@@ -136,6 +155,7 @@ public class NumberLineAdapter extends BaseAdapter {
             case Constants.UNAVAILABLE:
                 holder.tv.setBackgroundResource(R.drawable.circle_question_number_unavailable);
                 break;
+
         }
     }
 
@@ -172,7 +192,7 @@ public class NumberLineAdapter extends BaseAdapter {
                         intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
-                        context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
+                        context.setAnimationRunning(false);             // Stop the background color change animation on leaving activity
                     }
                 });
                 break;

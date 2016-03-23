@@ -1,5 +1,7 @@
 package com.rohanx96.admobproto.ui.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -8,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,8 +21,11 @@ import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
+import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,12 +41,20 @@ public class QuestionMCQFragment extends Fragment {
     FrameLayout questionCard;
     RelativeLayout cardContent;
     private QuestionsCallback mCallback;
+    GenericQuestion genericQuestion;
+    SharedPreferences pref;
 
     @Bind(R.id.qcard_mcq_question)
     TextView tvQuestion;
 
     @Bind(R.id.qcard_mcq_options_ll)
     LinearLayout llOptions;
+
+    @Bind(R.id.qcard_mcq_previous)
+    ImageButton prevQuestion;
+
+    @Bind(R.id.qcard_mcq_next)
+    ImageButton nextQuestion;
 
     @Bind(R.id.qcard_mcq_option1)
     TextView tvOption1;
@@ -64,9 +78,19 @@ public class QuestionMCQFragment extends Fragment {
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
         lockQuestionIfRequired();
-        GenericQuestion genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION - 1);
+        genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION - 1);
+        pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
         tvQuestion.setText(genericQuestion.question);
+
+        if (genericQuestion.question_number == 1) {
+            this.prevQuestion.setVisibility(View.GONE);
+        }
+
+        // TODO: replace 14 by count of question in that particular category
+        if (genericQuestion.question_number == 14) {
+            this.nextQuestion.setVisibility(View.GONE);
+        }
 
         try {
             switch (genericQuestion.options.length()) {
@@ -93,22 +117,51 @@ public class QuestionMCQFragment extends Fragment {
 
     @OnClick(R.id.qcard_mcq_option1)
     public void onClickOption1(View view) {
-        Toast.makeText(getActivity(), "Clicked option1", Toast.LENGTH_LONG).show();
+        isRight("1");
     }
 
     @OnClick(R.id.qcard_mcq_option2)
     public void onClickOption2(View view) {
-        Toast.makeText(getActivity(), "Clicked option2", Toast.LENGTH_LONG).show();
+        isRight("2");
     }
 
     @OnClick(R.id.qcard_mcq_option3)
     public void onClickOption3(View view) {
-        Toast.makeText(getActivity(), "Clicked option3", Toast.LENGTH_LONG).show();
+        isRight("3");
     }
 
     @OnClick(R.id.qcard_mcq_option4)
     public void onClickOption4(View view) {
-        Toast.makeText(getActivity(), "Clicked option4", Toast.LENGTH_LONG).show();
+        isRight("4");
+    }
+
+    void isRight(String check) {
+        if (genericQuestion.answer.equals(check)) {
+            GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
+            if (details.status == Constants.AVAILABLE) {
+                Coins.correct_answer(getContext());
+                details.status = Constants.CORRECT;
+                details.save();
+
+                TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
+                display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
+            }
+            Toast.makeText(getActivity(), "Clicked option " + check + " CORRECT", Toast.LENGTH_SHORT).show();
+
+        } else {
+            GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
+            if (details.status == Constants.AVAILABLE) {
+                Coins.wrong_answer(getContext());
+                details.status = Constants.INCORRECT;
+                details.save();
+
+                TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
+                display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
+
+                lockQuestionIfRequired();
+            }
+            Toast.makeText(getActivity(), "Clicked option " + check + " INCORRECT", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

@@ -2,10 +2,12 @@ package com.rohanx96.admobproto.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 /**
  * Created by bhutanidhruv16 on 12-Mar-16.
  */
+
 public class Coins {
 
     private static SharedPreferences pref;
@@ -32,25 +34,51 @@ public class Coins {
 
     }
 
-    // TODO: deduct coins.. check if sufficient coins
     public static void unlock_incorrect(Context context) {
         pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, context.MODE_PRIVATE);
         editor = pref.edit();
 
         long coins = pref.getLong(Constants.PREF_COINS, 0);
-        editor.putLong(Constants.PREF_COINS, coins - Constants.UNLOCK_INCORRECT_PRICE).apply();
-        long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
-        editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.UNLOCK_INCORRECT_PRICE).apply();
+
+        if (coins >= Constants.UNLOCK_INCORRECT_PRICE) {
+            editor.putLong(Constants.PREF_COINS, coins - Constants.UNLOCK_INCORRECT_PRICE).apply();
+            long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
+            editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.UNLOCK_INCORRECT_PRICE).apply();
+        } else {
+            Toast.makeText(context, "Donot have sufficient coins", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    // TODO: deduct coins .. check if sufficient coins
     public static void unlock_unavailable(Context context) {
         pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, context.MODE_PRIVATE);
         editor = pref.edit();
 
         long coins = pref.getLong(Constants.PREF_COINS, 0);
-        editor.putLong(Constants.PREF_COINS, coins - Constants.UNLOCK_UNAVAILABLE_PRICE).apply();
-        long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
-        editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.UNLOCK_UNAVAILABLE_PRICE).apply();
+        if (coins >= Constants.UNLOCK_UNAVAILABLE_PRICE) {
+            editor.putLong(Constants.PREF_COINS, coins - Constants.UNLOCK_UNAVAILABLE_PRICE).apply();
+            long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
+            editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.UNLOCK_UNAVAILABLE_PRICE).apply();
+        } else {
+            Toast.makeText(context, "Donot have sufficient coins", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void correct_answer(Context context) {
+        pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, context.MODE_PRIVATE);
+        editor = pref.edit();
+
+        long coins = pref.getLong(Constants.PREF_COINS, 0);
+        editor.putLong(Constants.PREF_COINS, coins + Constants.CORRECT_PRICE).apply();
+
+        long earned_coins = pref.getLong(Constants.PREF_COINS_EARNED, 0);
+        editor.putLong(Constants.PREF_COINS_EARNED, earned_coins + Constants.CORRECT_PRICE).apply();
+    }
+
+    public static void wrong_answer(Context context) {
+        pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, context.MODE_PRIVATE);
+        editor = pref.edit();
+
+        long coins = pref.getLong(Constants.PREF_COINS, 0);
+        editor.putLong(Constants.PREF_COINS, coins - Constants.INCORRECT_PRICE).apply();
     }
 }
