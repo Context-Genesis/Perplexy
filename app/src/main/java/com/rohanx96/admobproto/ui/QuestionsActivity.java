@@ -164,7 +164,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 Log.i("lock status ", " position " + mCurrentPage + 1 + " " + isLocked);
                 // TODO : Unlock question if status changed
                 // This removes the lock image on the fragment if question was previously locked but is now unlocked
-                if(!isLocked){
+                if (!isLocked) {
                     removeLock();
                 }
             }
@@ -377,6 +377,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                         if (!isCharacterDialogOpen) {
                             if (isLocked) {
                                 showCharacterUnlockDialog();
+                                setupCharacterUnlockDialog();
                             } else {
                                 showCharacterDialog();
                             }
@@ -617,14 +618,74 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
 
     public void setupCharacterUnlockDialog() {
-        // TODO: Add click listeners and implementation of coins for unlock dialog layout Rishabh
+        int status = GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY);
+        int unlockPriceValue = Constants.UNLOCK_UNAVAILABLE_PRICE;
 
+        TextView unlockPrice = (TextView) findViewById(R.id.char_unlock_price);
+        if (status == Constants.INCORRECT) {
+            unlockPriceValue = Constants.UNLOCK_INCORRECT_PRICE;
+        } else if (status == Constants.UNAVAILABLE) {
+            unlockPriceValue = Constants.UNLOCK_UNAVAILABLE_PRICE;
+        }
+        unlockPrice.setText(String.format("%d",unlockPriceValue));
+        final TextView unlock = (TextView) findViewById(R.id.char_unlock_tv_unlock);
+        final LinearLayout confirmUnlock = (LinearLayout) findViewById(R.id.char_unlock_ll_confirm_unlock);
+        unlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    unlock.setVisibility(View.GONE);
+                    Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+                    confirmUnlock.startAnimation(in);
+                    confirmUnlock.setVisibility(View.VISIBLE);
+            }
+        });
+
+        TextView yesUnlock = (TextView) findViewById(R.id.char_unlock_yes_unlock);
+        final int finalUnlockPriceValue = unlockPriceValue;
+        yesUnlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmUnlock.setVisibility(View.GONE);
+                unlock.setVisibility(View.VISIBLE);
+                pref = getBaseContext().getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+                long coins = pref.getLong(Constants.PREF_COINS, 0);
+                if (coins - finalUnlockPriceValue > 0) {
+                    Log.i("unlock","unlocking question");
+                    isLocked = false;
+                    // TODO: Implement hiding of lock image by some other way. This does not work
+                    removeLock();
+                    hideCharacterUnlockDialog();
+                    if(finalUnlockPriceValue == Constants.UNLOCK_INCORRECT_PRICE)
+                        Coins.unlock_incorrect(getApplicationContext());
+                    else
+                        Coins.unlock_unavailable(getApplicationContext());
+                    coins_display.setText(String.format("%d",coins-finalUnlockPriceValue));
+                    GenericAnswerDetails.updateStatus(mCurrentPage+1,CATEGORY,Constants.AVAILABLE);
+                } else {
+                    Toast.makeText(getApplication(), "Do not have enough coins",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        TextView noUnlock = (TextView) findViewById(R.id.char_unlock_no_unlock);
+        noUnlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmUnlock.setVisibility(View.GONE);
+                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+                unlock.startAnimation(in);
+                unlock.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
-    public void removeLock(){
+    public void removeLock() {
         ImageView lock = (ImageView) findViewById(R.id.lockImageId);
-        if (lock!=null){
+        if (lock != null) {
             lock.setVisibility(View.GONE);
         }
+        else
+            Log.i("removing lock","lock image not found");
     }
 }

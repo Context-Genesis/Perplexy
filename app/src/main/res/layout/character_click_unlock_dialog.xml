@@ -90,7 +90,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/char_unlock_unlockprice"
+                android:id="@+id/char_unlock_price"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
