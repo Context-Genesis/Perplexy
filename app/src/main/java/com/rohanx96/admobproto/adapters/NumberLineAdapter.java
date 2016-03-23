@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
@@ -150,7 +148,14 @@ public class NumberLineAdapter extends BaseAdapter {
                     holder.tv.setBackgroundResource(R.drawable.circle_question_number_incorrect);
                 break;
             case Constants.AVAILABLE:
-                holder.tv.setBackgroundResource(R.drawable.circle_question_number_available);
+                if (answerDetails.get(position).bookmarked) {
+                    ViewGroup.LayoutParams params = holder.tv.getLayoutParams();
+                    params.width = 140;
+                    params.height = 140;
+                    holder.tv.setLayoutParams(params);
+                    holder.tv.setBackgroundResource(R.drawable.available_bookmark);
+                } else
+                    holder.tv.setBackgroundResource(R.drawable.circle_question_number_available);
                 break;
             case Constants.UNAVAILABLE:
                 holder.tv.setBackgroundResource(R.drawable.circle_question_number_unavailable);

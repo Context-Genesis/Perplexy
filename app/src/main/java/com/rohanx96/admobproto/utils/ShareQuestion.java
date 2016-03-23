@@ -4,20 +4,27 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Toast;
 
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Date;
+
 
 /**
  * Created by rish on 12/3/16.
  */
+
 public class ShareQuestion {
 
-    // TODO : (DHRUV) Check why this isnt working.
+    static Bitmap bitmap;             // needed for FB
+
+    // TODO : (DHRUV) Check why this isnt working. (DONE)
     public static void shareImageWhatsapp(Activity activity) {
         Toast.makeText(activity, "Preparing for Share", Toast.LENGTH_LONG).show();
         shareImage(activity);
@@ -25,53 +32,63 @@ public class ShareQuestion {
 
     // TODO : (DHRUV) Fb share kar idhar.
     public static void shareImageFacebook(Activity activity) {
-        Toast.makeText(activity, "Requires FB SDK. Bhutani dhoondke kar.", Toast.LENGTH_LONG).show();
+        takeScreenshot(activity);
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(bitmap)
+                .build();
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+
+        Toast.makeText(activity, "This has not been tested!", Toast.LENGTH_LONG).show();
     }
 
-    private static String takeScreenshot(Activity activity) {
+    private static File takeScreenshot(Activity activity) {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+        String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
 
-        View v = activity.getWindow().getDecorView().getRootView();
-        v.setDrawingCacheEnabled(true);
-        Bitmap b = v.getDrawingCache();
-        String extr = BasePath.getBasePathShare();
-        File basePath = new File(extr);
-        if (!basePath.exists()) {
-            basePath.mkdir();
-            basePath.mkdirs();
-        }
-        File myPath = new File(extr, "sharedImage" + ".jpg");
-        myPath.mkdirs();
-        myPath.mkdir();
-        System.out.println(myPath);
-        FileOutputStream fos = null;
+        // create bitmap screen capture
+        View v1 = activity.getWindow().getDecorView().getRootView();
+        v1.setDrawingCacheEnabled(true);
+        bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+        v1.setDrawingCacheEnabled(false);
+        File imageFile = new File(mPath);
+
         try {
-            fos = new FileOutputStream(myPath);
-            b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.flush();
-            fos.close();
-            MediaStore.Images.Media.insertImage(activity.getContentResolver(), b,
-                    "Screen", "screen");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            int quality = 100;
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+            outputStream.flush();
+            outputStream.close();
+//            openScreenshot(activity, imageFile);
+        } catch (Throwable e) {
             e.printStackTrace();
         }
-        return myPath.getPath();
+
+        return imageFile;
     }
 
-    private static Intent shareImage(Activity activity) {
-        Intent share = new Intent(Intent.ACTION_SEND);
+    private static void openScreenshot(Activity activity, File imageFile) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        Uri uri = Uri.fromFile(imageFile);
+        intent.setDataAndType(uri, "image/*");
+        activity.startActivity(intent);
+    }
 
-        String path = takeScreenshot(activity);
-
-        File imageFileToShare = new File(path);
-
-        Uri uri = Uri.fromFile(imageFileToShare);
-        share.putExtra(Intent.EXTRA_STREAM, uri);
-        share.setType("image/jpeg");
-        share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        share.putExtra(Intent.EXTRA_TEXT, "Perplexed! Help me answer this question! " + "https://play.google.com/store/apps/details?id=" + activity.getPackageName());
-        activity.startActivity(Intent.createChooser(share, "Share Image!"));
-        return share;
+    private static void shareImage(Activity activity) {
+        File imageFile = takeScreenshot(activity);
+        Uri uri = Uri.fromFile(imageFile);
+        Intent whatsappIntent = new Intent(android.content.Intent.ACTION_SEND);
+        whatsappIntent.setDataAndType(uri, "image/*");
+        whatsappIntent.putExtra(Intent.EXTRA_TEXT, "Perplexed! Help me answer this question! " + "https://play.google.com/store/apps/details?id=" + activity.getPackageName());
+        whatsappIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        activity.startActivity(Intent.createChooser(whatsappIntent, "Share image using"));
+        try {
+            activity.startActivity(whatsappIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(activity, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

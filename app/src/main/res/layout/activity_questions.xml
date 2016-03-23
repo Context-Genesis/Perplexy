@@ -85,6 +85,7 @@
         android:layout_marginTop="8dp"
         android:layout_above="@+id/questions_activity_bubble"
         android:visibility="gone"></include>
+
     <include
         android:id="@+id/questions_activity_character_dialog_unlock"
         layout="@layout/character_click_unlock_dialog"

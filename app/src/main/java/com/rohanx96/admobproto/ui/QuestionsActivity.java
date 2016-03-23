@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -37,6 +38,7 @@ import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
 import com.rohanx96.admobproto.utils.ShareQuestion;
+import com.facebook.FacebookSdk;
 
 import java.util.ArrayList;
 
@@ -78,6 +80,8 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
         ButterKnife.bind(this);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         /* The page position is one less than question number. Note question number is passed to activity instead of position */
         mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_NUMBER, 0) - 1;
         CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY, -1);
@@ -574,7 +578,30 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         findViewById(R.id.char_q_clicked_whatsapp_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShareQuestion.shareImageWhatsapp(QuestionsActivity.this);
+                hideCharacterDialog();
+
+                final Handler handler = new Handler();          // delay to give time to dialog to close
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ShareQuestion.shareImageWhatsapp(QuestionsActivity.this);
+                    }
+                }, 600);
+            }
+        });
+
+        findViewById(R.id.char_q_clicked_facebook_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideCharacterDialog();
+
+                final Handler handler = new Handler();          // delay to give time to dialog to close
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ShareQuestion.shareImageFacebook(QuestionsActivity.this);
+                    }
+                }, 600);
             }
         });
     }
