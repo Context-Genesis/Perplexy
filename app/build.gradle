@@ -31,4 +31,6 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.github.satyan:sugar:1.5'
     compile 'com.facebook.android:facebook-android-sdk:4.+'
+    compile 'com.orhanobut:dialogplus:1.11@aar'
+
 }

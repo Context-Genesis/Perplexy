@@ -41,6 +41,7 @@ public class CharacterHelper {
      * This sets up the click listeners for various options in character dialog. Implementation copied from DialogSpeakingMan
      * by Dhruv
      */
+
     public void setupCharacterDialog(int CATEGORY, final int mCurrentPage) {
         // TODO: Add share intents for whatsapp, facebook Dhruv
         GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, CATEGORY, mCurrentPage);

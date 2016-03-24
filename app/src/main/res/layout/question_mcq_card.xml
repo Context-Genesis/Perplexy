@@ -36,86 +36,115 @@
                     android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type?"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textStyle="bold" />
+
             </ScrollView>
 
-            <LinearLayout
-                android:id="@+id/qcard_mcq_options_ll"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="48dp"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:layout_above="@+id/navigating_fragments"
+                android:layout_below="@id/textAreaScroller">
 
-                <TextView
-                    android:id="@+id/qcard_mcq_option1"
+                <RelativeLayout
+                    android:id="@+id/qcard_mcq_options_ll"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_background"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Option3"
-                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/qcard_mcq_option2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_background"
-                    android:gravity="center"
-                    android:text="Option4"
-                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
+                    <TextView
+                        android:id="@+id/qcard_mcq_option1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_background"
+                        android:gravity="center"
+                        android:text="Option3"
+                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
 
-                <TextView
-                    android:id="@+id/qcard_mcq_option3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_background"
-                    android:gravity="center"
-                    android:text="Option1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
+                    <TextView
+                        android:id="@+id/qcard_mcq_option2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/qcard_mcq_option1"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_background"
+                        android:gravity="center"
+                        android:text="Option4"
+                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
 
-                <TextView
-                    android:id="@+id/qcard_mcq_option4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_background"
-                    android:gravity="center"
-                    android:text="Option2"
-                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/qcard_mcq_option3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/qcard_mcq_option2"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_background"
+                        android:gravity="center"
+                        android:text="Option1"
+                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
 
-            <ImageButton
-                android:id="@+id/qcard_mcq_previous"
-                android:layout_width="48dp"
+                    <TextView
+                        android:id="@+id/qcard_mcq_option4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/qcard_mcq_option3"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_background"
+                        android:gravity="center"
+                        android:text="Option2"
+                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/canvas_pull"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/dragdown_dark" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/navigating_fragments"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:background="@color/white"
-                android:padding="4dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/left" />
+                android:layout_alignParentBottom="true">
 
-            <ImageButton
-                android:id="@+id/qcard_mcq_next"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:background="@color/white"
-                android:padding="4dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/right" />
+                <ImageButton
+                    android:id="@+id/qcard_mcq_previous"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/left" />
+
+                <ImageButton
+                    android:id="@+id/qcard_mcq_next"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/right" />
+
+            </RelativeLayout>
+
         </RelativeLayout>
+
     </android.support.v7.widget.CardView>
+
 </FrameLayout>
+

@@ -45,4 +45,8 @@
     <color name="first_background_color">@color/blue_d_ebony_clay</color>
     <color name="first_light_background_color">@color/blue_l_steel_blue</color>
     <color name="purple_a_l_material">#7C4DFF</color>
+
+    <color name="canvas_bg">@color/blue_d_grey</color>
+    <color name="color_pen">@color/white</color>
+
 </resources>
