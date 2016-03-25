@@ -207,15 +207,16 @@ public class QuestionTextBoxFragment extends Fragment {
     public boolean isAnsweredCorrectly() {
         GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
         if (answer.equals(enteredCharacters)) {
+            // Coins and question should be unlocked when status is available. For correct status relevant coins and question have already
+            // been unlocked. For incorrect and unavailable user should not be able to answer.
             if (details.status == Constants.AVAILABLE) {
                 GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
                 Coins.correct_answer(getContext());
 
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
-
+                mCallback.unlockNextQuestion(CATEGORY);
             }
-            mCallback.unlockNextQuestion(CATEGORY);
             Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_SHORT).show();
             return true;
         } else {
@@ -226,6 +227,9 @@ public class QuestionTextBoxFragment extends Fragment {
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
             }
+            // Sets status of question locked in questionsActivity. Used to change the layout of character
+            mCallback.setIsQuestionLocked(true);
+            lockQuestionIfRequired();
             Toast.makeText(getActivity(), "Answered Incorrectly!", Toast.LENGTH_SHORT).show();
             return false;
         }

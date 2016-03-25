@@ -1,6 +1,7 @@
 package com.rohanx96.admobproto.ui.fragments;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FrontPageFragment extends Fragment {
+    @Bind(R.id.home_tv_heading)
+    TextView heading;
 
     @Bind(R.id.home_tv_lvl_text)
     TextView gameTypeText;
@@ -52,7 +55,8 @@ public class FrontPageFragment extends Fragment {
         setUpSeekBar();
         gameSeekBar.setProgress(0);
         gameType1.performClick();
-
+        Typeface typeFace = Typeface.createFromAsset(getActivity().getAssets(), "tagus.ttf");
+        heading.setTypeface(typeFace);
         return rootView;
     }
 

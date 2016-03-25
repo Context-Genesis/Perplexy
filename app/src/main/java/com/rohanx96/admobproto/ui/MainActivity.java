@@ -48,19 +48,19 @@ public class MainActivity extends FragmentActivity {
         mPager.setAdapter(mPagerAdapter);
         circlePageIndicator.setViewPager(mPager);
         mPager.setCurrentItem(1, false);
-        mContainer.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         fallingDrawables = new FallingDrawables(this, mContainer);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        /* Make the activity fullscreen */
+        mContainer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         // This is not done in OnCreate because the animation is stopped whenever the activity is left.
         // So we need to restart the animation when activity resumes
         if (!fallingDrawables.getIsRunning()) {
@@ -118,6 +118,7 @@ public class MainActivity extends FragmentActivity {
          */
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
         if (prefs.getBoolean(Constants.FIRST_RUN, true)) {
+            //TODO: On uninstalling and reinstalling the questions are not reinitialised
             GenericAnswerDetails.initializeDatabase(getApplicationContext());
             prefs.edit().putBoolean(Constants.FIRST_RUN, false).apply();
             SharedPreferences.Editor editor = prefs.edit();

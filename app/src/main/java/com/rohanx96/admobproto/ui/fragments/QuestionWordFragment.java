@@ -228,14 +228,16 @@ public class QuestionWordFragment extends Fragment {
                 return false;
             }
         }
+        // Coins and question should be unlocked when status is available. For correct status relevant coins and question have already
+        // been unlocked. For incorrect and unavailable user should not be able to answer.
         if (details.status == Constants.AVAILABLE) {
             GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
             Coins.correct_answer(getContext());
 
             TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
             display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
+            mCallback.unlockNextQuestion(CATEGORY);
         }
-        mCallback.unlockNextQuestion(CATEGORY);
         Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
         return true;
     }

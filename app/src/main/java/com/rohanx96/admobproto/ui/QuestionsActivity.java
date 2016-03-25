@@ -5,7 +5,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -18,29 +17,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
-import com.rohanx96.admobproto.elements.GenericQuestion;
 import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionTextBoxFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
-import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
-import com.rohanx96.admobproto.utils.ShareQuestion;
-import com.facebook.FacebookSdk;
+//import com.facebook.FacebookSdk;
 
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -80,7 +72,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
         ButterKnife.bind(this);
-        FacebookSdk.sdkInitialize(getApplicationContext());
+        //FacebookSdk.sdkInitialize(getApplicationContext());
 
         /* The page position is one less than question number. Note question number is passed to activity instead of position */
         mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_NUMBER, 0) - 1;
@@ -162,7 +154,8 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 isLocked = (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT)
                         || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                 Log.i("lock status ", " position " + mCurrentPage + 1 + " " + isLocked);
-                // TODO : Unlock question if status changed
+                // TODO : Unlock question if status changed. removeLock() does not work.
+                // One way to do this is getCurrentFragment and call method of fragment that removes the view from container
                 // This removes the lock image on the fragment if question was previously locked but is now unlocked
                 if (!isLocked) {
                     removeLock();
@@ -382,8 +375,6 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                                 //Dialog is reinitialised based on question every time character is clicked
                                 characterHelper.setupCharacterDialog(CATEGORY,mCurrentPage);
                             }
-// TODO (done partly) : Remove swipe and button click listeners. Need to check if listeners need to be removed for options
-                            //
                         } else {
                             if (isLocked) {
                                 hideCharacterUnlockDialog();

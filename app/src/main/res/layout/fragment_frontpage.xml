@@ -7,11 +7,12 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/home_tv_heading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/home_tv_lvl_text"
         android:gravity="center"
-        android:text="Perplexy"
+        android:text="PERPLEXY"
         android:textColor="@color/white"
         android:textSize="40dp" />
 
