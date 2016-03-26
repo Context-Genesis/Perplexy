@@ -29,6 +29,7 @@ import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionTextBoxFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
+import com.rohanx96.admobproto.ui.fragments.QuestionsFragment;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -155,12 +156,17 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 isLocked = (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT)
                         || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                 Log.i("lock status ", " position " + mCurrentPage + 1 + " " + isLocked);
-                // TODO : Unlock question if status changed. removeLock() does not work.
-                // One way to do this is getCurrentFragment and call method of fragment that removes the view from container
-                // This removes the lock image on the fragment if question was previously locked but is now unlocked
-                if (!isLocked) {
-                    removeLock();
-                }
+
+                // Remove the lock image on the fragment if question was previously locked but is now unlocked
+                // finding view by id and then removing it does not work even if unique IDs are assigne to lock image view
+                // Another way to do this is getCurrentFragment and call method of fragment that removes the view from container
+                /*if (!isLocked) {
+                    ((QuestionsFragment)pagerAdapter.getItem(mCurrentPage)).unlockQuestion();
+                }*/
+                // The above method also does not work because the view cardContent used in unlockQuestion method is always null.
+                // So currently this issue is resolved by calling notifyDataSetChanged every time user correctly answers a question
+                // or unlocks a new question
+                // TODO: Another possible solution could be to display the lock image in the activity instead of fragments
             }
 
             @Override
@@ -183,6 +189,11 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     @Override
     public void unlockNextQuestion(int category) {
         GenericAnswerDetails.unlockNextQuestion(category);
+    }
+
+    @Override
+    public void refreshAdapter() {
+        pagerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -272,6 +283,11 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         @Override
         public int getCount() {
             return JSONUtils.getTotalQuestions(getApplicationContext(), CATEGORY);
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
     }
 
@@ -394,16 +410,5 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     public static int convertDip2Pixels(Context context, int dip) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.getResources().getDisplayMetrics());
 
-    }
-
-
-
-    public void removeLock() {
-        ImageView lock = (ImageView) findViewById(R.id.lockImageId);
-        if (lock != null) {
-            lock.setVisibility(View.GONE);
-        }
-        else
-            Log.i("removing lock","lock image not found");
     }
 }

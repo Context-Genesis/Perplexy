@@ -41,12 +41,10 @@ import butterknife.OnClick;
 /**
  * Created by rish on 9/3/16.
  */
-public class QuestionTextBoxFragment extends Fragment {
+public class QuestionTextBoxFragment extends QuestionsFragment {
 
     int POSITION = -1;
     int CATEGORY;
-    FrameLayout questionCard;
-    RelativeLayout cardContent;
     private QuestionsCallback mCallback;
     GenericQuestion genericQuestion;
     SharedPreferences pref;
@@ -80,8 +78,8 @@ public class QuestionTextBoxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.question_textbox_card, container, false);
         ButterKnife.bind(this, rootView);
-        this.questionCard = (FrameLayout) rootView.findViewById(R.id.question_card);
         this.cardContent = (RelativeLayout) rootView.findViewById(R.id.question_card_content);
+        setCardContent(cardContent);
         this.mCallback = (QuestionsCallback) getActivity();
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
@@ -216,8 +214,9 @@ public class QuestionTextBoxFragment extends Fragment {
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
                 mCallback.unlockNextQuestion(CATEGORY);
+                mCallback.refreshAdapter();
             }
-            Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_SHORT).show();
             return true;
         } else {
             if (details.status == Constants.AVAILABLE) {
@@ -323,7 +322,9 @@ public class QuestionTextBoxFragment extends Fragment {
                 });
                 cardContent.addView(options_lock, cardContent.getChildCount());
                 break;
+            default:
+                Log.i("unlock"," now");
+                unlockQuestion(cardContent);
         }
     }
-
 }

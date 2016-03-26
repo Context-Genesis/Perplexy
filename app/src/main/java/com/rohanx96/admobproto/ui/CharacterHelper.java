@@ -20,6 +20,7 @@ import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
+import com.rohanx96.admobproto.ui.fragments.QuestionsFragment;
 import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -292,17 +293,17 @@ public class CharacterHelper {
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
                 long coins = pref.getLong(Constants.PREF_COINS, 0);
                 if (coins - finalUnlockPriceValue > 0) {
+                    GenericAnswerDetails.updateStatus(currentPage+1,category,Constants.AVAILABLE);
                     Log.i("unlock", "unlocking question");
-                    //isLocked = false;
                     // TODO: Implement hiding of lock image by some other way. This does not work
-                    //removeLock();
+                    ((QuestionsCallback)mParentActivity).setIsQuestionLocked(false);
+                    ((QuestionsCallback)mParentActivity).refreshAdapter();
                     ((QuestionsCallback)mParentActivity).hideCharacterUnlockDialog();
                     if(finalUnlockPriceValue == Constants.UNLOCK_INCORRECT_PRICE)
                         Coins.unlock_incorrect(mParentActivity);
                     else
                         Coins.unlock_unavailable(mParentActivity);
-                    coins_display.setText(String.format("%d",coins-finalUnlockPriceValue));
-                    GenericAnswerDetails.updateStatus(currentPage+1,category,Constants.AVAILABLE);
+                    coins_display.setText(String.format("%d", coins - finalUnlockPriceValue));
                 } else {
                     animateAdView(CHARACTER_TYPE_LOCKED);
                     Toast.makeText(mParentActivity, "Do not have enough coins",

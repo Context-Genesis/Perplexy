@@ -41,12 +41,10 @@ import butterknife.OnClick;
 /**
  * Created by rose on 7/3/16.
  */
-public class QuestionMCQFragment extends Fragment {
+public class QuestionMCQFragment extends QuestionsFragment {
 
     int POSITION = -1;
     int CATEGORY;
-    FrameLayout questionCard;
-    RelativeLayout cardContent;
     private QuestionsCallback mCallback;
     GenericQuestion genericQuestion;
     SharedPreferences pref;
@@ -81,9 +79,8 @@ public class QuestionMCQFragment extends Fragment {
 
         ButterKnife.bind(this, rootView);
 
-        this.questionCard = (FrameLayout) rootView.findViewById(R.id.question_card);
         this.cardContent = (RelativeLayout) rootView.findViewById(R.id.question_card_content);
-
+        setCardContent(cardContent);
         this.canvas_pull = (Button) rootView.findViewById(R.id.canvas_pull);
 
         this.mCallback = (QuestionsCallback) getActivity();
@@ -264,8 +261,9 @@ public class QuestionMCQFragment extends Fragment {
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
                 mCallback.unlockNextQuestion(CATEGORY);
+                mCallback.refreshAdapter();
             }
-            Toast.makeText(getActivity(), "Clicked option " + check + " CORRECT", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Clicked option " + check + " CORRECT", Toast.LENGTH_SHORT).show();
 
         } else {
             GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
@@ -360,6 +358,9 @@ public class QuestionMCQFragment extends Fragment {
                 });
                 cardContent.addView(options_lock, cardContent.getChildCount());
                 break;
+            default:
+                Log.i("unlock"," now");
+                unlockQuestion(cardContent);
         }
     }
 }
