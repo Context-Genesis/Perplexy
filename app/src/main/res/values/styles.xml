@@ -26,4 +26,8 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="NumberLineTheme" parent="AppTheme.NoActionBar">
+    </style>
+    <style name="QuestionsActivityTheme" parent="AppTheme.NoActionBar">
+    </style>
 </resources>

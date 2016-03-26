@@ -54,12 +54,12 @@
         <activity
             android:name=".ui.QuestionsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/QuestionsActivityTheme" />
 
         <activity
             android:name=".ui.NumberLineActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/NumberLineTheme"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,7 @@
 package com.rohanx96.admobproto.ui;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +31,8 @@ import java.util.ArrayList;
  * Created by rose on 24/3/16.
  */
 public class CharacterHelper {
+    public static final int CHARACTER_TYPE_UNLOCKED = 0;
+    public static final int CHARACTER_TYPE_LOCKED = 1;
     SharedPreferences pref;
     AppCompatActivity mParentActivity;
     TextView coins_display;
@@ -113,6 +118,7 @@ public class CharacterHelper {
                     }
                     hintprice.setText("0");
                 } else {
+                    animateAdView(CHARACTER_TYPE_UNLOCKED);
                     Toast.makeText(mParentActivity, "Donot have enough coins",
                             Toast.LENGTH_LONG).show();
                 }
@@ -184,6 +190,7 @@ public class CharacterHelper {
                     }
                     solutionprice.setText("0");
                 } else {
+                    animateAdView(CHARACTER_TYPE_UNLOCKED);
                     Toast.makeText(mParentActivity, "Donot have enough coins",
                             Toast.LENGTH_LONG).show();
                 }
@@ -297,6 +304,7 @@ public class CharacterHelper {
                     coins_display.setText(String.format("%d",coins-finalUnlockPriceValue));
                     GenericAnswerDetails.updateStatus(currentPage+1,category,Constants.AVAILABLE);
                 } else {
+                    animateAdView(CHARACTER_TYPE_LOCKED);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
                 }
@@ -313,5 +321,23 @@ public class CharacterHelper {
                 unlock.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    public void animateAdView(int type){
+        View adView = null;
+        if(type == CHARACTER_TYPE_UNLOCKED)
+            adView = mParentActivity.findViewById(R.id.char_q_clicked_ad_video);
+        else if(type == CHARACTER_TYPE_LOCKED)
+            adView = mParentActivity.findViewById(R.id.char_unlock_clicked_ad_video);
+        if (adView!=null) {
+            ObjectAnimator animationUpX = ObjectAnimator.ofFloat(adView, "scaleX", 1.0f, 1.1f);
+            ObjectAnimator animatorUpY = ObjectAnimator.ofFloat(adView, "scaleY", 1.0f, 1.1f);
+            ObjectAnimator animationDownX = ObjectAnimator.ofFloat(adView, "scaleX", 1.2f, 1.0f);
+            ObjectAnimator animatorDownY = ObjectAnimator.ofFloat(adView, "scaleY", 1.2f, 1.0f);
+            AnimatorSet set = new AnimatorSet();
+            set.play(animationDownX).with(animatorDownY).after(animationUpX).with(animatorUpY);
+            set.setInterpolator(new BounceInterpolator());
+            set.setDuration(500).start();
+        }
     }
 }

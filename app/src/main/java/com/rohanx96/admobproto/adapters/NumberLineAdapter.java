@@ -2,6 +2,8 @@ package com.rohanx96.admobproto.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -174,7 +176,10 @@ public class NumberLineAdapter extends BaseAdapter {
                         intent.putExtra(Constants.BUNDLE_QUESTION_NUMBER, getItem(position).question_number);
                         intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
+                        if (Build.VERSION.SDK_INT >=21)
+                            context.startActivity(intent,ActivityOptionsCompat.makeSceneTransitionAnimation(context,holder.tv,"character").toBundle());
+                        else
+                            context.startActivity(intent);
                         context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
                     }
                 });
@@ -196,7 +201,10 @@ public class NumberLineAdapter extends BaseAdapter {
                         intent.putExtra(Constants.BUNDLE_QUESTION_NUMBER, getItem(position).question_number);
                         intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
+                        if (Build.VERSION.SDK_INT >=21)
+                            context.startActivity(intent,ActivityOptionsCompat.makeSceneTransitionAnimation(context, holder.tv, "character").toBundle());
+                        else
+                            context.startActivity(intent);
                         context.setAnimationRunning(false);             // Stop the background color change animation on leaving activity
                     }
                 });

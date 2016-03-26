@@ -4,6 +4,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,7 +32,7 @@ import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
-//import com.facebook.FacebookSdk;
+import com.facebook.FacebookSdk;
 
 
 import butterknife.Bind;
@@ -72,7 +73,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
         ButterKnife.bind(this);
-        //FacebookSdk.sdkInitialize(getApplicationContext());
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         /* The page position is one less than question number. Note question number is passed to activity instead of position */
         mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_NUMBER, 0) - 1;
@@ -355,6 +356,8 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     public void setupCharacter() {
         final CharacterHelper characterHelper = new CharacterHelper(this);
         character = (ImageView) findViewById(R.id.questions_activity_bubble);
+        if (Build.VERSION.SDK_INT >=21)
+            character.setTransitionName("character");
         //setupCharacterDialog();
         character.setOnTouchListener(new View.OnTouchListener() {
             @Override
