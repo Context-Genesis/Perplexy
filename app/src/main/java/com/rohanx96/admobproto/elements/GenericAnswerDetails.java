@@ -144,10 +144,11 @@ public class GenericAnswerDetails extends SugarRecord {
     }
 
     /** This unlocks the next question to be unlocked for a given category */
-    public static void unlockNextQuestion(int category){
+    public static int unlockNextQuestion(int category){
         GenericAnswerDetails nextQuestion = getFirstLocked(category);
         nextQuestion.status = Constants.AVAILABLE;
         nextQuestion.save();
+        return nextQuestion.question_number;
     }
 
     public static void printAll() {

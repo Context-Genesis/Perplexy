@@ -319,6 +319,43 @@ public class CharacterHelper {
         });
     }
 
+    public void setupCorrectAnswerFeedback(final int nextQuestion){
+        if (nextQuestion!=-1) {
+            TextView nextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_next_question);
+            nextLevel.setText(String.format("Question %d is now unlocked", nextQuestion));
+            nextLevel.setVisibility(View.VISIBLE);
+            TextView coinsEarned = (TextView) mParentActivity.findViewById(R.id.char_feedback_coins_earned);
+            coinsEarned.setVisibility(View.VISIBLE);
+            TextView congratulate = (TextView) mParentActivity.findViewById(R.id.char_feedback_congratulate);
+            congratulate.setVisibility(View.VISIBLE);
+            TextView gotoNextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_goto_next);
+            gotoNextLevel.setText("PROCEED TO UNLOCKED QUESTION");
+            gotoNextLevel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mParentActivity instanceof QuestionsActivity)
+                        ((QuestionsActivity)mParentActivity).gotoQuestion(nextQuestion);
+                }
+            });
+        }
+        else{
+            TextView nextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_next_question);
+            nextLevel.setVisibility(View.GONE);
+            TextView coinsEarned = (TextView) mParentActivity.findViewById(R.id.char_feedback_coins_earned);
+            coinsEarned.setVisibility(View.GONE);
+            TextView congratulate = (TextView) mParentActivity.findViewById(R.id.char_feedback_congratulate);
+            congratulate.setVisibility(View.GONE);
+            TextView gotoNextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_goto_next);
+            gotoNextLevel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mParentActivity instanceof QuestionsActivity)
+                        ((QuestionsActivity) mParentActivity).gotoQuestion(nextQuestion);
+                }
+            });
+        }
+    }
+
     public void animateAdView(int type) {
         View adView = null;
         if (type == CHARACTER_TYPE_UNLOCKED)

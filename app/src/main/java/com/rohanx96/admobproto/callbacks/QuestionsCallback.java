@@ -6,7 +6,7 @@ package com.rohanx96.admobproto.callbacks;
 public interface QuestionsCallback {
     public void toggleIsCharacterOpen();
     public void setIsQuestionLocked(boolean isLocked);
-    public void unlockNextQuestion(int category);
+    public int unlockNextQuestion(int category);
     void refreshAdapter();
     public float getCharacterX();
     public float getCharacterY();
@@ -16,4 +16,7 @@ public interface QuestionsCallback {
     public void showCharacterUnlockDialog();
     void setupCharacterUnlockDialog();
     public void hideCharacterUnlockDialog();
+    void setupCorrectAnswerFeedback(int nextQuestionUnlocked);
+    void showCorrectAnswerFeedback(int nextQuestion);
+    void hideCorrectAnswerFeedback();
 }
