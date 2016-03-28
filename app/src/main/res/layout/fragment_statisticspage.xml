@@ -12,11 +12,12 @@
         android:layout_centerInParent="true" />
 
     <TextView
+        android:id="@+id/statistics_tv_heading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/center_of_screen"
         android:gravity="center"
-        android:text="Statistics"
+        android:text="STATISTICS"
         android:textColor="@color/white"
         android:textSize="40dp" />
 

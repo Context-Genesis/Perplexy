@@ -2,13 +2,13 @@ package com.rohanx96.admobproto.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
@@ -29,12 +29,10 @@ public class NumberLineAdapter extends BaseAdapter {
     NumberLineActivity context;
     ArrayList<GenericAnswerDetails> answerDetails;
     LayoutInflater inflater;
-    NumberLineCallback numberLineCallback;
 
-    public NumberLineAdapter(NumberLineActivity context, ArrayList<GenericAnswerDetails> answerDetails, NumberLineCallback numberLineCallback) {
+    public NumberLineAdapter(NumberLineActivity context, ArrayList<GenericAnswerDetails> answerDetails) {
         this.context = context;
         this.answerDetails = answerDetails;
-        this.numberLineCallback = numberLineCallback;
         /*
         * Add for padding of the arrows on the number line
         */
@@ -150,7 +148,14 @@ public class NumberLineAdapter extends BaseAdapter {
                     holder.tv.setBackgroundResource(R.drawable.circle_question_number_incorrect);
                 break;
             case Constants.AVAILABLE:
-                holder.tv.setBackgroundResource(R.drawable.circle_question_number_available);
+                if (answerDetails.get(position).bookmarked) {
+                    ViewGroup.LayoutParams params = holder.tv.getLayoutParams();
+                    params.width = 140;
+                    params.height = 140;
+                    holder.tv.setLayoutParams(params);
+                    holder.tv.setBackgroundResource(R.drawable.available_bookmark);
+                } else
+                    holder.tv.setBackgroundResource(R.drawable.circle_question_number_available);
                 break;
             case Constants.UNAVAILABLE:
                 holder.tv.setBackgroundResource(R.drawable.circle_question_number_unavailable);
@@ -160,7 +165,7 @@ public class NumberLineAdapter extends BaseAdapter {
     }
 
     public void setOnClickListeners(final int position, final ViewHolder holder) {
-        switch (answerDetails.get(position).status) {
+        /*switch (answerDetails.get(position).status) {
             case Constants.CORRECT:
                 holder.tv.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -169,7 +174,10 @@ public class NumberLineAdapter extends BaseAdapter {
                         intent.putExtra(Constants.BUNDLE_QUESTION_NUMBER, getItem(position).question_number);
                         intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
+                        if (Build.VERSION.SDK_INT >=21)
+                            context.startActivity(intent,ActivityOptionsCompat.makeSceneTransitionAnimation(context,holder.tv,"character").toBundle());
+                        else
+                            context.startActivity(intent);
                         context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
                     }
                 });
@@ -191,7 +199,10 @@ public class NumberLineAdapter extends BaseAdapter {
                         intent.putExtra(Constants.BUNDLE_QUESTION_NUMBER, getItem(position).question_number);
                         intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
+                        if (Build.VERSION.SDK_INT >=21)
+                            context.startActivity(intent,ActivityOptionsCompat.makeSceneTransitionAnimation(context, holder.tv, "character").toBundle());
+                        else
+                            context.startActivity(intent);
                         context.setAnimationRunning(false);             // Stop the background color change animation on leaving activity
                     }
                 });
@@ -205,10 +216,30 @@ public class NumberLineAdapter extends BaseAdapter {
                     }
                 });
                 break;
-        }
+        }*/
+        holder.tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, QuestionsActivity.class);
+                intent.putExtra(Constants.BUNDLE_QUESTION_NUMBER, getItem(position).question_number);
+                intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (Build.VERSION.SDK_INT >=21)
+                    context.startActivity(intent,ActivityOptionsCompat.makeSceneTransitionAnimation(context,holder.tv,"character").toBundle());
+                else
+                    context.startActivity(intent);
+                context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
+            }
+        });
+
     }
 
     public void setAnswerDetails(ArrayList<GenericAnswerDetails> answerDetails) {
         this.answerDetails = answerDetails;
+        /*
+        * Add for padding of the arrows on the number line
+        */
+        this.answerDetails.add(0, new GenericAnswerDetails(-1, Constants.CORRECT, Constants.UNAVAILABLE, false, false, 0));
+        this.answerDetails.add(answerDetails.size(), new GenericAnswerDetails(-1, Constants.CORRECT, Constants.UNAVAILABLE, false, false, 0));
     }
 }

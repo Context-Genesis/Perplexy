@@ -1,31 +1,37 @@
 package com.rohanx96.admobproto.ui.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
 import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
+import com.rohanx96.admobproto.utils.DrawingView;
 import com.rohanx96.admobproto.utils.JSONUtils;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,21 +40,21 @@ import butterknife.OnClick;
 /**
  * Created by rose on 7/3/16.
  */
-public class QuestionMCQFragment extends Fragment {
+public class QuestionMCQFragment extends QuestionsFragment {
 
     int POSITION = -1;
     int CATEGORY;
-    FrameLayout questionCard;
-    RelativeLayout cardContent;
     private QuestionsCallback mCallback;
     GenericQuestion genericQuestion;
     SharedPreferences pref;
+    public static Paint mPaint;
+    Button canvas_pull;
 
     @Bind(R.id.qcard_mcq_question)
     TextView tvQuestion;
 
     @Bind(R.id.qcard_mcq_options_ll)
-    LinearLayout llOptions;
+    RelativeLayout llOptions;
 
     @Bind(R.id.qcard_mcq_previous)
     ImageButton prevQuestion;
@@ -71,8 +77,11 @@ public class QuestionMCQFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.question_mcq_card, container, false);
 
         ButterKnife.bind(this, rootView);
-        this.questionCard = (FrameLayout) rootView.findViewById(R.id.question_card);
+
         this.cardContent = (RelativeLayout) rootView.findViewById(R.id.question_card_content);
+        setCardContent(cardContent);
+        this.canvas_pull = (Button) rootView.findViewById(R.id.canvas_pull);
+
         this.mCallback = (QuestionsCallback) getActivity();
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
@@ -112,7 +121,110 @@ public class QuestionMCQFragment extends Fragment {
             e.printStackTrace();
         }
 
+        canvas_pull.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setUpCanvas(getContext());
+            }
+        });
+
         return rootView;
+    }
+
+    RelativeLayout canvas_main, canvas_screen;
+    ImageView canvas_cancel;
+    ImageView pen, eraser, refresh;
+    int eraser_s = 0, pen_s = 0;
+
+    public void setUpCanvas(final Context context) {
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int height = displaymetrics.heightPixels;
+        int width = displaymetrics.widthPixels;
+
+        // TODO: Set expanded height such that anything below options is covered
+        final DialogPlus dialog = DialogPlus.newDialog(context)
+                .setGravity(Gravity.BOTTOM)
+                .setExpanded(true, height - 275)                        // Change here
+                .setOverlayBackgroundResource(Color.TRANSPARENT)
+                .setContentHolder(new ViewHolder(R.layout.dialog_canvas))
+                .setContentWidth(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setMargin(30, 0, 30, 30)
+                .create();
+        dialog.show();
+
+        View dialogView = dialog.getHolderView();
+        canvas_main = (RelativeLayout) dialogView.findViewById(R.id.canvas_main);
+        pen = (ImageView) dialogView.findViewById(R.id.canvas_pen);
+        eraser = (ImageView) dialogView.findViewById(R.id.canvas_eraser);
+        refresh = (ImageView) dialogView.findViewById(R.id.canvas_refresh);
+        canvas_cancel = (ImageView) dialogView.findViewById(R.id.canvas_cancel);
+
+        canvas_main.addView(new DrawingView(context));
+
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setDither(true);
+        mPaint.setColor(ContextCompat.getColor(context, R.color.color_pen));
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeJoin(Paint.Join.ROUND);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setStrokeWidth(5);
+
+        pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
+
+        eraser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPaint.setColor(ContextCompat.getColor(context, R.color.canvas_bg));
+                mPaint.setStrokeWidth(8);
+                if (eraser_s == 0) {
+                    pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
+                    eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
+                    eraser_s = 1;
+                    pen_s = 0;
+                }
+            }
+        });
+
+        pen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPaint.setColor(ContextCompat.getColor(context, R.color.color_pen));
+                mPaint.setStrokeWidth(5);
+                if (pen_s == 0) {
+                    pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
+                    eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
+                    pen_s = 1;
+                    eraser_s = 0;
+                }
+            }
+        });
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                canvas_main.removeAllViews();
+                canvas_main.addView(new DrawingView(context));
+
+                mPaint.setColor(ContextCompat.getColor(context, R.color.color_pen));
+                mPaint.setStrokeWidth(5);
+
+                pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
+                eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
+
+                eraser_s = 0;
+                pen_s = 1;
+            }
+        });
+
+        canvas_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     @OnClick(R.id.qcard_mcq_option1)
@@ -138,6 +250,8 @@ public class QuestionMCQFragment extends Fragment {
     void isRight(String check) {
         if (genericQuestion.answer.equals(check)) {
             GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
+            // Coins and question should be unlocked when status is available. For correct status relevant coins and question have already
+            // been unlocked. For incorrect and unavailable user should not be able to answer.
             if (details.status == Constants.AVAILABLE) {
                 Coins.correct_answer(getContext());
                 details.status = Constants.CORRECT;
@@ -145,8 +259,10 @@ public class QuestionMCQFragment extends Fragment {
 
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
+                mCallback.unlockNextQuestion(CATEGORY);
+                mCallback.refreshAdapter();
             }
-            Toast.makeText(getActivity(), "Clicked option " + check + " CORRECT", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Clicked option " + check + " CORRECT", Toast.LENGTH_SHORT).show();
 
         } else {
             GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
@@ -157,7 +273,8 @@ public class QuestionMCQFragment extends Fragment {
 
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
-
+                // Sets status of question locked in questionsActivity. Used to change the layout of character
+                mCallback.setIsQuestionLocked(true);
                 lockQuestionIfRequired();
             }
             Toast.makeText(getActivity(), "Clicked option " + check + " INCORRECT", Toast.LENGTH_SHORT).show();
@@ -201,6 +318,7 @@ public class QuestionMCQFragment extends Fragment {
                 FrameLayout.LayoutParams layoutParams = new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                         , ViewGroup.LayoutParams.MATCH_PARENT);
                 lock.setLayoutParams(layoutParams);
+                lock.setId(R.id.lockImageId);
                 lock.setImageResource(R.drawable.lock_flat);
                 lock.setBackgroundColor(getResources().getColor(R.color.white));
                 lock.setScaleType(ImageView.ScaleType.CENTER);
@@ -211,6 +329,7 @@ public class QuestionMCQFragment extends Fragment {
                         //expand the character dialog only if it is not previously visible
                         if (characterDialog.getVisibility() == View.GONE) {
                             mCallback.showCharacterUnlockDialog();
+                            mCallback.setupCharacterUnlockDialog();
                         }
                     }
                 });
@@ -223,6 +342,7 @@ public class QuestionMCQFragment extends Fragment {
                         , ViewGroup.LayoutParams.MATCH_PARENT);
                 layoutParams1.addRule(RelativeLayout.BELOW, R.id.textAreaScroller);
                 options_lock.setLayoutParams(layoutParams1);
+                options_lock.setId(R.id.lockImageId);
                 options_lock.setImageResource(R.drawable.lock_flat);
                 options_lock.setBackgroundColor(getResources().getColor(R.color.white));
                 options_lock.setScaleType(ImageView.ScaleType.CENTER);
@@ -233,11 +353,16 @@ public class QuestionMCQFragment extends Fragment {
                         //expand the character dialog only if it is not previously visible
                         if (characterDialog.getVisibility() == View.GONE) {
                             mCallback.showCharacterUnlockDialog();
+                            mCallback.setupCharacterUnlockDialog();
                         }
                     }
                 });
                 cardContent.addView(options_lock, cardContent.getChildCount());
                 break;
+            default:
+                Log.i("unlock"," now");
+                unlockQuestion(cardContent);
         }
     }
 }
+

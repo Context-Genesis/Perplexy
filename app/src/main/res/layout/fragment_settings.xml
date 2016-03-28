@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorTransparent"
     android:orientation="vertical">
 
@@ -13,11 +12,12 @@
         android:layout_centerInParent="true" />
 
     <TextView
+        android:id="@+id/settings_tv_heading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/center_of_screen"
         android:gravity="center"
-        android:text="Settings"
+        android:text="SETTINGS"
         android:textColor="@color/white"
         android:textSize="40dp" />
     <TextView

@@ -1,0 +1,63 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/canvas_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/canvas_bg">
+
+    <RelativeLayout
+        android:id="@+id/canvas_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/canvas_options">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/canvas_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/canvas_pen"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_toLeftOf="@+id/canvas_eraser"
+            android:background="@drawable/button_ripple"
+            android:padding="10dp"
+            android:src="@drawable/pen" />
+
+        <ImageView
+            android:id="@+id/canvas_eraser"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="7dp"
+            android:background="@drawable/button_ripple"
+            android:padding="10dp"
+            android:src="@drawable/erase" />
+
+        <ImageView
+            android:id="@+id/canvas_refresh"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@id/canvas_eraser"
+            android:background="@drawable/button_ripple"
+            android:padding="10dp"
+            android:src="@drawable/refresh" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/canvas_cancel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/cancel"/>
+
+</RelativeLayout>

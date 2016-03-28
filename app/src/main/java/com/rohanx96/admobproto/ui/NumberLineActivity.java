@@ -27,7 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NumberLineActivity extends AppCompatActivity implements NumberLineCallback {
+public class NumberLineActivity extends AppCompatActivity{
     private View mContainer;
     private int mTimeCount = 0;
     private boolean isAnimationRunning = false;
@@ -40,11 +40,11 @@ public class NumberLineActivity extends AppCompatActivity implements NumberLineC
     @Bind(R.id.activity_coin_text)
     TextView coin_display;
 
-    @Bind(R.id.activity_number_line_bubble_ll)
+    /**@Bind(R.id.activity_number_line_bubble_ll)
     LinearLayout bubbleLL;
 
     @Bind(R.id.activity_number_line_bubble_im)
-    ImageView bubble;
+    ImageView bubble;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,10 @@ public class NumberLineActivity extends AppCompatActivity implements NumberLineC
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
         coin_display.setText(prefs.getLong(Constants.PREF_COINS, 0) + "");
 
-        bubbleLL.setVisibility(View.GONE);
+        //bubbleLL.setVisibility(View.GONE);
+        ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
+        NumberLineAdapter adapter = new NumberLineAdapter(this,new ArrayList<GenericAnswerDetails>());
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -78,11 +81,12 @@ public class NumberLineActivity extends AppCompatActivity implements NumberLineC
         if (actionBar != null) {
             actionBar.hide();
         }
+        //TODO: This brakes the return animation by scrolling to beginning
         /* Adapter list needs to be initialised here because we need to refresh list after returning to activity */
         ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(CATEGORY);
-        NumberLineAdapter numberLineAdapter = new NumberLineAdapter(this, answerDetails, this);
         ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
-        listView.setAdapter(numberLineAdapter);
+        ((NumberLineAdapter)listView.getAdapter()).setAnswerDetails(answerDetails);
+        ((NumberLineAdapter) listView.getAdapter()).notifyDataSetChanged();
 
         /** Change color of background after 7 seconds */
         if (!isAnimationRunning) {
@@ -138,7 +142,7 @@ public class NumberLineActivity extends AppCompatActivity implements NumberLineC
         onBackPressed();
     }
 
-    @OnClick(R.id.activity_number_line_bubble_im)
+   /* @OnClick(R.id.activity_number_line_bubble_im)
     public void characterDialogPressed() {
         this.closeCharacterDialog();
     }
@@ -154,7 +158,6 @@ public class NumberLineActivity extends AppCompatActivity implements NumberLineC
 
     @Override
     public void openCharacterDialog(int TYPE) {
-        // TODO: Add animation here. https://github.com/lgvalle/Material-Animations
 
         bubbleLL.setVisibility(View.VISIBLE);
         TextView titleTv = (TextView) findViewById(R.id.char_unlock_dialog_tv);
@@ -170,9 +173,8 @@ public class NumberLineActivity extends AppCompatActivity implements NumberLineC
 
     @Override
     public void closeCharacterDialog() {
-        // TODO: Add animation here. https://github.com/lgvalle/Material-Animations
         bubbleLL.setVisibility(View.GONE);
-    }
+    }*/
 
     /*public void updateCoinsDisplay(){
         TextView coinsText = (TextView) findViewById(R.id.activity_coin_text);

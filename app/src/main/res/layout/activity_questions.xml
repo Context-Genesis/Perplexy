@@ -80,20 +80,25 @@
         layout="@layout/character_click_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:layout_above="@+id/questions_activity_bubble"
+        android:layout_alignTop="@+id/questions_activity_pager"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:visibility="gone"></include>
+
     <include
         android:id="@+id/questions_activity_character_dialog_unlock"
         layout="@layout/character_click_unlock_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:layout_above="@+id/questions_activity_bubble"
+        android:layout_alignTop="@+id/questions_activity_pager"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:visibility="gone"></include>
 
     <ImageView

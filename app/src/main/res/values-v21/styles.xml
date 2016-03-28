@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="NumberLineTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowExitTransition">@transition/faded_slide_bottom</item>
+        <item name="android:windowSharedElementExitTransition">@transition/shared_element_fade</item>
+        <item name="android:windowTransitionBackgroundFadeDuration">700</item>
+        <item name="android:windowBackground">@color/blue_d_chambray</item>
+    </style>
+    <style name="QuestionsActivityTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowEnterTransition">@transition/faded_slide_bottom</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/shared_element_fade</item>
+        <item name="android:windowTransitionBackgroundFadeDuration">700</item>
+        <item name="android:windowBackground">@color/blue_d_chambray</item>
+    </style>
+</resources>

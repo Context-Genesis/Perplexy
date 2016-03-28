@@ -1,9 +1,12 @@
 package com.rohanx96.admobproto.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,30 +18,23 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
-import com.rohanx96.admobproto.elements.GenericQuestion;
 import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionTextBoxFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
-import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
-import com.rohanx96.admobproto.utils.ShareQuestion;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,7 +53,6 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     private boolean isLocked = false;
 
     SharedPreferences pref;
-    SharedPreferences.Editor editor;
 
     int CATEGORY = -1;
 
@@ -78,6 +73,8 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
         ButterKnife.bind(this);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         /* The page position is one less than question number. Note question number is passed to activity instead of position */
         mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_NUMBER, 0) - 1;
         CATEGORY = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_CATEGORY, -1);
@@ -158,7 +155,17 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 isLocked = (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT)
                         || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                 Log.i("lock status ", " position " + mCurrentPage + 1 + " " + isLocked);
-                // TODO : Unlock question if status changed
+
+                // Remove the lock image on the fragment if question was previously locked but is now unlocked
+                // finding view by id and then removing it does not work even if unique IDs are assigne to lock image view
+                // Another way to do this is getCurrentFragment and call method of fragment that removes the view from container
+                /*if (!isLocked) {
+                    ((QuestionsFragment)pagerAdapter.getItem(mCurrentPage)).unlockQuestion();
+                }*/
+                // The above method also does not work because the view cardContent used in unlockQuestion method is always null.
+                // So currently this issue is resolved by calling notifyDataSetChanged every time user correctly answers a question
+                // or unlocks a new question
+                // TODO: Another possible solution could be to display the lock image in the activity instead of fragments
             }
 
             @Override
@@ -179,6 +186,16 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     }
 
     @Override
+    public void unlockNextQuestion(int category) {
+        GenericAnswerDetails.unlockNextQuestion(category);
+    }
+
+    @Override
+    public void refreshAdapter() {
+        pagerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public float getCharacterX() {
         return character.getX();
     }
@@ -189,53 +206,144 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     }
 
     @Override
+    public void setupCharacterDialog() {
+        CharacterHelper characterHelper = new CharacterHelper(this);
+        characterHelper.setupCharacterDialog(CATEGORY, mCurrentPage);
+    }
+
+    @Override
     public void showCharacterDialog() {
-        View characterDialog = findViewById(R.id.questions_activity_character_dialog);
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
-        scaleAnimation.setDuration(500);
-        scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        characterDialog.setVisibility(View.VISIBLE);
-        characterDialog.startAnimation(scaleAnimation);
+        final View characterDialog = findViewById(R.id.questions_activity_character_dialog);
+        /* Animation for post Lollipop devices*/
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            characterDialog.post(new Runnable() {
+                @Override
+                public void run() {
+                    int cx = characterDialog.getWidth() / 2;
+                    int cy = characterDialog.getHeight();
+                    int radius = characterDialog.getHeight();
+
+                    Animator animator = ViewAnimationUtils.createCircularReveal(characterDialog, cx, cy, 0, radius);
+                    animator.start();
+                    characterDialog.setVisibility(View.VISIBLE);
+                }
+            });
+        } else {
+            ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
+            scaleAnimation.setDuration(500);
+            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+            characterDialog.setVisibility(View.VISIBLE);
+            characterDialog.startAnimation(scaleAnimation);
+        }
+
         toggleIsCharacterOpen();
     }
 
     @Override
     public void hideCharacterDialog() {
-        View characterDialog = findViewById(R.id.questions_activity_character_dialog);
+        final View characterDialog = findViewById(R.id.questions_activity_character_dialog);
         // This will prevent running of animation when hiding not visible dialog.
         // This helps because we can now call this method even if the view is not visible
         if (characterDialog.getVisibility() == View.VISIBLE) {
-            ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
-            scaleAnimation.setDuration(500);
-            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-            characterDialog.setVisibility(View.GONE);
-            characterDialog.startAnimation(scaleAnimation);
+            /* Animation for post Lollipop devices */
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                characterDialog.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int cx = characterDialog.getWidth() / 2;
+                        int cy = characterDialog.getHeight();
+                        int radius = characterDialog.getHeight();
+
+                        Animator animator = ViewAnimationUtils.createCircularReveal(characterDialog, cx, cy, radius, 0);
+                        animator.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                characterDialog.setVisibility(View.GONE);
+                            }
+                        });
+                        animator.start();
+                    }
+                });
+            } else {
+                characterDialog.setVisibility(View.GONE);
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
+                scaleAnimation.setDuration(500);
+                scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                characterDialog.setVisibility(View.GONE);
+                characterDialog.startAnimation(scaleAnimation);
+            }
             toggleIsCharacterOpen();
         }
     }
 
     @Override
     public void showCharacterUnlockDialog() {
-        View characterDialog = findViewById(R.id.questions_activity_character_dialog_unlock);
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
-        scaleAnimation.setDuration(500);
-        scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        characterDialog.setVisibility(View.VISIBLE);
-        characterDialog.startAnimation(scaleAnimation);
+        final View characterDialog = findViewById(R.id.questions_activity_character_dialog_unlock);
+        /* Animation for post Lollipop devices*/
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            characterDialog.post(new Runnable() {
+                @Override
+                public void run() {
+                    int cx = characterDialog.getWidth() / 2;
+                    int cy = characterDialog.getHeight();
+                    int radius = characterDialog.getHeight();
+
+                    Animator animator = ViewAnimationUtils.createCircularReveal(characterDialog, cx, cy, 0, radius);
+                    animator.start();
+                    characterDialog.setVisibility(View.VISIBLE);
+                }
+            });
+        } else {
+            ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
+            scaleAnimation.setDuration(500);
+            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+            characterDialog.setVisibility(View.VISIBLE);
+            characterDialog.startAnimation(scaleAnimation);
+        }
         toggleIsCharacterOpen();
     }
 
     @Override
+    public void setupCharacterUnlockDialog() {
+        CharacterHelper characterHelper = new CharacterHelper(this);
+        characterHelper.setupCharacterUnlockDialog(CATEGORY, mCurrentPage);
+
+    }
+
+    @Override
     public void hideCharacterUnlockDialog() {
-        View characterDialog = findViewById(R.id.questions_activity_character_dialog_unlock);
+        final View characterDialog = findViewById(R.id.questions_activity_character_dialog_unlock);
         // This will prevent running of animation when hiding not visible dialog.
         // This helps because we can now call this method even if the view is not visible
         if (characterDialog.getVisibility() == View.VISIBLE) {
-            ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
-            scaleAnimation.setDuration(500);
-            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-            characterDialog.setVisibility(View.GONE);
-            characterDialog.startAnimation(scaleAnimation);
+            /* Animation for post Lollipop devices */
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                characterDialog.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int cx = characterDialog.getWidth() / 2;
+                        int cy = characterDialog.getHeight();
+                        int radius = characterDialog.getHeight();
+
+                        Animator animator = ViewAnimationUtils.createCircularReveal(characterDialog, cx, cy, radius, 0);
+                        animator.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                characterDialog.setVisibility(View.GONE);
+                            }
+                        });
+                        animator.start();
+                    }
+                });
+            } else {
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
+                scaleAnimation.setDuration(500);
+                scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                characterDialog.setVisibility(View.GONE);
+                characterDialog.startAnimation(scaleAnimation);
+            }
             toggleIsCharacterOpen();
         }
     }
@@ -265,6 +373,11 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         @Override
         public int getCount() {
             return JSONUtils.getTotalQuestions(getApplicationContext(), CATEGORY);
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
     }
 
@@ -348,7 +461,8 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     public void setupCharacter() {
         character = (ImageView) findViewById(R.id.questions_activity_bubble);
-        //setupCharacterDialog();
+        if (Build.VERSION.SDK_INT >= 21)
+            character.setTransitionName("character");
         character.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -357,18 +471,19 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                         v.animate().scaleX(1.3f).scaleY(1.3f).setDuration(100).start();
                         break;
                     case MotionEvent.ACTION_UP:
-
-                        setupCharacterDialog(); //Dialog is reinitialised based on question every time character is clicked
                         character.clearAnimation();
                         character.animate().scaleX(1.0f).scaleY(1.0f).setDuration(300).start();
+                        isLocked = (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT)
+                                || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                         if (!isCharacterDialogOpen) {
                             if (isLocked) {
                                 showCharacterUnlockDialog();
+                                setupCharacterUnlockDialog();
                             } else {
                                 showCharacterDialog();
+                                //Dialog is reinitialised based on question every time character is clicked
+                                setupCharacterDialog();
                             }
-// TODO (done partly) : Remove swipe and button click listeners. Need to check if listeners need to be removed for options
-                            //
                         } else {
                             if (isLocked) {
                                 hideCharacterUnlockDialog();
@@ -384,204 +499,6 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     public static int convertDip2Pixels(Context context, int dip) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.getResources().getDisplayMetrics());
-
-    }
-
-    /**
-     * This sets up the click listeners for various options in character dialog. Implementation copied from DialogSpeakingMan
-     * by Dhruv
-     */
-    public void setupCharacterDialog() {
-        // TODO: Add share intents for whatsapp, facebook Dhruv
-        GenericQuestion question = JSONUtils.getQuestionAt(getApplication(), CATEGORY, mCurrentPage);
-        final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(CATEGORY);
-        final TextView showhint;
-        final TextView hintprice;
-        final LinearLayout hint, confirmhint;
-        final TextView nohint, yeshint, showhiddenhint;
-
-        final TextView showsolution;
-        final TextView solutionprice;
-        final LinearLayout solution, confirmsolution;
-        final TextView nosolution, yessolution, showhiddensolution;
-
-        showhint = (TextView) findViewById(R.id.char_q_clicked_showhint);
-        hint = (LinearLayout) findViewById(R.id.char_q_clicked_ll_hint);
-        hintprice = (TextView) findViewById(R.id.char_q_clicked_hintprice);
-        confirmhint = (LinearLayout) findViewById(R.id.char_q_clicked_ll_confirmhint);
-        nohint = (TextView) findViewById(R.id.char_q_clicked_nohint);
-        yeshint = (TextView) findViewById(R.id.char_q_clicked_yeshint);
-        showhiddenhint = (TextView) findViewById(R.id.char_q_clicked_showhiddenhint);
-
-        showhiddenhint.setVisibility(View.GONE);
-        showhint.setVisibility(View.VISIBLE);
-        confirmhint.setVisibility(View.GONE);
-        showhiddenhint.setText(question.hint);
-
-        final ImageView favourite = (ImageView) findViewById(R.id.char_q_clicked_favourite_question);
-
-        if (ansDetails.get(mCurrentPage).hint_displayed == true) {
-            hintprice.setText("0");
-        } else {
-            hintprice.setText(Constants.HINT_PRICE + "");
-        }
-
-        showhint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (showhiddenhint.getVisibility() == View.GONE) {
-                    showhint.setVisibility(View.GONE);
-                    Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
-                    confirmhint.startAnimation(in);
-                    confirmhint.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        yeshint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmhint.setVisibility(View.GONE);
-                showhint.setVisibility(View.VISIBLE);
-
-                pref = getBaseContext().getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
-                long coins = pref.getLong(Constants.PREF_COINS, 0);
-                if (coins - Integer.parseInt(hintprice.getText().toString()) >= 0) {
-                    showhiddenhint.setVisibility(View.INVISIBLE);
-                    Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
-                    showhiddenhint.startAnimation(in);
-                    showhiddenhint.setVisibility(View.VISIBLE);
-                    showhiddenhint.startAnimation(in);
-
-                    if (ansDetails.get(mCurrentPage).hint_displayed == false) {
-                        ansDetails.get(mCurrentPage).hint_displayed = true;
-                        ansDetails.get(mCurrentPage).save();
-                        // TODO: deduct coins (Done)
-                        Coins.hint_access(getApplication());
-                        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
-                    }
-                    hintprice.setText("0");
-                } else {
-                    Toast.makeText(getApplication(), "Donot have enough coins",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        nohint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmhint.setVisibility(View.GONE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
-                showhint.startAnimation(in);
-                showhint.setVisibility(View.VISIBLE);
-            }
-        });
-
-
-        showsolution = (TextView) findViewById(R.id.char_q_clicked_showsolution);
-        solution = (LinearLayout) findViewById(R.id.char_q_clicked_ll_solution);
-        solutionprice = (TextView) findViewById(R.id.char_q_clicked_solutionprice);
-        confirmsolution = (LinearLayout) findViewById(R.id.char_q_clicked_ll_confirmsolution);
-        nosolution = (TextView) findViewById(R.id.char_q_clicked_nosolution);
-        yessolution = (TextView) findViewById(R.id.char_q_clicked_yessolution);
-        showhiddensolution = (TextView) findViewById(R.id.char_q_clicked_showhiddensolution);
-
-        showsolution.setVisibility(View.VISIBLE);
-        confirmsolution.setVisibility(View.GONE);
-        showhiddensolution.setVisibility(View.GONE);
-
-        showhiddensolution.setText(question.answer);
-        if (ansDetails.get(mCurrentPage).answer_displayed == true) {
-            solutionprice.setText("0");
-        } else {
-            solutionprice.setText(Constants.SOLUTION_PRICE + "");
-        }
-
-        showsolution.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (showhiddensolution.getVisibility() == View.GONE) {
-                    showsolution.setVisibility(View.GONE);
-                    Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
-                    confirmsolution.startAnimation(in);
-                    confirmsolution.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        yessolution.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmsolution.setVisibility(View.GONE);
-                showsolution.setVisibility(View.VISIBLE);
-                pref = getBaseContext().getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
-                long coins = pref.getLong(Constants.PREF_COINS, 0);
-                if (coins - Integer.parseInt(solutionprice.getText().toString()) >= 0) {
-                    showhiddensolution.setVisibility(View.INVISIBLE);
-                    Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_y_downards);
-                    showhiddensolution.startAnimation(in);
-                    showhiddensolution.setVisibility(View.VISIBLE);
-                    showhiddensolution.startAnimation(in);
-
-                    if (!ansDetails.get(mCurrentPage).answer_displayed) {
-                        ansDetails.get(mCurrentPage).answer_displayed = true;
-                        ansDetails.get(mCurrentPage).save();
-                        // TODO: deduct coins (done)
-                        Coins.solution_access(getApplication());
-                        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
-                    }
-                    solutionprice.setText("0");
-                } else {
-                    Toast.makeText(getApplication(), "Donot have enough coins",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-
-        nosolution.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmsolution.setVisibility(View.GONE);
-                Animation in = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
-                showsolution.startAnimation(in);
-                showsolution.setVisibility(View.VISIBLE);
-            }
-        });
-
-        if (!ansDetails.get(mCurrentPage).bookmarked) {
-            favourite.setBackgroundResource(R.drawable.favorite);  // color
-        } else {
-            favourite.setBackgroundResource(R.drawable.favourite_filled);
-        }
-
-        favourite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!ansDetails.get(mCurrentPage).bookmarked) {
-                    ansDetails.get(mCurrentPage).bookmarked = true;
-                    ansDetails.get(mCurrentPage).save();
-                    favourite.setBackgroundResource(R.drawable.favourite_filled);  // color
-                } else {
-                    ansDetails.get(mCurrentPage).bookmarked = false;
-                    ansDetails.get(mCurrentPage).save();
-                    favourite.setBackgroundResource(R.drawable.favorite);
-                }
-            }
-        });
-
-        findViewById(R.id.char_q_clicked_whatsapp_share).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShareQuestion.shareImageWhatsapp(QuestionsActivity.this);
-            }
-        });
-    }
-
-
-    public void setupCharacterUnlockDialog() {
-        // TODO: Add click listeners and implementation of coins for unlock dialog layout Rishabh
 
     }
 }

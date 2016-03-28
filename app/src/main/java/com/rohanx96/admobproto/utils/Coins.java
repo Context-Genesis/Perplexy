@@ -9,7 +9,7 @@ import android.widget.Toast;
  */
 
 public class Coins {
-
+    // TODO: Coins can go negative?
     private static SharedPreferences pref;
     private static SharedPreferences.Editor editor;
 
