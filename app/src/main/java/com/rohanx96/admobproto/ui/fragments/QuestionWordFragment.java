@@ -2,11 +2,13 @@ package com.rohanx96.admobproto.ui.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -69,8 +71,6 @@ public class QuestionWordFragment extends QuestionsFragment {
 
     String answer, answerPadCharacters;
 
-    int BLANK_CIRCLE_SIZE;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.question_word_card, container, false);
@@ -89,8 +89,6 @@ public class QuestionWordFragment extends QuestionsFragment {
         answer = genericQuestion.answer;
         answerPadCharacters = genericQuestion.pad_characters;
 
-        BLANK_CIRCLE_SIZE = getBlankCircleSize();
-
 
         if (genericQuestion.question_number == 1) {
             this.prevQuestion.setVisibility(View.GONE);
@@ -102,7 +100,6 @@ public class QuestionWordFragment extends QuestionsFragment {
         }
 
         setUpJumbledCharacters();
-
         setUpBlanksAndRows();
 
         return rootView;
@@ -118,13 +115,18 @@ public class QuestionWordFragment extends QuestionsFragment {
     private void setUpJumbledCharacters() {
         jumbledCharacters = new ArrayList<>();
 
+        long seed = System.nanoTime();
+
         for (int i = 0; i < answerPadCharacters.length(); i++) {
             jumbledCharacters.add(answerPadCharacters.charAt(i));
         }
-        Collections.shuffle(jumbledCharacters, new Random(System.currentTimeMillis()));
+        Collections.shuffle(jumbledCharacters, new Random(seed));
 
         for (int i = 0; i < answer.length(); i++) {
-            jumbledCharacters.add(0, '-');
+            if (answer.charAt(i) == ' ')
+                jumbledCharacters.add(i, ' ');
+            else
+                jumbledCharacters.add(i, '-');
         }
     }
 
@@ -154,18 +156,21 @@ public class QuestionWordFragment extends QuestionsFragment {
         answerRow.removeAllViews();
 
         for (int i = 0; i < answer.length(); i++) {
-            final int m = i;
-            final TextView answerTV = generateBlanksTextView(i);
-
-            answerTV.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    putThisCharacterBackToOptionsRow(m);
-                    setUpBlanksAndRows();
-                }
-            });
-
-            answerRow.addView(answerTV);
+            if (jumbledCharacters.get(i) == ' ') {
+                final TextView emptyTextView = generateEmptyTextView();
+                answerRow.addView(emptyTextView);
+            } else {
+                final TextView answerTV = generateBlanksTextView(i);
+                final int m = i;
+                answerTV.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        putThisCharacterBackToOptionsRow(m);
+                        setUpBlanksAndRows();
+                    }
+                });
+                answerRow.addView(answerTV);
+            }
         }
 
         for (int i = 0; i < answerPadCharacters.length() / 2; i++) {
@@ -240,15 +245,22 @@ public class QuestionWordFragment extends QuestionsFragment {
     }
 
     private TextView generateBlanksTextView(int i) {
-        final TextView answerTV = new TextView(getActivity());
 
+        int screen = getScreenWidth();
+        int tvMargin = 2;
+        int tvWidth = (screen / answer.length()) - (2 * tvMargin);
+        int tvMaxWidth = (screen / (answerPadCharacters.length() / 2)) - (2 * tvMargin);
+
+        tvWidth = tvWidth > tvMaxWidth ? tvMaxWidth : tvWidth;
+
+        final TextView answerTV = new TextView(getActivity());
         answerTV.setText("" + jumbledCharacters.get(i));
-        answerTV.setId(100 + i);
-        answerTV.setTextSize(25);
+        answerTV.setTextSize(tvWidth / 2);
         answerTV.setTextColor(Color.BLACK);
         answerTV.setBackgroundResource(R.drawable.circle_border);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(BLANK_CIRCLE_SIZE, BLANK_CIRCLE_SIZE);
-        layoutParams.setMargins(2, 2, 2, 2);
+        answerTV.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(tvWidth, tvWidth);
+        layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);
         answerTV.setLayoutParams(layoutParams);
         answerTV.setGravity(Gravity.CENTER);
 
@@ -256,38 +268,55 @@ public class QuestionWordFragment extends QuestionsFragment {
     }
 
     private TextView generateFilledTextView(int i) {
+        int screen = getScreenWidth();
+        int tvMargin = 2;
+        int tvWidth = (screen / (answerPadCharacters.length() / 2)) - (2 * tvMargin);
+
         final TextView answerTV = new TextView(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(answer.length() + i));
-        answerTV.setId(100 + i);
-        answerTV.setTextSize(25);
-        answerTV.setTextColor(Color.BLACK);
+        answerTV.setTextSize(tvWidth / 2);
+        answerTV.setTextColor(Color.WHITE);
         answerTV.setBackgroundResource(R.drawable.circle_filled);
-//        GradientDrawable gradientDrawable = (GradientDrawable) answerTV.getBackground();
-//        gradientDrawable.setColor(Color.BLUE);
-//        answerTV.setBackground(gradientDrawable);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(BLANK_CIRCLE_SIZE, BLANK_CIRCLE_SIZE);
-        layoutParams.setMargins(2, 2, 2, 2);
+        answerTV.setLayoutParams(new ViewGroup.LayoutParams(tvWidth, tvWidth));
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(tvWidth, tvWidth);
+        layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);
         answerTV.setLayoutParams(layoutParams);
         answerTV.setGravity(Gravity.CENTER);
 
         return answerTV;
     }
 
-    private int getBlankCircleSize() {
+    private TextView generateEmptyTextView() {
+
+        int screen = getScreenWidth();
+        int tvMargin = 2;
+        int tvWidth = (screen / answer.length()) - (2 * tvMargin);
+        int tvMaxWidth = (screen / (answerPadCharacters.length() / 2)) - (2 * tvMargin);
+
+        tvWidth = tvWidth > tvMaxWidth ? tvMaxWidth : tvWidth;
+
+        final TextView blankTV = new TextView(getActivity());
+        blankTV.setText(" ");
+        blankTV.setBackgroundResource(0);
+        blankTV.setTextSize(tvWidth / 2);
+        blankTV.setBackgroundResource(0);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(tvWidth, tvWidth);
+        layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);
+        blankTV.setLayoutParams(layoutParams);
+        blankTV.setGravity(Gravity.CENTER);
+
+        return blankTV;
+    }
+
+    private int getScreenWidth() {
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int width = size.x;
 
-        row1.getWidth();
-        if (row1.getWidth() != 0) {
-            Log.d("TAG", "Size of the blank is ar " + row1.getWidth() / 8);
-            return row1.getWidth() / 8;
-        } else {
-            Log.d("TAG", "Size of the blank is sw " + width / 10);
-            return width / 10;
-        }
+        Resources r = getResources();
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
+        return size.x - 2 * px;
     }
 
     public void lockQuestionIfRequired() {
@@ -345,7 +374,7 @@ public class QuestionWordFragment extends QuestionsFragment {
                 cardContent.addView(options_lock, cardContent.getChildCount());
                 break;
             default:
-                Log.i("unlock"," now");
+                Log.i("unlock", " now");
                 unlockQuestion(cardContent);
         }
     }
