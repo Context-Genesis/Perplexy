@@ -1,5 +1,7 @@
 package com.rohanx96.admobproto.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -16,12 +18,14 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
@@ -31,8 +35,6 @@ import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
-import com.facebook.FacebookSdk;
-
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -204,66 +206,144 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     }
 
     @Override
-    public void showCharacterDialog() {
-        View characterDialog = findViewById(R.id.questions_activity_character_dialog);
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
-        scaleAnimation.setDuration(500);
-        scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        characterDialog.setVisibility(View.VISIBLE);
-        characterDialog.startAnimation(scaleAnimation);
-        toggleIsCharacterOpen();
-    }
-
-    @Override
     public void setupCharacterDialog() {
         CharacterHelper characterHelper = new CharacterHelper(this);
         characterHelper.setupCharacterDialog(CATEGORY, mCurrentPage);
     }
 
     @Override
+    public void showCharacterDialog() {
+        final View characterDialog = findViewById(R.id.questions_activity_character_dialog);
+        /* Animation for post Lollipop devices*/
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            characterDialog.post(new Runnable() {
+                @Override
+                public void run() {
+                    int cx = characterDialog.getWidth() / 2;
+                    int cy = characterDialog.getHeight();
+                    int radius = characterDialog.getHeight();
+
+                    Animator animator = ViewAnimationUtils.createCircularReveal(characterDialog, cx, cy, 0, radius);
+                    animator.start();
+                    characterDialog.setVisibility(View.VISIBLE);
+                }
+            });
+        } else {
+            ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
+            scaleAnimation.setDuration(500);
+            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+            characterDialog.setVisibility(View.VISIBLE);
+            characterDialog.startAnimation(scaleAnimation);
+        }
+
+        toggleIsCharacterOpen();
+    }
+
+    @Override
     public void hideCharacterDialog() {
-        View characterDialog = findViewById(R.id.questions_activity_character_dialog);
+        final View characterDialog = findViewById(R.id.questions_activity_character_dialog);
         // This will prevent running of animation when hiding not visible dialog.
         // This helps because we can now call this method even if the view is not visible
         if (characterDialog.getVisibility() == View.VISIBLE) {
-            ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
-            scaleAnimation.setDuration(500);
-            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-            characterDialog.setVisibility(View.GONE);
-            characterDialog.startAnimation(scaleAnimation);
+            /* Animation for post Lollipop devices */
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                characterDialog.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int cx = characterDialog.getWidth() / 2;
+                        int cy = characterDialog.getHeight();
+                        int radius = characterDialog.getHeight();
+
+                        Animator animator = ViewAnimationUtils.createCircularReveal(characterDialog, cx, cy, radius, 0);
+                        animator.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                characterDialog.setVisibility(View.GONE);
+                            }
+                        });
+                        animator.start();
+                    }
+                });
+            } else {
+                characterDialog.setVisibility(View.GONE);
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
+                scaleAnimation.setDuration(500);
+                scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                characterDialog.setVisibility(View.GONE);
+                characterDialog.startAnimation(scaleAnimation);
+            }
             toggleIsCharacterOpen();
         }
     }
 
     @Override
     public void showCharacterUnlockDialog() {
-        View characterDialog = findViewById(R.id.questions_activity_character_dialog_unlock);
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
-        scaleAnimation.setDuration(500);
-        scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        characterDialog.setVisibility(View.VISIBLE);
-        characterDialog.startAnimation(scaleAnimation);
+        final View characterDialog = findViewById(R.id.questions_activity_character_dialog_unlock);
+        /* Animation for post Lollipop devices*/
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            characterDialog.post(new Runnable() {
+                @Override
+                public void run() {
+                    int cx = characterDialog.getWidth() / 2;
+                    int cy = characterDialog.getHeight();
+                    int radius = characterDialog.getHeight();
+
+                    Animator animator = ViewAnimationUtils.createCircularReveal(characterDialog, cx, cy, 0, radius);
+                    animator.start();
+                    characterDialog.setVisibility(View.VISIBLE);
+                }
+            });
+        } else {
+            ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
+            scaleAnimation.setDuration(500);
+            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+            characterDialog.setVisibility(View.VISIBLE);
+            characterDialog.startAnimation(scaleAnimation);
+        }
         toggleIsCharacterOpen();
     }
 
     @Override
     public void setupCharacterUnlockDialog() {
         CharacterHelper characterHelper = new CharacterHelper(this);
-        characterHelper.setupCharacterUnlockDialog(CATEGORY,mCurrentPage);
+        characterHelper.setupCharacterUnlockDialog(CATEGORY, mCurrentPage);
 
     }
 
     @Override
     public void hideCharacterUnlockDialog() {
-        View characterDialog = findViewById(R.id.questions_activity_character_dialog_unlock);
+        final View characterDialog = findViewById(R.id.questions_activity_character_dialog_unlock);
         // This will prevent running of animation when hiding not visible dialog.
         // This helps because we can now call this method even if the view is not visible
         if (characterDialog.getVisibility() == View.VISIBLE) {
-            ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
-            scaleAnimation.setDuration(500);
-            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-            characterDialog.setVisibility(View.GONE);
-            characterDialog.startAnimation(scaleAnimation);
+            /* Animation for post Lollipop devices */
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                characterDialog.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int cx = characterDialog.getWidth() / 2;
+                        int cy = characterDialog.getHeight();
+                        int radius = characterDialog.getHeight();
+
+                        Animator animator = ViewAnimationUtils.createCircularReveal(characterDialog, cx, cy, radius, 0);
+                        animator.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                characterDialog.setVisibility(View.GONE);
+                            }
+                        });
+                        animator.start();
+                    }
+                });
+            } else {
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
+                scaleAnimation.setDuration(500);
+                scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                characterDialog.setVisibility(View.GONE);
+                characterDialog.startAnimation(scaleAnimation);
+            }
             toggleIsCharacterOpen();
         }
     }
@@ -381,7 +461,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     public void setupCharacter() {
         character = (ImageView) findViewById(R.id.questions_activity_bubble);
-        if (Build.VERSION.SDK_INT >=21)
+        if (Build.VERSION.SDK_INT >= 21)
             character.setTransitionName("character");
         character.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -419,6 +499,5 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     public static int convertDip2Pixels(Context context, int dip) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.getResources().getDisplayMetrics());
-
     }
 }

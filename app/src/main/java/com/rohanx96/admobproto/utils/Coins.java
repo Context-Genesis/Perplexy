@@ -18,9 +18,13 @@ public class Coins {
         editor = pref.edit();
         long coins = pref.getLong(Constants.PREF_COINS, 0);
 
-        editor.putLong(Constants.PREF_COINS, coins - Constants.HINT_PRICE).apply();
-        long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
-        editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.HINT_PRICE).apply();
+        if (coins >= Constants.HINT_PRICE) {
+            editor.putLong(Constants.PREF_COINS, coins - Constants.HINT_PRICE).apply();
+            long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
+            editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.HINT_PRICE).apply();
+        } else {
+            Toast.makeText(context, "Do not have sufficient coins", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static void solution_access(Context context) {

@@ -48,7 +48,6 @@ public class QuestionMCQFragment extends QuestionsFragment {
     GenericQuestion genericQuestion;
     SharedPreferences pref;
     public static Paint mPaint;
-    Button canvas_pull;
 
     @Bind(R.id.qcard_mcq_question)
     TextView tvQuestion;
@@ -71,6 +70,8 @@ public class QuestionMCQFragment extends QuestionsFragment {
     @Bind(R.id.qcard_mcq_option4)
     TextView tvOption4;
 
+    @Bind(R.id.canvas_pull)
+    Button canvas_pull;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +81,6 @@ public class QuestionMCQFragment extends QuestionsFragment {
 
         this.cardContent = (RelativeLayout) rootView.findViewById(R.id.question_card_content);
         setCardContent(cardContent);
-        this.canvas_pull = (Button) rootView.findViewById(R.id.canvas_pull);
 
         this.mCallback = (QuestionsCallback) getActivity();
         Bundle args = getArguments();
@@ -120,13 +120,6 @@ public class QuestionMCQFragment extends QuestionsFragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        canvas_pull.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setUpCanvas(getContext());
-            }
-        });
 
         return rootView;
     }
@@ -225,6 +218,11 @@ public class QuestionMCQFragment extends QuestionsFragment {
                 dialog.dismiss();
             }
         });
+    }
+
+    @OnClick(R.id.canvas_pull)
+    public void canvasClick() {
+        setUpCanvas(getContext());
     }
 
     @OnClick(R.id.qcard_mcq_option1)
@@ -360,7 +358,7 @@ public class QuestionMCQFragment extends QuestionsFragment {
                 cardContent.addView(options_lock, cardContent.getChildCount());
                 break;
             default:
-                Log.i("unlock"," now");
+                Log.i("unlock", " now");
                 unlockQuestion(cardContent);
         }
     }

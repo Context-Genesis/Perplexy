@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Display;
@@ -325,7 +324,7 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
                 cardContent.addView(options_lock, cardContent.getChildCount());
                 break;
             default:
-                Log.i("unlock"," now");
+                Log.i("unlock", " now");
                 unlockQuestion(cardContent);
         }
     }

@@ -1,6 +1,7 @@
 package com.rohanx96.admobproto.utils;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.rohanx96.admobproto.elements.GenericQuestion;
@@ -170,6 +171,17 @@ public class JSONUtils {
             return genericQuestion;
         } catch (JSONException e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    /*This shall be used to fetch images for the QuestionImageFragment*/
+    public static Uri getQuestionImageURI(String URL) {
+        if (URL.split(":")[0].toLowerCase().trim().equals("resource")) {
+            return Uri.parse(URL.split(":")[1]);
+        } else if (URL.split(":")[0].toLowerCase().trim().equals("web")) {
+            return Uri.parse(URL.split(":")[1]);
+        } else {
             return null;
         }
     }

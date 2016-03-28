@@ -20,7 +20,6 @@ import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
-import com.rohanx96.admobproto.ui.fragments.QuestionsFragment;
 import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -231,7 +230,7 @@ public class CharacterHelper {
         mParentActivity.findViewById(R.id.char_q_clicked_whatsapp_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((QuestionsCallback)mParentActivity).hideCharacterDialog();
+                ((QuestionsCallback) mParentActivity).hideCharacterDialog();
                 final Handler handler = new Handler();          // delay to give time to dialog to close
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -245,7 +244,7 @@ public class CharacterHelper {
         mParentActivity.findViewById(R.id.char_q_clicked_facebook_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((QuestionsCallback)mParentActivity).hideCharacterDialog();
+                ((QuestionsCallback) mParentActivity).hideCharacterDialog();
                 final Handler handler = new Handler();          // delay to give time to dialog to close
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -268,7 +267,7 @@ public class CharacterHelper {
         } else if (status == Constants.UNAVAILABLE) {
             unlockPriceValue = Constants.UNLOCK_UNAVAILABLE_PRICE;
         }
-        unlockPrice.setText(String.format("%d",unlockPriceValue));
+        unlockPrice.setText(String.format("%d", unlockPriceValue));
         final TextView unlock = (TextView) mParentActivity.findViewById(R.id.char_unlock_tv_unlock);
         final LinearLayout confirmUnlock = (LinearLayout) mParentActivity.findViewById(R.id.char_unlock_ll_confirm_unlock);
         unlock.setOnClickListener(new View.OnClickListener() {
@@ -291,12 +290,12 @@ public class CharacterHelper {
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
                 long coins = pref.getLong(Constants.PREF_COINS, 0);
                 if (coins - finalUnlockPriceValue > 0) {
-                    GenericAnswerDetails.updateStatus(currentPage+1,category,Constants.AVAILABLE);
+                    GenericAnswerDetails.updateStatus(currentPage + 1, category, Constants.AVAILABLE);
                     Log.i("unlock", "unlocking question");
-                    ((QuestionsCallback)mParentActivity).setIsQuestionLocked(false);
-                    ((QuestionsCallback)mParentActivity).refreshAdapter();
-                    ((QuestionsCallback)mParentActivity).hideCharacterUnlockDialog();
-                    if(finalUnlockPriceValue == Constants.UNLOCK_INCORRECT_PRICE)
+                    ((QuestionsCallback) mParentActivity).setIsQuestionLocked(false);
+                    ((QuestionsCallback) mParentActivity).refreshAdapter();
+                    ((QuestionsCallback) mParentActivity).hideCharacterUnlockDialog();
+                    if (finalUnlockPriceValue == Constants.UNLOCK_INCORRECT_PRICE)
                         Coins.unlock_incorrect(mParentActivity);
                     else
                         Coins.unlock_unavailable(mParentActivity);
@@ -321,13 +320,13 @@ public class CharacterHelper {
         });
     }
 
-    public void animateAdView(int type){
+    public void animateAdView(int type) {
         View adView = null;
-        if(type == CHARACTER_TYPE_UNLOCKED)
+        if (type == CHARACTER_TYPE_UNLOCKED)
             adView = mParentActivity.findViewById(R.id.char_q_clicked_ad_video);
-        else if(type == CHARACTER_TYPE_LOCKED)
+        else if (type == CHARACTER_TYPE_LOCKED)
             adView = mParentActivity.findViewById(R.id.char_unlock_clicked_ad_video);
-        if (adView!=null) {
+        if (adView != null) {
             ObjectAnimator animationUpX = ObjectAnimator.ofFloat(adView, "scaleX", 1.0f, 1.1f);
             ObjectAnimator animatorUpY = ObjectAnimator.ofFloat(adView, "scaleY", 1.0f, 1.1f);
             ObjectAnimator animationDownX = ObjectAnimator.ofFloat(adView, "scaleX", 1.2f, 1.0f);

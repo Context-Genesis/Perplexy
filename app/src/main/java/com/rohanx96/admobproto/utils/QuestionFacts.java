@@ -28,7 +28,6 @@ public class QuestionFacts {
 
         editor.putInt(Constants.INCORRECT_COUNT, incorrect_count + 1).apply();
 
-        System.out.println();
         editor.putFloat(Constants.ACCURACY, ((float) pref.getInt(Constants.CORRECT_COUNT, 0) / ((float) pref.getInt(Constants.CORRECT_COUNT, 0) + (float) pref.getInt(Constants.INCORRECT_COUNT, 0)))).apply();
     }
 }

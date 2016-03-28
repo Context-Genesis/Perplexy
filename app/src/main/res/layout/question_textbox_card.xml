@@ -63,24 +63,23 @@
 
                 <ImageView
                     android:id="@+id/qcard_textbox_im_backspace"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="5dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/qcard_textbox_im_done"
                     android:layout_toStartOf="@+id/qcard_textbox_im_done"
-                    android:background="@drawable/button_border_metal"
-                    android:src="@drawable/back" />
+                    android:src="@drawable/backspace" />
 
                 <ImageView
                     android:id="@+id/qcard_textbox_im_done"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignTop="@+id/qcard_textbox_im_backspace"
-                    android:background="@drawable/button_border_metal"
-                    android:src="@drawable/plus" />
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/button_no_border"
+                    android:padding="5dp"
+                    android:src="@drawable/tick" />
 
             </RelativeLayout>
 
