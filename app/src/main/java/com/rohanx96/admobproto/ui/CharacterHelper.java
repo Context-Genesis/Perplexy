@@ -256,7 +256,6 @@ public class CharacterHelper {
         });
     }
 
-
     public void setupCharacterUnlockDialog(final int category, final int currentPage) {
         int status = GenericAnswerDetails.getStatus(currentPage + 1, category);
         int unlockPriceValue = Constants.UNLOCK_UNAVAILABLE_PRICE;
