@@ -2,9 +2,7 @@ package com.rohanx96.admobproto.ui.fragments;
 
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.rohanx96.admobproto.R;
 
@@ -42,6 +40,16 @@ public class QuestionsFragment extends Fragment {
                 Log.i("unlocking", " removing image3");
                 cardContent.removeViewAt(cardContent.getChildCount() - 1);
             }
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            
+        } else {
+
         }
     }
 }

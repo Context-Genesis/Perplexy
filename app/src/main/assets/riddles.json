@@ -35,7 +35,7 @@
       "answer": "GOOD",
       "explanation": "well maybe I am lying here",
       "message": "Its too late to apologize",
-      "pad_characters": "GOODEBADWREQ",
+      "pad_characters": "GOODEBADWREQRT",
       "options": [],
       "layout_type": 1
     },
@@ -74,7 +74,7 @@
       "answer": "HARAMI",
       "explanation": "no",
       "message": "Its too late to apologize",
-      "pad_characters": "HARAMIHQWPLX",
+      "pad_characters": "HARAMIHQWPLXPQ",
       "options": [],
       "layout_type": 2
     },
@@ -87,7 +87,7 @@
       "answer": "STUDIOUS",
       "explanation": "well maybe I am lying here",
       "message": "Its too late to apologize",
-      "pad_characters": "LASWSTUDIOUS",
+      "pad_characters": "LASWSTUDIOUSFG",
       "options": [],
       "layout_type": 1
     },
@@ -100,7 +100,7 @@
       "answer": "GAATE",
       "explanation": "no",
       "message": "Its too late to apologize",
-      "pad_characters": "WGAATEPLKASH",
+      "pad_characters": "WGAATEPLKASHLQ",
       "options": [],
       "layout_type": 2
     },
@@ -139,7 +139,7 @@
       "answer": "LOTION",
       "explanation": "no",
       "message": "Its too late to apologize",
-      "pad_characters": "LPWRDFLOTION",
+      "pad_characters": "LPWRDFLOTIONWE",
       "options": [],
       "layout_type": 2
     },
@@ -152,7 +152,7 @@
       "answer": "GOOD",
       "explanation": "well maybe I am lying here",
       "message": "Its too late to apologize",
-      "pad_characters": "DAFGEBADGOOD",
+      "pad_characters": "DAFGEBADGOODLL",
       "options": [],
       "layout_type": 1
     },
@@ -165,7 +165,7 @@
       "answer": "HARAMI",
       "explanation": "no",
       "message": "Its too late to apologize",
-      "pad_characters": "HARAMIHQWPLX",
+      "pad_characters": "HARAMIHQWPLXMM",
       "options": [],
       "layout_type": 2
     },
@@ -178,7 +178,7 @@
       "answer": "HARAMI",
       "explanation": "no",
       "message": "Its too late to apologize",
-      "pad_characters": "HARAMIHQWPLX",
+      "pad_characters": "HARAMIHQWPLXKJ",
       "options": [],
       "layout_type": 2
     },
@@ -191,7 +191,7 @@
       "answer": "HARAMI",
       "explanation": "no",
       "message": "Its too late to apologize",
-      "pad_characters": "HARAMIHQWPLX",
+      "pad_characters": "HARAMIHQWPLXIU",
       "options": [],
       "layout_type": 2
     },

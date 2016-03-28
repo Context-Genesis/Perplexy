@@ -2,11 +2,13 @@ package com.rohanx96.admobproto.ui.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -71,7 +73,7 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
 
     String answer, answerPadCharacters;
 
-    int BLANK_CIRCLE_SIZE;
+    private boolean isUIVisibleToUser = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,7 +92,6 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
         answer = genericQuestion.answer;
         lockQuestionIfRequired();
         answerPadCharacters = genericQuestion.pad_characters;
-        BLANK_CIRCLE_SIZE = getBlankCircleSize();
 
         if (genericQuestion.question_number == 1) {
             this.prevQuestion.setVisibility(View.GONE);
@@ -126,31 +127,38 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
 
     @OnClick(R.id.qcard_textbox_next)
     public void nextQuestion() {
-        ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
-        pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+        if (isUIVisibleToUser) {
+            ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
+            pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+        }
     }
 
     @OnClick(R.id.qcard_textbox_previous)
     public void previousQuestion() {
-        ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
-        pager.setCurrentItem(pager.getCurrentItem() - 1, true);
+        if (isUIVisibleToUser) {
+            ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
+            pager.setCurrentItem(pager.getCurrentItem() - 1, true);
+        }
     }
 
     @OnClick(R.id.qcard_textbox_im_backspace)
     public void removeCharacter() {
-        if (enteredCharacters.length() >= 1) {
-            enteredCharacters = enteredCharacters.substring(0, enteredCharacters.length() - 1);
-            editText.setText(enteredCharacters);
+        if (isUIVisibleToUser) {
+            if (enteredCharacters.length() >= 1) {
+                enteredCharacters = enteredCharacters.substring(0, enteredCharacters.length() - 1);
+                editText.setText(enteredCharacters);
+            }
         }
     }
 
     @OnClick(R.id.qcard_textbox_im_done)
     public void checkAnswer() {
-        isAnsweredCorrectly();
+        if (isUIVisibleToUser) {
+            isAnsweredCorrectly();
+        }
     }
 
     public static QuestionTextBoxFragment newInstance(Bundle args) {
-
         QuestionTextBoxFragment fragment = new QuestionTextBoxFragment();
         fragment.setArguments(args);
         return fragment;
@@ -170,8 +178,10 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
             answerTV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addThisCharacterToEditText(m);
-                    setUpBlanksAndRows();
+                    if (isUIVisibleToUser) {
+                        addThisCharacterToEditText(m);
+                        setUpBlanksAndRows();
+                    }
                     // isAnsweredCorrectly();
                 }
             });
@@ -186,8 +196,10 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
             answerTV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addThisCharacterToEditText(m);
-                    setUpBlanksAndRows();
+                    if (isUIVisibleToUser) {
+                        addThisCharacterToEditText(m);
+                        setUpBlanksAndRows();
+                    }
                     //isAnsweredCorrectly();
                 }
             });
@@ -234,37 +246,34 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
     }
 
     private TextView generateFilledTextView(int i) {
+        int screen = getScreenWidth();
+        int tvMargin = 2;
+        int tvWidth = (screen / (answerPadCharacters.length() / 2)) - (2 * tvMargin);
+
         final TextView answerTV = new TextView(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(i));
-        answerTV.setTextSize(25);
-        answerTV.setTextColor(Color.BLACK);
+        answerTV.setTextSize(tvWidth / 2);
+        answerTV.setTextColor(Color.WHITE);
         answerTV.setBackgroundResource(R.drawable.circle_filled);
-//        GradientDrawable gradientDrawable = (GradientDrawable) answerTV.getBackground();
-//        gradientDrawable.setColor(Color.BLUE);
-//        answerTV.setBackground(gradientDrawable);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(BLANK_CIRCLE_SIZE, BLANK_CIRCLE_SIZE);
-        layoutParams.setMargins(2, 2, 2, 2);
+        answerTV.setLayoutParams(new ViewGroup.LayoutParams(tvWidth, tvWidth));
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(tvWidth, tvWidth);
+        layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);
         answerTV.setLayoutParams(layoutParams);
         answerTV.setGravity(Gravity.CENTER);
 
         return answerTV;
     }
 
-    private int getBlankCircleSize() {
+    private int getScreenWidth() {
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int width = size.x;
 
-        row1.getWidth();
-        if (row1.getWidth() != 0) {
-            Log.d("TAG", "Size of the blank is ar " + row1.getWidth() / 8);
-            return row1.getWidth() / 8;
-        } else {
-            Log.d("TAG", "Size of the blank is sw " + width / 10);
-            return width / 10;
-        }
+        Resources r = getResources();
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
+
+        return size.x - 4 * px;
     }
 
     public void lockQuestionIfRequired() {
@@ -289,11 +298,13 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
                 lock.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
-                        //expand the character dialog only if it is not previously visible
-                        if (characterDialog.getVisibility() == View.GONE) {
-                            mCallback.showCharacterUnlockDialog();
-                            mCallback.setupCharacterUnlockDialog();
+                        if (isUIVisibleToUser) {
+                            View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
+                            //expand the character dialog only if it is not previously visible
+                            if (characterDialog.getVisibility() == View.GONE) {
+                                mCallback.showCharacterUnlockDialog();
+                                mCallback.setupCharacterUnlockDialog();
+                            }
                         }
                     }
                 });
@@ -313,11 +324,13 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
                 options_lock.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
-                        //expand the character dialog only if it is not previously visible
-                        if (characterDialog.getVisibility() == View.GONE) {
-                            mCallback.showCharacterUnlockDialog();
-                            mCallback.setupCharacterUnlockDialog();
+                        if (isUIVisibleToUser) {
+                            View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
+                            //expand the character dialog only if it is not previously visible
+                            if (characterDialog.getVisibility() == View.GONE) {
+                                mCallback.showCharacterUnlockDialog();
+                                mCallback.setupCharacterUnlockDialog();
+                            }
                         }
                     }
                 });
@@ -327,5 +340,11 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
                 Log.i("unlock", " now");
                 unlockQuestion(cardContent);
         }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isUIVisibleToUser = isVisibleToUser;
     }
 }

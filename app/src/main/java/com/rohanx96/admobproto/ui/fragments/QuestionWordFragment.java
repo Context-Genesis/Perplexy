@@ -71,6 +71,8 @@ public class QuestionWordFragment extends QuestionsFragment {
 
     String answer, answerPadCharacters;
 
+    private boolean isUIVisibleToUser = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.question_word_card, container, false);
@@ -88,7 +90,6 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         answer = genericQuestion.answer;
         answerPadCharacters = genericQuestion.pad_characters;
-
 
         if (genericQuestion.question_number == 1) {
             this.prevQuestion.setVisibility(View.GONE);
@@ -132,18 +133,21 @@ public class QuestionWordFragment extends QuestionsFragment {
 
     @OnClick(R.id.qcard_word_next)
     public void nextQuestion() {
-        ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
-        pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+        if (isUIVisibleToUser) {
+            ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
+            pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+        }
     }
 
     @OnClick(R.id.qcard_word_previous)
     public void previousQuestion() {
-        ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
-        pager.setCurrentItem(pager.getCurrentItem() - 1, true);
+        if (isUIVisibleToUser) {
+            ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
+            pager.setCurrentItem(pager.getCurrentItem() - 1, true);
+        }
     }
 
     public static QuestionWordFragment newInstance(Bundle args) {
-
         QuestionWordFragment fragment = new QuestionWordFragment();
         fragment.setArguments(args);
         return fragment;
@@ -165,8 +169,10 @@ public class QuestionWordFragment extends QuestionsFragment {
                 answerTV.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        putThisCharacterBackToOptionsRow(m);
-                        setUpBlanksAndRows();
+                        if (isUIVisibleToUser) {
+                            putThisCharacterBackToOptionsRow(m);
+                            setUpBlanksAndRows();
+                        }
                     }
                 });
                 answerRow.addView(answerTV);
@@ -180,9 +186,11 @@ public class QuestionWordFragment extends QuestionsFragment {
             answerTV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addThisCharacterToAnswerRow(answer.length() + m);
-                    setUpBlanksAndRows();
-                    isAnsweredCorrectly();
+                    if (isUIVisibleToUser) {
+                        addThisCharacterToAnswerRow(answer.length() + m);
+                        setUpBlanksAndRows();
+                        isAnsweredCorrectly();
+                    }
                 }
             });
 
@@ -196,9 +204,11 @@ public class QuestionWordFragment extends QuestionsFragment {
             answerTV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addThisCharacterToAnswerRow(answer.length() + m);
-                    setUpBlanksAndRows();
-                    isAnsweredCorrectly();
+                    if (isUIVisibleToUser) {
+                        addThisCharacterToAnswerRow(answer.length() + m);
+                        setUpBlanksAndRows();
+                        isAnsweredCorrectly();
+                    }
                 }
             });
 
@@ -316,7 +326,8 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         Resources r = getResources();
         int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
-        return size.x - 2 * px;
+
+        return size.x - 4 * px;
     }
 
     public void lockQuestionIfRequired() {
@@ -339,11 +350,13 @@ public class QuestionWordFragment extends QuestionsFragment {
                 lock.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
-                        //expand the character dialog only if it is not previously visible
-                        if (characterDialog.getVisibility() == View.GONE) {
-                            mCallback.showCharacterUnlockDialog();
-                            mCallback.setupCharacterUnlockDialog();
+                        if (isUIVisibleToUser) {
+                            View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
+                            //expand the character dialog only if it is not previously visible
+                            if (characterDialog.getVisibility() == View.GONE) {
+                                mCallback.showCharacterUnlockDialog();
+                                mCallback.setupCharacterUnlockDialog();
+                            }
                         }
                     }
                 });
@@ -363,11 +376,13 @@ public class QuestionWordFragment extends QuestionsFragment {
                 options_lock.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
-                        //expand the character dialog only if it is not previously visible
-                        if (characterDialog.getVisibility() == View.GONE) {
-                            mCallback.showCharacterUnlockDialog();
-                            mCallback.setupCharacterUnlockDialog();
+                        if (isUIVisibleToUser) {
+                            View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
+                            //expand the character dialog only if it is not previously visible
+                            if (characterDialog.getVisibility() == View.GONE) {
+                                mCallback.showCharacterUnlockDialog();
+                                mCallback.setupCharacterUnlockDialog();
+                            }
                         }
                     }
                 });
@@ -379,4 +394,9 @@ public class QuestionWordFragment extends QuestionsFragment {
         }
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isUIVisibleToUser = isVisibleToUser;
+    }
 }

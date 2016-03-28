@@ -73,6 +73,8 @@ public class QuestionMCQFragment extends QuestionsFragment {
     @Bind(R.id.canvas_pull)
     Button canvas_pull;
 
+    private boolean isUIVisibleToUser = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.question_mcq_card, container, false);
@@ -170,13 +172,15 @@ public class QuestionMCQFragment extends QuestionsFragment {
         eraser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPaint.setColor(ContextCompat.getColor(context, R.color.canvas_bg));
-                mPaint.setStrokeWidth(8);
-                if (eraser_s == 0) {
-                    pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
-                    eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
-                    eraser_s = 1;
-                    pen_s = 0;
+                if (isUIVisibleToUser) {
+                    mPaint.setColor(ContextCompat.getColor(context, R.color.canvas_bg));
+                    mPaint.setStrokeWidth(8);
+                    if (eraser_s == 0) {
+                        pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
+                        eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
+                        eraser_s = 1;
+                        pen_s = 0;
+                    }
                 }
             }
         });
@@ -184,13 +188,15 @@ public class QuestionMCQFragment extends QuestionsFragment {
         pen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPaint.setColor(ContextCompat.getColor(context, R.color.color_pen));
-                mPaint.setStrokeWidth(5);
-                if (pen_s == 0) {
-                    pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
-                    eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
-                    pen_s = 1;
-                    eraser_s = 0;
+                if (isUIVisibleToUser) {
+                    mPaint.setColor(ContextCompat.getColor(context, R.color.color_pen));
+                    mPaint.setStrokeWidth(5);
+                    if (pen_s == 0) {
+                        pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
+                        eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
+                        pen_s = 1;
+                        eraser_s = 0;
+                    }
                 }
             }
         });
@@ -198,51 +204,65 @@ public class QuestionMCQFragment extends QuestionsFragment {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                canvas_main.removeAllViews();
-                canvas_main.addView(new DrawingView(context));
+                if (isUIVisibleToUser) {
+                    canvas_main.removeAllViews();
+                    canvas_main.addView(new DrawingView(context));
 
-                mPaint.setColor(ContextCompat.getColor(context, R.color.color_pen));
-                mPaint.setStrokeWidth(5);
+                    mPaint.setColor(ContextCompat.getColor(context, R.color.color_pen));
+                    mPaint.setStrokeWidth(5);
 
-                pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
-                eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
+                    pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
+                    eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
 
-                eraser_s = 0;
-                pen_s = 1;
+                    eraser_s = 0;
+                    pen_s = 1;
+                }
             }
         });
 
         canvas_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                if (isUIVisibleToUser) {
+                    dialog.dismiss();
+                }
             }
         });
     }
 
     @OnClick(R.id.canvas_pull)
     public void canvasClick() {
-        setUpCanvas(getContext());
+        if (isUIVisibleToUser) {
+            setUpCanvas(getContext());
+        }
     }
 
     @OnClick(R.id.qcard_mcq_option1)
     public void onClickOption1(View view) {
-        isRight("1");
+        if (isUIVisibleToUser) {
+            isRight("1");
+        }
     }
 
     @OnClick(R.id.qcard_mcq_option2)
     public void onClickOption2(View view) {
-        isRight("2");
+        if (isUIVisibleToUser) {
+            isRight("2");
+        }
     }
 
     @OnClick(R.id.qcard_mcq_option3)
     public void onClickOption3(View view) {
-        isRight("3");
+        if (isUIVisibleToUser) {
+            isRight("3");
+        }
     }
 
     @OnClick(R.id.qcard_mcq_option4)
     public void onClickOption4(View view) {
-        isRight("4");
+        if (isUIVisibleToUser) {
+            isRight("4");
+        }
     }
 
     void isRight(String check) {
@@ -288,17 +308,22 @@ public class QuestionMCQFragment extends QuestionsFragment {
 
     @OnClick(R.id.qcard_mcq_next)
     public void nextQuestion() {
-        ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
-        pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+        if (isUIVisibleToUser) {
+            ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
+            pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+        }
     }
 
     @OnClick(R.id.qcard_mcq_previous)
     public void previousQuestion() {
-        ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
-        pager.setCurrentItem(pager.getCurrentItem() - 1, true);
+        if (isUIVisibleToUser) {
+            ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
+            pager.setCurrentItem(pager.getCurrentItem() - 1, true);
+        }
     }
 
     public static QuestionMCQFragment newInstance(Bundle args) {
+
         QuestionMCQFragment fragment = new QuestionMCQFragment();
         fragment.setArguments(args);
         return fragment;
@@ -323,11 +348,13 @@ public class QuestionMCQFragment extends QuestionsFragment {
                 lock.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
-                        //expand the character dialog only if it is not previously visible
-                        if (characterDialog.getVisibility() == View.GONE) {
-                            mCallback.showCharacterUnlockDialog();
-                            mCallback.setupCharacterUnlockDialog();
+                        if (isUIVisibleToUser) {
+                            View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
+                            //expand the character dialog only if it is not previously visible
+                            if (characterDialog.getVisibility() == View.GONE) {
+                                mCallback.showCharacterUnlockDialog();
+                                mCallback.setupCharacterUnlockDialog();
+                            }
                         }
                     }
                 });
@@ -347,11 +374,13 @@ public class QuestionMCQFragment extends QuestionsFragment {
                 options_lock.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
-                        //expand the character dialog only if it is not previously visible
-                        if (characterDialog.getVisibility() == View.GONE) {
-                            mCallback.showCharacterUnlockDialog();
-                            mCallback.setupCharacterUnlockDialog();
+                        if (isUIVisibleToUser) {
+                            View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
+                            //expand the character dialog only if it is not previously visible
+                            if (characterDialog.getVisibility() == View.GONE) {
+                                mCallback.showCharacterUnlockDialog();
+                                mCallback.setupCharacterUnlockDialog();
+                            }
                         }
                     }
                 });
@@ -361,6 +390,12 @@ public class QuestionMCQFragment extends QuestionsFragment {
                 Log.i("unlock", " now");
                 unlockQuestion(cardContent);
         }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isUIVisibleToUser = isVisibleToUser;
     }
 }
 
