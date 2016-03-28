@@ -499,6 +499,5 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     public static int convertDip2Pixels(Context context, int dip) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.getResources().getDisplayMetrics());
-
     }
 }
