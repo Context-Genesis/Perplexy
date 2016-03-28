@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,8 +26,10 @@ import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
+import com.rohanx96.admobproto.ui.QuestionsActivity;
 import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
+import com.rohanx96.admobproto.utils.DrawingView;
 import com.rohanx96.admobproto.utils.JSONUtils;
 
 import java.util.ArrayList;
@@ -66,6 +69,9 @@ public class QuestionWordFragment extends QuestionsFragment {
 
     @Bind(R.id.q_card_word_ll_row2_q)
     LinearLayout row2;
+
+    @Bind(R.id.word_canvas_pull)
+    Button canvas;
 
     ArrayList<Character> jumbledCharacters;
 
@@ -144,6 +150,13 @@ public class QuestionWordFragment extends QuestionsFragment {
         if (isUIVisibleToUser) {
             ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
             pager.setCurrentItem(pager.getCurrentItem() - 1, true);
+        }
+    }
+
+    @OnClick(R.id.word_canvas_pull)
+    public void canvas_pulldown() {
+        if (isUIVisibleToUser) {
+            DrawingView.setUpCanvas(getContext(), QuestionsActivity.convertDip2Pixels(getContext(), tvQuestion.getHeight() + 80));
         }
     }
 
