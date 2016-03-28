@@ -84,7 +84,7 @@
         android:layout_margin="18dp"
         android:background="#88ffffff" />
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/activity_number_line_bubble_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -108,5 +108,5 @@
             android:layout_gravity="bottom|center"
             android:elevation="7dp"
             android:src="@drawable/haha" />
-    </LinearLayout>
+    </LinearLayout>-->
 </RelativeLayout>

@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
@@ -315,6 +314,7 @@ public class QuestionWordFragment extends QuestionsFragment {
                         //expand the character dialog only if it is not previously visible
                         if (characterDialog.getVisibility() == View.GONE) {
                             mCallback.showCharacterUnlockDialog();
+                            mCallback.setupCharacterUnlockDialog();
                         }
                     }
                 });
@@ -338,6 +338,7 @@ public class QuestionWordFragment extends QuestionsFragment {
                         //expand the character dialog only if it is not previously visible
                         if (characterDialog.getVisibility() == View.GONE) {
                             mCallback.showCharacterUnlockDialog();
+                            mCallback.setupCharacterUnlockDialog();
                         }
                     }
                 });

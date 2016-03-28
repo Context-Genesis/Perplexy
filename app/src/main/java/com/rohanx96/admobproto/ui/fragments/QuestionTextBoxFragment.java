@@ -294,6 +294,7 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
                         //expand the character dialog only if it is not previously visible
                         if (characterDialog.getVisibility() == View.GONE) {
                             mCallback.showCharacterUnlockDialog();
+                            mCallback.setupCharacterUnlockDialog();
                         }
                     }
                 });
@@ -317,6 +318,7 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
                         //expand the character dialog only if it is not previously visible
                         if (characterDialog.getVisibility() == View.GONE) {
                             mCallback.showCharacterUnlockDialog();
+                            mCallback.setupCharacterUnlockDialog();
                         }
                     }
                 });

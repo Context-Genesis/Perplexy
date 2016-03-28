@@ -21,7 +21,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
@@ -29,7 +28,6 @@ import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionTextBoxFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
-import com.rohanx96.admobproto.ui.fragments.QuestionsFragment;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -53,7 +51,6 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     private boolean isLocked = false;
 
     SharedPreferences pref;
-    SharedPreferences.Editor editor;
 
     int CATEGORY = -1;
 
@@ -218,6 +215,12 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     }
 
     @Override
+    public void setupCharacterDialog() {
+        CharacterHelper characterHelper = new CharacterHelper(this);
+        characterHelper.setupCharacterDialog(CATEGORY, mCurrentPage);
+    }
+
+    @Override
     public void hideCharacterDialog() {
         View characterDialog = findViewById(R.id.questions_activity_character_dialog);
         // This will prevent running of animation when hiding not visible dialog.
@@ -241,6 +244,13 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         characterDialog.setVisibility(View.VISIBLE);
         characterDialog.startAnimation(scaleAnimation);
         toggleIsCharacterOpen();
+    }
+
+    @Override
+    public void setupCharacterUnlockDialog() {
+        CharacterHelper characterHelper = new CharacterHelper(this);
+        characterHelper.setupCharacterUnlockDialog(CATEGORY,mCurrentPage);
+
     }
 
     @Override
@@ -370,11 +380,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     }
 
     public void setupCharacter() {
-        final CharacterHelper characterHelper = new CharacterHelper(this);
         character = (ImageView) findViewById(R.id.questions_activity_bubble);
         if (Build.VERSION.SDK_INT >=21)
             character.setTransitionName("character");
-        //setupCharacterDialog();
         character.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -385,14 +393,16 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                     case MotionEvent.ACTION_UP:
                         character.clearAnimation();
                         character.animate().scaleX(1.0f).scaleY(1.0f).setDuration(300).start();
+                        isLocked = (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT)
+                                || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                         if (!isCharacterDialogOpen) {
                             if (isLocked) {
                                 showCharacterUnlockDialog();
-                                characterHelper.setupCharacterUnlockDialog(CATEGORY,mCurrentPage);
+                                setupCharacterUnlockDialog();
                             } else {
                                 showCharacterDialog();
                                 //Dialog is reinitialised based on question every time character is clicked
-                                characterHelper.setupCharacterDialog(CATEGORY,mCurrentPage);
+                                setupCharacterDialog();
                             }
                         } else {
                             if (isLocked) {

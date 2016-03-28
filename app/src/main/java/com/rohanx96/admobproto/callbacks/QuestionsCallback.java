@@ -11,7 +11,9 @@ public interface QuestionsCallback {
     public float getCharacterX();
     public float getCharacterY();
     public void showCharacterDialog();
+    void setupCharacterDialog();
     public void hideCharacterDialog();
     public void showCharacterUnlockDialog();
+    void setupCharacterUnlockDialog();
     public void hideCharacterUnlockDialog();
 }

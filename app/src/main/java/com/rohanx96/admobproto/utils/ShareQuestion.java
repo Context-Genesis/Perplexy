@@ -24,7 +24,6 @@ public class ShareQuestion {
 
     static Bitmap bitmap;             // needed for FB
 
-    // TODO : (DHRUV) Check why this isnt working. (DONE)
     public static void shareImageWhatsapp(Activity activity) {
         Toast.makeText(activity, "Preparing for Share", Toast.LENGTH_LONG).show();
         shareImage(activity);

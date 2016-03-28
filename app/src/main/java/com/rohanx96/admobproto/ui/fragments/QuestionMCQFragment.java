@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -330,6 +329,7 @@ public class QuestionMCQFragment extends QuestionsFragment {
                         //expand the character dialog only if it is not previously visible
                         if (characterDialog.getVisibility() == View.GONE) {
                             mCallback.showCharacterUnlockDialog();
+                            mCallback.setupCharacterUnlockDialog();
                         }
                     }
                 });
@@ -353,6 +353,7 @@ public class QuestionMCQFragment extends QuestionsFragment {
                         //expand the character dialog only if it is not previously visible
                         if (characterDialog.getVisibility() == View.GONE) {
                             mCallback.showCharacterUnlockDialog();
+                            mCallback.setupCharacterUnlockDialog();
                         }
                     }
                 });

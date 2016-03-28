@@ -113,7 +113,6 @@ public class CharacterHelper {
                     if (ansDetails.get(mCurrentPage).hint_displayed == false) {
                         ansDetails.get(mCurrentPage).hint_displayed = true;
                         ansDetails.get(mCurrentPage).save();
-                        // TODO: deduct coins (Done)
                         Coins.hint_access(mParentActivity);
                         coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
                     }
@@ -185,7 +184,6 @@ public class CharacterHelper {
                     if (!ansDetails.get(mCurrentPage).answer_displayed) {
                         ansDetails.get(mCurrentPage).answer_displayed = true;
                         ansDetails.get(mCurrentPage).save();
-                        // TODO: deduct coins (done)
                         Coins.solution_access(mParentActivity);
                         coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
                     }
@@ -295,7 +293,6 @@ public class CharacterHelper {
                 if (coins - finalUnlockPriceValue > 0) {
                     GenericAnswerDetails.updateStatus(currentPage+1,category,Constants.AVAILABLE);
                     Log.i("unlock", "unlocking question");
-                    // TODO: Implement hiding of lock image by some other way. This does not work
                     ((QuestionsCallback)mParentActivity).setIsQuestionLocked(false);
                     ((QuestionsCallback)mParentActivity).refreshAdapter();
                     ((QuestionsCallback)mParentActivity).hideCharacterUnlockDialog();
