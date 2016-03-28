@@ -18,9 +18,13 @@ public class Coins {
         editor = pref.edit();
         long coins = pref.getLong(Constants.PREF_COINS, 0);
 
-        editor.putLong(Constants.PREF_COINS, coins - Constants.HINT_PRICE).apply();
-        long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
-        editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.HINT_PRICE).apply();
+        if (coins >= Constants.HINT_PRICE) {
+            editor.putLong(Constants.PREF_COINS, coins - Constants.HINT_PRICE).apply();
+            long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
+            editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.HINT_PRICE).apply();
+        } else {
+            Toast.makeText(context, "Do not have sufficient coins", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static void solution_access(Context context) {
@@ -28,9 +32,13 @@ public class Coins {
         editor = pref.edit();
         long coins = pref.getLong(Constants.PREF_COINS, 0);
 
-        editor.putLong(Constants.PREF_COINS, coins - Constants.SOLUTION_PRICE).apply();
-        long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
-        editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.SOLUTION_PRICE).apply();
+        if (coins >= Constants.SOLUTION_PRICE) {
+            editor.putLong(Constants.PREF_COINS, coins - Constants.SOLUTION_PRICE).apply();
+            long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
+            editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.SOLUTION_PRICE).apply();
+        } else {
+            Toast.makeText(context, "Do not have sufficient coins", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -45,7 +53,7 @@ public class Coins {
             long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
             editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.UNLOCK_INCORRECT_PRICE).apply();
         } else {
-            Toast.makeText(context, "Donot have sufficient coins", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Do not have sufficient coins", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -59,7 +67,7 @@ public class Coins {
             long spent_coins = pref.getLong(Constants.PREF_COINS_SPENT, 0);
             editor.putLong(Constants.PREF_COINS_SPENT, spent_coins + Constants.UNLOCK_UNAVAILABLE_PRICE).apply();
         } else {
-            Toast.makeText(context, "Donot have sufficient coins", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Do not have sufficient coins", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -72,6 +80,8 @@ public class Coins {
 
         long earned_coins = pref.getLong(Constants.PREF_COINS_EARNED, 0);
         editor.putLong(Constants.PREF_COINS_EARNED, earned_coins + Constants.CORRECT_PRICE).apply();
+
+        QuestionFacts.increment_correct(context);
     }
 
     public static void wrong_answer(Context context) {
@@ -80,5 +90,7 @@ public class Coins {
 
         long coins = pref.getLong(Constants.PREF_COINS, 0);
         editor.putLong(Constants.PREF_COINS, coins - Constants.INCORRECT_PRICE).apply();
+
+        QuestionFacts.increment_incorrect(context);
     }
 }

@@ -33,6 +33,21 @@
             android:textColor="@color/white"
             android:textSize="20dp" />
 
+        <ImageView
+            android:id="@+id/db"
+            android:layout_width="22dp"
+            android:layout_height="25dp"
+            android:layout_alignLeft="@+id/element_number_line_left_textview" />
+
+        <ImageView
+            android:id="@+id/bookmark_left_textview"
+            android:layout_width="22dp"
+            android:layout_height="25dp"
+            android:layout_alignRight="@+id/db"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/plain"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/l1_textView3"
             android:layout_width="96dp"

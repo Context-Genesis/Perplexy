@@ -9,10 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.rohanx96.admobproto.R;
-import com.rohanx96.admobproto.callbacks.NumberLineCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.NumberLineActivity;
 import com.rohanx96.admobproto.ui.QuestionsActivity;
@@ -39,8 +38,7 @@ public class NumberLineAdapter extends BaseAdapter {
         this.answerDetails.add(0, new GenericAnswerDetails(-1, Constants.CORRECT, Constants.UNAVAILABLE, false, false, 0));
         this.answerDetails.add(answerDetails.size(), new GenericAnswerDetails(-1, Constants.CORRECT, Constants.UNAVAILABLE, false, false, 0));
     }
-
-
+    
     @Override
     public int getCount() {
         return answerDetails.size();
@@ -58,37 +56,34 @@ public class NumberLineAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
-        final ViewHolder holder;
         View vi = convertView;
         int type = getItemViewType(position);
-        if (convertView == null) {
-            holder = new ViewHolder();
-            if (type == 0) {
-                inflater = (LayoutInflater) context.
-                        getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                vi = inflater.inflate(R.layout.element_number_line_left, null);
-                holder.tv = (Button) vi.findViewById(R.id.element_number_line_left_textview);
-            } else if (type == 1) {
-                inflater = (LayoutInflater) context.
-                        getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                vi = inflater.inflate(R.layout.element_number_line_right, null);
-                holder.tv = (Button) vi.findViewById(R.id.element_number_line_right_textview);
-            } else if (type == -1) {
-                inflater = (LayoutInflater) context.
-                        getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                vi = inflater.inflate(R.layout.element_number_line_start, null);
-                holder.tv = (Button) vi.findViewById(R.id.element_number_line_start_uparrow);
-            } else {
-                inflater = (LayoutInflater) context.
-                        getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                vi = inflater.inflate(R.layout.element_number_line_end, null);
-                holder.tv = (Button) vi.findViewById(R.id.element_number_line_end_downarrow);
-            }
-
-            vi.setTag(holder);
+        ViewHolder holder = new ViewHolder();
+        if (type == 0) {
+            inflater = (LayoutInflater) context.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            vi = inflater.inflate(R.layout.element_number_line_left, null);
+            holder.tv = (Button) vi.findViewById(R.id.element_number_line_left_textview);
+            holder.bookmark_star = (ImageView) vi.findViewById(R.id.bookmark_left_textview);
+        } else if (type == 1) {
+            inflater = (LayoutInflater) context.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            vi = inflater.inflate(R.layout.element_number_line_right, null);
+            holder.tv = (Button) vi.findViewById(R.id.element_number_line_right_textview);
+            holder.bookmark_star = (ImageView) vi.findViewById(R.id.bookmark_right_textview);
+        } else if (type == -1) {
+            inflater = (LayoutInflater) context.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            vi = inflater.inflate(R.layout.element_number_line_start, null);
+            holder.tv = (Button) vi.findViewById(R.id.element_number_line_start_uparrow);
         } else {
-            holder = (ViewHolder) vi.getTag();
+            inflater = (LayoutInflater) context.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            vi = inflater.inflate(R.layout.element_number_line_end, null);
+            holder.tv = (Button) vi.findViewById(R.id.element_number_line_end_downarrow);
         }
+
+        vi.setTag(holder);
 
         /*
         * Process answer details here and set backgrounds and lock image accordingly
@@ -122,6 +117,7 @@ public class NumberLineAdapter extends BaseAdapter {
 
     public class ViewHolder {
         Button tv;
+        ImageView bookmark_star;
     }
 
     public void setBackgroundDrawable(int position, ViewHolder holder) {
@@ -129,33 +125,27 @@ public class NumberLineAdapter extends BaseAdapter {
         switch (answerDetails.get(position).status) {
             case Constants.CORRECT:
                 if (answerDetails.get(position).bookmarked) {
-                    ViewGroup.LayoutParams params = holder.tv.getLayoutParams();
-                    params.width = 140;
-                    params.height = 140;
-                    holder.tv.setLayoutParams(params);
-                    holder.tv.setBackgroundResource(R.drawable.correct_star);
-                } else
-                    holder.tv.setBackgroundResource(R.drawable.circle_question_number_correcct);
+                    holder.bookmark_star.setVisibility(View.VISIBLE);
+                } else {
+                    holder.bookmark_star.setVisibility(View.GONE);
+                }
+                holder.tv.setBackgroundResource(R.drawable.circle_question_number_correcct);
                 break;
             case Constants.INCORRECT:
                 if (answerDetails.get(position).bookmarked) {
-                    ViewGroup.LayoutParams params = holder.tv.getLayoutParams();
-                    params.width = 140;
-                    params.height = 140;
-                    holder.tv.setLayoutParams(params);
-                    holder.tv.setBackgroundResource(R.drawable.incorrect_star);
-                } else
-                    holder.tv.setBackgroundResource(R.drawable.circle_question_number_incorrect);
+                    holder.bookmark_star.setVisibility(View.VISIBLE);
+                } else {
+                    holder.bookmark_star.setVisibility(View.GONE);
+                }
+                holder.tv.setBackgroundResource(R.drawable.circle_question_number_incorrect);
                 break;
             case Constants.AVAILABLE:
                 if (answerDetails.get(position).bookmarked) {
-                    ViewGroup.LayoutParams params = holder.tv.getLayoutParams();
-                    params.width = 140;
-                    params.height = 140;
-                    holder.tv.setLayoutParams(params);
-                    holder.tv.setBackgroundResource(R.drawable.available_bookmark);
-                } else
-                    holder.tv.setBackgroundResource(R.drawable.circle_question_number_available);
+                    holder.bookmark_star.setVisibility(View.VISIBLE);
+                } else {
+                    holder.bookmark_star.setVisibility(View.GONE);
+                }
+                holder.tv.setBackgroundResource(R.drawable.circle_question_number_available);
                 break;
             case Constants.UNAVAILABLE:
                 holder.tv.setBackgroundResource(R.drawable.circle_question_number_unavailable);
@@ -224,8 +214,8 @@ public class NumberLineAdapter extends BaseAdapter {
                 intent.putExtra(Constants.BUNDLE_QUESTION_NUMBER, getItem(position).question_number);
                 intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (Build.VERSION.SDK_INT >=21)
-                    context.startActivity(intent,ActivityOptionsCompat.makeSceneTransitionAnimation(context,holder.tv,"character").toBundle());
+                if (Build.VERSION.SDK_INT >= 21)
+                    context.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(context, holder.tv, "character").toBundle());
                 else
                     context.startActivity(intent);
                 context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
