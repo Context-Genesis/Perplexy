@@ -103,13 +103,13 @@
 
     <ImageView
         android:id="@+id/questions_activity_bubble"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="16dp"
         android:elevation="7dp"
-        android:src="@drawable/haha" />
+        android:src="@drawable/andy" />
 
 </RelativeLayout>
