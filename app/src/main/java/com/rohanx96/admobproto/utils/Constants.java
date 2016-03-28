@@ -43,4 +43,5 @@ public class Constants {
     public static final String CORRECT_COUNT = "correctcount";
     public static final String INCORRECT_COUNT = "incorrectcount";
     public static final String ACCURACY = "accuracy";
+    public static final String ERROR = null;
 }
