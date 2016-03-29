@@ -58,7 +58,7 @@ public class GenericAnswerDetails extends SugarRecord {
          * answer : false
          * number_incorrect : 0
          */
-
+        GenericAnswerDetails.deleteAll(GenericAnswerDetails.class);
         ArrayList<GenericQuestion> allQuestions = new ArrayList<>();
         allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_RIDDLE));
         allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
