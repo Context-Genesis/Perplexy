@@ -1,6 +1,5 @@
 package com.rohanx96.admobproto.ui.fragments;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -8,11 +7,11 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,11 +74,11 @@ public class SettingsFragment extends Fragment {
     @OnClick(R.id.settings_reset)
     public void onClick_reset() {
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
+        new AlertDialog.Builder(getContext())
+                .setMessage("All your progress will be lost. Are you sure?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
                         GenericAnswerDetails.initializeDatabase(getContext());
                         SharedPreferences.Editor editor = pref.edit();
 
@@ -90,23 +89,18 @@ public class SettingsFragment extends Fragment {
                         editor.putInt(Constants.CORRECT_COUNT, 0).apply();
                         editor.putInt(Constants.INCORRECT_COUNT, 0).apply();
                         editor.putFloat(Constants.ACCURACY, 0f).apply();
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        dialog.dismiss();
-                        break;
-                }
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("All your progress will be lost.Are you sure?").setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).show();
     }
 
     @OnClick(R.id.settings_info)
     public void onClick_info() {
         // TODO: MORE INFO ACTIVITY
-        Toast.makeText(getContext(),"A new activity",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "A new activity", Toast.LENGTH_SHORT).show();
     }
 }
