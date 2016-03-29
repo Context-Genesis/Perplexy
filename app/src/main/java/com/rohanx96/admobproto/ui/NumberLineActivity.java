@@ -9,17 +9,15 @@ import android.os.Looper;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.adapters.NumberLineAdapter;
-import com.rohanx96.admobproto.callbacks.NumberLineCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
+import com.rohanx96.admobproto.utils.SoundManager;
 
 import java.util.ArrayList;
 
@@ -27,7 +25,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NumberLineActivity extends AppCompatActivity{
+public class NumberLineActivity extends AppCompatActivity {
     private View mContainer;
     private int mTimeCount = 0;
     private boolean isAnimationRunning = false;
@@ -40,11 +38,10 @@ public class NumberLineActivity extends AppCompatActivity{
     @Bind(R.id.activity_coin_text)
     TextView coin_display;
 
-    /**@Bind(R.id.activity_number_line_bubble_ll)
-    LinearLayout bubbleLL;
-
-    @Bind(R.id.activity_number_line_bubble_im)
-    ImageView bubble;*/
+    /**
+     * @Bind(R.id.activity_number_line_bubble_ll) LinearLayout bubbleLL;
+     * @Bind(R.id.activity_number_line_bubble_im) ImageView bubble;
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +56,7 @@ public class NumberLineActivity extends AppCompatActivity{
 
         //bubbleLL.setVisibility(View.GONE);
         ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
-        NumberLineAdapter adapter = new NumberLineAdapter(this,new ArrayList<GenericAnswerDetails>());
+        NumberLineAdapter adapter = new NumberLineAdapter(this, new ArrayList<GenericAnswerDetails>());
         listView.setAdapter(adapter);
     }
 
@@ -85,7 +82,7 @@ public class NumberLineActivity extends AppCompatActivity{
         /* Adapter list needs to be initialised here because we need to refresh list after returning to activity */
         ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(CATEGORY);
         ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
-        ((NumberLineAdapter)listView.getAdapter()).setAnswerDetails(answerDetails);
+        ((NumberLineAdapter) listView.getAdapter()).setAnswerDetails(answerDetails);
         ((NumberLineAdapter) listView.getAdapter()).notifyDataSetChanged();
 
         /** Change color of background after 7 seconds */
@@ -139,6 +136,7 @@ public class NumberLineActivity extends AppCompatActivity{
 
     @OnClick(R.id.activity_number_line_back)
     public void goBack() {
+        SoundManager.playButtonClickSound(getApplicationContext());
         onBackPressed();
     }
 

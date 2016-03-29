@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
@@ -15,9 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,6 +28,7 @@ import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.DrawingView;
 import com.rohanx96.admobproto.utils.JSONUtils;
+import com.rohanx96.admobproto.utils.SoundManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -116,7 +114,7 @@ public class QuestionWordFragment extends QuestionsFragment {
     public void onResume() {
         super.onResume();
         // Check every time the fragment is refreshed
-        lockQuestionIfRequired();
+        lockQuestionIfRequired(POSITION, CATEGORY, isUIVisibleToUser, mCallback);
     }
 
     private void setUpJumbledCharacters() {
@@ -142,6 +140,7 @@ public class QuestionWordFragment extends QuestionsFragment {
         if (isUIVisibleToUser) {
             ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
             pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+            SoundManager.playSwipeSound(getActivity());
         }
     }
 
@@ -150,6 +149,7 @@ public class QuestionWordFragment extends QuestionsFragment {
         if (isUIVisibleToUser) {
             ViewPager pager = (ViewPager) getActivity().findViewById(R.id.questions_activity_pager);
             pager.setCurrentItem(pager.getCurrentItem() - 1, true);
+            SoundManager.playSwipeSound(getActivity());
         }
     }
 
@@ -157,6 +157,7 @@ public class QuestionWordFragment extends QuestionsFragment {
     public void canvas_pulldown() {
         if (isUIVisibleToUser) {
             DrawingView.setUpCanvas(getContext(), QuestionsActivity.convertDip2Pixels(getContext(), tvQuestion.getHeight() + 80));
+            SoundManager.playButtonClickSound(getActivity());
         }
     }
 
@@ -174,10 +175,10 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         for (int i = 0; i < answer.length(); i++) {
             if (jumbledCharacters.get(i) == ' ') {
-                final TextView emptyTextView = generateEmptyTextView();
+                final com.rey.material.widget.Button emptyTextView = generateEmptyTextView();
                 answerRow.addView(emptyTextView);
             } else {
-                final TextView answerTV = generateBlanksTextView(i);
+                final com.rey.material.widget.Button answerTV = generateBlanksTextView(i);
                 final int m = i;
                 answerTV.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -185,6 +186,7 @@ public class QuestionWordFragment extends QuestionsFragment {
                         if (isUIVisibleToUser) {
                             putThisCharacterBackToOptionsRow(m);
                             setUpBlanksAndRows();
+                            SoundManager.playPadCharacterSound(getActivity());
                         }
                     }
                 });
@@ -194,7 +196,7 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         for (int i = 0; i < answerPadCharacters.length() / 2; i++) {
             final int m = i;
-            final TextView answerTV = generateFilledTextView(i);
+            final com.rey.material.widget.Button answerTV = generateFilledTextView(i);
 
             answerTV.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -202,6 +204,7 @@ public class QuestionWordFragment extends QuestionsFragment {
                     if (isUIVisibleToUser) {
                         addThisCharacterToAnswerRow(answer.length() + m);
                         setUpBlanksAndRows();
+                        SoundManager.playPadCharacterSound(getActivity());
                         isAnsweredCorrectly();
                     }
                 }
@@ -211,7 +214,7 @@ public class QuestionWordFragment extends QuestionsFragment {
         }
 
         for (int i = answerPadCharacters.length() / 2; i < answerPadCharacters.length(); i++) {
-            final TextView answerTV = generateFilledTextView(i);
+            final com.rey.material.widget.Button answerTV = generateFilledTextView(i);
             final int m = i;
 
             answerTV.setOnClickListener(new View.OnClickListener() {
@@ -220,6 +223,7 @@ public class QuestionWordFragment extends QuestionsFragment {
                     if (isUIVisibleToUser) {
                         addThisCharacterToAnswerRow(answer.length() + m);
                         setUpBlanksAndRows();
+                        SoundManager.playPadCharacterSound(getActivity());
                         isAnsweredCorrectly();
                     }
                 }
@@ -263,13 +267,12 @@ public class QuestionWordFragment extends QuestionsFragment {
             int next = mCallback.unlockNextQuestion(CATEGORY);
             mCallback.showCorrectAnswerFeedback(next);
             mCallback.refreshAdapter();
-        }
-        else mCallback.showCorrectAnswerFeedback(-1);
+        } else mCallback.showCorrectAnswerFeedback(-1);
         //Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private TextView generateBlanksTextView(int i) {
+    private com.rey.material.widget.Button generateBlanksTextView(int i) {
 
         int screen = getScreenWidth();
         int tvMargin = 2;
@@ -278,9 +281,10 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         tvWidth = tvWidth > tvMaxWidth ? tvMaxWidth : tvWidth;
 
-        final TextView answerTV = new TextView(getActivity());
+        final com.rey.material.widget.Button answerTV = new com.rey.material.widget.Button(getActivity());
+
         answerTV.setText("" + jumbledCharacters.get(i));
-        answerTV.setTextSize(tvWidth / 2);
+        answerTV.setTextSize((float) (((float) tvWidth) / 1.5));
         answerTV.setTextColor(Color.BLACK);
         answerTV.setBackgroundResource(R.drawable.circle_border);
         answerTV.setGravity(Gravity.CENTER);
@@ -288,19 +292,20 @@ public class QuestionWordFragment extends QuestionsFragment {
         layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);
         answerTV.setLayoutParams(layoutParams);
         answerTV.setGravity(Gravity.CENTER);
+        answerTV.applyStyle(R.style.PadCharacterButtonStyle);
 
         return answerTV;
     }
 
-    private TextView generateFilledTextView(int i) {
+    private com.rey.material.widget.Button generateFilledTextView(int i) {
         int screen = getScreenWidth();
         int tvMargin = 2;
         int tvWidth = (screen / (answerPadCharacters.length() / 2)) - (2 * tvMargin);
 
-        final TextView answerTV = new TextView(getActivity());
+        com.rey.material.widget.Button answerTV = new com.rey.material.widget.Button(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(answer.length() + i));
-        answerTV.setTextSize(tvWidth / 2);
+        answerTV.setTextSize((float) (((float) tvWidth) / 1.5));
         answerTV.setTextColor(Color.WHITE);
         answerTV.setBackgroundResource(R.drawable.circle_filled);
         answerTV.setLayoutParams(new ViewGroup.LayoutParams(tvWidth, tvWidth));
@@ -308,11 +313,12 @@ public class QuestionWordFragment extends QuestionsFragment {
         layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);
         answerTV.setLayoutParams(layoutParams);
         answerTV.setGravity(Gravity.CENTER);
+        answerTV.applyStyle(R.style.PadCharacterButtonStyle);
 
         return answerTV;
     }
 
-    private TextView generateEmptyTextView() {
+    private com.rey.material.widget.Button generateEmptyTextView() {
 
         int screen = getScreenWidth();
         int tvMargin = 2;
@@ -321,7 +327,7 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         tvWidth = tvWidth > tvMaxWidth ? tvMaxWidth : tvWidth;
 
-        final TextView blankTV = new TextView(getActivity());
+        com.rey.material.widget.Button blankTV = new com.rey.material.widget.Button(getActivity());
         blankTV.setText(" ");
         blankTV.setBackgroundResource(0);
         blankTV.setTextSize(tvWidth / 2);
@@ -343,70 +349,6 @@ public class QuestionWordFragment extends QuestionsFragment {
         int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
 
         return size.x - 4 * px;
-    }
-
-    public void lockQuestionIfRequired() {
-        //Log.i("question ", answer);
-        Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION, CATEGORY));
-        switch (GenericAnswerDetails.getStatus(POSITION, CATEGORY)) {
-            case Constants.UNAVAILABLE:
-                Log.i("textcard", "unavailable");
-                //mCallback.setIsQuestionLocked(true);
-                //ImageView lock = (ImageView) findViewById(R.id.lock_full_image);
-                //lock.setVisibility(View.VISIBLE);
-                ImageView lock = new ImageView(getActivity());
-                FrameLayout.LayoutParams layoutParams = new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
-                        , ViewGroup.LayoutParams.MATCH_PARENT);
-                lock.setLayoutParams(layoutParams);
-                lock.setId(R.id.lockImageId);
-                lock.setImageResource(R.drawable.lock_flat);
-                lock.setBackgroundColor(getResources().getColor(R.color.white));
-                lock.setScaleType(ImageView.ScaleType.CENTER);
-                lock.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (isUIVisibleToUser) {
-                            View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
-                            //expand the character dialog only if it is not previously visible
-                            if (characterDialog.getVisibility() == View.GONE) {
-                                mCallback.showCharacterUnlockDialog();
-                                mCallback.setupCharacterUnlockDialog();
-                            }
-                        }
-                    }
-                });
-                cardContent.addView(lock, cardContent.getChildCount());
-                break;
-            case Constants.INCORRECT:
-                //mCallback.setIsQuestionLocked(true);
-                ImageView options_lock = new ImageView(getActivity());
-                RelativeLayout.LayoutParams layoutParams1 = new android.widget.RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
-                        , ViewGroup.LayoutParams.MATCH_PARENT);
-                layoutParams1.addRule(RelativeLayout.BELOW, R.id.textAreaScroller);
-                options_lock.setLayoutParams(layoutParams1);
-                options_lock.setId(R.id.lockImageId + POSITION);
-                options_lock.setImageResource(R.drawable.lock_flat);
-                options_lock.setBackgroundColor(getResources().getColor(R.color.white));
-                options_lock.setScaleType(ImageView.ScaleType.CENTER);
-                options_lock.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (isUIVisibleToUser) {
-                            View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
-                            //expand the character dialog only if it is not previously visible
-                            if (characterDialog.getVisibility() == View.GONE) {
-                                mCallback.showCharacterUnlockDialog();
-                                mCallback.setupCharacterUnlockDialog();
-                            }
-                        }
-                    }
-                });
-                cardContent.addView(options_lock, cardContent.getChildCount());
-                break;
-            default:
-                Log.i("unlock", " now");
-                unlockQuestion(cardContent);
-        }
     }
 
     @Override

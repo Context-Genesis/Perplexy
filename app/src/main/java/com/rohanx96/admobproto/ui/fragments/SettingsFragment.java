@@ -19,6 +19,7 @@ import com.kyleduo.switchbutton.SwitchButton;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.utils.Constants;
+import com.rohanx96.admobproto.utils.SoundManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,12 +53,14 @@ public class SettingsFragment extends Fragment {
         Typeface typeFace = Typeface.createFromAsset(getActivity().getAssets(), "tagus.ttf");
         TextView heading = (TextView) rootView.findViewById(R.id.settings_tv_heading);
         heading.setTypeface(typeFace);
+        setupSoundSwitch();
         return rootView;
     }
 
-    @OnClick(R.id.switchButton)
-    public void onClick_volume() {
+    public void setupSoundSwitch() {
+        SoundManager.playSwipeSound(getActivity());
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        volume.setChecked(pref.getBoolean(Constants.VOLUME, true));
         final SharedPreferences.Editor editor = pref.edit();
         volume.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -73,6 +76,7 @@ public class SettingsFragment extends Fragment {
 
     @OnClick(R.id.settings_reset)
     public void onClick_reset() {
+        SoundManager.playButtonClickSound(getActivity());
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
         new AlertDialog.Builder(getContext())
                 .setMessage("All your progress will be lost. Are you sure?")
@@ -101,6 +105,7 @@ public class SettingsFragment extends Fragment {
     @OnClick(R.id.settings_info)
     public void onClick_info() {
         // TODO: MORE INFO ACTIVITY
+        SoundManager.playButtonClickSound(getActivity());
         Toast.makeText(getContext(), "A new activity", Toast.LENGTH_SHORT).show();
     }
 }

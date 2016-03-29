@@ -1,14 +1,10 @@
 package com.rohanx96.admobproto.ui;
 
-import android.Manifest;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +24,7 @@ import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
 import com.rohanx96.admobproto.utils.ShareQuestion;
+import com.rohanx96.admobproto.utils.SoundManager;
 
 import java.util.ArrayList;
 
@@ -52,7 +49,7 @@ public class CharacterHelper {
      * by Dhruv
      */
 
-    public void setupCharacterDialog(int CATEGORY, final int mCurrentPage) {
+    public void setupCharacterDialog(int CATEGORY, final int mCurrentPage, final Context context) {
         // TODO: Add share intents for whatsapp, facebook Dhruv
         GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, CATEGORY, mCurrentPage);
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(CATEGORY);
@@ -95,6 +92,7 @@ public class CharacterHelper {
                     Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
                     confirmhint.startAnimation(in);
                     confirmhint.setVisibility(View.VISIBLE);
+                    SoundManager.playButtonClickSound(context);
                 }
             }
         });
@@ -126,6 +124,7 @@ public class CharacterHelper {
                     Toast.makeText(mParentActivity, "Donot have enough coins",
                             Toast.LENGTH_LONG).show();
                 }
+                SoundManager.playButtonClickSound(context);
             }
         });
 
@@ -136,6 +135,7 @@ public class CharacterHelper {
                 Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
                 showhint.startAnimation(in);
                 showhint.setVisibility(View.VISIBLE);
+                SoundManager.playButtonClickSound(context);
             }
         });
 
@@ -167,6 +167,7 @@ public class CharacterHelper {
                     Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
                     confirmsolution.startAnimation(in);
                     confirmsolution.setVisibility(View.VISIBLE);
+                    SoundManager.playButtonClickSound(context);
                 }
             }
         });
@@ -192,11 +193,14 @@ public class CharacterHelper {
                         coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
                     }
                     solutionprice.setText("0");
+                    SoundManager.playButtonClickSound(context);
                 } else {
                     animateAdView(CHARACTER_TYPE_UNLOCKED);
                     Toast.makeText(mParentActivity, "Donot have enough coins",
                             Toast.LENGTH_LONG).show();
+                    SoundManager.playButtonClickSound(context);
                 }
+
             }
         });
 
@@ -208,6 +212,7 @@ public class CharacterHelper {
                 Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
                 showsolution.startAnimation(in);
                 showsolution.setVisibility(View.VISIBLE);
+                SoundManager.playButtonClickSound(context);
             }
         });
 
@@ -224,10 +229,12 @@ public class CharacterHelper {
                     ansDetails.get(mCurrentPage).bookmarked = true;
                     ansDetails.get(mCurrentPage).save();
                     favourite.setBackgroundResource(R.drawable.favourite_filled);  // color
+                    SoundManager.playButtonClickSound(context);
                 } else {
                     ansDetails.get(mCurrentPage).bookmarked = false;
                     ansDetails.get(mCurrentPage).save();
                     favourite.setBackgroundResource(R.drawable.favorite);
+                    SoundManager.playButtonClickSound(context);
                 }
             }
         });
@@ -244,6 +251,7 @@ public class CharacterHelper {
                         ShareQuestion.shareImageWhatsapp(mParentActivity);
                     }
                 }, 600);
+                SoundManager.playButtonClickSound(context);
             }
         });
 
@@ -258,11 +266,12 @@ public class CharacterHelper {
                         ShareQuestion.shareImageFacebook(mParentActivity);
                     }
                 }, 600);
+                SoundManager.playButtonClickSound(context);
             }
         });
     }
 
-    public void setupCharacterUnlockDialog(final int category, final int currentPage) {
+    public void setupCharacterUnlockDialog(final int category, final int currentPage, final Context context) {
         int status = GenericAnswerDetails.getStatus(currentPage + 1, category);
         int unlockPriceValue = Constants.UNLOCK_UNAVAILABLE_PRICE;
 
@@ -282,6 +291,7 @@ public class CharacterHelper {
                 Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
                 confirmUnlock.startAnimation(in);
                 confirmUnlock.setVisibility(View.VISIBLE);
+                SoundManager.playButtonClickSound(context);
             }
         });
 
@@ -305,10 +315,12 @@ public class CharacterHelper {
                     else
                         Coins.unlock_unavailable(mParentActivity);
                     coins_display.setText(String.format("%d", coins - finalUnlockPriceValue));
+                    SoundManager.playButtonClickSound(context);
                 } else {
                     animateAdView(CHARACTER_TYPE_LOCKED);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
+                    SoundManager.playButtonClickSound(context);
                 }
             }
         });
@@ -321,11 +333,12 @@ public class CharacterHelper {
                 Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
                 unlock.startAnimation(in);
                 unlock.setVisibility(View.VISIBLE);
+                SoundManager.playButtonClickSound(context);
             }
         });
     }
 
-    public void setupCorrectAnswerFeedback(final int nextQuestion) {
+    public void setupCorrectAnswerFeedback(final int nextQuestion, final Context context) {
         if (nextQuestion != -1) {
             TextView nextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_next_question);
             nextLevel.setText(String.format("Question %d is now unlocked", nextQuestion));
@@ -341,6 +354,7 @@ public class CharacterHelper {
                 public void onClick(View v) {
                     if (mParentActivity instanceof QuestionsActivity)
                         ((QuestionsActivity) mParentActivity).gotoQuestion(nextQuestion);
+                    SoundManager.playButtonClickSound(context);
                 }
             });
         } else {
@@ -356,12 +370,13 @@ public class CharacterHelper {
                 public void onClick(View v) {
                     if (mParentActivity instanceof QuestionsActivity)
                         ((QuestionsActivity) mParentActivity).gotoQuestion(nextQuestion);
+                    SoundManager.playButtonClickSound(context);
                 }
             });
         }
     }
 
-    public void setupIncorrectAnswerFeedback(final int category, final int currentPage) {
+    public void setupIncorrectAnswerFeedback(final int category, final int currentPage, final Context context) {
         final GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, category, currentPage);
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(category);
 
@@ -376,6 +391,7 @@ public class CharacterHelper {
                 Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
                 confirmUnlock.startAnimation(in);
                 confirmUnlock.setVisibility(View.VISIBLE);
+                SoundManager.playButtonClickSound(context);
             }
         });
 
@@ -395,10 +411,12 @@ public class CharacterHelper {
                     ((QuestionsCallback) mParentActivity).hideIncorrectAnswerFeedback();
                     Coins.unlock_incorrect(mParentActivity);
                     coins_display.setText(String.format("%d", coins - Constants.UNLOCK_INCORRECT_PRICE));
+                    SoundManager.playButtonClickSound(context);
                 } else {
                     animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
+                    SoundManager.playButtonClickSound(context);
                 }
             }
         });
@@ -410,6 +428,7 @@ public class CharacterHelper {
                 Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
                 unlock.startAnimation(in);
                 unlock.setVisibility(View.VISIBLE);
+                SoundManager.playButtonClickSound(context);
             }
         });
 
@@ -440,6 +459,7 @@ public class CharacterHelper {
                     Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
                     confirmsolution.startAnimation(in);
                     confirmsolution.setVisibility(View.VISIBLE);
+                    SoundManager.playButtonClickSound(context);
                 }
             }
         });
@@ -463,12 +483,14 @@ public class CharacterHelper {
                         ansDetails.get(currentPage).save();
                         Coins.solution_access(mParentActivity);
                         coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
+                        SoundManager.playButtonClickSound(context);
                     }
                     solutionprice.setText("0");
                 } else {
                     animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
                     Toast.makeText(mParentActivity, "Donot have enough coins",
                             Toast.LENGTH_LONG).show();
+                    SoundManager.playButtonClickSound(context);
                 }
             }
         });
@@ -481,6 +503,7 @@ public class CharacterHelper {
                 Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
                 showsolution.startAnimation(in);
                 showsolution.setVisibility(View.VISIBLE);
+                SoundManager.playButtonClickSound(context);
             }
         });
     }

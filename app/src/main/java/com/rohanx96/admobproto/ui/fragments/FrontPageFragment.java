@@ -3,6 +3,7 @@ package com.rohanx96.admobproto.ui.fragments;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.ui.MainActivity;
 import com.rohanx96.admobproto.ui.NumberLineActivity;
 import com.rohanx96.admobproto.utils.Constants;
+import com.rohanx96.admobproto.utils.SoundManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -53,8 +55,13 @@ public class FrontPageFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         setUpSeekBar();
-        gameSeekBar.setProgress(0);
-        gameType1.performClick();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                gameSeekBar.setProgress(0);
+                gameType1.performClick();
+            }
+        }, 500);
         Typeface typeFace = Typeface.createFromAsset(getActivity().getAssets(), "tagus.ttf");
         heading.setTypeface(typeFace);
         return rootView;
@@ -104,21 +111,25 @@ public class FrontPageFragment extends Fragment {
     @OnClick(R.id.game_1)
     public void onClickGame1() {
         gameSeekBar.setProgress(0);
+        SoundManager.playSwipeSound(getActivity());
     }
 
     @OnClick(R.id.game_2)
     public void onClickGame2() {
         gameSeekBar.setProgress(1);
+        SoundManager.playSwipeSound(getActivity());
     }
 
     @OnClick(R.id.game_3)
     public void onClickGame3() {
         gameSeekBar.setProgress(2);
+        SoundManager.playSwipeSound(getActivity());
     }
 
     @OnClick(R.id.game_4)
     public void onClickGame4() {
         gameSeekBar.setProgress(3);
+        SoundManager.playSwipeSound(getActivity());
     }
 
     @OnClick(R.id.home_play)
@@ -133,6 +144,8 @@ public class FrontPageFragment extends Fragment {
 
         /* This will stop the falling drawables animation when the activity has been left. Improves performance */
         ((MainActivity) getActivity()).getFallingDrawables().stopAnimation();
+
+        SoundManager.playButtonClickSound(getActivity());
     }
 
     private String getGameTypeText(int lvl) {

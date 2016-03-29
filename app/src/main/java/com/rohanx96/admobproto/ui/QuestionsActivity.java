@@ -35,6 +35,7 @@ import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
+import com.rohanx96.admobproto.utils.SoundManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -83,6 +84,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoundManager.playButtonClickSound(getApplicationContext());
                 onBackPressed();
             }
         });
@@ -210,7 +212,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     @Override
     public void setupCharacterDialog() {
         CharacterHelper characterHelper = new CharacterHelper(this);
-        characterHelper.setupCharacterDialog(CATEGORY, mCurrentPage);
+        characterHelper.setupCharacterDialog(CATEGORY, mCurrentPage, getApplicationContext());
     }
 
     @Override
@@ -309,7 +311,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     @Override
     public void setupCharacterUnlockDialog() {
         CharacterHelper characterHelper = new CharacterHelper(this);
-        characterHelper.setupCharacterUnlockDialog(CATEGORY, mCurrentPage);
+        characterHelper.setupCharacterUnlockDialog(CATEGORY, mCurrentPage,getApplicationContext());
 
     }
 
@@ -353,7 +355,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     @Override
     public void setupCorrectAnswerFeedback(int nextQuestionUnlocked) {
         CharacterHelper helper = new CharacterHelper(this);
-        helper.setupCorrectAnswerFeedback(nextQuestionUnlocked);
+        helper.setupCorrectAnswerFeedback(nextQuestionUnlocked, getApplicationContext());
     }
 
     @Override
@@ -424,7 +426,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     @Override
     public void setupIncorrectAnswerFeedback() {
         CharacterHelper helper = new CharacterHelper(this);
-        helper.setupIncorrectAnswerFeedback(CATEGORY,mCurrentPage);
+        helper.setupIncorrectAnswerFeedback(CATEGORY, mCurrentPage,getApplicationContext());
     }
 
     @Override
@@ -641,10 +643,10 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         });
     }
 
-    public void gotoQuestion(int questionNumber){
+    public void gotoQuestion(int questionNumber) {
         if (questionNumber == -1)
-            pager.setCurrentItem(mCurrentPage+1,true);
-        else pager.setCurrentItem(questionNumber - 1,true);
+            pager.setCurrentItem(mCurrentPage + 1, true);
+        else pager.setCurrentItem(questionNumber - 1, true);
     }
 
     public static int convertDip2Pixels(Context context, int dip) {
