@@ -33,6 +33,7 @@ import java.util.ArrayList;
 public class CharacterHelper {
     public static final int CHARACTER_TYPE_UNLOCKED = 0;
     public static final int CHARACTER_TYPE_LOCKED = 1;
+    public static final int CHARACTER_TYPE_FEEDBACK_INCORRECT = 2;
     SharedPreferences pref;
     AppCompatActivity mParentActivity;
     TextView coins_display;
@@ -136,7 +137,7 @@ public class CharacterHelper {
 
 
         showsolution = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_showsolution);
-        solution = (LinearLayout) mParentActivity.findViewById(R.id.char_q_clicked_ll_solution);
+        solution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_solution);
         solutionprice = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_solutionprice);
         confirmsolution = (LinearLayout) mParentActivity.findViewById(R.id.char_q_clicked_ll_confirmsolution);
         nosolution = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_nosolution);
@@ -319,8 +320,8 @@ public class CharacterHelper {
         });
     }
 
-    public void setupCorrectAnswerFeedback(final int nextQuestion){
-        if (nextQuestion!=-1) {
+    public void setupCorrectAnswerFeedback(final int nextQuestion) {
+        if (nextQuestion != -1) {
             TextView nextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_next_question);
             nextLevel.setText(String.format("Question %d is now unlocked", nextQuestion));
             nextLevel.setVisibility(View.VISIBLE);
@@ -334,11 +335,10 @@ public class CharacterHelper {
                 @Override
                 public void onClick(View v) {
                     if (mParentActivity instanceof QuestionsActivity)
-                        ((QuestionsActivity)mParentActivity).gotoQuestion(nextQuestion);
+                        ((QuestionsActivity) mParentActivity).gotoQuestion(nextQuestion);
                 }
             });
-        }
-        else{
+        } else {
             TextView nextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_next_question);
             nextLevel.setVisibility(View.GONE);
             TextView coinsEarned = (TextView) mParentActivity.findViewById(R.id.char_feedback_coins_earned);
@@ -356,12 +356,138 @@ public class CharacterHelper {
         }
     }
 
+    public void setupIncorrectAnswerFeedback(final int category, final int currentPage) {
+        final GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, category, currentPage);
+        final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(category);
+
+        TextView unlockPrice = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_unlock_price);
+        unlockPrice.setText(String.format("%d", Constants.UNLOCK_INCORRECT_PRICE));
+        final TextView unlock = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_tv_unlock);
+        final LinearLayout confirmUnlock = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_confirm_unlock);
+        unlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                unlock.setVisibility(View.GONE);
+                Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
+                confirmUnlock.startAnimation(in);
+                confirmUnlock.setVisibility(View.VISIBLE);
+            }
+        });
+
+        TextView yesUnlock = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_yes_unlock);
+        yesUnlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmUnlock.setVisibility(View.GONE);
+                unlock.setVisibility(View.VISIBLE);
+                pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+                final long coins = pref.getLong(Constants.PREF_COINS, 0);
+                if (coins - Constants.UNLOCK_INCORRECT_PRICE > 0) {
+                    GenericAnswerDetails.updateStatus(currentPage + 1, category, Constants.AVAILABLE);
+                    Log.i("unlock", "unlocking question");
+                    ((QuestionsCallback) mParentActivity).setIsQuestionLocked(false);
+                    ((QuestionsCallback) mParentActivity).refreshAdapter();
+                    ((QuestionsCallback) mParentActivity).hideIncorrectAnswerFeedback();
+                    Coins.unlock_incorrect(mParentActivity);
+                    coins_display.setText(String.format("%d", coins - Constants.UNLOCK_INCORRECT_PRICE));
+                } else {
+                    animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
+                    Toast.makeText(mParentActivity, "Do not have enough coins",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        TextView noUnlock = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_no_unlock);
+        noUnlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmUnlock.setVisibility(View.GONE);
+                Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
+                unlock.startAnimation(in);
+                unlock.setVisibility(View.VISIBLE);
+            }
+        });
+
+        final TextView showsolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_showsolution);
+        LinearLayout solution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_solution);
+        final TextView solutionprice = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_solutionprice);
+        final LinearLayout confirmsolution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_confirmsolution);
+        TextView nosolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_nosolution);
+        TextView yessolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_yessolution);
+        final TextView showhiddensolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_showhiddensolution);
+
+        showsolution.setVisibility(View.VISIBLE);
+        confirmsolution.setVisibility(View.GONE);
+        showhiddensolution.setVisibility(View.GONE);
+
+        showhiddensolution.setText(question.answer);
+        if (ansDetails.get(currentPage).answer_displayed == true) {
+            solutionprice.setText("0");
+        } else {
+            solutionprice.setText(Constants.SOLUTION_PRICE + "");
+        }
+
+        showsolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (showhiddensolution.getVisibility() == View.GONE) {
+                    showsolution.setVisibility(View.GONE);
+                    Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
+                    confirmsolution.startAnimation(in);
+                    confirmsolution.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        yessolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmsolution.setVisibility(View.GONE);
+                showsolution.setVisibility(View.VISIBLE);
+                pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+                long coins = pref.getLong(Constants.PREF_COINS, 0);
+                if (coins - Integer.parseInt(solutionprice.getText().toString()) >= 0) {
+                    showhiddensolution.setVisibility(View.INVISIBLE);
+                    Animation in = AnimationUtils.loadAnimation(mParentActivity, R.anim.scale_y_downards);
+                    showhiddensolution.startAnimation(in);
+                    showhiddensolution.setVisibility(View.VISIBLE);
+                    showhiddensolution.startAnimation(in);
+
+                    if (!ansDetails.get(currentPage).answer_displayed) {
+                        ansDetails.get(currentPage).answer_displayed = true;
+                        ansDetails.get(currentPage).save();
+                        Coins.solution_access(mParentActivity);
+                        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
+                    }
+                    solutionprice.setText("0");
+                } else {
+                    animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
+                    Toast.makeText(mParentActivity, "Donot have enough coins",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+        nosolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmsolution.setVisibility(View.GONE);
+                Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
+                showsolution.startAnimation(in);
+                showsolution.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
     public void animateAdView(int type) {
         View adView = null;
         if (type == CHARACTER_TYPE_UNLOCKED)
             adView = mParentActivity.findViewById(R.id.char_q_clicked_ad_video);
         else if (type == CHARACTER_TYPE_LOCKED)
             adView = mParentActivity.findViewById(R.id.char_unlock_clicked_ad_video);
+        else if (type == CHARACTER_TYPE_FEEDBACK_INCORRECT)
+            adView = mParentActivity.findViewById(R.id.char_feedback_incorrect_ad_video);
         if (adView != null) {
             ObjectAnimator animationUpX = ObjectAnimator.ofFloat(adView, "scaleX", 1.0f, 1.1f);
             ObjectAnimator animatorUpY = ObjectAnimator.ofFloat(adView, "scaleY", 1.0f, 1.1f);

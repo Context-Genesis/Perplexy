@@ -241,6 +241,7 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
             }
             // Sets status of question locked in questionsActivity. Used to change the layout of character
             mCallback.setIsQuestionLocked(true);
+            mCallback.showIncorrectAnswerFeedback();
             lockQuestionIfRequired();
             Toast.makeText(getActivity(), "Answered Incorrectly!", Toast.LENGTH_SHORT).show();
             return false;

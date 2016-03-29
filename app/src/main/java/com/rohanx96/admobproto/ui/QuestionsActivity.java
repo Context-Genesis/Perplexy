@@ -151,8 +151,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 if (isCharacterDialogOpen) {
                     hideCharacterDialog();
                     hideCharacterUnlockDialog();
-                    hideCorrectAnswerFeedback();
                 }
+                hideCorrectAnswerFeedback();
+                hideIncorrectAnswerFeedback();
                 isLocked = (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT)
                         || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                 Log.i("lock status ", " position " + mCurrentPage + 1 + " " + isLocked);
@@ -380,7 +381,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             characterDialog.startAnimation(scaleAnimation);
         }
         setupCorrectAnswerFeedback(nextQuestion);
-        toggleIsCharacterOpen();
+        //toggleIsCharacterOpen();
     }
 
     @Override
@@ -416,8 +417,79 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 characterDialog.setVisibility(View.GONE);
                 characterDialog.startAnimation(scaleAnimation);
             }
-            toggleIsCharacterOpen();
         }
+        //toggleIsCharacterOpen();
+    }
+
+    @Override
+    public void setupIncorrectAnswerFeedback() {
+        CharacterHelper helper = new CharacterHelper(this);
+        helper.setupIncorrectAnswerFeedback(CATEGORY,mCurrentPage);
+    }
+
+    @Override
+    public void showIncorrectAnswerFeedback() {
+        final View characterDialog = findViewById(R.id.questions_activity_character_feedback_incorrect);
+        /* Animation for post Lollipop devices*/
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            characterDialog.post(new Runnable() {
+                @Override
+                public void run() {
+                    int cx = characterDialog.getWidth() / 2;
+                    int cy = characterDialog.getHeight();
+                    int radius = characterDialog.getHeight();
+
+                    Animator animator = ViewAnimationUtils.createCircularReveal(characterDialog, cx, cy, 0, radius);
+                    animator.start();
+                    characterDialog.setVisibility(View.VISIBLE);
+                }
+            });
+        } else {
+            ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
+            scaleAnimation.setDuration(500);
+            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+            characterDialog.setVisibility(View.VISIBLE);
+            characterDialog.startAnimation(scaleAnimation);
+        }
+        setupIncorrectAnswerFeedback();
+        //toggleIsCharacterOpen();
+    }
+
+    @Override
+    public void hideIncorrectAnswerFeedback() {
+        final View characterDialog = findViewById(R.id.questions_activity_character_feedback_incorrect);
+        // This will prevent running of animation when hiding not visible dialog.
+        // This helps because we can now call this method even if the view is not visible
+        if (characterDialog.getVisibility() == View.VISIBLE) {
+            /* Animation for post Lollipop devices */
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                characterDialog.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int cx = characterDialog.getWidth() / 2;
+                        int cy = characterDialog.getHeight();
+                        int radius = characterDialog.getHeight();
+
+                        Animator animator = ViewAnimationUtils.createCircularReveal(characterDialog, cx, cy, radius, 0);
+                        animator.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                characterDialog.setVisibility(View.GONE);
+                            }
+                        });
+                        animator.start();
+                    }
+                });
+            } else {
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
+                scaleAnimation.setDuration(500);
+                scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                characterDialog.setVisibility(View.GONE);
+                characterDialog.startAnimation(scaleAnimation);
+            }
+        }
+        //toggleIsCharacterOpen();
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {

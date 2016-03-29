@@ -19,4 +19,7 @@ public interface QuestionsCallback {
     void setupCorrectAnswerFeedback(int nextQuestionUnlocked);
     void showCorrectAnswerFeedback(int nextQuestion);
     void hideCorrectAnswerFeedback();
+    void setupIncorrectAnswerFeedback();
+    void showIncorrectAnswerFeedback();
+    void hideIncorrectAnswerFeedback();
 }

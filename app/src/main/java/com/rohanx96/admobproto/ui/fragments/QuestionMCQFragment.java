@@ -297,6 +297,7 @@ public class QuestionMCQFragment extends QuestionsFragment {
                 mCallback.setIsQuestionLocked(true);
                 lockQuestionIfRequired();
             }
+            mCallback.showIncorrectAnswerFeedback();
             Toast.makeText(getActivity(), "Clicked option " + check + " INCORRECT", Toast.LENGTH_SHORT).show();
         }
     }
