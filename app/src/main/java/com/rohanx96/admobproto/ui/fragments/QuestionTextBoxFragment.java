@@ -237,9 +237,11 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
 
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
-                mCallback.unlockNextQuestion(CATEGORY);
+                int next = mCallback.unlockNextQuestion(CATEGORY);
+                mCallback.showCorrectAnswerFeedback(next);
                 mCallback.refreshAdapter();
             }
+            else mCallback.showCorrectAnswerFeedback(-1);
             //Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_SHORT).show();
             return true;
         } else {
@@ -252,6 +254,7 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
             }
             // Sets status of question locked in questionsActivity. Used to change the layout of character
             mCallback.setIsQuestionLocked(true);
+            mCallback.showIncorrectAnswerFeedback();
             lockQuestionIfRequired();
             Toast.makeText(getActivity(), "Answered Incorrectly!", Toast.LENGTH_SHORT).show();
             return false;

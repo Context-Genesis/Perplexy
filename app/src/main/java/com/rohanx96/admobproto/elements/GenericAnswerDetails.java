@@ -58,7 +58,7 @@ public class GenericAnswerDetails extends SugarRecord {
          * answer : false
          * number_incorrect : 0
          */
-
+        GenericAnswerDetails.deleteAll(GenericAnswerDetails.class);
         ArrayList<GenericQuestion> allQuestions = new ArrayList<>();
         allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_RIDDLE));
         allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
@@ -144,10 +144,11 @@ public class GenericAnswerDetails extends SugarRecord {
     }
 
     /** This unlocks the next question to be unlocked for a given category */
-    public static void unlockNextQuestion(int category){
+    public static int unlockNextQuestion(int category){
         GenericAnswerDetails nextQuestion = getFirstLocked(category);
         nextQuestion.status = Constants.AVAILABLE;
         nextQuestion.save();
+        return nextQuestion.question_number;
     }
 
     public static void printAll() {

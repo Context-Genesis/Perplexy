@@ -174,9 +174,11 @@ public class QuestionMCQFragment extends QuestionsFragment {
 
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
-                mCallback.unlockNextQuestion(CATEGORY);
+                int next = mCallback.unlockNextQuestion(CATEGORY);
+                mCallback.showCorrectAnswerFeedback(next);
                 mCallback.refreshAdapter();
             }
+            else mCallback.showCorrectAnswerFeedback(-1);
             //Toast.makeText(getActivity(), "Clicked option " + check + " CORRECT", Toast.LENGTH_SHORT).show();
 
         } else {
@@ -192,6 +194,7 @@ public class QuestionMCQFragment extends QuestionsFragment {
                 mCallback.setIsQuestionLocked(true);
                 lockQuestionIfRequired();
             }
+            mCallback.showIncorrectAnswerFeedback();
             Toast.makeText(getActivity(), "Clicked option " + check + " INCORRECT", Toast.LENGTH_SHORT).show();
         }
     }
