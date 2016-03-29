@@ -6,6 +6,8 @@ package com.rohanx96.admobproto.utils;
 
 public class Constants {
 
+    public static final String VOLUME = "volume";
+
     public static final String JSON_SEQUENCES_FILE = "sequences.json";
     public static final String JSON_RIDDLES_FILE = "riddles.json";
     public static final String JSON_LOGIC_FILE = "logic.json";

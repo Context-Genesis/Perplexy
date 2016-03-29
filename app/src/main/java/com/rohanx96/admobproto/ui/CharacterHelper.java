@@ -1,10 +1,14 @@
 package com.rohanx96.admobproto.ui;
 
+import android.Manifest;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -236,6 +240,7 @@ public class CharacterHelper {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+
                         ShareQuestion.shareImageWhatsapp(mParentActivity);
                     }
                 }, 600);

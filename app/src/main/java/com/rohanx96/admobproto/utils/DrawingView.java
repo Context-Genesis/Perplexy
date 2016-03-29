@@ -1,22 +1,34 @@
 package com.rohanx96.admobproto.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
-import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
+import com.rohanx96.admobproto.R;
+import com.rohanx96.admobproto.ui.QuestionsActivity;
 
 /**
  * Created by bhutanidhruv16 on 24-Mar-16.
  */
 
+
 public class DrawingView extends View {
 
+    public static Paint mPaint;
     public int width;
     public int height;
     private Bitmap mBitmap;
@@ -26,6 +38,107 @@ public class DrawingView extends View {
     Context context;
     private Paint circlePaint;
     private Path circlePath;
+
+    static RelativeLayout canvas_main;
+    RelativeLayout canvas_screen;
+    static ImageView canvas_cancel;
+    static ImageView pen;
+    static ImageView eraser;
+    static ImageView refresh;
+    static int eraser_s = 0;
+    static int pen_s = 0;
+
+    public static void setUpCanvas(final Context context, int questionHeight) {
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int height = displaymetrics.heightPixels;
+        int width = displaymetrics.widthPixels;
+
+        // TODO: Set expanded height such that anything below options is covered
+        final DialogPlus dialog = DialogPlus.newDialog(context)
+                .setGravity(Gravity.BOTTOM)
+                .setExpanded(true, height - questionHeight)                        // Change here
+                .setOverlayBackgroundResource(Color.TRANSPARENT)
+                .setContentHolder(new ViewHolder(R.layout.dialog_canvas))
+                .setContentWidth(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setMargin(QuestionsActivity.convertDip2Pixels(context, 16), 0, QuestionsActivity.convertDip2Pixels(context, 16), QuestionsActivity.convertDip2Pixels(context, 16))
+                .create();
+        dialog.show();
+
+        View dialogView = dialog.getHolderView();
+        canvas_main = (RelativeLayout) dialogView.findViewById(R.id.canvas_main);
+        pen = (ImageView) dialogView.findViewById(R.id.canvas_pen);
+        eraser = (ImageView) dialogView.findViewById(R.id.canvas_eraser);
+        refresh = (ImageView) dialogView.findViewById(R.id.canvas_refresh);
+        canvas_cancel = (ImageView) dialogView.findViewById(R.id.canvas_cancel);
+
+        canvas_main.addView(new DrawingView(context));
+
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setDither(true);
+        mPaint.setColor(ContextCompat.getColor(context, R.color.color_pen));
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeJoin(Paint.Join.ROUND);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setStrokeWidth(3);
+
+        pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
+
+        eraser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPaint.setColor(ContextCompat.getColor(context, R.color.canvas_bg));
+                mPaint.setStrokeWidth(6);
+                if (eraser_s == 0) {
+                    pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
+                    eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
+                    eraser_s = 1;
+                    pen_s = 0;
+                }
+            }
+        });
+
+        pen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPaint.setColor(ContextCompat.getColor(context, R.color.color_pen));
+                mPaint.setStrokeWidth(3);
+                if (pen_s == 0) {
+                    pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
+                    eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
+                    pen_s = 1;
+                    eraser_s = 0;
+                }
+            }
+        });
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                canvas_main.removeAllViews();
+                canvas_main.addView(new DrawingView(context));
+
+                mPaint.setColor(ContextCompat.getColor(context, R.color.color_pen));
+                mPaint.setStrokeWidth(3);
+
+                pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
+                eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
+
+                eraser_s = 0;
+                pen_s = 1;
+            }
+        });
+
+        canvas_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
 
     public DrawingView(Context c) {
         super(c);
@@ -53,7 +166,7 @@ public class DrawingView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
-        canvas.drawPath(mPath, QuestionMCQFragment.mPaint);
+        canvas.drawPath(mPath, mPaint);
         canvas.drawPath(circlePath, circlePaint);
     }
 
@@ -84,7 +197,7 @@ public class DrawingView extends View {
         mPath.lineTo(mX, mY);
         circlePath.reset();
         // commit the path to our offscreen
-        mCanvas.drawPath(mPath, QuestionMCQFragment.mPaint);
+        mCanvas.drawPath(mPath, mPaint);
         // kill this so we don't double draw
         mPath.reset();
     }

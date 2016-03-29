@@ -123,6 +123,7 @@ public class MainActivity extends FragmentActivity {
             prefs.edit().putBoolean(Constants.FIRST_RUN, false).apply();
             SharedPreferences.Editor editor = prefs.edit();
             editor.putLong(Constants.PREF_COINS, Constants.INITIAL_COINS).apply();
+            editor.putBoolean(Constants.VOLUME, true).apply();
         }
     }
 

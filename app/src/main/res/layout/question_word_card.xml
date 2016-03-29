@@ -38,6 +38,15 @@
                     android:textStyle="bold" />
             </ScrollView>
 
+            <Button
+                android:id="@+id/word_canvas_pull"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_below="@id/textAreaScroller"
+                android:background="@drawable/palette" />
+
             <LinearLayout
                 android:id="@+id/q_card_word_ll_answerrow_q"
                 android:layout_width="match_parent"
