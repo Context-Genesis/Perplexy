@@ -16,6 +16,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kyleduo.switchbutton.SwitchButton;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.utils.Constants;
@@ -35,7 +36,7 @@ public class SettingsFragment extends Fragment {
     SharedPreferences.Editor editor;
 
     @Bind(R.id.switchButton)
-    Switch volume;
+    SwitchButton volume;
 
     @Bind(R.id.settings_reset)
     TextView reset;

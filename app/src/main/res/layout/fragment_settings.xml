@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorTransparent"
@@ -31,24 +32,22 @@
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
         android:textColor="@color/white" />
 
-    <Switch
+
+    <com.kyleduo.switchbutton.SwitchButton
         android:id="@+id/switchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/settings_sound_text"
         android:layout_alignParentRight="true"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:checked="true"
-        android:gravity="center_vertical"
-        android:switchMinWidth="40dp"
-        android:textOff=""
-        android:textOn=""
-        android:thumb="@drawable/circle_question_number_available"
-        android:track="@drawable/switch_track" />
+        app:kswBackDrawable="@drawable/switch_back"
+        app:kswBackMeasureRatio="2"
+        app:kswThumbDrawable="@drawable/switch_thumb"
+        app:kswThumbHeight="18dp"
+        app:kswThumbWidth="18dp" />
 
-    <!-- TODO: Add switch -->
     <TextView
         android:id="@+id/settings_reset"
         android:layout_width="wrap_content"
