@@ -256,7 +256,7 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         /*Check if entire row is completed. If it is, display animation if wrong*/
         if (isAnswerRowCompletelyFilled()) {
-            boolean isAnsweredCorrectly = false;
+            boolean isAnsweredCorrectly = true;
             for (int i = 0; i < answer.length(); i++) {
                 if (jumbledCharacters.get(i) != answer.charAt(i)) {
                     isAnsweredCorrectly = false;
@@ -324,7 +324,7 @@ public class QuestionWordFragment extends QuestionsFragment {
         final TextView answerTV = new TextView(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(i));
-        answerTV.setTextSize(tvWidth / 2);
+        answerTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, tvWidth / 2);
         answerTV.setTextColor(Color.BLACK);
         answerTV.setBackgroundResource(R.drawable.circle_border);
         answerTV.setGravity(Gravity.CENTER);
@@ -344,7 +344,7 @@ public class QuestionWordFragment extends QuestionsFragment {
         final TextView answerTV = new TextView(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(answer.length() + i));
-        answerTV.setTextSize(tvWidth / 2);
+        answerTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, tvWidth / 2);
         answerTV.setTextColor(Color.WHITE);
         answerTV.setBackgroundResource(R.drawable.circle_filled);
         answerTV.setLayoutParams(new ViewGroup.LayoutParams(tvWidth, tvWidth));
@@ -369,6 +369,7 @@ public class QuestionWordFragment extends QuestionsFragment {
         blankTV.setText(" ");
         blankTV.setBackgroundResource(0);
         blankTV.setTextSize(tvWidth / 2);
+        blankTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, tvWidth / 2);
         blankTV.setBackgroundResource(0);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(tvWidth, tvWidth);
         layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);

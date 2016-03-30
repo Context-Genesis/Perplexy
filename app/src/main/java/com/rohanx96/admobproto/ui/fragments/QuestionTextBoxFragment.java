@@ -273,7 +273,7 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
         TextView answerTV = new TextView(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(i));
-        answerTV.setTextSize(tvWidth / 2);
+        answerTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, tvWidth / 2);
         answerTV.setTextColor(Color.WHITE);
         answerTV.setBackgroundResource(R.drawable.circle_filled);
         answerTV.setLayoutParams(new ViewGroup.LayoutParams(tvWidth, tvWidth));
