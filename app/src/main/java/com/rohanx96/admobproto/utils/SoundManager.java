@@ -1,8 +1,9 @@
 package com.rohanx96.admobproto.utils;
 
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+
+import com.rohanx96.admobproto.R;
 
 import java.util.Random;
 
@@ -18,28 +19,21 @@ public class SoundManager {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
                 mediaPlayer.release();
-                mediaPlayer = new MediaPlayer();
             }
-            AssetFileDescriptor descriptor = null;
+
             /* Randomly chose one sound */
             switch (new Random().nextInt(3)) {
                 case 0:
-                    descriptor = context.getAssets().openFd("sounds/flick_a.ogg");
+                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_flick_a);
                     break;
                 case 1:
-                    descriptor = context.getAssets().openFd("sounds/flick_b.ogg");
+                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_flick_b);
                     break;
                 case 2:
-                    descriptor = context.getAssets().openFd("sounds/flick_c.ogg");
+                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_flick_c);
                     break;
             }
 
-            mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            descriptor.close();
-
-            mediaPlayer.prepare();
-            mediaPlayer.setVolume(1f, 1f);
-            mediaPlayer.setLooping(false);
             mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,26 +47,20 @@ public class SoundManager {
                 mediaPlayer.release();
                 mediaPlayer = new MediaPlayer();
             }
-            AssetFileDescriptor descriptor = null;
+            /* Randomly chose one sound */
             /* Randomly chose one sound */
             switch (new Random().nextInt(3)) {
                 case 0:
-                    descriptor = context.getAssets().openFd("sounds/click_a.ogg");
+                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_a);
                     break;
                 case 1:
-                    descriptor = context.getAssets().openFd("sounds/click_b.ogg");
+                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_b);
                     break;
                 case 2:
-                    descriptor = context.getAssets().openFd("sounds/click_c.ogg");
+                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
                     break;
             }
 
-            mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            descriptor.close();
-
-            mediaPlayer.prepare();
-            mediaPlayer.setVolume(1f, 1f);
-            mediaPlayer.setLooping(false);
             mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,26 +74,20 @@ public class SoundManager {
                 mediaPlayer.release();
                 mediaPlayer = new MediaPlayer();
             }
-            AssetFileDescriptor descriptor = null;
+            /* Randomly chose one sound */
             /* Randomly chose one sound */
             switch (new Random().nextInt(3)) {
                 case 0:
-                    descriptor = context.getAssets().openFd("sounds/click_a.ogg");
+                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_a);
                     break;
                 case 1:
-                    descriptor = context.getAssets().openFd("sounds/click_b.ogg");
+                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_b);
                     break;
                 case 2:
-                    descriptor = context.getAssets().openFd("sounds/click_c.ogg");
+                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
                     break;
             }
 
-            mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            descriptor.close();
-
-            mediaPlayer.prepare();
-            mediaPlayer.setVolume(1f, 1f);
-            mediaPlayer.setLooping(false);
             mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,14 +102,10 @@ public class SoundManager {
                 mediaPlayer.release();
                 mediaPlayer = new MediaPlayer();
             }
-            AssetFileDescriptor descriptor = context.getAssets().openFd("sounds/click_c.ogg");
 
-            mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            descriptor.close();
+            mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
 
-            mediaPlayer.prepare();
-            mediaPlayer.setVolume(1f, 1f);
-            mediaPlayer.setLooping(false);
+
             mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,14 +119,9 @@ public class SoundManager {
                 mediaPlayer.release();
                 mediaPlayer = new MediaPlayer();
             }
-            AssetFileDescriptor descriptor = context.getAssets().openFd("sounds/click_c.ogg");
 
-            mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            descriptor.close();
+            mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
 
-            mediaPlayer.prepare();
-            mediaPlayer.setVolume(1f, 1f);
-            mediaPlayer.setLooping(false);
             mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -162,15 +135,9 @@ public class SoundManager {
                 mediaPlayer.release();
                 mediaPlayer = new MediaPlayer();
             }
-            AssetFileDescriptor descriptor = null;
-            descriptor = context.getAssets().openFd("sounds/click_c.ogg");
 
-            mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            descriptor.close();
+            mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
 
-            mediaPlayer.prepare();
-            mediaPlayer.setVolume(1f, 1f);
-            mediaPlayer.setLooping(false);
             mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -184,21 +151,14 @@ public class SoundManager {
                 mediaPlayer.release();
                 mediaPlayer = new MediaPlayer();
             }
-            AssetFileDescriptor descriptor = null;
-            descriptor = context.getAssets().openFd("sounds/click_c.ogg");
 
-            mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            descriptor.close();
+            mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
 
-            mediaPlayer.prepare();
-            mediaPlayer.setVolume(1f, 1f);
-            mediaPlayer.setLooping(false);
             mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     public static void playBackClickSound(Context context) {
         try {
@@ -207,15 +167,9 @@ public class SoundManager {
                 mediaPlayer.release();
                 mediaPlayer = new MediaPlayer();
             }
-            AssetFileDescriptor descriptor = null;
-            descriptor = context.getAssets().openFd("sounds/click_c.ogg");
 
-            mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            descriptor.close();
+            mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
 
-            mediaPlayer.prepare();
-            mediaPlayer.setVolume(1f, 1f);
-            mediaPlayer.setLooping(false);
             mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();

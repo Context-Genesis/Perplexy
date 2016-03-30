@@ -34,5 +34,4 @@ dependencies {
     //above this version requires support library v23.2.0
     compile 'com.orhanobut:dialogplus:1.11@aar'
     compile 'com.kyleduo.switchbutton:library:1.3.4'
-    compile 'com.github.rey5137:material:1.2.2'
 }

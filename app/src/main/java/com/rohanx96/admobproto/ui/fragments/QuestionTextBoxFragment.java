@@ -189,7 +189,7 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
 
         for (int i = 0; i < answerPadCharacters.length() / 2; i++) {
             final int m = i;
-            final com.rey.material.widget.Button answerTV = generateFilledTextView(i);
+            final TextView answerTV = generateFilledTextView(i);
 
             answerTV.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -207,7 +207,7 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
         }
 
         for (int i = answerPadCharacters.length() / 2; i < answerPadCharacters.length(); i++) {
-            final com.rey.material.widget.Button answerTV = generateFilledTextView(i);
+            final TextView answerTV = generateFilledTextView(i);
             final int m = i;
 
             answerTV.setOnClickListener(new View.OnClickListener() {
@@ -265,12 +265,12 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
         }
     }
 
-    private com.rey.material.widget.Button generateFilledTextView(int i) {
+    private TextView generateFilledTextView(int i) {
         int screen = getScreenWidth();
         int tvMargin = 2;
         int tvWidth = (screen / (answerPadCharacters.length() / 2)) - (2 * tvMargin);
 
-        com.rey.material.widget.Button answerTV = new com.rey.material.widget.Button(getActivity());
+        TextView answerTV = new TextView(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(i));
         answerTV.setTextSize(tvWidth / 2);
@@ -281,7 +281,6 @@ public class QuestionTextBoxFragment extends QuestionsFragment {
         layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);
         answerTV.setLayoutParams(layoutParams);
         answerTV.setGravity(Gravity.CENTER);
-        answerTV.applyStyle(R.style.PadCharacterButtonStyle);
 
         return answerTV;
     }

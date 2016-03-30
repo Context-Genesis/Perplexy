@@ -13,6 +13,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -175,10 +177,10 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         for (int i = 0; i < answer.length(); i++) {
             if (jumbledCharacters.get(i) == ' ') {
-                final com.rey.material.widget.Button emptyTextView = generateEmptyTextView();
+                final TextView emptyTextView = generateEmptyTextView();
                 answerRow.addView(emptyTextView);
             } else {
-                final com.rey.material.widget.Button answerTV = generateBlanksTextView(i);
+                final TextView answerTV = generateBlanksTextView(i);
                 final int m = i;
                 answerTV.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -196,7 +198,7 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         for (int i = 0; i < answerPadCharacters.length() / 2; i++) {
             final int m = i;
-            final com.rey.material.widget.Button answerTV = generateFilledTextView(i);
+            final TextView answerTV = generateFilledTextView(i);
 
             answerTV.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -214,7 +216,7 @@ public class QuestionWordFragment extends QuestionsFragment {
         }
 
         for (int i = answerPadCharacters.length() / 2; i < answerPadCharacters.length(); i++) {
-            final com.rey.material.widget.Button answerTV = generateFilledTextView(i);
+            final TextView answerTV = generateFilledTextView(i);
             final int m = i;
 
             answerTV.setOnClickListener(new View.OnClickListener() {
@@ -251,11 +253,34 @@ public class QuestionWordFragment extends QuestionsFragment {
 
     public boolean isAnsweredCorrectly() {
         GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
-        for (int i = 0; i < answer.length(); i++) {
-            if (jumbledCharacters.get(i) != answer.charAt(i)) {
+
+        /*Check if entire row is completed. If it is, display animation if wrong*/
+        if (isAnswerRowCompletelyFilled()) {
+            boolean isAnsweredCorrectly = false;
+            for (int i = 0; i < answer.length(); i++) {
+                if (jumbledCharacters.get(i) != answer.charAt(i)) {
+                    isAnsweredCorrectly = false;
+                }
+            }
+            if (!isAnsweredCorrectly) {
+                /*Display animation and return false*/
+                final Animation animOvershoot = AnimationUtils.loadAnimation(getActivity(), R.anim.overshoot);
+
+                for (int i = 0; i < answerRow.getChildCount(); i++) {
+                    View v = answerRow.getChildAt(i);
+                    v.startAnimation(animOvershoot);
+                }
+
                 return false;
             }
+        } else {
+            for (int i = 0; i < answer.length(); i++) {
+                if (jumbledCharacters.get(i) != answer.charAt(i)) {
+                    return false;
+                }
+            }
         }
+
         // Coins and question should be unlocked when status is available. For correct status relevant coins and question have already
         // been unlocked. For incorrect and unavailable user should not be able to answer.
         if (details.status == Constants.AVAILABLE) {
@@ -267,12 +292,26 @@ public class QuestionWordFragment extends QuestionsFragment {
             int next = mCallback.unlockNextQuestion(CATEGORY);
             mCallback.showCorrectAnswerFeedback(next);
             mCallback.refreshAdapter();
-        } else mCallback.showCorrectAnswerFeedback(-1);
+        } else {
+            mCallback.showCorrectAnswerFeedback(-1);
+        }
         //Toast.makeText(getActivity(), "Answered Correctly!", Toast.LENGTH_LONG).show();
         return true;
     }
 
-    private com.rey.material.widget.Button generateBlanksTextView(int i) {
+    /*
+    *@return true if answer row is completely filled, else false
+     */
+    private boolean isAnswerRowCompletelyFilled() {
+        for (int i = 0; i < answer.length(); i++) {
+            if (jumbledCharacters.get(i) == '-') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private TextView generateBlanksTextView(int i) {
 
         int screen = getScreenWidth();
         int tvMargin = 2;
@@ -281,10 +320,11 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         tvWidth = tvWidth > tvMaxWidth ? tvMaxWidth : tvWidth;
 
-        final com.rey.material.widget.Button answerTV = new com.rey.material.widget.Button(getActivity());
+
+        final TextView answerTV = new TextView(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(i));
-        answerTV.setTextSize((float) (((float) tvWidth) / 1.5));
+        answerTV.setTextSize(tvWidth / 2);
         answerTV.setTextColor(Color.BLACK);
         answerTV.setBackgroundResource(R.drawable.circle_border);
         answerTV.setGravity(Gravity.CENTER);
@@ -292,20 +332,19 @@ public class QuestionWordFragment extends QuestionsFragment {
         layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);
         answerTV.setLayoutParams(layoutParams);
         answerTV.setGravity(Gravity.CENTER);
-        answerTV.applyStyle(R.style.PadCharacterButtonStyle);
 
         return answerTV;
     }
 
-    private com.rey.material.widget.Button generateFilledTextView(int i) {
+    private TextView generateFilledTextView(int i) {
         int screen = getScreenWidth();
         int tvMargin = 2;
         int tvWidth = (screen / (answerPadCharacters.length() / 2)) - (2 * tvMargin);
 
-        com.rey.material.widget.Button answerTV = new com.rey.material.widget.Button(getActivity());
+        final TextView answerTV = new TextView(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(answer.length() + i));
-        answerTV.setTextSize((float) (((float) tvWidth) / 1.5));
+        answerTV.setTextSize(tvWidth / 2);
         answerTV.setTextColor(Color.WHITE);
         answerTV.setBackgroundResource(R.drawable.circle_filled);
         answerTV.setLayoutParams(new ViewGroup.LayoutParams(tvWidth, tvWidth));
@@ -313,12 +352,11 @@ public class QuestionWordFragment extends QuestionsFragment {
         layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);
         answerTV.setLayoutParams(layoutParams);
         answerTV.setGravity(Gravity.CENTER);
-        answerTV.applyStyle(R.style.PadCharacterButtonStyle);
 
         return answerTV;
     }
 
-    private com.rey.material.widget.Button generateEmptyTextView() {
+    private TextView generateEmptyTextView() {
 
         int screen = getScreenWidth();
         int tvMargin = 2;
@@ -327,7 +365,7 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         tvWidth = tvWidth > tvMaxWidth ? tvMaxWidth : tvWidth;
 
-        com.rey.material.widget.Button blankTV = new com.rey.material.widget.Button(getActivity());
+        TextView blankTV = new TextView(getActivity());
         blankTV.setText(" ");
         blankTV.setBackgroundResource(0);
         blankTV.setTextSize(tvWidth / 2);
