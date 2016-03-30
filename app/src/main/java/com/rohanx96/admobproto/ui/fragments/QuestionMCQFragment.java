@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -168,6 +169,9 @@ public class QuestionMCQFragment extends QuestionsFragment {
                 details.save();
 
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
+                ImageView correctIndicator = (ImageView) getActivity().findViewById(R.id.questions_activity_correct_indicator);
+                correctIndicator.setImageResource(R.drawable.tick_green);
+
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
                 int next = mCallback.unlockNextQuestion(CATEGORY);
                 mCallback.showCorrectAnswerFeedback(next);
@@ -181,6 +185,9 @@ public class QuestionMCQFragment extends QuestionsFragment {
                 Coins.wrong_answer(getContext());
                 details.status = Constants.INCORRECT;
                 details.save();
+
+                ImageView correctIndicator = (ImageView) getActivity().findViewById(R.id.questions_activity_correct_indicator);
+                correctIndicator.setImageResource(R.drawable.cross);
 
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
