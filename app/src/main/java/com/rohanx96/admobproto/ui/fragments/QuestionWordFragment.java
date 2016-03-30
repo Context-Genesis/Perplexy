@@ -256,7 +256,7 @@ public class QuestionWordFragment extends QuestionsFragment {
 
         /*Check if entire row is completed. If it is, display animation if wrong*/
         if (isAnswerRowCompletelyFilled()) {
-            boolean isAnsweredCorrectly = false;
+            boolean isAnsweredCorrectly = true;
             for (int i = 0; i < answer.length(); i++) {
                 if (jumbledCharacters.get(i) != answer.charAt(i)) {
                     isAnsweredCorrectly = false;

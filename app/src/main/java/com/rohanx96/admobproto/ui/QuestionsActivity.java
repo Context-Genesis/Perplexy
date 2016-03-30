@@ -414,7 +414,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         }
         character.setImageResource(R.drawable.character_happy_open_128);
         setupCorrectAnswerFeedback(nextQuestion);
-        //toggleIsCharacterOpen();
+        toggleIsCharacterOpen();
     }
 
     @Override
@@ -450,9 +450,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 characterDialog.setVisibility(View.GONE);
                 characterDialog.startAnimation(scaleAnimation);
             }
+            toggleIsCharacterOpen();
         }
         character.setImageResource(R.drawable.character_happy_closed_128);
-        //toggleIsCharacterOpen();
     }
 
     @Override
@@ -487,7 +487,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         }
         character.setImageResource(R.drawable.character_shocked_128);
         setupIncorrectAnswerFeedback();
-        //toggleIsCharacterOpen();
+        toggleIsCharacterOpen();
     }
 
     @Override
@@ -523,9 +523,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 characterDialog.setVisibility(View.GONE);
                 characterDialog.startAnimation(scaleAnimation);
             }
+            toggleIsCharacterOpen();
         }
         character.setImageResource(R.drawable.character_happy_closed_128);
-        //toggleIsCharacterOpen();
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -667,8 +667,10 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                         } else {
                             if (isLocked) {
                                 hideCharacterUnlockDialog();
+                                hideIncorrectAnswerFeedback();
                             } else {
                                 hideCharacterDialog();
+                                hideCorrectAnswerFeedback();
                             }
                         }
                 }
