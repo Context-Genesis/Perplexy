@@ -17,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -286,6 +287,9 @@ public class QuestionWordFragment extends QuestionsFragment {
         if (details.status == Constants.AVAILABLE) {
             GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
             Coins.correct_answer(getContext());
+
+            ImageView correctIndicator = (ImageView) getActivity().findViewById(R.id.questions_activity_correct_indicator);
+            correctIndicator.setImageResource(R.drawable.tick_green);
 
             TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
             display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
