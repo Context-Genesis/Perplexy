@@ -430,7 +430,8 @@ public class QuestionWordFragment extends Fragment {
                         }
                     }
                 });
-                cardContent.addView(lock, cardContent.getChildCount());
+                cardContent.addView(lock, cardContent.getChildCount()-2);
+                canvas.setVisibility(View.GONE);
                 break;
             case Constants.INCORRECT:
                 //mCallback.setIsQuestionLocked(true);
@@ -439,7 +440,7 @@ public class QuestionWordFragment extends Fragment {
                         , ViewGroup.LayoutParams.MATCH_PARENT);
                 layoutParams1.addRule(RelativeLayout.BELOW, R.id.textAreaScroller);
                 options_lock.setLayoutParams(layoutParams1);
-                options_lock.setId(R.id.lockImageId + POSITION);
+                options_lock.setId(R.id.lockImageId);
                 options_lock.setImageResource(R.drawable.lock_flat);
                 options_lock.setBackgroundColor(getResources().getColor(R.color.white));
                 options_lock.setScaleType(ImageView.ScaleType.CENTER);
@@ -457,7 +458,8 @@ public class QuestionWordFragment extends Fragment {
                         }
                     }
                 });
-                cardContent.addView(options_lock, cardContent.getChildCount());
+                cardContent.addView(options_lock, cardContent.getChildCount() - 2);
+                canvas.setVisibility(View.GONE);
                 break;
         }
     }

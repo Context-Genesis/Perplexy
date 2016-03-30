@@ -266,7 +266,7 @@ public class QuestionMCQFragment extends Fragment {
                         }
                     }
                 });
-                cardContent.addView(lock, cardContent.getChildCount());
+                cardContent.addView(lock, cardContent.getChildCount()-1);
                 break;
             case Constants.INCORRECT:
                 //mCallback.setIsQuestionLocked(true);
@@ -293,7 +293,7 @@ public class QuestionMCQFragment extends Fragment {
                         }
                     }
                 });
-                cardContent.addView(options_lock, cardContent.getChildCount());
+                cardContent.addView(options_lock, cardContent.getChildCount()-1);
                 break;
         }
     }
