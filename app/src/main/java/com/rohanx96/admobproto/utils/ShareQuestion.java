@@ -2,6 +2,7 @@ package com.rohanx96.admobproto.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.facebook.share.model.SharePhotoContent;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 
 
@@ -26,11 +29,10 @@ import java.util.Date;
  */
 
 public class ShareQuestion {
-
+    public static final int REQUEST_WRITE_STORAGE = 112;
     static Bitmap bitmap;             // needed for FB
 
-    public static void shareImageWhatsapp(Activity activity) {
-        int REQUEST_WRITE_STORAGE = 112;
+    public static void shareImageWhatsapp(final Activity activity) {
         if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -38,9 +40,19 @@ public class ShareQuestion {
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(activity,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        REQUEST_WRITE_STORAGE);
+                android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(activity);
+                dialogBuilder.setMessage("The write external storage permission is required to save the screenshot of the question. " +
+                        "Kindly grant the permission when requested to use the share functionality")
+                        .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                ActivityCompat.requestPermissions(activity,
+                                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                        REQUEST_WRITE_STORAGE);
+                            }
+                        });
+                dialogBuilder.show();
                 // Show an expanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
@@ -58,8 +70,10 @@ public class ShareQuestion {
                 // result of the request.
             }
         }
-        Toast.makeText(activity, "Preparing for Share", Toast.LENGTH_LONG).show();
-        shareImage(activity);
+        else {
+            Toast.makeText(activity, "Preparing for Share", Toast.LENGTH_LONG).show();
+            shareImage(activity);
+        }
     }
 
 
@@ -86,10 +100,18 @@ public class ShareQuestion {
         v1.setDrawingCacheEnabled(true);
         bitmap = Bitmap.createBitmap(v1.getDrawingCache());
         v1.setDrawingCacheEnabled(false);
-        File imageFile = new File(mPath);
-
+        File imageFile = new File(Environment.getExternalStorageDirectory(),"/" + now + ".jpg");
+        if (!imageFile.exists()) {
+            Log.i("Sharing", "creating file");
+            try {
+                imageFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.e("Sharing",mPath);
         try {
-            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            FileOutputStream outputStream = new FileOutputStream(imageFile,true);
             int quality = 100;
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
             outputStream.flush();
