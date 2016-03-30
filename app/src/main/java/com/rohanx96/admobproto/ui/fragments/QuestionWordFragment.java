@@ -264,7 +264,7 @@ public class QuestionWordFragment extends QuestionsFragment {
             }
             if (!isAnsweredCorrectly) {
                 /*Display animation and return false*/
-                final Animation animOvershoot = AnimationUtils.loadAnimation(getActivity(), R.anim.overshoot);
+                final Animation animOvershoot = AnimationUtils.loadAnimation(getActivity(), R.anim.wobble);
 
                 for (int i = 0; i < answerRow.getChildCount(); i++) {
                     View v = answerRow.getChildAt(i);

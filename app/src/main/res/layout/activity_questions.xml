@@ -104,8 +104,8 @@
     <include
         android:id="@+id/questions_activity_character_feedback_correct"
         layout="@layout/character_correct_answer_feedback_dialog"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_above="@+id/questions_activity_bubble"
         android:layout_alignTop="@+id/questions_activity_pager"
         android:layout_marginBottom="16dp"
@@ -117,8 +117,8 @@
     <include
         android:id="@+id/questions_activity_character_feedback_incorrect"
         layout="@layout/character_incorrect_answer_feedback_dialog"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_above="@+id/questions_activity_bubble"
         android:layout_alignTop="@+id/questions_activity_pager"
         android:layout_marginBottom="16dp"
@@ -129,13 +129,13 @@
 
     <ImageView
         android:id="@+id/questions_activity_bubble"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom|center"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="10dp"
         android:elevation="7dp"
-        android:src="@drawable/char_3" />
+        android:src="@drawable/character_happy_closed_128" />
 
 </RelativeLayout>
