@@ -3,7 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_l_material">
+    android:background="#F0F0F0">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,91 +24,112 @@
             android:layout_gravity="center"
             card_view:cardCornerRadius="4dp">
 
-            <TextView
-                android:id="@+id/char_unlock_dialog_tv"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text=" Want to unlock this question? "
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
-                android:textColor="@color/grey"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:src="@drawable/hint" />
+
+                <TextView
+                    android:id="@+id/char_unlock_dialog_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Want to unlock this question? "
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold" />
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
 
-        <LinearLayout
-            android:id="@+id/char_unlock_ll_unlock"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="8dp">
-
-            <TextView
-                android:id="@+id/char_unlock_tv_unlock"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_gravity="center"
-                android:layout_weight="1.7"
-                android:gravity="left|center"
-                android:text="UNLOCK QUESTION"
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/blue_d_chambray" />
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            card_view:cardCornerRadius="4dp">
 
             <LinearLayout
-                android:id="@+id/char_unlock_ll_confirm_unlock"
+                android:id="@+id/char_unlock_ll_unlock"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_gravity="center"
-                android:layout_weight="1.7"
-                android:gravity="center"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:paddingTop="8dp">
 
                 <TextView
-                    android:id="@+id/char_unlock_no_unlock"
+                    android:id="@+id/char_unlock_tv_unlock"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="45dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="NO"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.7"
+                    android:gravity="left|center"
+                    android:text="Unlock Question"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                    android:textColor="@color/red_l_poppy" />
+                    android:textColor="@color/blue_d_chambray" />
+
+                <LinearLayout
+                    android:id="@+id/char_unlock_ll_confirm_unlock"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.7"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/char_unlock_no_unlock"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="NO"
+                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                        android:textColor="@color/red_l_poppy" />
+
+                    <TextView
+                        android:id="@+id/char_unlock_yes_unlock"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="YES"
+                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                        android:textColor="@color/green_l_carribean" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/char_unlock_yes_unlock"
+                    android:id="@+id/char_unlock_price"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="YES"
+                    android:layout_weight="4.9"
+                    android:gravity="right"
+                    android:text="200"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                    android:textColor="@color/green_l_carribean" />
+                    android:textColor="@color/blue_d_chambray" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="4.9"
+                    android:src="@drawable/coin_gold_silver" />
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/char_unlock_price"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_weight="4.9"
-                android:gravity="right"
-                android:text="200"
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/blue_d_chambray" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:layout_weight="4.9"
-                android:src="@drawable/coin_stack" />
-
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
 
         <TextView
             android:id="@+id/char_unlock_showhiddenunlock"
@@ -129,15 +150,25 @@
             android:layout_marginTop="8dp"
             card_view:cardCornerRadius="4dp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="5dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ads" />
 
                 <TextView
                     android:id="@+id/char_unlock_title_ad_unlock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:padding="8dp"
@@ -150,13 +181,20 @@
                     android:id="@+id/char_unlock_videoad_unlock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:paddingBottom="8dp"
-                    android:text="WATCH A VIDEO"
+                    android:text="Watch A Video"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/colorPrimary" />
-            </LinearLayout>
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"></LinearLayout>
+
     </LinearLayout>
 </ScrollView>

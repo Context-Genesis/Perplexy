@@ -44,6 +44,7 @@
             android:layout_width="22dp"
             android:layout_height="25dp"
             android:layout_alignLeft="@+id/db"
+            android:elevation="2dp"
             android:layout_marginLeft="8dp"
             android:src="@drawable/plain"
             android:visibility="gone" />

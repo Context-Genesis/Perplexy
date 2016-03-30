@@ -3,7 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="#F0F0F0">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,43 +25,68 @@
             android:layout_gravity="center"
             card_view:cardCornerRadius="4dp">
 
-            <TextView
-                android:id="@+id/char_feedback_title_text"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text=" Good. You got it right ! "
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
-                android:textColor="@color/grey"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:src="@drawable/hint" />
+
+                <TextView
+                    android:id="@+id/char_feedback_title_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text=" Good. You got it right ! "
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold" />
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/char_feedback_solution"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            android:layout_weight="1.7"
-            android:gravity="center|left"
-            android:padding="8dp"
-            android:text="SOLUTION"
-            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-            android:textColor="@color/orange_d_zest" />
-
-
-        <TextView
-            android:id="@+id/char_feedback_solution_details"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="8dp"
-            android:text="This is the solution. This could get real big and fuck the layout. Just like this"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/grey" />
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            card_view:cardCornerRadius="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/char_feedback_solution"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.7"
+                    android:gravity="center|left"
+                    android:padding="8dp"
+                    android:text="Solution"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/orange_d_zest" />
+
+                <TextView
+                    android:id="@+id/char_feedback_solution_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="This is the solution. This could get real big and fuck the layout. Just like this"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/grey" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/char_feedback_summary"
@@ -83,10 +108,11 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="Congratulations,"
+                    android:text="Congratulations"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textColor="@color/grey"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/char_feedback_coins_earned"
@@ -94,10 +120,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:paddingBottom="8dp"
                     android:text="You earned 100 coins"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/colorPrimary" />
+
                 <TextView
                     android:id="@+id/char_feedback_next_question"
                     android:layout_width="wrap_content"
@@ -109,6 +135,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textColor="@color/grey"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/char_feedback_goto_next"
                     android:layout_width="wrap_content"
@@ -122,5 +149,10 @@
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"></LinearLayout>
+
     </LinearLayout>
 </ScrollView>

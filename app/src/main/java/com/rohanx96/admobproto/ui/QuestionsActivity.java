@@ -61,6 +61,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     int CATEGORY = -1;
 
+    @Bind(R.id.questions_activity_correct_indicator)
+    ImageView correct_indicator;
+
     @Bind(R.id.questions_activity_level)
     TextView tvLevel;
 
@@ -186,6 +189,12 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                         || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                 Log.i("lock status ", " position " + mCurrentPage + 1 + " " + isLocked);
 
+                if (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT) {
+                    correct_indicator.setImageResource(R.drawable.cross);
+                } else if (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.CORRECT) {
+                    correct_indicator.setImageResource(R.drawable.tick_green);
+                } else
+                    correct_indicator.setImageResource(0);
                 // Remove the lock image on the fragment if question was previously locked but is now unlocked
                 // finding view by id and then removing it does not work even if unique IDs are assigne to lock image view
                 // Another way to do this is getCurrentFragment and call method of fragment that removes the view from container

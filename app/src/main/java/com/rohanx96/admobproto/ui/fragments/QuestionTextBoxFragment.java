@@ -244,6 +244,9 @@ public class QuestionTextBoxFragment extends Fragment {
                 GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
                 Coins.correct_answer(getContext());
 
+                ImageView correctIndicator = (ImageView) getActivity().findViewById(R.id.questions_activity_correct_indicator);
+                correctIndicator.setImageResource(R.drawable.tick_green);
+
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
                 int next = mCallback.unlockNextQuestion(CATEGORY);
@@ -256,6 +259,9 @@ public class QuestionTextBoxFragment extends Fragment {
             if (details.status == Constants.AVAILABLE) {
                 GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.INCORRECT);
                 Coins.wrong_answer(getContext());
+
+                ImageView correctIndicator = (ImageView) getActivity().findViewById(R.id.questions_activity_correct_indicator);
+                correctIndicator.setImageResource(R.drawable.cross);
 
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
@@ -277,7 +283,7 @@ public class QuestionTextBoxFragment extends Fragment {
         TextView answerTV = new TextView(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(i));
-        answerTV.setTextSize(tvWidth / 2);
+        answerTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, tvWidth / 2);
         answerTV.setTextColor(Color.WHITE);
         answerTV.setBackgroundResource(R.drawable.circle_filled);
         answerTV.setLayoutParams(new ViewGroup.LayoutParams(tvWidth, tvWidth));

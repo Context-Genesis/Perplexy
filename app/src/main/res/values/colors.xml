@@ -49,4 +49,6 @@
     <color name="canvas_bg">@color/blue_d_grey</color>
     <color name="color_pen">@color/white</color>
 
+    <color name="color_canvas">#303030</color>
+
 </resources>

@@ -291,6 +291,9 @@ public class QuestionWordFragment extends Fragment {
             GenericAnswerDetails.updateStatus(POSITION, CATEGORY, Constants.CORRECT);
             Coins.correct_answer(getContext());
 
+            ImageView correctIndicator = (ImageView) getActivity().findViewById(R.id.questions_activity_correct_indicator);
+            correctIndicator.setImageResource(R.drawable.tick_green);
+
             TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
             display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
             int next = mCallback.unlockNextQuestion(CATEGORY);
@@ -328,7 +331,7 @@ public class QuestionWordFragment extends Fragment {
         final TextView answerTV = new TextView(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(i));
-        answerTV.setTextSize(tvWidth / 2);
+        answerTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, tvWidth / 2);
         answerTV.setTextColor(Color.BLACK);
         answerTV.setBackgroundResource(R.drawable.circle_border);
         answerTV.setGravity(Gravity.CENTER);
@@ -348,7 +351,7 @@ public class QuestionWordFragment extends Fragment {
         final TextView answerTV = new TextView(getActivity());
 
         answerTV.setText("" + jumbledCharacters.get(answer.length() + i));
-        answerTV.setTextSize(tvWidth / 2);
+        answerTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, tvWidth / 2);
         answerTV.setTextColor(Color.WHITE);
         answerTV.setBackgroundResource(R.drawable.circle_filled);
         answerTV.setLayoutParams(new ViewGroup.LayoutParams(tvWidth, tvWidth));
@@ -373,6 +376,7 @@ public class QuestionWordFragment extends Fragment {
         blankTV.setText(" ");
         blankTV.setBackgroundResource(0);
         blankTV.setTextSize(tvWidth / 2);
+        blankTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, tvWidth / 2);
         blankTV.setBackgroundResource(0);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(tvWidth, tvWidth);
         layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);

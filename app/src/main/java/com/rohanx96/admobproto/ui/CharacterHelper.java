@@ -217,7 +217,7 @@ public class CharacterHelper {
         });
 
         if (!ansDetails.get(mCurrentPage).bookmarked) {
-            favourite.setBackgroundResource(R.drawable.favorite);  // color
+            favourite.setBackgroundResource(R.drawable.favourite);  // color
         } else {
             favourite.setBackgroundResource(R.drawable.favourite_filled);
         }
@@ -233,7 +233,7 @@ public class CharacterHelper {
                 } else {
                     ansDetails.get(mCurrentPage).bookmarked = false;
                     ansDetails.get(mCurrentPage).save();
-                    favourite.setBackgroundResource(R.drawable.favorite);
+                    favourite.setBackgroundResource(R.drawable.favourite);
                     SoundManager.playButtonClickSound(context);
                 }
             }
