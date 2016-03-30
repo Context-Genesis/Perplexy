@@ -262,7 +262,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             characterDialog.setVisibility(View.VISIBLE);
             characterDialog.startAnimation(scaleAnimation);
         }
-
+        character.setImageResource(R.drawable.character_happy_open_128);
         toggleIsCharacterOpen();
     }
 
@@ -300,6 +300,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 characterDialog.setVisibility(View.GONE);
                 characterDialog.startAnimation(scaleAnimation);
             }
+            character.setImageResource(R.drawable.character_happy_closed_128);
             toggleIsCharacterOpen();
         }
     }
@@ -328,6 +329,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             characterDialog.setVisibility(View.VISIBLE);
             characterDialog.startAnimation(scaleAnimation);
         }
+        character.setImageResource(R.drawable.character_eyes_closed_128);
         toggleIsCharacterOpen();
     }
 
@@ -371,6 +373,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 characterDialog.setVisibility(View.GONE);
                 characterDialog.startAnimation(scaleAnimation);
             }
+            character.setImageResource(R.drawable.character_sad_closed_128);
             toggleIsCharacterOpen();
         }
     }
@@ -405,6 +408,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             characterDialog.setVisibility(View.VISIBLE);
             characterDialog.startAnimation(scaleAnimation);
         }
+        character.setImageResource(R.drawable.character_happy_open_128);
         setupCorrectAnswerFeedback(nextQuestion);
         //toggleIsCharacterOpen();
     }
@@ -443,6 +447,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 characterDialog.startAnimation(scaleAnimation);
             }
         }
+        character.setImageResource(R.drawable.character_happy_closed_128);
         //toggleIsCharacterOpen();
     }
 
@@ -476,6 +481,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             characterDialog.setVisibility(View.VISIBLE);
             characterDialog.startAnimation(scaleAnimation);
         }
+        character.setImageResource(R.drawable.character_shocked_128);
         setupIncorrectAnswerFeedback();
         //toggleIsCharacterOpen();
     }
@@ -514,6 +520,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 characterDialog.startAnimation(scaleAnimation);
             }
         }
+        character.setImageResource(R.drawable.character_happy_closed_128);
         //toggleIsCharacterOpen();
     }
 
