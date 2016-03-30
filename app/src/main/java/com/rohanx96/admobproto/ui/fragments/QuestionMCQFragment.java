@@ -3,12 +3,16 @@ package com.rohanx96.admobproto.ui.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +35,7 @@ import butterknife.OnClick;
 /**
  * Created by rose on 7/3/16.
  */
-public class QuestionMCQFragment extends QuestionsFragment {
+public class QuestionMCQFragment extends Fragment {
 
     int POSITION = -1;
     int CATEGORY;
@@ -64,6 +68,7 @@ public class QuestionMCQFragment extends QuestionsFragment {
     Button canvas_pull;
 
     private boolean isUIVisibleToUser = false;
+    private RelativeLayout cardContent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,13 +77,12 @@ public class QuestionMCQFragment extends QuestionsFragment {
         ButterKnife.bind(this, rootView);
 
         this.cardContent = (RelativeLayout) rootView.findViewById(R.id.question_card_content);
-        setCardContent(cardContent);
+        //setCardContent(cardContent);
 
         this.mCallback = (QuestionsCallback) getActivity();
         Bundle args = getArguments();
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
-        lockQuestionIfRequired(POSITION, CATEGORY, isUIVisibleToUser, mCallback);
         genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION - 1);
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -186,7 +190,7 @@ public class QuestionMCQFragment extends QuestionsFragment {
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
                 // Sets status of question locked in questionsActivity. Used to change the layout of character
                 mCallback.setIsQuestionLocked(true);
-                lockQuestionIfRequired(POSITION, CATEGORY, isUIVisibleToUser, mCallback);
+                lockQuestionIfRequired();
             }
             mCallback.showIncorrectAnswerFeedback();
             Toast.makeText(getActivity(), "Clicked option " + check + " INCORRECT", Toast.LENGTH_SHORT).show();
@@ -197,7 +201,7 @@ public class QuestionMCQFragment extends QuestionsFragment {
     public void onResume() {
         super.onResume();
         // Check every time the fragment is refreshed
-        lockQuestionIfRequired(POSITION, CATEGORY, isUIVisibleToUser, mCallback);
+        lockQuestionIfRequired();
     }
 
     @OnClick(R.id.qcard_mcq_next)
@@ -229,6 +233,69 @@ public class QuestionMCQFragment extends QuestionsFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         isUIVisibleToUser = isVisibleToUser;
+    }
+
+    public void lockQuestionIfRequired() {
+        //Log.i("question ", answer);
+        Log.i("text card ", "position " + POSITION + " category " + CATEGORY + " status " + GenericAnswerDetails.getStatus(POSITION, CATEGORY));
+        switch (GenericAnswerDetails.getStatus(POSITION, CATEGORY)) {
+            case Constants.UNAVAILABLE:
+                Log.i("textcard", "unavailable");
+                //mCallback.setIsQuestionLocked(true);
+                //ImageView lock = (ImageView) findViewById(R.id.lock_full_image);
+                //lock.setVisibility(View.VISIBLE);
+                ImageView lock = new ImageView(getActivity());
+                FrameLayout.LayoutParams layoutParams = new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                        , ViewGroup.LayoutParams.MATCH_PARENT);
+                lock.setLayoutParams(layoutParams);
+                lock.setId(R.id.lockImageId);
+                lock.setImageResource(R.drawable.lock_flat);
+                lock.setBackgroundColor(getResources().getColor(R.color.white));
+                lock.setScaleType(ImageView.ScaleType.CENTER);
+                lock.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (isUIVisibleToUser) {
+                            View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
+                            //expand the character dialog only if it is not previously visible
+                            if (characterDialog.getVisibility() == View.GONE) {
+                                mCallback.showCharacterUnlockDialog();
+                                mCallback.setupCharacterUnlockDialog();
+                            }
+                            SoundManager.playButtonClickSound(getActivity());
+                        }
+                    }
+                });
+                cardContent.addView(lock, cardContent.getChildCount());
+                break;
+            case Constants.INCORRECT:
+                //mCallback.setIsQuestionLocked(true);
+                ImageView options_lock = new ImageView(getActivity());
+                RelativeLayout.LayoutParams layoutParams1 = new android.widget.RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                        , ViewGroup.LayoutParams.MATCH_PARENT);
+                layoutParams1.addRule(RelativeLayout.BELOW, R.id.textAreaScroller);
+                options_lock.setLayoutParams(layoutParams1);
+                options_lock.setId(R.id.lockImageId + POSITION);
+                options_lock.setImageResource(R.drawable.lock_flat);
+                options_lock.setBackgroundColor(getResources().getColor(R.color.white));
+                options_lock.setScaleType(ImageView.ScaleType.CENTER);
+                options_lock.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (isUIVisibleToUser) {
+                            View characterDialog = getActivity().findViewById(R.id.questions_activity_character_dialog_unlock);
+                            //expand the character dialog only if it is not previously visible
+                            if (characterDialog.getVisibility() == View.GONE) {
+                                mCallback.showCharacterUnlockDialog();
+                                mCallback.setupCharacterUnlockDialog();
+                            }
+                            SoundManager.playButtonClickSound(getActivity());
+                        }
+                    }
+                });
+                cardContent.addView(options_lock, cardContent.getChildCount());
+                break;
+        }
     }
 }
 
