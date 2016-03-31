@@ -96,6 +96,14 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             }
         });
 
+        if (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.CORRECT) {
+            correct_indicator.setImageResource(R.drawable.tick_green);
+        } else if (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT) {
+            correct_indicator.setImageResource(R.drawable.cross);
+        } else {
+            correct_indicator.setImageResource(0);
+        }
+
         setupCharacter();
     }
 
@@ -195,6 +203,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                     correct_indicator.setImageResource(R.drawable.tick_green);
                 } else
                     correct_indicator.setImageResource(0);
+
                 // Remove the lock image on the fragment if question was previously locked but is now unlocked
                 // finding view by id and then removing it does not work even if unique IDs are assigne to lock image view
                 // Another way to do this is getCurrentFragment and call method of fragment that removes the view from container
@@ -479,9 +488,12 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                         isLocked = (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT)
                                 || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                         if (!isCharacterDialogOpen) {
-                            if (isLocked) {
+                            if (isLocked && GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) != Constants.INCORRECT) {
                                 showCharacterUnlockDialog();
                                 setupCharacterUnlockDialog();
+                            } else if (isLocked && GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT) {
+                                showIncorrectAnswerFeedback();
+                                setupIncorrectAnswerFeedback();
                             } else {
                                 showCharacterDialog();
                                 //Dialog is reinitialised based on question every time character is clicked
@@ -512,7 +524,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.getResources().getDisplayMetrics());
     }
 
-    public void startCharacterDialogShowAnimation(final View characterDialog){
+    public void startCharacterDialogShowAnimation(final View characterDialog) {
         /* Animation for post Lollipop devices*/
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             characterDialog.post(new Runnable() {
@@ -536,7 +548,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         }
     }
 
-    public void startCharacterDialogHideAnimation(final View characterDialog){
+    public void startCharacterDialogHideAnimation(final View characterDialog) {
         /* Animation for post Lollipop devices */
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             characterDialog.post(new Runnable() {

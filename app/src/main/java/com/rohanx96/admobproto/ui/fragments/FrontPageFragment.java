@@ -64,6 +64,7 @@ public class FrontPageFragment extends Fragment {
         }, 500);
         Typeface typeFace = Typeface.createFromAsset(getActivity().getAssets(), "tagus.ttf");
         heading.setTypeface(typeFace);
+
         return rootView;
     }
 

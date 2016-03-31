@@ -50,7 +50,6 @@ public class CharacterHelper {
      */
 
     public void setupCharacterDialog(int CATEGORY, final int mCurrentPage, final Context context) {
-        // TODO: Add share intents for whatsapp, facebook Dhruv
         GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, CATEGORY, mCurrentPage);
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(CATEGORY);
         final TextView showhint;
@@ -159,6 +158,10 @@ public class CharacterHelper {
             solutionprice.setText(Constants.SOLUTION_PRICE + "");
         }
 
+        if (ansDetails.get(mCurrentPage).status == Constants.CORRECT) {
+            solutionprice.setText("0");
+        }
+
         showsolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,7 +189,7 @@ public class CharacterHelper {
                     showhiddensolution.setVisibility(View.VISIBLE);
                     showhiddensolution.startAnimation(in);
 
-                    if (!ansDetails.get(mCurrentPage).answer_displayed) {
+                    if (!ansDetails.get(mCurrentPage).answer_displayed && ansDetails.get(mCurrentPage).status != Constants.CORRECT) {
                         ansDetails.get(mCurrentPage).answer_displayed = true;
                         ansDetails.get(mCurrentPage).save();
                         Coins.solution_access(mParentActivity);
@@ -196,11 +199,10 @@ public class CharacterHelper {
                     SoundManager.playButtonClickSound(context);
                 } else {
                     animateAdView(CHARACTER_TYPE_UNLOCKED);
-                    Toast.makeText(mParentActivity, "Donot have enough coins",
+                    Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
                     SoundManager.playButtonClickSound(context);
                 }
-
             }
         });
 
@@ -217,9 +219,9 @@ public class CharacterHelper {
         });
 
         if (!ansDetails.get(mCurrentPage).bookmarked) {
-            favourite.setBackgroundResource(R.drawable.favourite);  // color
+            favourite.setImageResource(R.drawable.favorite);  // color
         } else {
-            favourite.setBackgroundResource(R.drawable.favourite_filled);
+            favourite.setImageResource(R.drawable.favourite_filled);
         }
 
         favourite.setOnClickListener(new View.OnClickListener() {
@@ -228,12 +230,12 @@ public class CharacterHelper {
                 if (!ansDetails.get(mCurrentPage).bookmarked) {
                     ansDetails.get(mCurrentPage).bookmarked = true;
                     ansDetails.get(mCurrentPage).save();
-                    favourite.setBackgroundResource(R.drawable.favourite_filled);  // color
+                    favourite.setImageResource(R.drawable.favourite_filled);  // color
                     SoundManager.playButtonClickSound(context);
                 } else {
                     ansDetails.get(mCurrentPage).bookmarked = false;
                     ansDetails.get(mCurrentPage).save();
-                    favourite.setBackgroundResource(R.drawable.favourite);
+                    favourite.setImageResource(R.drawable.favorite);
                     SoundManager.playButtonClickSound(context);
                 }
             }
@@ -432,80 +434,136 @@ public class CharacterHelper {
             }
         });
 
-        final TextView showsolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_showsolution);
-        LinearLayout solution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_solution);
-        final TextView solutionprice = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_solutionprice);
-        final LinearLayout confirmsolution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_confirmsolution);
-        TextView nosolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_nosolution);
-        TextView yessolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_yessolution);
-        final TextView showhiddensolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_showhiddensolution);
+        final ImageView favourite = (ImageView) mParentActivity.findViewById(R.id.char_feedback_incorrect_char_q_clicked_favourite_question);
 
-        showsolution.setVisibility(View.VISIBLE);
-        confirmsolution.setVisibility(View.GONE);
-        showhiddensolution.setVisibility(View.GONE);
-
-        showhiddensolution.setText(question.answer);
-        if (ansDetails.get(currentPage).answer_displayed == true) {
-            solutionprice.setText("0");
+        if (!ansDetails.get(currentPage).bookmarked) {
+            favourite.setImageResource(R.drawable.favorite);  // color
         } else {
-            solutionprice.setText(Constants.SOLUTION_PRICE + "");
+            favourite.setImageResource(R.drawable.favourite_filled);
         }
 
-        showsolution.setOnClickListener(new View.OnClickListener() {
+        favourite.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (showhiddensolution.getVisibility() == View.GONE) {
-                    showsolution.setVisibility(View.GONE);
-                    Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
-                    confirmsolution.startAnimation(in);
-                    confirmsolution.setVisibility(View.VISIBLE);
+            public void onClick(View v) {
+                if (!ansDetails.get(currentPage).bookmarked) {
+                    ansDetails.get(currentPage).bookmarked = true;
+                    ansDetails.get(currentPage).save();
+                    favourite.setImageResource(R.drawable.favourite_filled);  // color
                     SoundManager.playButtonClickSound(context);
-                }
-            }
-        });
-
-        yessolution.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmsolution.setVisibility(View.GONE);
-                showsolution.setVisibility(View.VISIBLE);
-                pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
-                long coins = pref.getLong(Constants.PREF_COINS, 0);
-                if (coins - Integer.parseInt(solutionprice.getText().toString()) >= 0) {
-                    showhiddensolution.setVisibility(View.INVISIBLE);
-                    Animation in = AnimationUtils.loadAnimation(mParentActivity, R.anim.scale_y_downards);
-                    showhiddensolution.startAnimation(in);
-                    showhiddensolution.setVisibility(View.VISIBLE);
-                    showhiddensolution.startAnimation(in);
-
-                    if (!ansDetails.get(currentPage).answer_displayed) {
-                        ansDetails.get(currentPage).answer_displayed = true;
-                        ansDetails.get(currentPage).save();
-                        Coins.solution_access(mParentActivity);
-                        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
-                        SoundManager.playButtonClickSound(context);
-                    }
-                    solutionprice.setText("0");
                 } else {
-                    animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
-                    Toast.makeText(mParentActivity, "Donot have enough coins",
-                            Toast.LENGTH_LONG).show();
+                    ansDetails.get(currentPage).bookmarked = false;
+                    ansDetails.get(currentPage).save();
+                    favourite.setImageResource(R.drawable.favorite);
                     SoundManager.playButtonClickSound(context);
                 }
             }
         });
 
-
-        nosolution.setOnClickListener(new View.OnClickListener() {
+        mParentActivity.findViewById(R.id.char_feedback_incorrect_char_q_clicked_whatsapp_share).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                confirmsolution.setVisibility(View.GONE);
-                Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
-                showsolution.startAnimation(in);
-                showsolution.setVisibility(View.VISIBLE);
+            public void onClick(View v) {
+                ((QuestionsCallback) mParentActivity).hideCharacterDialog();
+                final Handler handler = new Handler();          // delay to give time to dialog to close
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        ShareQuestion.shareImageWhatsapp(mParentActivity);
+                    }
+                }, 600);
                 SoundManager.playButtonClickSound(context);
             }
         });
+
+        mParentActivity.findViewById(R.id.char_feedback_incorrect_char_q_clicked_facebook_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((QuestionsCallback) mParentActivity).hideCharacterDialog();
+                final Handler handler = new Handler();          // delay to give time to dialog to close
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ShareQuestion.shareImageFacebook(mParentActivity);
+                    }
+                }, 600);
+                SoundManager.playButtonClickSound(context);
+            }
+        });
+
+//        final TextView showsolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_showsolution);
+//        LinearLayout solution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_solution);
+//        final TextView solutionprice = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_solutionprice);
+//        final LinearLayout confirmsolution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_confirmsolution);
+//        TextView nosolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_nosolution);
+//        TextView yessolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_yessolution);
+//        final TextView showhiddensolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_showhiddensolution);
+//
+//        showsolution.setVisibility(View.VISIBLE);
+//        confirmsolution.setVisibility(View.GONE);
+//        showhiddensolution.setVisibility(View.GONE);
+//
+//        showhiddensolution.setText(question.answer);
+//        if (ansDetails.get(currentPage).answer_displayed == true) {
+//            solutionprice.setText("0");
+//        } else {
+//            solutionprice.setText(Constants.SOLUTION_PRICE + "");
+//        }
+//
+//        showsolution.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (showhiddensolution.getVisibility() == View.GONE) {
+//                    showsolution.setVisibility(View.GONE);
+//                    Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
+//                    confirmsolution.startAnimation(in);
+//                    confirmsolution.setVisibility(View.VISIBLE);
+//                    SoundManager.playButtonClickSound(context);
+//                }
+//            }
+//        });
+//
+//        yessolution.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                confirmsolution.setVisibility(View.GONE);
+//                showsolution.setVisibility(View.VISIBLE);
+//                pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+//                long coins = pref.getLong(Constants.PREF_COINS, 0);
+//                if (coins - Integer.parseInt(solutionprice.getText().toString()) >= 0) {
+//                    showhiddensolution.setVisibility(View.INVISIBLE);
+//                    Animation in = AnimationUtils.loadAnimation(mParentActivity, R.anim.scale_y_downards);
+//                    showhiddensolution.startAnimation(in);
+//                    showhiddensolution.setVisibility(View.VISIBLE);
+//                    showhiddensolution.startAnimation(in);
+//
+//                    if (!ansDetails.get(currentPage).answer_displayed) {
+//                        ansDetails.get(currentPage).answer_displayed = true;
+//                        ansDetails.get(currentPage).save();
+//                        Coins.solution_access(mParentActivity);
+//                        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
+//                        SoundManager.playButtonClickSound(context);
+//                    }
+//                    solutionprice.setText("0");
+//                } else {
+//                    animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
+//                    Toast.makeText(mParentActivity, "Donot have enough coins",
+//                            Toast.LENGTH_LONG).show();
+//                    SoundManager.playButtonClickSound(context);
+//                }
+//            }
+//        });
+//
+//
+//        nosolution.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                confirmsolution.setVisibility(View.GONE);
+//                Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
+//                showsolution.startAnimation(in);
+//                showsolution.setVisibility(View.VISIBLE);
+//                SoundManager.playButtonClickSound(context);
+//            }
+//        });
     }
 
     public void animateAdView(int type) {

@@ -40,10 +40,7 @@
                 android:id="@+id/questions_activity_correct_indicator"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/tick_green"
-                android:visibility="invisible"/>
+                android:layout_gravity="center"/>
 
             <TextView
                 android:id="@+id/questions_activity_level"
