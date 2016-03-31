@@ -42,7 +42,8 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/tick_green" />
+                android:src="@drawable/tick_green"
+                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/questions_activity_level"

@@ -8,11 +8,11 @@ public class Constants {
 
     public static final String VOLUME = "volume";
 
-    public static final String JSON_SEQUENCES_FILE = "sequences.json";
-    public static final String JSON_RIDDLES_FILE = "riddles.json";
-    public static final String JSON_LOGIC_FILE = "logic.json";
+    public static final String JSON_SEQUENCES_FILE = "sequences";
+    public static final String JSON_RIDDLES_FILE = "riddles";
+    public static final String JSON_LOGIC_FILE = "logic";
 
-    public static final String JSON_ALL_QUESTIONS_FILE = "all_questions.json";
+    public static final String JSON_ALL_QUESTIONS_FILE = "all_questions";
 
     public static final int GAME_TYPE_SEQUENCES = 0;
     public static final int GAME_TYPE_RIDDLE = 1;
