@@ -71,7 +71,7 @@
                     android:layout_weight="1.7"
                     android:gravity="center|left"
                     android:padding="8dp"
-                    android:text="Solution"
+                    android:text="Explanation"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/orange_d_zest" />
 
