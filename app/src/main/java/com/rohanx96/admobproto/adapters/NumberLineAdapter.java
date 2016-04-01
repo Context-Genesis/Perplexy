@@ -155,58 +155,6 @@ public class NumberLineAdapter extends BaseAdapter {
     }
 
     public void setOnClickListeners(final int position, final ViewHolder holder) {
-        /*switch (answerDetails.get(position).status) {
-            case Constants.CORRECT:
-                holder.tv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, QuestionsActivity.class);
-                        intent.putExtra(Constants.BUNDLE_QUESTION_NUMBER, getItem(position).question_number);
-                        intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        if (Build.VERSION.SDK_INT >=21)
-                            context.startActivity(intent,ActivityOptionsCompat.makeSceneTransitionAnimation(context,holder.tv,"character").toBundle());
-                        else
-                            context.startActivity(intent);
-                        context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
-                    }
-                });
-                break;
-            case Constants.INCORRECT:
-                holder.tv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context, "This question is locked", Toast.LENGTH_LONG).show();
-                        numberLineCallback.openCharacterDialog(Constants.INCORRECT);
-                    }
-                });
-                break;
-            case Constants.AVAILABLE:
-                holder.tv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, QuestionsActivity.class);
-                        intent.putExtra(Constants.BUNDLE_QUESTION_NUMBER, getItem(position).question_number);
-                        intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        if (Build.VERSION.SDK_INT >=21)
-                            context.startActivity(intent,ActivityOptionsCompat.makeSceneTransitionAnimation(context, holder.tv, "character").toBundle());
-                        else
-                            context.startActivity(intent);
-                        context.setAnimationRunning(false);             // Stop the background color change animation on leaving activity
-                    }
-                });
-                break;
-            case Constants.UNAVAILABLE:
-                holder.tv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context, "This question is unavailable", Toast.LENGTH_LONG).show();
-                        numberLineCallback.openCharacterDialog(Constants.UNAVAILABLE);
-                    }
-                });
-                break;
-        }*/
         holder.tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

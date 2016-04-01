@@ -68,7 +68,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:padding="16dp"
-        android:text="MORE INFO"
+        android:text="ABOUT US"
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
         android:textColor="@color/white" />
 

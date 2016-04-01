@@ -76,7 +76,9 @@ public class JSONUtils {
     private static String loadJSONFromAsset(Context context, String WHICH_FILE) {
         String json = null;
         try {
-            InputStream is = context.getAssets().open(WHICH_FILE);
+            InputStream is = context.getResources().openRawResource
+                    (context.getResources().getIdentifier(WHICH_FILE, "raw", context.getPackageName()));
+            //InputStream is = context.getAssets().open(WHICH_FILE);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.utils.Constants;
 
+import java.text.DecimalFormat;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -85,6 +87,7 @@ public class StatisticsFragment extends Fragment {
         correctcount.setText("CORRECT\n" + pref.getInt(Constants.CORRECT_COUNT, 0));
         incorrectcount.setText("INCORRECT\n" + pref.getInt(Constants.INCORRECT_COUNT, 0));
 
-        accuracy.setText("ACCURACY " + pref.getFloat(Constants.ACCURACY, 0f)*100f);
+        DecimalFormat df = new DecimalFormat("#.##");
+        accuracy.setText("ACCURACY " + df.format(pref.getFloat(Constants.ACCURACY, 0f)*100f));
     }
 }

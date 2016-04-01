@@ -31,10 +31,11 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/incorrect_ans_feedback_text_image"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_margin="5dp"
                     android:padding="5dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/hint" />
 
                 <TextView
@@ -43,12 +44,14 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
+                    android:layout_toRightOf="@id/incorrect_ans_feedback_text_image"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="You didn't get this one quite right"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textColor="@color/grey"
                     android:textStyle="bold" />
+
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
@@ -62,31 +65,32 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical"
+                android:padding="8dp">
 
                 <LinearLayout
                     android:id="@+id/char_feedback_incorrect_ll_solution"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="8dp">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/char_feedback_incorrect_showsolution"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
                         android:layout_weight="1.7"
                         android:gravity="center|left"
-                        android:text="SHOW SOLUTION"
+                        android:text="Buy Solution"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                        android:textColor="@color/orange_d_zest" />
+                        android:textColor="@color/orange_d_zest"
+                        android:textSize="20dp" />
 
                     <LinearLayout
                         android:id="@+id/char_feedback_incorrect_ll_confirmsolution"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1.7"
                         android:gravity="center"
@@ -100,6 +104,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:textSize="20dp"
                             android:text="NO"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                             android:textColor="@color/red_l_poppy" />
@@ -110,6 +115,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:textSize="20dp"
                             android:gravity="center"
                             android:text="YES"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
@@ -120,20 +126,21 @@
                     <TextView
                         android:id="@+id/char_feedback_incorrect_solutionprice"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="4.9"
-                        android:gravity="right"
+                        android:gravity="center|right"
                         android:text="100"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                        android:textColor="@color/orange_d_zest" />
+                        android:textColor="@color/orange_d_zest"
+                        android:textSize="20dp" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
                         android:layout_gravity="center"
                         android:layout_weight="4.9"
-                        android:src="@drawable/coin_gold_silver" />
+                        android:src="@drawable/coin_stack" />
 
                 </LinearLayout>
 
@@ -142,31 +149,31 @@
                     android:id="@+id/char_feedback_incorrect_showhiddensolution"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:paddingTop="4dp"
                     android:text="This is the solution. This could get real big and fuck the layout. Just like this"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/grey"
+                    android:textSize="15dp"
                     android:visibility="gone" />
+
 
                 <LinearLayout
                     android:id="@+id/char_feedback_incorrect_ll_unlock"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="8dp">
+                    android:paddingTop="8dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/char_feedback_incorrect_tv_unlock"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
                         android:layout_weight="1.7"
                         android:gravity="left|center"
-                        android:text="UNLOCK QUESTION"
+                        android:text="Unlock Question"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                        android:textColor="@color/blue_d_chambray" />
+                        android:textColor="@color/blue_d_chambray"
+                        android:textSize="20dp" />
 
                     <LinearLayout
                         android:id="@+id/char_feedback_incorrect_ll_confirm_unlock"
@@ -184,6 +191,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:textSize="20dp"
                             android:gravity="center"
                             android:text="NO"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
@@ -197,6 +205,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="YES"
+                            android:textSize="20dp"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                             android:textColor="@color/green_l_carribean" />
 
@@ -205,13 +214,14 @@
                     <TextView
                         android:id="@+id/char_feedback_incorrect_unlock_price"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="4.9"
-                        android:gravity="right"
+                        android:gravity="center|right"
                         android:text="200"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                        android:textColor="@color/blue_d_chambray" />
+                        android:textColor="@color/blue_d_chambray"
+                        android:textSize="20dp" />
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -234,7 +244,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -267,7 +278,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:paddingBottom="8dp"
                     android:text="Watch A Video"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/colorPrimary" />
@@ -276,9 +286,40 @@
 
         </android.support.v7.widget.CardView>
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/char_feedback_incorrect_char_q_clicked_ll_drawable"
             android:layout_width="match_parent"
-            android:layout_height="2dp"></LinearLayout>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/char_feedback_incorrect_char_q_clicked_favourite_question"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/favorite" />
+
+            <ImageView
+                android:id="@+id/char_feedback_incorrect_char_q_clicked_facebook_share"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="8dp"
+                android:layout_toRightOf="@+id/char_feedback_incorrect_char_q_clicked_favourite_question"
+                android:scaleType="fitCenter"
+                android:src="@drawable/share" />
+
+            <ImageView
+                android:id="@+id/char_feedback_incorrect_char_q_clicked_whatsapp_share"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="8dp"
+                android:layout_toRightOf="@id/char_feedback_incorrect_char_q_clicked_facebook_share"
+                android:scaleType="fitCenter"
+                android:src="@drawable/whatsapp" />
+        </RelativeLayout>
 
     </LinearLayout>
 </ScrollView>

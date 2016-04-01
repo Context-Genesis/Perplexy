@@ -29,6 +29,7 @@ public class FallingDrawables {
     public static final int NO_OF_COLORS = 9;
     public static final int NO_OF_LIGHT_COLORS = 7;
     private int mWindowWidth;
+    private int mWindowHeight;
     private Handler mainThread;
     private Thread workerThread;
 
@@ -100,7 +101,7 @@ public class FallingDrawables {
         Point size = new Point();
         display.getSize(size);
         mWindowWidth = size.x;
-        int height = size.y;
+        mWindowHeight = size.y;
         this.mDrawablesInRow = mWindowWidth / mDrawableSize;
     }
 
@@ -142,7 +143,7 @@ public class FallingDrawables {
             @Override
             public void run() {
                 mParentView.addView(drawable);
-                drawable.animate().alpha(0).rotation(760).translationY(400).setDuration(20000).setInterpolator(new DecelerateInterpolator())
+                drawable.animate().alpha(0).rotation(760).translationY(mWindowHeight/2.5f).setDuration(20000).setInterpolator(new DecelerateInterpolator())
                         .withEndAction(new Runnable() {
                             @Override
                             public void run() {

@@ -74,8 +74,12 @@
                     android:layout_gravity="center"
                     android:layout_weight="1.7"
                     android:gravity="center|left"
+<<<<<<< HEAD
                     android:padding="8dp"
                     android:text="Explanation"
+=======
+                    android:text="Solution"
+>>>>>>> ecb3e353a7d6f2df14e1146eb615a49342736eef
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/orange_d_zest"
                     android:textSize="20dp" />
@@ -84,9 +88,6 @@
                     android:id="@+id/char_feedback_solution_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
                     android:text="This is the solution. This could get real big and fuck the layout. Just like this"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/grey"
