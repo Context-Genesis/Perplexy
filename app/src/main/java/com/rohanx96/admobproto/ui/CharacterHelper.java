@@ -52,6 +52,7 @@ public class CharacterHelper {
     public void setupCharacterDialog(int CATEGORY, final int mCurrentPage, final Context context) {
         GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, CATEGORY, mCurrentPage);
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(CATEGORY);
+
         final TextView showhint;
         final TextView hintprice;
         final LinearLayout hint, confirmhint;
@@ -62,6 +63,8 @@ public class CharacterHelper {
         final LinearLayout solution, confirmsolution;
         final TextView nosolution, yessolution, showhiddensolution;
 
+        final ImageView favourite = (ImageView) mParentActivity.findViewById(R.id.char_q_clicked_favourite_question);
+
         showhint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_showhint);
         hint = (LinearLayout) mParentActivity.findViewById(R.id.char_q_clicked_ll_hint);
         hintprice = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_hintprice);
@@ -70,12 +73,10 @@ public class CharacterHelper {
         yeshint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_yeshint);
         showhiddenhint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_showhiddenhint);
 
-        showhiddenhint.setVisibility(View.GONE);
         showhint.setVisibility(View.VISIBLE);
         confirmhint.setVisibility(View.GONE);
+        showhiddenhint.setVisibility(View.GONE);
         showhiddenhint.setText(question.hint);
-
-        final ImageView favourite = (ImageView) mParentActivity.findViewById(R.id.char_q_clicked_favourite_question);
 
         if (ansDetails.get(mCurrentPage).hint_displayed == true) {
             hintprice.setText("0");
@@ -101,29 +102,27 @@ public class CharacterHelper {
             public void onClick(View view) {
                 confirmhint.setVisibility(View.GONE);
                 showhint.setVisibility(View.VISIBLE);
-
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
                 long coins = pref.getLong(Constants.PREF_COINS, 0);
                 if (coins - Integer.parseInt(hintprice.getText().toString()) >= 0) {
-                    showhiddenhint.setVisibility(View.INVISIBLE);
-                    Animation in = AnimationUtils.loadAnimation(mParentActivity, R.anim.scale_y_downards);
+                    Animation in = AnimationUtils.loadAnimation(mParentActivity, R.anim.slide_down);
                     showhiddenhint.startAnimation(in);
                     showhiddenhint.setVisibility(View.VISIBLE);
-                    showhiddenhint.startAnimation(in);
 
-                    if (ansDetails.get(mCurrentPage).hint_displayed == false) {
+                    if (!ansDetails.get(mCurrentPage).hint_displayed && ansDetails.get(mCurrentPage).status != Constants.CORRECT) {
                         ansDetails.get(mCurrentPage).hint_displayed = true;
                         ansDetails.get(mCurrentPage).save();
                         Coins.hint_access(mParentActivity);
                         coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
                     }
                     hintprice.setText("0");
+                    SoundManager.playButtonClickSound(context);
                 } else {
                     animateAdView(CHARACTER_TYPE_UNLOCKED);
-                    Toast.makeText(mParentActivity, "Donot have enough coins",
+                    Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
+                    SoundManager.playButtonClickSound(context);
                 }
-                SoundManager.playButtonClickSound(context);
             }
         });
 
@@ -138,7 +137,6 @@ public class CharacterHelper {
             }
         });
 
-
         showsolution = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_showsolution);
         solution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_solution);
         solutionprice = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_solutionprice);
@@ -150,8 +148,8 @@ public class CharacterHelper {
         showsolution.setVisibility(View.VISIBLE);
         confirmsolution.setVisibility(View.GONE);
         showhiddensolution.setVisibility(View.GONE);
+        showhiddensolution.setText(question.answer + "\n" + question.explanation);
 
-        showhiddensolution.setText(question.answer);
         if (ansDetails.get(mCurrentPage).answer_displayed == true) {
             solutionprice.setText("0");
         } else {
@@ -182,12 +180,11 @@ public class CharacterHelper {
                 showsolution.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
                 long coins = pref.getLong(Constants.PREF_COINS, 0);
+
                 if (coins - Integer.parseInt(solutionprice.getText().toString()) >= 0) {
-                    showhiddensolution.setVisibility(View.INVISIBLE);
-                    Animation in = AnimationUtils.loadAnimation(mParentActivity, R.anim.scale_y_downards);
+                    Animation in = AnimationUtils.loadAnimation(mParentActivity, R.anim.slide_down);
                     showhiddensolution.startAnimation(in);
                     showhiddensolution.setVisibility(View.VISIBLE);
-                    showhiddensolution.startAnimation(in);
 
                     if (!ansDetails.get(mCurrentPage).answer_displayed && ansDetails.get(mCurrentPage).status != Constants.CORRECT) {
                         ansDetails.get(mCurrentPage).answer_displayed = true;
@@ -205,7 +202,6 @@ public class CharacterHelper {
                 }
             }
         });
-
 
         nosolution.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -340,8 +336,12 @@ public class CharacterHelper {
         });
     }
 
-    public void setupCorrectAnswerFeedback(final int nextQuestion, final Context context) {
+    public void setupCorrectAnswerFeedback(int category, int currentPage, final int nextQuestion, final Context context) {
         if (nextQuestion != -1) {
+            TextView solution = (TextView) mParentActivity.findViewById(R.id.char_feedback_solution_details);
+            GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, category, currentPage);
+            solution.setText(question.answer + "\n" + question.explanation);
+
             TextView nextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_next_question);
             nextLevel.setText(String.format("Question %d is now unlocked", nextQuestion));
             nextLevel.setVisibility(View.VISIBLE);
@@ -490,80 +490,79 @@ public class CharacterHelper {
             }
         });
 
-//        final TextView showsolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_showsolution);
-//        LinearLayout solution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_solution);
-//        final TextView solutionprice = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_solutionprice);
-//        final LinearLayout confirmsolution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_confirmsolution);
-//        TextView nosolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_nosolution);
-//        TextView yessolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_yessolution);
-//        final TextView showhiddensolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_showhiddensolution);
-//
-//        showsolution.setVisibility(View.VISIBLE);
-//        confirmsolution.setVisibility(View.GONE);
-//        showhiddensolution.setVisibility(View.GONE);
-//
-//        showhiddensolution.setText(question.answer);
-//        if (ansDetails.get(currentPage).answer_displayed == true) {
-//            solutionprice.setText("0");
-//        } else {
-//            solutionprice.setText(Constants.SOLUTION_PRICE + "");
-//        }
-//
-//        showsolution.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (showhiddensolution.getVisibility() == View.GONE) {
-//                    showsolution.setVisibility(View.GONE);
-//                    Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
-//                    confirmsolution.startAnimation(in);
-//                    confirmsolution.setVisibility(View.VISIBLE);
-//                    SoundManager.playButtonClickSound(context);
-//                }
-//            }
-//        });
-//
-//        yessolution.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                confirmsolution.setVisibility(View.GONE);
-//                showsolution.setVisibility(View.VISIBLE);
-//                pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
-//                long coins = pref.getLong(Constants.PREF_COINS, 0);
-//                if (coins - Integer.parseInt(solutionprice.getText().toString()) >= 0) {
-//                    showhiddensolution.setVisibility(View.INVISIBLE);
-//                    Animation in = AnimationUtils.loadAnimation(mParentActivity, R.anim.scale_y_downards);
-//                    showhiddensolution.startAnimation(in);
-//                    showhiddensolution.setVisibility(View.VISIBLE);
-//                    showhiddensolution.startAnimation(in);
-//
-//                    if (!ansDetails.get(currentPage).answer_displayed) {
-//                        ansDetails.get(currentPage).answer_displayed = true;
-//                        ansDetails.get(currentPage).save();
-//                        Coins.solution_access(mParentActivity);
-//                        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
-//                        SoundManager.playButtonClickSound(context);
-//                    }
-//                    solutionprice.setText("0");
-//                } else {
-//                    animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
-//                    Toast.makeText(mParentActivity, "Donot have enough coins",
-//                            Toast.LENGTH_LONG).show();
-//                    SoundManager.playButtonClickSound(context);
-//                }
-//            }
-//        });
-//
-//
-//        nosolution.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                confirmsolution.setVisibility(View.GONE);
-//                Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
-//                showsolution.startAnimation(in);
-//                showsolution.setVisibility(View.VISIBLE);
-//                SoundManager.playButtonClickSound(context);
-//            }
-//        });
+        final TextView showsolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_showsolution);
+        LinearLayout solution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_solution);
+        final TextView solutionprice = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_solutionprice);
+        final LinearLayout confirmsolution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_confirmsolution);
+        TextView nosolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_nosolution);
+        TextView yessolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_yessolution);
+        final TextView showhiddensolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_showhiddensolution);
+
+        showsolution.setVisibility(View.VISIBLE);
+        confirmsolution.setVisibility(View.GONE);
+        showhiddensolution.setVisibility(View.GONE);
+
+        showhiddensolution.setText(question.answer + "\n" + question.explanation);
+
+        if (ansDetails.get(currentPage).answer_displayed == true) {
+            solutionprice.setText("0");
+        } else {
+            solutionprice.setText(Constants.SOLUTION_PRICE + "");
+        }
+
+        showsolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (showhiddensolution.getVisibility() == View.GONE) {
+                    showsolution.setVisibility(View.GONE);
+                    Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
+                    confirmsolution.startAnimation(in);
+                    confirmsolution.setVisibility(View.VISIBLE);
+                    SoundManager.playButtonClickSound(context);
+                }
+            }
+        });
+
+        yessolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmsolution.setVisibility(View.GONE);
+                showsolution.setVisibility(View.VISIBLE);
+                pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+                long coins = pref.getLong(Constants.PREF_COINS, 0);
+                if (coins - Integer.parseInt(solutionprice.getText().toString()) >= 0) {
+                    Animation in = AnimationUtils.loadAnimation(mParentActivity, R.anim.slide_down);
+                    showhiddensolution.startAnimation(in);
+                    showhiddensolution.setVisibility(View.VISIBLE);
+
+                    if (!ansDetails.get(currentPage).answer_displayed) {
+                        ansDetails.get(currentPage).answer_displayed = true;
+                        ansDetails.get(currentPage).save();
+                        Coins.solution_access(mParentActivity);
+                        coins_display.setText(pref.getLong(Constants.PREF_COINS, 0) + " ");
+                        SoundManager.playButtonClickSound(context);
+                    }
+                    solutionprice.setText("0");
+                } else {
+                    animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
+                    Toast.makeText(mParentActivity, "Donot have enough coins",
+                            Toast.LENGTH_LONG).show();
+                    SoundManager.playButtonClickSound(context);
+                }
+            }
+        });
+
+
+        nosolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmsolution.setVisibility(View.GONE);
+                Animation in = AnimationUtils.loadAnimation(mParentActivity, android.R.anim.fade_in);
+                showsolution.startAnimation(in);
+                showsolution.setVisibility(View.VISIBLE);
+                SoundManager.playButtonClickSound(context);
+            }
+        });
     }
 
     public void animateAdView(int type) {

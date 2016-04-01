@@ -54,14 +54,13 @@ public class FrontPageFragment extends Fragment {
 
         ButterKnife.bind(this, rootView);
 
+        gameSeekBar.setProgress(0);
+        gameType1.performClick();
+        gameTypeText.setText(getGameTypeText(0));
+        resetLevelSizes(0);
+
         setUpSeekBar();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gameSeekBar.setProgress(0);
-                gameType1.performClick();
-            }
-        }, 500);
+
         Typeface typeFace = Typeface.createFromAsset(getActivity().getAssets(), "tagus.ttf");
         heading.setTypeface(typeFace);
 

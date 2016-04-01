@@ -309,7 +309,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     @Override
     public void setupCorrectAnswerFeedback(int nextQuestionUnlocked) {
         CharacterHelper helper = new CharacterHelper(this);
-        helper.setupCorrectAnswerFeedback(nextQuestionUnlocked, getApplicationContext());
+        helper.setupCorrectAnswerFeedback(CATEGORY, mCurrentPage, nextQuestionUnlocked, getApplicationContext());
     }
 
     @Override
