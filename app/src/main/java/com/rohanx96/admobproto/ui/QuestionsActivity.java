@@ -35,6 +35,7 @@ import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionTextBoxFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
+import com.rohanx96.admobproto.utils.CharacterUtils;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -187,15 +188,17 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 colorAnimator.start();
                 mCurrentPage = position;
                 tvLevel.setText("Level " + (mCurrentPage + 1));
+                hideCorrectAnswerFeedback();
+                hideIncorrectAnswerFeedback();
                 if (isCharacterDialogOpen) {
                     hideCharacterDialog();
                     hideCharacterUnlockDialog();
                 }
-                hideCorrectAnswerFeedback();
-                hideIncorrectAnswerFeedback();
                 isLocked = (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT)
                         || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                 Log.i("lock status ", " position " + mCurrentPage + 1 + " " + isLocked);
+                if (isLocked)
+                    CharacterUtils.setCharacterDrawable(character,CharacterUtils.EXPRESSION_SAD_CLOSED);
 
                 if (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT) {
                     correct_indicator.setImageResource(R.drawable.cross);
@@ -263,7 +266,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     public void showCharacterDialog() {
         final View characterDialog = findViewById(R.id.questions_activity_character_dialog);
         startCharacterDialogShowAnimation(characterDialog);
-        character.setImageResource(R.drawable.character_happy_open_128);
+        CharacterUtils.setCharacterDrawable(character,CharacterUtils.EXPRESSION_HAPPY_OPEN);
         toggleIsCharacterOpen();
     }
 
@@ -274,7 +277,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         // This helps because we can now call this method even if the view is not visible
         if (characterDialog.getVisibility() == View.VISIBLE) {
             startCharacterDialogHideAnimation(characterDialog);
-            character.setImageResource(R.drawable.character_happy_closed_128);
+            CharacterUtils.setCharacterDrawable(character,CharacterUtils.EXPRESSION_HAPPY_CLOSED);
             toggleIsCharacterOpen();
         }
     }
@@ -283,7 +286,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     public void showCharacterUnlockDialog() {
         final View characterDialog = findViewById(R.id.questions_activity_character_dialog_unlock);
         startCharacterDialogShowAnimation(characterDialog);
-        character.setImageResource(R.drawable.character_eyes_closed_128);
+        CharacterUtils.setCharacterDrawable(character,CharacterUtils.EXPRESSION_BLUSH);
         toggleIsCharacterOpen();
     }
 
@@ -301,7 +304,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         // This helps because we can now call this method even if the view is not visible
         if (characterDialog.getVisibility() == View.VISIBLE) {
             startCharacterDialogHideAnimation(characterDialog);
-            character.setImageResource(R.drawable.character_sad_closed_128);
+            CharacterUtils.setCharacterDrawable(character,CharacterUtils.EXPRESSION_SAD_CLOSED);
             toggleIsCharacterOpen();
         }
     }
@@ -316,7 +319,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     public void showCorrectAnswerFeedback(int nextQuestion) {
         final View characterDialog = findViewById(R.id.questions_activity_character_feedback_correct);
         startCharacterDialogShowAnimation(characterDialog);
-        character.setImageResource(R.drawable.character_happy_open_128);
+        CharacterUtils.setCharacterDrawable(character,CharacterUtils.EXPRESSION_HAPPY_OPEN);
         setupCorrectAnswerFeedback(nextQuestion);
         toggleIsCharacterOpen();
     }
@@ -330,7 +333,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             startCharacterDialogHideAnimation(characterDialog);
             toggleIsCharacterOpen();
         }
-        character.setImageResource(R.drawable.character_happy_closed_128);
+        CharacterUtils.setCharacterDrawable(character,CharacterUtils.EXPRESSION_HAPPY_CLOSED);
     }
 
     @Override
@@ -343,7 +346,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     public void showIncorrectAnswerFeedback() {
         final View characterDialog = findViewById(R.id.questions_activity_character_feedback_incorrect);
         startCharacterDialogShowAnimation(characterDialog);
-        character.setImageResource(R.drawable.character_shocked_128);
+        CharacterUtils.setCharacterDrawable(character,CharacterUtils.EXPRESSION_SHOCKED);
         setupIncorrectAnswerFeedback();
         toggleIsCharacterOpen();
     }
@@ -356,8 +359,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         if (characterDialog.getVisibility() == View.VISIBLE) {
             startCharacterDialogHideAnimation(characterDialog);
             toggleIsCharacterOpen();
+            // Question is locked so we need to set the character as sad
+            CharacterUtils.setCharacterDrawable(character, CharacterUtils.EXPRESSION_SAD_CLOSED);
         }
-        character.setImageResource(R.drawable.character_happy_closed_128);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
