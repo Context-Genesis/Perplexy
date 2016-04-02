@@ -3,7 +3,6 @@ package com.rohanx96.admobproto.ui.fragments;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -146,6 +145,16 @@ public class FrontPageFragment extends Fragment {
         ((MainActivity) getActivity()).getFallingDrawables().stopAnimation();
 
         SoundManager.playButtonClickSound(getActivity());
+    }
+
+    @OnClick(R.id.home_settings)
+    public void settingsFrag() {
+        
+    }
+
+    @OnClick(R.id.home_leaderboard)
+    public void leaderboardFrag() {
+
     }
 
     private String getGameTypeText(int lvl) {

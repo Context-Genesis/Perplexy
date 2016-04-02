@@ -53,13 +53,11 @@ public class CharacterHelper {
         GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, CATEGORY, mCurrentPage);
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(CATEGORY);
 
-        final TextView showhint;
-        final TextView hintprice;
+        final TextView showhint, hintprice;
         final LinearLayout hint, confirmhint;
-        final TextView nohint, yeshint, showhiddenhint;
+        final TextView nohint, yeshint, showhiddenhint, characterText;
 
-        final TextView showsolution;
-        final TextView solutionprice;
+        final TextView showsolution, solutionprice;
         final LinearLayout solution, confirmsolution;
         final TextView nosolution, yessolution, showhiddensolution;
 
@@ -72,6 +70,7 @@ public class CharacterHelper {
         nohint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_nohint);
         yeshint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_yeshint);
         showhiddenhint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_showhiddenhint);
+        characterText = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_title_text);
 
         showhint.setVisibility(View.VISIBLE);
         confirmhint.setVisibility(View.GONE);

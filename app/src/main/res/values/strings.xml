@@ -3,4 +3,41 @@
     <string name="facebook_app_id">676629869141386</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- Trying to answer question, clicks guy -->
+    <string name="characterTrying1">Hey there! Are you stuck? Here's how I can help you.</string>
+    <string name="characterTrying2">Are you stuck? Buy a hint, or (Protip) go do some meditation.</string>
+    <string name="characterTrying3">Hi! Unable to solve this question? (Protip) Earn some coins and unlock another question.</string>
+
+    <!-- Question already answered correctly -->
+    <string name="characterAlreadyAnsweredRight1">You've already answered this question correctly. You can view the solution in case you'd like to see it.</string>
+    <string name="characterAlreadyAnsweredRight2">This question has already been answered correctly!. (Protip) If you're running low on coins, watch a video.</string>
+    <string name="characterAlreadyAnsweredRight3">You've already got this one right! (Protip) Watch a video to help the poor questionmaker eat tonight. He's a liberal arts student. Just saying.</string>
+
+    <!-- Question already answered wrongly, is locked-->
+    <string name="characterAlreadyAnsweredWrong1">Aw, Snap! You answered this question wrong. (Protip) Magic is known to unlock questions. Just kidding, coins will do the trick.</string>
+    <string name="characterAlreadyAnsweredWrong2">You had previously answered this question wrong. (Protip) It costs less to unlock a wrong question than an unattempted one.</string>
+    <string name="characterAlreadyAnsweredWrong3">Did the question perplex you? Hmm. No wonder the app is named Perplexy.</string>
+
+    <!-- Question answered correctly right now-->
+    <string name="characterAnsweredNowRight1">Awesome! You answered this right. Move ahead to the next unlocked question. Remember, you always have a minimum of 3 unlocked questions.</string>
+    <string name="characterAnsweredNowRight2">Great work! (Protip) The more questions you answer, the faster your brain thinks, the easier it is to kill mosquitoes.</string>
+    <string name="characterAnsweredNowRight3">Amazing! If you loved this question, would you consider watching an ad? *puppy eyes*</string>
+
+    <!-- Question answered wrong right now-->
+    <string name="characterAnsweredNowWrong1">This question is locked because you answered it wrong. (Protip) Don't answer it wrong next time.</string>
+    <string name="characterAnsweredNowWrong2">Oops! That wasn't quite right. (Protip) Instead of trying another question, unlock this one and try again!</string>
+    <string name="characterAnsweredNowWrong3">Perplexed! You got this wrong. (Protip) Unlock and try again. Or. Watch an ad and stay blessed.</string>
+
+    <!-- Question not yet unlocked -->
+    <string name="characterQuestionLocked1">This question hasn't been unlocked yet. Till then, keep calm and be a ninja.</string>
+    <string name="characterQuestionLocked2">This question hasn't been unlocked yet. Till then, keep calm and go to hogwarts</string>
+    <string name="characterQuestionLocked3">This question hasn't been unlocked yet. Till then, keep calm and kill zombies.</string>
+    <string name="characterQuestionLocked4">This question hasn't been unlocked yet. Till then, keep calm and freak out.</string>
+    <string name="characterQuestionLocked5">This question hasn't been unlocked yet. Till then, keep calm and snatch the snitch.</string>
+    <string name="characterQuestionLocked6">This question hasn't been unlocked yet. Till then, keep calm and stay sherlocked.</string>
+    <string name="characterQuestionLocked7">This question hasn't been unlocked yet. Till then, keep calm and stop crushing candies.</string>
+
+    <!-- Answered correctly first time, now answered wron-->
+
 </resources>
