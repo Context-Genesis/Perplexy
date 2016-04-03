@@ -45,7 +45,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_toRightOf="@id/incorrect_ans_feedback_text_image"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:padding="10dp"
                     android:text="You didn't get this one quite right"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"

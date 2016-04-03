@@ -14,7 +14,13 @@ public class SoundManager {
 
     public static MediaPlayer mediaPlayer = new MediaPlayer();
 
+    public static MediaPlayer setupSound(Context context) {
+        mediaPlayer.setVolume(1, 1);
+        return mediaPlayer;
+    }
+
     public static void playSwipeSound(Context context) {
+        mediaPlayer = setupSound(context);
         try {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
@@ -41,6 +47,7 @@ public class SoundManager {
     }
 
     public static void playButtonClickSound(Context context) {
+        mediaPlayer = setupSound(context);
         try {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
@@ -68,6 +75,7 @@ public class SoundManager {
     }
 
     public static void playPadCharacterSound(Context context) {
+        mediaPlayer = setupSound(context);
         try {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
@@ -96,6 +104,7 @@ public class SoundManager {
 
 
     public static void playCorrectAnswerSound(Context context) {
+        mediaPlayer = setupSound(context);
         try {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
@@ -113,6 +122,7 @@ public class SoundManager {
     }
 
     public static void playWrongAnswerSound(Context context) {
+        mediaPlayer = setupSound(context);
         try {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
@@ -129,6 +139,7 @@ public class SoundManager {
     }
 
     public static void playCharacterOpenedSound(Context context) {
+        mediaPlayer = setupSound(context);
         try {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
@@ -145,6 +156,7 @@ public class SoundManager {
     }
 
     public static void playCharacterClosedSound(Context context) {
+        mediaPlayer = setupSound(context);
         try {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
@@ -161,6 +173,7 @@ public class SoundManager {
     }
 
     public static void playBackClickSound(Context context) {
+        mediaPlayer = setupSound(context);
         try {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();

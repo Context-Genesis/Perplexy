@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_margin="5dp"
@@ -36,12 +37,13 @@
                     android:src="@drawable/hint" />
 
                 <TextView
-                    android:id="@+id/char_unlock_dialog_tv"
+                    android:id="@+id/char_unlock_feeback_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:gravity="center"
+                    android:layout_toEndOf="@+id/imageView"
+                    android:layout_toRightOf="@+id/imageView"
+                    android:gravity="left"
                     android:padding="10dp"
                     android:text="Want to unlock this question? "
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"

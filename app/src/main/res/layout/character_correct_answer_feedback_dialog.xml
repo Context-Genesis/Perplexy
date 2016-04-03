@@ -34,7 +34,8 @@
                     android:layout_height="48dp"
                     android:layout_margin="5dp"
                     android:padding="5dp"
-                    android:src="@drawable/hint" />
+                    android:src="@drawable/hint"
+                    android:id="@+id/imageView4" />
 
                 <TextView
                     android:id="@+id/char_feedback_title_text"
@@ -42,12 +43,14 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:padding="10dp"
                     android:text=" Good. You got it right ! "
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textColor="@color/grey"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/imageView4"
+                    android:layout_toEndOf="@+id/imageView4" />
 
             </RelativeLayout>
 

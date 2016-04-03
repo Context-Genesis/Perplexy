@@ -38,7 +38,7 @@
                     android:src="@drawable/hint" />
 
                 <TextView
-                    android:id="@+id/char_feedback_incorrect_title_text"
+                    android:id="@+id/char_q_clicked_feedback_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"

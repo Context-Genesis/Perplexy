@@ -20,6 +20,7 @@ import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.elements.GenericQuestion;
+import com.rohanx96.admobproto.utils.CharacterStrings;
 import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -70,12 +71,18 @@ public class CharacterHelper {
         nohint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_nohint);
         yeshint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_yeshint);
         showhiddenhint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_showhiddenhint);
-        characterText = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_title_text);
+        characterText = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_feedback_text);
 
         showhint.setVisibility(View.VISIBLE);
         confirmhint.setVisibility(View.GONE);
         showhiddenhint.setVisibility(View.GONE);
         showhiddenhint.setText(question.hint);
+
+        if (ansDetails.get(mCurrentPage).status == Constants.CORRECT) {
+            characterText.setText(CharacterStrings.getStringAlreadyAnsweredRight(context));
+        } else {
+            characterText.setText(CharacterStrings.getStringCharacterTrying(context));
+        }
 
         if (ansDetails.get(mCurrentPage).hint_displayed == true) {
             hintprice.setText("0");
@@ -272,11 +279,15 @@ public class CharacterHelper {
         int status = GenericAnswerDetails.getStatus(currentPage + 1, category);
         int unlockPriceValue = Constants.UNLOCK_UNAVAILABLE_PRICE;
 
+        TextView feedbackText = (TextView) mParentActivity.findViewById(R.id.char_unlock_feeback_text);
+
         TextView unlockPrice = (TextView) mParentActivity.findViewById(R.id.char_unlock_price);
         if (status == Constants.INCORRECT) {
             unlockPriceValue = Constants.UNLOCK_INCORRECT_PRICE;
+            feedbackText.setText(CharacterStrings.getStringAlreadyAnsweredWrong(context));
         } else if (status == Constants.UNAVAILABLE) {
             unlockPriceValue = Constants.UNLOCK_UNAVAILABLE_PRICE;
+            feedbackText.setText(CharacterStrings.getStringQuestionLocked(context));
         }
         unlockPrice.setText(String.format("%d", unlockPriceValue));
         final TextView unlock = (TextView) mParentActivity.findViewById(R.id.char_unlock_tv_unlock);
@@ -333,6 +344,7 @@ public class CharacterHelper {
                 SoundManager.playButtonClickSound(context);
             }
         });
+
     }
 
     public void setupCorrectAnswerFeedback(int category, int currentPage, final int nextQuestion, final Context context) {
@@ -375,11 +387,17 @@ public class CharacterHelper {
                 }
             });
         }
+
+        TextView feebackTv = (TextView) mParentActivity.findViewById(R.id.char_feedback_title_text);
+        feebackTv.setText(CharacterStrings.getStringNowAnsweredRight(context));
     }
 
     public void setupIncorrectAnswerFeedback(final int category, final int currentPage, final Context context) {
         final GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, category, currentPage);
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(category);
+
+        TextView feebackTv = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_title_text);
+        feebackTv.setText(CharacterStrings.getStringNowAnsweredWrong(context));
 
         TextView unlockPrice = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_unlock_price);
         unlockPrice.setText(String.format("%d", Constants.UNLOCK_INCORRECT_PRICE));
