@@ -343,7 +343,7 @@ public class QuestionTextBoxFragment extends Fragment {
                         }
                     }
                 });
-                cardContent.addView(lock, cardContent.getChildCount()-2);
+                cardContent.addView(lock, cardContent.getChildCount() - 2);
                 canvas.setVisibility(View.GONE);
                 break;
             case Constants.INCORRECT:

@@ -4,6 +4,9 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
+    <string name="answered_wrong">Answered Wrong</string>
+    <string name="answered_right">Answered Right</string>
+
     <!-- Trying to answer question, clicks guy -->
     <string name="characterTrying1">Hey there! Are you stuck? Here\'s how I can help you.</string>
     <string name="characterTrying2">Are you stuck? Buy a hint, or (Protip) go do some meditation.</string>

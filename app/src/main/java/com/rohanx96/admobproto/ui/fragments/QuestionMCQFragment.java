@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -64,8 +63,8 @@ public class QuestionMCQFragment extends Fragment {
     @Bind(R.id.qcard_mcq_option4)
     TextView tvOption4;
 
-    @Bind(R.id.canvas_pull)
-    Button canvas_pull;
+    @Bind(R.id.qcard_mcq_q_status)
+    TextView qStatus;
 
     private boolean isUIVisibleToUser = false;
     private RelativeLayout cardContent;
@@ -272,7 +271,7 @@ public class QuestionMCQFragment extends Fragment {
                         }
                     }
                 });
-                cardContent.addView(lock, cardContent.getChildCount()-1);
+                cardContent.addView(lock, cardContent.getChildCount() - 1);
                 break;
             case Constants.INCORRECT:
                 //mCallback.setIsQuestionLocked(true);
@@ -299,7 +298,7 @@ public class QuestionMCQFragment extends Fragment {
                         }
                     }
                 });
-                cardContent.addView(options_lock, cardContent.getChildCount()-1);
+                cardContent.addView(options_lock, cardContent.getChildCount() - 1);
                 break;
         }
     }

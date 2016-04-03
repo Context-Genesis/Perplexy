@@ -77,6 +77,9 @@ public class QuestionWordFragment extends Fragment {
     @Bind(R.id.word_canvas_pull)
     Button canvas;
 
+    @Bind(R.id.qcard_word_q_status)
+    TextView qStatus;
+
     ArrayList<Character> jumbledCharacters;
 
     String answer, answerPadCharacters;
@@ -434,7 +437,7 @@ public class QuestionWordFragment extends Fragment {
                         }
                     }
                 });
-                cardContent.addView(lock, cardContent.getChildCount()-2);
+                cardContent.addView(lock, cardContent.getChildCount() - 2);
                 canvas.setVisibility(View.GONE);
                 break;
             case Constants.INCORRECT:
