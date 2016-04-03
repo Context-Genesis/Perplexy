@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -24,9 +25,6 @@ public class CharacterStore extends Activity {
 
     @Bind(R.id.store_image)
     ImageView characterImage;
-
-    @Bind(R.id.store_character_text)
-    TextView characterText;
 
     @Bind(R.id.store_character_name)
     TextView characterName;
@@ -52,6 +50,11 @@ public class CharacterStore extends Activity {
     @Bind(R.id.store_ll)
     LinearLayout linearLayout;
 
+    @Bind(R.id.store_left)
+    ImageView leftButton;
+    @Bind(R.id.store_right)
+    ImageView rightButton;
+
     public static final int CHARACTER_GOOD_BWOY = 0;
     public static final int CHARACTER_SUPER_HERO = 1;
     public static final int CHARACTER_BOX_CARTOON = 2;
@@ -70,6 +73,8 @@ public class CharacterStore extends Activity {
 
     public static final String STRING_CURRENT_CHARACTER = "STRING_CURRENT_CHARACTER";
     public static final String STRING_UNLOCKED_CHARACTERS = "STRING_UNLOCKED_CHARACTERS";
+
+    public static final String TAG = CharacterStore.class.getSimpleName();
 
     private int currentCharacter = 0;
 
@@ -95,25 +100,21 @@ public class CharacterStore extends Activity {
     @OnClick(R.id.storeCharacterOption1)
     public void storeCharacterOption1() {
         setCharacterNameAndImage(CHARACTER_GOOD_BWOY);
-        currentCharacter = CHARACTER_GOOD_BWOY;
     }
 
     @OnClick(R.id.storeCharacterOption2)
     public void storeCharacterOption2() {
         setCharacterNameAndImage(CHARACTER_BOX_CARTOON);
-        currentCharacter = CHARACTER_BOX_CARTOON;
     }
 
     @OnClick(R.id.storeCharacterOption3)
     public void storeCharacterOption3() {
         setCharacterNameAndImage(CHARACTER_SUPER_HERO);
-        currentCharacter = CHARACTER_SUPER_HERO;
     }
 
     @OnClick(R.id.storeCharacterOption4)
     public void storeCharacterOption4() {
         setCharacterNameAndImage(CHARACTER_MINIONS);
-        currentCharacter = CHARACTER_MINIONS;
     }
 
     @OnClick(R.id.store_back)
@@ -121,7 +122,25 @@ public class CharacterStore extends Activity {
         onBackPressed();
     }
 
+    @OnClick(R.id.store_left)
+    public void storeLeft() {
+        Log.wtf(TAG, "" + currentCharacter);
+        currentCharacter = currentCharacter <= 0 ? 0 : currentCharacter--;
+        Log.wtf(TAG, "" + currentCharacter);
+        setCharacterNameAndImage(currentCharacter);
+    }
+
+    @OnClick(R.id.store_right)
+    public void storeRight() {
+        Log.wtf(TAG, "" + currentCharacter);
+        currentCharacter = currentCharacter >= CHARACTER_TYPES.length - 1 ? CHARACTER_TYPES.length - 1 : currentCharacter++;
+        Log.wtf(TAG, "" + currentCharacter);
+        setCharacterNameAndImage(currentCharacter);
+    }
+
     private void setCharacterNameAndImage(int WHICH) {
+        currentCharacter = WHICH;
+
         switch (CHARACTER_TYPES[WHICH]) {
             case CHARACTER_BOX_CARTOON:
                 characterName.setText("Hi! I'm a Box Cartoon");
@@ -147,6 +166,17 @@ public class CharacterStore extends Activity {
         } else {
             buyButton.setText("Use Me!");
             lockImage.setVisibility(View.GONE);
+        }
+
+        if (currentCharacter == 0) {
+            leftButton.setVisibility(View.GONE);
+        } else {
+            leftButton.setVisibility(View.VISIBLE);
+        }
+        if (currentCharacter == CHARACTER_TYPES.length - 1) {
+            rightButton.setVisibility(View.GONE);
+        } else {
+            rightButton.setVisibility(View.VISIBLE);
         }
     }
 
