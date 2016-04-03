@@ -33,9 +33,6 @@ public class FrontPageFragment extends Fragment {
     @Bind(R.id.home_seekbar)
     SeekBar gameSeekBar;
 
-    @Bind(R.id.home_play)
-    ImageView playButton;
-
     @Bind(R.id.game_1)
     ImageView gameType1;
     @Bind(R.id.game_2)
@@ -90,7 +87,7 @@ public class FrontPageFragment extends Fragment {
 
                     }
                 });
-
+                selectedGameType = progress;
                 resetLevelSizes(progress);
                 gameTypeText.startAnimation(slideOut);
             }
@@ -144,15 +141,6 @@ public class FrontPageFragment extends Fragment {
         SoundManager.playButtonClickSound(getActivity());
     }
 
-    @OnClick(R.id.home_settings)
-    public void settingsFrag() {
-        
-    }
-
-    @OnClick(R.id.home_leaderboard)
-    public void leaderboardFrag() {
-
-    }
 
     private String getGameTypeText(int lvl) {
         switch (lvl) {

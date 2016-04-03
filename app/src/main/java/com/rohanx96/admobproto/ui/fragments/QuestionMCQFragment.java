@@ -63,9 +63,6 @@ public class QuestionMCQFragment extends Fragment {
     @Bind(R.id.qcard_mcq_option4)
     TextView tvOption4;
 
-    @Bind(R.id.qcard_mcq_q_status)
-    TextView qStatus;
-
     private boolean isUIVisibleToUser = false;
     private RelativeLayout cardContent;
 
