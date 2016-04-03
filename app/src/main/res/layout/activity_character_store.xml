@@ -188,7 +188,7 @@
                 <ImageView
                     android:layout_width="72dp"
                     android:layout_height="72dp"
-                    android:src="@drawable/character_happy_closed_128" />
+                    android:src="@drawable/monster_eyes_closed" />
             </LinearLayout>
 
             <LinearLayout
@@ -211,7 +211,7 @@
                 <ImageView
                     android:layout_width="72dp"
                     android:layout_height="72dp"
-                    android:src="@drawable/character_happy_closed_128" />
+                    android:src="@drawable/human_happy_open" />
             </LinearLayout>
 
             <LinearLayout

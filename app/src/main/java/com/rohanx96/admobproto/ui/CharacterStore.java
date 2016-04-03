@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -142,12 +141,12 @@ public class CharacterStore extends Activity {
                 break;
             case CHARACTER_SUPER_HERO:
                 characterName.setText("Hi! I'm za Super Hero");
-                characterImage.setImageResource(R.drawable.character_happy_closed_128);
+                characterImage.setImageResource(R.drawable.monster_happy_open);
                 characterOption2.setBackgroundResource(R.drawable.transparent_border);
                 break;
             case CHARACTER_BOX_CARTOON:
                 characterName.setText("Hi! I'm a Box Cartoon");
-                characterImage.setImageResource(R.drawable.character_happy_closed_128);
+                characterImage.setImageResource(R.drawable.human_happy_open);
                 characterOption3.setBackgroundResource(R.drawable.transparent_border);
                 break;
             case CHARACTER_MINIONS:
@@ -192,23 +191,23 @@ public class CharacterStore extends Activity {
                 editor.apply();
                 break;
             case CHARACTER_SUPER_HERO:
-                editor.putString(STRING_EXPRESSION_HAPPY_CLOSED, "character_happy_closed_128");
-                editor.putString(STRING_EXPRESSION_HAPPY_OPEN, "character_happy_open_128");
-                editor.putString(STRING_EXPRESSION_ANGRY, "character_angry_128");
-                editor.putString(STRING_EXPRESSION_BLUSH, "character_eyes_closed_128");
-                editor.putString(STRING_EXPRESSION_SAD_CLOSED, "character_sad_closed_128");
-                editor.putString(STRING_EXPRESSION_SAD_OPEN, "character_sad_128");
-                editor.putString(STRING_EXPRESSION_SHOCKED, "character_shocked_128");
+                editor.putString(STRING_EXPRESSION_HAPPY_CLOSED, "monster_angry");
+                editor.putString(STRING_EXPRESSION_HAPPY_OPEN, "monster_eyes_closed");
+                editor.putString(STRING_EXPRESSION_ANGRY, "monster_happy_closed");
+                editor.putString(STRING_EXPRESSION_BLUSH, "monster_happy_open");
+                editor.putString(STRING_EXPRESSION_SAD_CLOSED, "monster_sad");
+                editor.putString(STRING_EXPRESSION_SAD_OPEN, "monster_sad_closed");
+                editor.putString(STRING_EXPRESSION_SHOCKED, "monster_shocked");
                 editor.apply();
                 break;
             case CHARACTER_BOX_CARTOON:
-                editor.putString(STRING_EXPRESSION_HAPPY_CLOSED, "character_happy_closed_128");
-                editor.putString(STRING_EXPRESSION_HAPPY_OPEN, "character_happy_open_128");
-                editor.putString(STRING_EXPRESSION_ANGRY, "character_angry_128");
-                editor.putString(STRING_EXPRESSION_BLUSH, "character_eyes_closed_128");
-                editor.putString(STRING_EXPRESSION_SAD_CLOSED, "character_sad_closed_128");
-                editor.putString(STRING_EXPRESSION_SAD_OPEN, "character_sad_128");
-                editor.putString(STRING_EXPRESSION_SHOCKED, "character_shocked_128");
+                editor.putString(STRING_EXPRESSION_HAPPY_CLOSED, "human_angry");
+                editor.putString(STRING_EXPRESSION_HAPPY_OPEN, "human_eyes_closed");
+                editor.putString(STRING_EXPRESSION_ANGRY, "human_happy_closed");
+                editor.putString(STRING_EXPRESSION_BLUSH, "human_happy_open");
+                editor.putString(STRING_EXPRESSION_SAD_CLOSED, "human_sad");
+                editor.putString(STRING_EXPRESSION_SAD_OPEN, "human_sad_closed");
+                editor.putString(STRING_EXPRESSION_SHOCKED, "human_shocked");
                 editor.apply();
                 break;
             case CHARACTER_MINIONS:
