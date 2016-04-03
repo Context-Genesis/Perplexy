@@ -43,8 +43,8 @@ public class FrontPageFragment extends Fragment {
     ImageView gameType2;
     @Bind(R.id.game_3)
     ImageView gameType3;
-    @Bind(R.id.game_4)
-    ImageView gameType4;
+
+    private int selectedGameType = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,24 +111,21 @@ public class FrontPageFragment extends Fragment {
     @OnClick(R.id.game_1)
     public void onClickGame1() {
         gameSeekBar.setProgress(0);
+        selectedGameType = Constants.GAME_TYPE_LOGIC;
         SoundManager.playSwipeSound(getActivity());
     }
 
     @OnClick(R.id.game_2)
     public void onClickGame2() {
         gameSeekBar.setProgress(1);
+        selectedGameType = Constants.GAME_TYPE_RIDDLE;
         SoundManager.playSwipeSound(getActivity());
     }
 
     @OnClick(R.id.game_3)
     public void onClickGame3() {
         gameSeekBar.setProgress(2);
-        SoundManager.playSwipeSound(getActivity());
-    }
-
-    @OnClick(R.id.game_4)
-    public void onClickGame4() {
-        gameSeekBar.setProgress(3);
+        selectedGameType = Constants.GAME_TYPE_SEQUENCES;
         SoundManager.playSwipeSound(getActivity());
     }
 
@@ -139,7 +136,7 @@ public class FrontPageFragment extends Fragment {
          */
         Intent questionsActivity = new Intent(getActivity(), NumberLineActivity.class);
         /*Implement switch case here once we set up code and questions*/
-        questionsActivity.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, Constants.GAME_TYPE_RIDDLE);
+        questionsActivity.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, selectedGameType);
         startActivity(questionsActivity);
 
         /* This will stop the falling drawables animation when the activity has been left. Improves performance */
@@ -151,11 +148,11 @@ public class FrontPageFragment extends Fragment {
     private String getGameTypeText(int lvl) {
         switch (lvl) {
             case 0:
-                return "If a:b and c:d, then x: ?";
+                return "Do you have the logic in you?";
             case 1:
                 return "Riddle Me This";
             case 2:
-                return "Do you have the logic in you?";
+                return "If a:b and c:d, then x: ?";
             case 3:
                 return "4 Pictures 1 Word";
             default:
@@ -173,9 +170,6 @@ public class FrontPageFragment extends Fragment {
         gameType3.requestLayout();
         gameType3.getLayoutParams().height = 40;
         gameType3.getLayoutParams().width = 40;
-        gameType4.requestLayout();
-        gameType4.getLayoutParams().height = 40;
-        gameType4.getLayoutParams().width = 40;
         switch (lvl) {
             case 0:
                 gameType1.requestLayout();
@@ -192,13 +186,23 @@ public class FrontPageFragment extends Fragment {
                 gameType3.getLayoutParams().height = 50;
                 gameType3.getLayoutParams().width = 50;
                 return;
-            case 3:
+            /*case 3:
                 gameType4.requestLayout();
                 gameType4.getLayoutParams().height = 50;
                 gameType4.getLayoutParams().width = 50;
-                return;
+                return;*/
             default:
                 return;
         }
+    }
+
+    @OnClick(R.id.home_settings_button)
+    public void openSettings(){
+        ((MainActivity)getActivity()).goToSettings();
+    }
+
+    @OnClick(R.id.home_statistics_button)
+    public void openStats(){
+        ((MainActivity)getActivity()).goToStats();
     }
 }

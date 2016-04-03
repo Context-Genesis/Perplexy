@@ -130,4 +130,12 @@ public class MainActivity extends FragmentActivity {
     public FallingDrawables getFallingDrawables() {
         return fallingDrawables;
     }
+
+    public void goToSettings(){
+        mPager.setCurrentItem(0,true);
+    }
+
+    public void goToStats(){
+        mPager.setCurrentItem(2,true);
+    }
 }
