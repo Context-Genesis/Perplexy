@@ -14,6 +14,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
+import com.rohanx96.admobproto.ui.CharacterStore;
 import com.rohanx96.admobproto.ui.MainActivity;
 import com.rohanx96.admobproto.ui.NumberLineActivity;
 import com.rohanx96.admobproto.utils.Constants;
@@ -144,16 +145,6 @@ public class FrontPageFragment extends Fragment {
         SoundManager.playButtonClickSound(getActivity());
     }
 
-    @OnClick(R.id.home_settings)
-    public void settingsFrag() {
-        
-    }
-
-    @OnClick(R.id.home_leaderboard)
-    public void leaderboardFrag() {
-
-    }
-
     private String getGameTypeText(int lvl) {
         switch (lvl) {
             case 0:
@@ -206,12 +197,13 @@ public class FrontPageFragment extends Fragment {
     }
 
     @OnClick(R.id.home_settings_button)
-    public void openSettings(){
-        ((MainActivity)getActivity()).goToSettings();
+    public void openSettings() {
+//        ((MainActivity) getActivity()).goToSettings();
+        startActivity(new Intent(getActivity(), CharacterStore.class));
     }
 
     @OnClick(R.id.home_statistics_button)
-    public void openStats(){
-        ((MainActivity)getActivity()).goToStats();
+    public void openStats() {
+        ((MainActivity) getActivity()).goToStats();
     }
 }

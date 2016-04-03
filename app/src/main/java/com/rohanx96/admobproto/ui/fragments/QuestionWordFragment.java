@@ -77,9 +77,6 @@ public class QuestionWordFragment extends Fragment {
     @Bind(R.id.word_canvas_pull)
     Button canvas;
 
-    @Bind(R.id.qcard_word_q_status)
-    TextView qStatus;
-
     ArrayList<Character> jumbledCharacters;
 
     String answer, answerPadCharacters;
