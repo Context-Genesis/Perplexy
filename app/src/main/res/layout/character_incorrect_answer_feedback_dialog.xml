@@ -46,10 +46,11 @@
                     android:layout_gravity="center"
                     android:layout_toRightOf="@id/incorrect_ans_feedback_text_image"
                     android:gravity="left"
-                    android:padding="10dp"
+                    android:padding="5dp"
                     android:text="You didn't get this one quite right"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textColor="@color/grey"
+                    android:textSize="@dimen/charactersubheading"
                     android:textStyle="bold" />
 
             </RelativeLayout>
@@ -85,7 +86,7 @@
                         android:text="Buy Solution"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                         android:textColor="@color/orange_d_zest"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/characterheading" />
 
                     <LinearLayout
                         android:id="@+id/char_feedback_incorrect_ll_confirmsolution"
@@ -104,10 +105,10 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:textSize="20dp"
                             android:text="NO"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                            android:textColor="@color/red_l_poppy" />
+                            android:textColor="@color/red_l_poppy"
+                            android:textSize="@dimen/characterheading" />
 
                         <TextView
                             android:id="@+id/char_feedback_incorrect_yessolution"
@@ -115,11 +116,11 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:textSize="20dp"
                             android:gravity="center"
                             android:text="YES"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                            android:textColor="@color/green_l_carribean" />
+                            android:textColor="@color/green_l_carribean"
+                            android:textSize="@dimen/characterheading" />
 
                     </LinearLayout>
 
@@ -133,7 +134,7 @@
                         android:text="100"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                         android:textColor="@color/orange_d_zest"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/characterheading" />
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -152,7 +153,7 @@
                     android:text="This is the solution. This could get real big and fuck the layout. Just like this"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/grey"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/charactersubheading"
                     android:visibility="gone" />
 
 
@@ -160,8 +161,8 @@
                     android:id="@+id/char_feedback_incorrect_ll_unlock"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp">
 
                     <TextView
                         android:id="@+id/char_feedback_incorrect_tv_unlock"
@@ -173,12 +174,12 @@
                         android:text="Unlock Question"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                         android:textColor="@color/blue_d_chambray"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/characterheading" />
 
                     <LinearLayout
                         android:id="@+id/char_feedback_incorrect_ll_confirm_unlock"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1.7"
                         android:gravity="center"
@@ -191,11 +192,11 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:textSize="20dp"
                             android:gravity="center"
                             android:text="NO"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                            android:textColor="@color/red_l_poppy" />
+                            android:textColor="@color/red_l_poppy"
+                            android:textSize="@dimen/characterheading" />
 
                         <TextView
                             android:id="@+id/char_feedback_incorrect_yes_unlock"
@@ -205,9 +206,9 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="YES"
-                            android:textSize="20dp"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                            android:textColor="@color/green_l_carribean" />
+                            android:textColor="@color/green_l_carribean"
+                            android:textSize="@dimen/characterheading" />
 
                     </LinearLayout>
 
@@ -221,7 +222,7 @@
                         android:text="200"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                         android:textColor="@color/blue_d_chambray"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/characterheading" />
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -257,30 +258,34 @@
 
                 <TextView
                     android:id="@+id/char_feedback_incorrect_title_ad"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/char_feedback_incorrect_videoad"
                     android:layout_alignBottom="@+id/char_feedback_incorrect_videoad"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
+                    android:layout_toRightOf="@id/imageView3"
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="Do not have enough coins ?"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textColor="@color/grey"
+                    android:textSize="@dimen/charactersubheading"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/char_feedback_incorrect_videoad"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
+                    android:layout_toRightOf="@id/imageView3"
                     android:gravity="center"
                     android:text="Watch A Video"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/characterheading" />
 
             </RelativeLayout>
 
@@ -303,7 +308,7 @@
                 android:src="@drawable/favorite" />
 
             <ImageView
-                android:id="@+id/char_feedback_incorrect_char_q_clicked_facebook_share"
+                android:id="@+id/char_feedback_incorrect_char_q_clicked_normal_share"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_margin="8dp"
@@ -316,7 +321,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_margin="8dp"
-                android:layout_toRightOf="@id/char_feedback_incorrect_char_q_clicked_facebook_share"
+                android:layout_toRightOf="@id/char_feedback_incorrect_char_q_clicked_normal_share"
                 android:scaleType="fitCenter"
                 android:src="@drawable/whatsapp" />
         </RelativeLayout>

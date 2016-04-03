@@ -44,12 +44,13 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:gravity="left"
-                    android:padding="10dp"
+                    android:padding="5dp"
                     android:text=" Good. You got it right ! "
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textColor="@color/grey"
                     android:textStyle="bold"
                     android:layout_toRightOf="@+id/imageView4"
+                    android:textSize="@dimen/charactersubheading"
                     android:layout_toEndOf="@+id/imageView4" />
 
             </RelativeLayout>
@@ -77,23 +78,19 @@
                     android:layout_gravity="center"
                     android:layout_weight="1.7"
                     android:gravity="center|left"
-                    android:padding="8dp"
                     android:text="Explanation"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/orange_d_zest"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/characterheading" />
 
                 <TextView
                     android:id="@+id/char_feedback_solution_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
+                    android:textSize="@dimen/charactersubheading"
                     android:text="This is the solution. This could get real big and fuck the layout. Just like this"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/grey"
-                    android:textSize="15dp" />
+                    android:textColor="@color/grey" />
 
             </LinearLayout>
 
@@ -111,6 +108,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -124,6 +122,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textColor="@color/grey"
                     android:textStyle="bold"
+                    android:textSize="@dimen/charactersubheading"
                     android:visibility="gone" />
 
                 <TextView
@@ -134,7 +133,8 @@
                     android:gravity="center"
                     android:text="You earned 100 coins"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/characterheading"/>
 
                 <TextView
                     android:id="@+id/char_feedback_next_question"
@@ -146,7 +146,8 @@
                     android:text="Question 21 is now unlocked"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textColor="@color/grey"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textSize="@dimen/charactersubheading"/>
 
                 <TextView
                     android:id="@+id/char_feedback_goto_next"
@@ -154,10 +155,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:paddingBottom="8dp"
                     android:text="PROCEED TO NEXT QUESTION"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/characterheading" />
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
