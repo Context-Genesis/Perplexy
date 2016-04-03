@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
@@ -243,6 +245,8 @@ public class CharacterHelper {
             }
         });
 
+        setupShowAd(CHARACTER_TYPE_UNLOCKED);
+
         mParentActivity.findViewById(R.id.char_q_clicked_whatsapp_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -345,6 +349,7 @@ public class CharacterHelper {
             }
         });
 
+        setupShowAd(CHARACTER_TYPE_LOCKED);
     }
 
     public void setupCorrectAnswerFeedback(int category, int currentPage, final int nextQuestion, final Context context) {
@@ -580,8 +585,32 @@ public class CharacterHelper {
                 SoundManager.playButtonClickSound(context);
             }
         });
+
+        setupShowAd(CHARACTER_TYPE_FEEDBACK_INCORRECT);
     }
 
+    private void setupShowAd(int characterType){
+        TextView adText;
+        switch (characterType){
+            case CHARACTER_TYPE_LOCKED:
+                adText = (TextView) mParentActivity.findViewById(R.id.char_unlock_videoad_unlock);
+                break;
+            case CHARACTER_TYPE_UNLOCKED:
+                adText = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_videoad);
+                break;
+            case CHARACTER_TYPE_FEEDBACK_INCORRECT:
+                adText = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_videoad);
+                break;
+            default:
+                adText = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_videoad);
+        }
+        adText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((QuestionsActivity)mParentActivity).showAdd();
+            }
+        });
+    }
     public void animateAdView(int type) {
         View adView = null;
         if (type == CHARACTER_TYPE_UNLOCKED)
@@ -602,3 +631,4 @@ public class CharacterHelper {
         }
     }
 }
+

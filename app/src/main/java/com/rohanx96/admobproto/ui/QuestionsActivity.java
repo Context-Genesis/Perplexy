@@ -29,6 +29,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
@@ -57,7 +60,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     private int mCurrentPage;
     private boolean isCharacterDialogOpen = false;
     private boolean isLocked = false;
-
+    InterstitialAd mInterstitialAd;
     SharedPreferences pref;
 
     int CATEGORY = -1;
@@ -104,8 +107,8 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         } else {
             correct_indicator.setImageResource(0);
         }
-
         setupCharacter();
+        setupAd();
     }
 
     @Override
@@ -580,5 +583,32 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
             characterDialog.startAnimation(scaleAnimation);
         }
+    }
+
+    private void setupAd(){
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+        requestNewInterstitial();
+    }
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("A63B0CDF9A759A19A47A01100878B546")
+                .build();
+        mInterstitialAd.loadAd(adRequest);
+    }
+
+    public void showAdd(){
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+        else
+            Snackbar.make(mContainer,"Cannot load add at this time. Please check your internet connection.",Snackbar.LENGTH_LONG).show();
     }
 }
