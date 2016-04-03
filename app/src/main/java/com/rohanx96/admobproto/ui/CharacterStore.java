@@ -86,7 +86,6 @@ public class CharacterStore extends Activity {
 
         setCharacterNameAndImage(getCurrentCharacter(getApplicationContext()));
         currentCharacter = getCurrentCharacter(getApplicationContext());
-//        setCurrentCharacter(getApplicationContext(), getCurrentCharacter(getApplicationContext()));
 
     }
 
@@ -104,12 +103,12 @@ public class CharacterStore extends Activity {
 
     @OnClick(R.id.storeCharacterOption2)
     public void storeCharacterOption2() {
-        setCharacterNameAndImage(CHARACTER_BOX_CARTOON);
+        setCharacterNameAndImage(CHARACTER_SUPER_HERO);
     }
 
     @OnClick(R.id.storeCharacterOption3)
     public void storeCharacterOption3() {
-        setCharacterNameAndImage(CHARACTER_SUPER_HERO);
+        setCharacterNameAndImage(CHARACTER_BOX_CARTOON);
     }
 
     @OnClick(R.id.storeCharacterOption4)
@@ -124,39 +123,37 @@ public class CharacterStore extends Activity {
 
     @OnClick(R.id.store_left)
     public void storeLeft() {
-        Log.wtf(TAG, "" + currentCharacter);
-        currentCharacter = currentCharacter <= 0 ? 0 : currentCharacter--;
-        Log.wtf(TAG, "" + currentCharacter);
-        setCharacterNameAndImage(currentCharacter);
+        setCharacterNameAndImage(--currentCharacter);
     }
 
     @OnClick(R.id.store_right)
     public void storeRight() {
-        Log.wtf(TAG, "" + currentCharacter);
-        currentCharacter = currentCharacter >= CHARACTER_TYPES.length - 1 ? CHARACTER_TYPES.length - 1 : currentCharacter++;
-        Log.wtf(TAG, "" + currentCharacter);
-        setCharacterNameAndImage(currentCharacter);
+        setCharacterNameAndImage(++currentCharacter);
     }
 
     private void setCharacterNameAndImage(int WHICH) {
         currentCharacter = WHICH;
-
+        removeAllBorders();
         switch (CHARACTER_TYPES[WHICH]) {
-            case CHARACTER_BOX_CARTOON:
-                characterName.setText("Hi! I'm a Box Cartoon");
-                characterImage.setImageResource(R.drawable.character_happy_closed_128);
-                break;
             case CHARACTER_GOOD_BWOY:
                 characterName.setText("Hi! I'm the Good Bwoy");
                 characterImage.setImageResource(R.drawable.character_happy_closed_128);
-                break;
-            case CHARACTER_MINIONS:
-                characterName.setText("Hi! I'm la Minion");
-                characterImage.setImageResource(R.drawable.character_happy_closed_128);
+                characterOption1.setBackgroundResource(R.drawable.transparent_border);
                 break;
             case CHARACTER_SUPER_HERO:
                 characterName.setText("Hi! I'm za Super Hero");
                 characterImage.setImageResource(R.drawable.character_happy_closed_128);
+                characterOption2.setBackgroundResource(R.drawable.transparent_border);
+                break;
+            case CHARACTER_BOX_CARTOON:
+                characterName.setText("Hi! I'm a Box Cartoon");
+                characterImage.setImageResource(R.drawable.character_happy_closed_128);
+                characterOption3.setBackgroundResource(R.drawable.transparent_border);
+                break;
+            case CHARACTER_MINIONS:
+                characterName.setText("Hi! I'm la Minion");
+                characterImage.setImageResource(R.drawable.character_happy_closed_128);
+                characterOption4.setBackgroundResource(R.drawable.transparent_border);
                 break;
         }
 
@@ -249,5 +246,13 @@ public class CharacterStore extends Activity {
     private String getUnlockedCharacters(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(CharacterStore.CHAR_SHARED_PREFS, Context.MODE_PRIVATE);
         return prefs.getString(STRING_UNLOCKED_CHARACTERS, "1000");
+        /*SET 1000 by default for the first character is unlocked by default*/
+    }
+
+    private void removeAllBorders() {
+        characterOption1.setBackgroundResource(0);
+        characterOption2.setBackgroundResource(0);
+        characterOption3.setBackgroundResource(0);
+        characterOption4.setBackgroundResource(0);
     }
 }
