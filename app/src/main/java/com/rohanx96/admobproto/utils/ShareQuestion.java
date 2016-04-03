@@ -30,7 +30,7 @@ import java.util.Date;
 
 public class ShareQuestion {
     public static final int REQUEST_WRITE_STORAGE = 112;
-    static Bitmap bitmap;             // needed for FB
+    static Bitmap bitmap;
 
     public static void shareImageWhatsapp(final Activity activity) {
         if (ContextCompat.checkSelfPermission(activity,
@@ -69,25 +69,10 @@ public class ShareQuestion {
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
-        }
-        else {
+        } else {
             Toast.makeText(activity, "Preparing for Share", Toast.LENGTH_LONG).show();
             shareImage(activity);
         }
-    }
-
-
-    // TODO : (DHRUV) Fb share kar idhar.
-    public static void shareImageFacebook(Activity activity) {
-        takeScreenshot(activity);
-        SharePhoto photo = new SharePhoto.Builder()
-                .setBitmap(bitmap)
-                .build();
-        SharePhotoContent content = new SharePhotoContent.Builder()
-                .addPhoto(photo)
-                .build();
-
-        Toast.makeText(activity, "This has not been tested!", Toast.LENGTH_LONG).show();
     }
 
     private static File takeScreenshot(Activity activity) {
@@ -100,7 +85,7 @@ public class ShareQuestion {
         v1.setDrawingCacheEnabled(true);
         bitmap = Bitmap.createBitmap(v1.getDrawingCache());
         v1.setDrawingCacheEnabled(false);
-        File imageFile = new File(Environment.getExternalStorageDirectory(),"/" + now + ".jpg");
+        File imageFile = new File(Environment.getExternalStorageDirectory(), "/" + now + ".jpg");
         if (!imageFile.exists()) {
             Log.i("Sharing", "creating file");
             try {
@@ -109,9 +94,9 @@ public class ShareQuestion {
                 e.printStackTrace();
             }
         }
-        Log.e("Sharing",mPath);
+        Log.e("Sharing", mPath);
         try {
-            FileOutputStream outputStream = new FileOutputStream(imageFile,true);
+            FileOutputStream outputStream = new FileOutputStream(imageFile, true);
             int quality = 100;
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
             outputStream.flush();
@@ -145,5 +130,13 @@ public class ShareQuestion {
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(activity, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static void shareIt(Activity activity, String question) {
+        Intent i = new Intent(android.content.Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject test");
+        i.putExtra(android.content.Intent.EXTRA_TEXT, question+"\n For more such questions download https://play.google.com/store/apps/details?id=" +activity.getPackageName());
+        activity.startActivity(Intent.createChooser(i, "Share via"));
     }
 }

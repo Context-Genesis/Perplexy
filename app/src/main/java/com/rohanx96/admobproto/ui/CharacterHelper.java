@@ -51,7 +51,7 @@ public class CharacterHelper {
      */
 
     public void setupCharacterDialog(int CATEGORY, final int mCurrentPage, final Context context) {
-        GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, CATEGORY, mCurrentPage);
+        final GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, CATEGORY, mCurrentPage);
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(CATEGORY);
 
         final TextView showhint, hintprice;
@@ -261,7 +261,7 @@ public class CharacterHelper {
             }
         });
 
-        mParentActivity.findViewById(R.id.char_q_clicked_facebook_share).setOnClickListener(new View.OnClickListener() {
+        mParentActivity.findViewById(R.id.char_q_clicked_normal_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((QuestionsCallback) mParentActivity).hideCharacterDialog();
@@ -269,7 +269,7 @@ public class CharacterHelper {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        ShareQuestion.shareImageFacebook(mParentActivity);
+                        ShareQuestion.shareIt(mParentActivity, question.question);
                     }
                 }, 600);
                 SoundManager.playButtonClickSound(context);
@@ -495,7 +495,7 @@ public class CharacterHelper {
             }
         });
 
-        mParentActivity.findViewById(R.id.char_feedback_incorrect_char_q_clicked_facebook_share).setOnClickListener(new View.OnClickListener() {
+        mParentActivity.findViewById(R.id.char_feedback_incorrect_char_q_clicked_normal_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((QuestionsCallback) mParentActivity).hideCharacterDialog();
@@ -503,7 +503,7 @@ public class CharacterHelper {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        ShareQuestion.shareImageFacebook(mParentActivity);
+                        ShareQuestion.shareIt(mParentActivity, question.question);
                     }
                 }, 600);
                 SoundManager.playButtonClickSound(context);

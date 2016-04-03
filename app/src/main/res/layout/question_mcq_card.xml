@@ -45,11 +45,11 @@
                 android:layout_above="@+id/navigating_fragments"
                 android:layout_below="@id/textAreaScroller">
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/qcard_mcq_options_ll"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="bottom"
                     android:orientation="vertical">
 
                     <TextView
@@ -57,7 +57,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:layout_weight="1"
                         android:background="@drawable/button_background"
                         android:gravity="center"
                         android:text="Option3"
@@ -69,7 +68,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/qcard_mcq_option1"
                         android:layout_margin="5dp"
-                        android:layout_weight="1"
                         android:background="@drawable/button_background"
                         android:gravity="center"
                         android:text="Option4"
@@ -81,7 +79,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/qcard_mcq_option2"
                         android:layout_margin="5dp"
-                        android:layout_weight="1"
                         android:background="@drawable/button_background"
                         android:gravity="center"
                         android:text="Option1"
@@ -93,12 +90,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/qcard_mcq_option3"
                         android:layout_margin="5dp"
-                        android:layout_weight="1"
                         android:background="@drawable/button_background"
                         android:gravity="center"
                         android:text="Option2"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/canvas_pull"
