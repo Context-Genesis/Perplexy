@@ -22,4 +22,5 @@ public interface QuestionsCallback {
     void setupIncorrectAnswerFeedback();
     void showIncorrectAnswerFeedback();
     void hideIncorrectAnswerFeedback();
+    void showAd(boolean isVideoAd);
 }

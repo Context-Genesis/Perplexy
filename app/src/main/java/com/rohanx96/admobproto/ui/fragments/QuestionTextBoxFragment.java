@@ -237,6 +237,10 @@ public class QuestionTextBoxFragment extends Fragment {
 
     public boolean isAnsweredCorrectly() {
         GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
+        if(pref.getInt(Constants.PREF_SHOW_AD,0)>=Constants.AD_DISPLAY_LIMIT)
+            mCallback.showAd(false);
+        else
+            pref.edit().putInt(Constants.PREF_SHOW_AD, pref.getInt(Constants.PREF_SHOW_AD, 0) + 1).apply();
         if (answer.equals(enteredCharacters)) {
             // Coins and question should be unlocked when status is available. For correct status relevant coins and question have already
             // been unlocked. For incorrect and unavailable user should not be able to answer.

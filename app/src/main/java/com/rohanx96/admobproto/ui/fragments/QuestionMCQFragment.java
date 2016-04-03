@@ -158,6 +158,10 @@ public class QuestionMCQFragment extends Fragment {
     }
 
     void isRight(String check) {
+        if(pref.getInt(Constants.PREF_SHOW_AD,0)>=Constants.AD_DISPLAY_LIMIT)
+            mCallback.showAd(false);
+        else
+            pref.edit().putInt(Constants.PREF_SHOW_AD,pref.getInt(Constants.PREF_SHOW_AD,0)+1).apply();
         if (genericQuestion.answer.equals(check)) {
             GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
             // Coins and question should be unlocked when status is available. For correct status relevant coins and question have already

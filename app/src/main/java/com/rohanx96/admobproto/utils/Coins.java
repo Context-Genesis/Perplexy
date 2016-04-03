@@ -13,6 +13,11 @@ public class Coins {
     private static SharedPreferences pref;
     private static SharedPreferences.Editor editor;
 
+    public static long getCurrentCoins(Context context){
+        pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        return pref.getLong(Constants.PREF_COINS, 0);
+    }
+
     public static void hint_access(Context context) {
         pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
         editor = pref.edit();
@@ -92,5 +97,16 @@ public class Coins {
         editor.putLong(Constants.PREF_COINS, coins - Constants.INCORRECT_PRICE).apply();
 
         QuestionFacts.increment_incorrect(context);
+    }
+
+    public static void addCoinsFromAd(Context context){
+        pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        editor = pref.edit();
+
+        long coins = pref.getLong(Constants.PREF_COINS, 0);
+        editor.putLong(Constants.PREF_COINS, coins + Constants.AD_VALUE_COINS).apply();
+
+        long earned_coins = pref.getLong(Constants.PREF_COINS_EARNED, 0);
+        editor.putLong(Constants.PREF_COINS_EARNED, earned_coins + Constants.AD_VALUE_COINS).apply();
     }
 }

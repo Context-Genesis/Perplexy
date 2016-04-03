@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.callbacks.QuestionsCallback;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
@@ -607,7 +605,7 @@ public class CharacterHelper {
         adText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((QuestionsActivity)mParentActivity).showAdd();
+                ((QuestionsActivity)mParentActivity).showAd(true);
             }
         });
     }

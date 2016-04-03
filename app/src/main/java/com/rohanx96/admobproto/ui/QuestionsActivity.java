@@ -39,6 +39,7 @@ import com.rohanx96.admobproto.ui.fragments.QuestionMCQFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionTextBoxFragment;
 import com.rohanx96.admobproto.ui.fragments.QuestionWordFragment;
 import com.rohanx96.admobproto.utils.CharacterUtils;
+import com.rohanx96.admobproto.utils.Coins;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.utils.JSONUtils;
@@ -60,6 +61,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     private int mCurrentPage;
     private boolean isCharacterDialogOpen = false;
     private boolean isLocked = false;
+    InterstitialAd mVideoAd;
     InterstitialAd mInterstitialAd;
     SharedPreferences pref;
 
@@ -367,6 +369,21 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         }
     }
 
+    @Override
+    public void showAd(boolean isVideoAd) {
+        if (isVideoAd) {
+            if (mVideoAd.isLoaded()) {
+                mVideoAd.show();
+            } else
+                Snackbar.make(mContainer, "Cannot load add at this time. Please try again later.", Snackbar.LENGTH_LONG).show();
+        }
+        else if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+        else
+            requestNewInterstitial(false);
+    }
+
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
@@ -586,29 +603,41 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     }
 
     private void setupAd(){
+        mVideoAd = new InterstitialAd(this);
+        mVideoAd.setAdUnitId(getString(R.string.video_ad_id));
+        mVideoAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                afterAdWatched();
+                requestNewInterstitial(true);
+            }
+        });
+        requestNewInterstitial(true);
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                requestNewInterstitial();
+                pref.edit().putInt(Constants.PREF_SHOW_AD,0).apply();
+                super.onAdClosed();
             }
         });
-        requestNewInterstitial();
+        requestNewInterstitial(false);
     }
-    private void requestNewInterstitial() {
+
+    private void requestNewInterstitial(boolean isVideoAd) {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("A63B0CDF9A759A19A47A01100878B546")
                 .build();
-        mInterstitialAd.loadAd(adRequest);
+        if (isVideoAd)
+            mVideoAd.loadAd(adRequest);
+        else
+            mInterstitialAd.loadAd(adRequest);
     }
 
-    public void showAdd(){
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        }
-        else
-            Snackbar.make(mContainer,"Cannot load add at this time. Please check your internet connection.",Snackbar.LENGTH_LONG).show();
+    public void afterAdWatched(){
+        Coins.addCoinsFromAd(this);
+        SoundManager.playCorrectAnswerSound(this);
+        coins_display.setText(String.format("%d",Coins.getCurrentCoins(this)));
     }
 }
