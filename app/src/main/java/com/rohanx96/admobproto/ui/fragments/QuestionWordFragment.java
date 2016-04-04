@@ -257,9 +257,12 @@ public class QuestionWordFragment extends Fragment {
 
     public boolean isAnsweredCorrectly() {
         GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
-
         /*Check if entire row is completed. If it is, display animation if wrong*/
         if (isAnswerRowCompletelyFilled()) {
+            if(pref.getInt(Constants.PREF_SHOW_AD,0)>=Constants.AD_DISPLAY_LIMIT)
+                mCallback.showAd(false);
+            else
+                pref.edit().putInt(Constants.PREF_SHOW_AD,pref.getInt(Constants.PREF_SHOW_AD,0)+1).apply();
             boolean isAnsweredCorrectly = true;
             for (int i = 0; i < answer.length(); i++) {
                 if (jumbledCharacters.get(i) != answer.charAt(i)) {
@@ -277,13 +280,8 @@ public class QuestionWordFragment extends Fragment {
 
                 return false;
             }
-        } else {
-            for (int i = 0; i < answer.length(); i++) {
-                if (jumbledCharacters.get(i) != answer.charAt(i)) {
-                    return false;
-                }
-            }
-        }
+        } else
+            return false;
 
         // Coins and question should be unlocked when status is available. For correct status relevant coins and question have already
         // been unlocked. For incorrect and unavailable user should not be able to answer.

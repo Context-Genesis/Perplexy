@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ActionMenuView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,12 +43,13 @@ public class QuestionMCQFragment extends Fragment {
     private QuestionsCallback mCallback;
     GenericQuestion genericQuestion;
     SharedPreferences pref;
+    ViewGroup container;
 
     @Bind(R.id.qcard_mcq_question)
     TextView tvQuestion;
 
     @Bind(R.id.qcard_mcq_options_ll)
-    RelativeLayout llOptions;
+    LinearLayout llOptions;
 
     @Bind(R.id.qcard_mcq_previous)
     ImageButton prevQuestion;
@@ -68,6 +71,7 @@ public class QuestionMCQFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.container = container;
         View rootView = inflater.inflate(R.layout.question_mcq_card, container, false);
 
         ButterKnife.bind(this, rootView);
@@ -128,7 +132,7 @@ public class QuestionMCQFragment extends Fragment {
     @OnClick(R.id.qcard_mcq_option1)
     public void onClickOption1(View view) {
         if (isUIVisibleToUser) {
-            isRight("1");
+            optionConfirmation(1);
             SoundManager.playPadCharacterSound(getActivity());
         }
     }
@@ -136,7 +140,7 @@ public class QuestionMCQFragment extends Fragment {
     @OnClick(R.id.qcard_mcq_option2)
     public void onClickOption2(View view) {
         if (isUIVisibleToUser) {
-            isRight("2");
+            optionConfirmation(2);
             SoundManager.playPadCharacterSound(getActivity());
         }
     }
@@ -144,7 +148,7 @@ public class QuestionMCQFragment extends Fragment {
     @OnClick(R.id.qcard_mcq_option3)
     public void onClickOption3(View view) {
         if (isUIVisibleToUser) {
-            isRight("3");
+            optionConfirmation(3);
             SoundManager.playPadCharacterSound(getActivity());
         }
     }
@@ -152,12 +156,125 @@ public class QuestionMCQFragment extends Fragment {
     @OnClick(R.id.qcard_mcq_option4)
     public void onClickOption4(View view) {
         if (isUIVisibleToUser) {
-            isRight("4");
+            optionConfirmation(4);
             SoundManager.playPadCharacterSound(getActivity());
         }
     }
 
+    int lastclick = 0;
+    View view2;
+
+    void optionConfirmation(final int n) {
+        LayoutInflater layoutInflater = (LayoutInflater)
+                getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view2 = layoutInflater.inflate(R.layout.confirm_option, container, false);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(5, 5, 5, 5);
+        view2.setLayoutParams(params);
+
+        switch(lastclick){
+            case 1:
+                llOptions.removeViewAt(1);
+                tvOption1.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                llOptions.removeViewAt(2);
+                tvOption2.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                llOptions.removeViewAt(3);
+                tvOption3.setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                llOptions.removeViewAt(4);
+                tvOption4.setVisibility(View.VISIBLE);
+                break;
+        }
+
+        switch (n) {
+            case 1:
+                lastclick = 1;
+                llOptions.addView(view2, 1);
+                tvOption1.setVisibility(View.GONE);
+                break;
+            case 2:
+                lastclick = 2;
+                llOptions.addView(view2, 2);
+                tvOption2.setVisibility(View.GONE);
+                break;
+            case 3:
+                lastclick = 3;
+                llOptions.addView(view2, 3);
+                tvOption3.setVisibility(View.GONE);
+                break;
+            case 4:
+                lastclick = 4;
+                llOptions.addView(view2, 4);
+                tvOption4.setVisibility(View.GONE);
+                break;
+        }
+
+        TextView yes = (TextView) view2.findViewById(R.id.yes_answer);
+        TextView no = (TextView) view2.findViewById(R.id.no_answer);
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (n) {
+                    case 1:
+                        view2.setVisibility(View.GONE);
+                        tvOption1.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        view2.setVisibility(View.GONE);
+                        tvOption2.setVisibility(View.VISIBLE);
+                        break;
+                    case 3:
+                        view2.setVisibility(View.GONE);
+                        tvOption3.setVisibility(View.VISIBLE);
+                        break;
+                    case 4:
+                        view2.setVisibility(View.GONE);
+                        tvOption4.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (n) {
+                    case 1:
+                        view2.setVisibility(View.GONE);
+                        tvOption1.setVisibility(View.VISIBLE);
+                        isRight(1 + "");
+                        break;
+                    case 2:
+                        view2.setVisibility(View.GONE);
+                        tvOption2.setVisibility(View.VISIBLE);
+                        isRight(2 + "");
+                        break;
+                    case 3:
+                        view2.setVisibility(View.GONE);
+                        tvOption3.setVisibility(View.VISIBLE);
+                        isRight(3 + "");
+                        break;
+                    case 4:
+                        view2.setVisibility(View.GONE);
+                        tvOption4.setVisibility(View.VISIBLE);
+                        isRight(4 + "");
+                        break;
+                }
+            }
+        });
+    }
+
     void isRight(String check) {
+        if(pref.getInt(Constants.PREF_SHOW_AD,0)>=Constants.AD_DISPLAY_LIMIT)
+            mCallback.showAd(false);
+        else
+            pref.edit().putInt(Constants.PREF_SHOW_AD,pref.getInt(Constants.PREF_SHOW_AD,0)+1).apply();
         if (genericQuestion.answer.equals(check)) {
             GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
             // Coins and question should be unlocked when status is available. For correct status relevant coins and question have already

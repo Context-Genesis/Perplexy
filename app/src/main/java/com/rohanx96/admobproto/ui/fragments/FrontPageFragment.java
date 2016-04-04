@@ -91,7 +91,7 @@ public class FrontPageFragment extends Fragment {
 
                     }
                 });
-
+                selectedGameType = progress;
                 resetLevelSizes(progress);
                 gameTypeText.startAnimation(slideOut);
             }
@@ -144,6 +144,7 @@ public class FrontPageFragment extends Fragment {
 
         SoundManager.playButtonClickSound(getActivity());
     }
+
 
     private String getGameTypeText(int lvl) {
         switch (lvl) {
@@ -203,7 +204,7 @@ public class FrontPageFragment extends Fragment {
     }
 
     @OnClick(R.id.home_statistics_button)
-    public void openStats() {
-        ((MainActivity) getActivity()).goToStats();
+    public void openStats(){
+        ((MainActivity)getActivity()).goToStats();
     }
 }

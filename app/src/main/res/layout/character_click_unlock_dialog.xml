@@ -44,10 +44,11 @@
                     android:layout_toEndOf="@+id/imageView"
                     android:layout_toRightOf="@+id/imageView"
                     android:gravity="left"
-                    android:padding="10dp"
+                    android:padding="5dp"
                     android:text="Want to unlock this question? "
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textColor="@color/grey"
+                    android:textSize="@dimen/charactersubheading"
                     android:textStyle="bold" />
 
             </RelativeLayout>
@@ -79,7 +80,7 @@
                     android:text="Unlock Question"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/blue_d_chambray"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/characterheading" />
 
                 <LinearLayout
                     android:id="@+id/char_unlock_ll_confirm_unlock"
@@ -101,7 +102,7 @@
                         android:text="NO"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                         android:textColor="@color/red_l_poppy"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/characterheading" />
 
                     <TextView
                         android:id="@+id/char_unlock_yes_unlock"
@@ -113,7 +114,7 @@
                         android:text="YES"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                         android:textColor="@color/green_l_carribean"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/characterheading" />
 
                 </LinearLayout>
 
@@ -127,7 +128,7 @@
                     android:text="200"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/blue_d_chambray"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/characterheading" />
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -173,30 +174,34 @@
 
                 <TextView
                     android:id="@+id/char_unlock_title_ad_unlock"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
+                    android:layout_toRightOf="@id/imageView2"
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="Do not have enough coins ?"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                     android:textColor="@color/grey"
+                    android:textSize="@dimen/charactersubheading"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/char_unlock_videoad_unlock"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
+                    android:layout_toRightOf="@id/imageView2"
                     android:gravity="center"
                     android:paddingBottom="8dp"
                     android:text="Watch A Video"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/characterheading" />
 
             </RelativeLayout>
 

@@ -34,6 +34,9 @@ public class Constants {
     public static final String PREF_COINS_EARNED = "Earned";
     public static final String PREF_COINS_SPENT = "Spent";
 
+    public static final String PREF_SHOW_AD = "ShowAd";
+    public static final int AD_DISPLAY_LIMIT = 3;
+
     public static final long INITIAL_COINS = 1500;
     public static final int HINT_PRICE = 75;
     public static final int CORRECT_PRICE = 100;
@@ -41,6 +44,7 @@ public class Constants {
     public static final int SOLUTION_PRICE = 150;
     public static final int UNLOCK_INCORRECT_PRICE = 100;
     public static final int UNLOCK_UNAVAILABLE_PRICE = 120;
+    public static final int AD_VALUE_COINS = 100;
 
     public static final String CORRECT_COUNT = "correctcount";
     public static final String INCORRECT_COUNT = "incorrectcount";

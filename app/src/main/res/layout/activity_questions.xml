@@ -99,10 +99,12 @@
         android:id="@+id/questions_activity_character_dialog"
         layout="@layout/character_click_dialog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/questions_activity_bubble"
         android:layout_alignTop="@+id/questions_activity_pager"
-        android:layout_margin="16dp"
+        android:layout_below="@id/linearLayout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:visibility="gone"></include>
 
     <include
