@@ -106,7 +106,13 @@ public class QuestionWordFragment extends Fragment {
         }
 
         // TODO: replace 14 by count of question in that particular category
-        if (genericQuestion.question_number == 14) {
+        if (genericQuestion.question_number == Constants.RIDDLE_COUNT && genericQuestion.category == Constants.GAME_TYPE_RIDDLE) {
+            this.nextQuestion.setVisibility(View.GONE);
+        }
+        if (genericQuestion.question_number == Constants.SEQUENCE_COUNT && genericQuestion.category == Constants.GAME_TYPE_SEQUENCES) {
+            this.nextQuestion.setVisibility(View.GONE);
+        }
+        if (genericQuestion.question_number == Constants.LOGIC_QUESTION && genericQuestion.category == Constants.GAME_TYPE_LOGIC) {
             this.nextQuestion.setVisibility(View.GONE);
         }
 

@@ -95,7 +95,21 @@ public class JSONUtils {
         ArrayList<GenericQuestion> genericQuestions = new ArrayList<>();
         try {
             JSONObject listObject = null;
-            listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
+            switch (category) {
+                case Constants.GAME_TYPE_LOGIC:
+                    listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
+                    break;
+                case Constants.GAME_TYPE_SEQUENCES:
+                    listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
+                    break;
+                case Constants.GAME_TYPE_RIDDLE:
+                    listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
+                    break;
+                default:
+                    listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
+                    break;
+            }
+            Log.i("jSOnUNTILS",listObject.getJSONArray("questions").length()+"");
 
             for (int i = 0; i < listObject.getJSONArray("questions").length(); i++) {
                 JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(i);
@@ -110,11 +124,15 @@ public class JSONUtils {
                 String message = questionObj.getString("message");
                 String explanation = questionObj.getString("explanation");
                 String pad_characters = questionObj.getString("pad_characters");
-                JSONArray options = questionObj.getJSONArray("options");
+//                JSONArray options = questionObj.getJSONArray("options");
+                String options = questionObj.getString("options");
 
                 GenericQuestion genericQuestion = new GenericQuestion(question_number, layout_type, category_string, question_name, question_string, answer, hint, message, explanation, pad_characters, options);
                 genericQuestions.add(genericQuestion);
+
+                Log.i("questions total ", genericQuestion.question_number+" "+genericQuestion.question + "");
             }
+            Log.i("questions total ", genericQuestions.size() + "");
             return genericQuestions;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -167,7 +185,9 @@ public class JSONUtils {
             String message = questionObj.getString("message");
             String explanation = questionObj.getString("explanation");
             String pad_characters = questionObj.getString("pad_characters");
-            JSONArray options = questionObj.getJSONArray("options");
+            String options = questionObj.getString("options");
+
+//            JSONArray options = questionObj.getJSONArray("options");
 
             GenericQuestion genericQuestion = new GenericQuestion(question_number, layout_type, category_string, question_name, question_string, answer, hint, message, explanation, pad_characters, options);
             return genericQuestion;

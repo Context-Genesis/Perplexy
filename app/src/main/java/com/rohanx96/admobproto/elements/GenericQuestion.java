@@ -9,10 +9,9 @@ import org.json.JSONException;
 public class GenericQuestion {
 
     public int question_number, layout_type, category;
-    public String question_name, question, answer, hint, message, explanation, pad_characters;
-    public transient JSONArray options;
+    public String question_name, question, answer, hint, message, explanation, pad_characters, options;
 
-    public GenericQuestion(int question_number, int layout_type, int category, String question_name, String question, String answer, String hint, String message, String explanation, String pad_characters, JSONArray options) {
+    public GenericQuestion(int question_number, int layout_type, int category, String question_name, String question, String answer, String hint, String message, String explanation, String pad_characters, String options) {
         this.question_number = question_number;
         this.layout_type = layout_type;
         this.category = category;
@@ -34,13 +33,13 @@ public class GenericQuestion {
          */
 
         String optionString = "";
-        try {
-            for (int i = 0; i < options.length(); i++) {
-                optionString += options.getJSONObject(i).getString("choice") + ";";
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        String option[] = options.split(";");
+
+        for (int i = 0; i < option.length - 1; i++) {
+            optionString += option[i] + ";";
         }
+        optionString += option[option.length - 1];
+
 
         return "GenericQuestion{" +
                 "questionNumber=" + question_number +

@@ -19,6 +19,7 @@ public class Constants {
     public static final int GAME_TYPE_LOGIC = 2;
 
     // status
+
     public static final int CORRECT = 0;
     public static final int INCORRECT = 1;
     public static final int UNAVAILABLE = 2;
@@ -50,4 +51,8 @@ public class Constants {
     public static final String INCORRECT_COUNT = "incorrectcount";
     public static final String ACCURACY = "accuracy";
     public static final String ERROR = null;
+
+    public static final int RIDDLE_COUNT = 52;
+    public static final int SEQUENCE_COUNT = 50;
+    public static final int LOGIC_QUESTION = 50;
 }
