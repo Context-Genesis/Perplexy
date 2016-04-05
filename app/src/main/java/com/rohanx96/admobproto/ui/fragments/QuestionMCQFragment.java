@@ -93,24 +93,31 @@ public class QuestionMCQFragment extends Fragment {
         }
 
         // TODO: replace 14 by count of question in that particular category
-        if (genericQuestion.question_number == 14) {
+        if (genericQuestion.question_number == Constants.RIDDLE_COUNT && genericQuestion.category == Constants.GAME_TYPE_RIDDLE) {
+            this.nextQuestion.setVisibility(View.GONE);
+        }
+        if (genericQuestion.question_number == Constants.SEQUENCE_COUNT && genericQuestion.category == Constants.GAME_TYPE_SEQUENCES) {
+            this.nextQuestion.setVisibility(View.GONE);
+        }
+        if (genericQuestion.question_number == Constants.LOGIC_QUESTION && genericQuestion.category == Constants.GAME_TYPE_LOGIC) {
             this.nextQuestion.setVisibility(View.GONE);
         }
 
         try {
-            switch (genericQuestion.options.length()) {
-                case 2:
-                    tvOption1.setText(genericQuestion.options.getJSONObject(0).getString("choice"));
-                    tvOption2.setText(genericQuestion.options.getJSONObject(1).getString("choice"));
+            String option[] = genericQuestion.options.split(";");
 
+            switch (option.length) {
+                case 2:
+                    tvOption1.setText(option[0]);
+                    tvOption2.setText(option[1]);
                     tvOption3.setVisibility(View.GONE);
                     tvOption4.setVisibility(View.GONE);
                     break;
                 case 4:
-                    tvOption1.setText(genericQuestion.options.getJSONObject(0).getString("choice"));
-                    tvOption2.setText(genericQuestion.options.getJSONObject(1).getString("choice"));
-                    tvOption3.setText(genericQuestion.options.getJSONObject(2).getString("choice"));
-                    tvOption4.setText(genericQuestion.options.getJSONObject(3).getString("choice"));
+                    tvOption1.setText(option[0]);
+                    tvOption2.setText(option[1]);
+                    tvOption3.setText(option[2]);
+                    tvOption4.setText(option[3]);
                     break;
             }
         } catch (Exception e) {
@@ -172,7 +179,7 @@ public class QuestionMCQFragment extends Fragment {
         params.setMargins(5, 5, 5, 5);
         view2.setLayoutParams(params);
 
-        switch(lastclick){
+        switch (lastclick) {
             case 1:
                 llOptions.removeViewAt(1);
                 tvOption1.setVisibility(View.VISIBLE);
@@ -271,10 +278,10 @@ public class QuestionMCQFragment extends Fragment {
     }
 
     void isRight(String check) {
-        if(pref.getInt(Constants.PREF_SHOW_AD,0)>=Constants.AD_DISPLAY_LIMIT)
+        if (pref.getInt(Constants.PREF_SHOW_AD, 0) >= Constants.AD_DISPLAY_LIMIT)
             mCallback.showAd(false);
         else
-            pref.edit().putInt(Constants.PREF_SHOW_AD,pref.getInt(Constants.PREF_SHOW_AD,0)+1).apply();
+            pref.edit().putInt(Constants.PREF_SHOW_AD, pref.getInt(Constants.PREF_SHOW_AD, 0) + 1).apply();
         if (genericQuestion.answer.equals(check)) {
             GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
             // Coins and question should be unlocked when status is available. For correct status relevant coins and question have already

@@ -60,9 +60,41 @@ public class GenericAnswerDetails extends SugarRecord {
          */
         GenericAnswerDetails.deleteAll(GenericAnswerDetails.class);
         ArrayList<GenericQuestion> allQuestions = new ArrayList<>();
+//        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_RIDDLE));
+//        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
+        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_LOGIC));
+
+        for (int i = 0; i < allQuestions.size(); i++) {
+            int question_number = allQuestions.get(i).question_number;
+            int category = allQuestions.get(i).category;
+            GenericAnswerDetails genericAnswerDetails;
+
+            if (i < 3)
+                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
+            else
+                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
+            genericAnswerDetails.save();
+        }
+
+        allQuestions = new ArrayList<>();
+
         allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_RIDDLE));
+
+        for (int i = 0; i < allQuestions.size(); i++) {
+            int question_number = allQuestions.get(i).question_number;
+            int category = allQuestions.get(i).category;
+            GenericAnswerDetails genericAnswerDetails;
+
+            if (i < 3)
+                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
+            else
+                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
+            genericAnswerDetails.save();
+        }
+
+        allQuestions = new ArrayList<>();
+
         allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
-        /* allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_LOGIC));*/
 
         for (int i = 0; i < allQuestions.size(); i++) {
             int question_number = allQuestions.get(i).question_number;
@@ -133,18 +165,22 @@ public class GenericAnswerDetails extends SugarRecord {
          */
     }
 
-    /** This method returns the question which is locked and has the least no */
-    public static GenericAnswerDetails getFirstLocked(int category){
+    /**
+     * This method returns the question which is locked and has the least no
+     */
+    public static GenericAnswerDetails getFirstLocked(int category) {
         GenericAnswerDetails genericAnswerDetail = Select.from(GenericAnswerDetails.class)
                 .where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category))
                 .where(Condition.prop(NamingHelper.toSQLNameDefault("status")).eq(Constants.UNAVAILABLE))
                 .first(); // Note this may need to change if question numbers are not ascending
-        Log.i("First Locked position"," " + genericAnswerDetail.question_number);
+        Log.i("First Locked position", " " + genericAnswerDetail.question_number);
         return genericAnswerDetail;
     }
 
-    /** This unlocks the next question to be unlocked for a given category */
-    public static int unlockNextQuestion(int category){
+    /**
+     * This unlocks the next question to be unlocked for a given category
+     */
+    public static int unlockNextQuestion(int category) {
         GenericAnswerDetails nextQuestion = getFirstLocked(category);
         nextQuestion.status = Constants.AVAILABLE;
         nextQuestion.save();

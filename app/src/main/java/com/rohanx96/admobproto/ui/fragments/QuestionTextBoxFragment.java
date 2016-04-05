@@ -106,7 +106,13 @@ public class QuestionTextBoxFragment extends Fragment {
         }
 
         // TODO: replace 14 by count of question in that particular category
-        if (genericQuestion.question_number == 14) {
+        if (genericQuestion.question_number == Constants.RIDDLE_COUNT && genericQuestion.category == Constants.GAME_TYPE_RIDDLE) {
+            this.nextQuestion.setVisibility(View.GONE);
+        }
+        if (genericQuestion.question_number == Constants.SEQUENCE_COUNT && genericQuestion.category == Constants.GAME_TYPE_SEQUENCES) {
+            this.nextQuestion.setVisibility(View.GONE);
+        }
+        if (genericQuestion.question_number == Constants.LOGIC_QUESTION && genericQuestion.category == Constants.GAME_TYPE_LOGIC) {
             this.nextQuestion.setVisibility(View.GONE);
         }
 
@@ -237,7 +243,7 @@ public class QuestionTextBoxFragment extends Fragment {
 
     public boolean isAnsweredCorrectly() {
         GenericAnswerDetails details = GenericAnswerDetails.getAnswerDetail(genericQuestion.question_number, CATEGORY);
-        if(pref.getInt(Constants.PREF_SHOW_AD,0)>=Constants.AD_DISPLAY_LIMIT)
+        if (pref.getInt(Constants.PREF_SHOW_AD, 0) >= Constants.AD_DISPLAY_LIMIT)
             mCallback.showAd(false);
         else
             pref.edit().putInt(Constants.PREF_SHOW_AD, pref.getInt(Constants.PREF_SHOW_AD, 0) + 1).apply();

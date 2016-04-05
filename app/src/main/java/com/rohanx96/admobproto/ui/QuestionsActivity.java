@@ -87,7 +87,6 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
         ButterKnife.bind(this);
-        FacebookSdk.sdkInitialize(getApplicationContext());
 
         /* The page position is one less than question number. Note question number is passed to activity instead of position */
         mCurrentPage = getIntent().getIntExtra(Constants.BUNDLE_QUESTION_NUMBER, 0) - 1;
@@ -202,6 +201,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 isLocked = (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT)
                         || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                 Log.i("lock status ", " position " + mCurrentPage + 1 + " " + isLocked);
+
                 if (isLocked)
                     CharacterUtils.setCharacterDrawable(getApplicationContext(), character, CharacterUtils.EXPRESSION_SAD_CLOSED);
 
