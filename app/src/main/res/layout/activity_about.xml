@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/aboutTextViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:text="Developers" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/devImage1"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@drawable/human_happy_open" />
+
+            <TextView
+                android:id="@+id/devTitle1"
+                style="@style/aboutTextViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage1"
+                android:layout_toRightOf="@+id/devImage1"
+                android:text="Developer" />
+
+            <TextView
+                android:id="@+id/devName1"
+                style="@style/aboutTextViewContent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/devTitle1"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage1"
+                android:layout_toRightOf="@+id/devImage1"
+                android:text="Dhruv Bhutani" />
+
+            <ImageView
+                android:id="@+id/devgplus1"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignTop="@+id/devandroid1"
+                android:layout_toEndOf="@+id/devandroid1"
+                android:layout_toRightOf="@+id/devandroid1"
+                android:src="@drawable/gplus" />
+
+            <ImageView
+                android:id="@+id/devandroid1"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_below="@+id/devName1"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage1"
+                android:layout_toRightOf="@+id/devImage1"
+                android:src="@drawable/android" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/devImage4"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@drawable/human_sad" />
+
+            <TextView
+                android:id="@+id/devTitle4"
+                style="@style/aboutTextViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage4"
+                android:layout_toRightOf="@+id/devImage4"
+                android:text="Developer" />
+
+            <TextView
+                android:id="@+id/devName4"
+                style="@style/aboutTextViewContent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/devTitle4"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage4"
+                android:layout_toRightOf="@+id/devImage4"
+                android:text="Gaurav Bansal" />
+
+            <ImageView
+                android:id="@+id/devgplus4"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignTop="@+id/devandroid4"
+                android:layout_toEndOf="@+id/devandroid4"
+                android:layout_toRightOf="@+id/devandroid4"
+                android:src="@drawable/gplus" />
+
+            <ImageView
+                android:id="@+id/devandroid4"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_below="@+id/devName4"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage4"
+                android:layout_toRightOf="@+id/devImage4"
+                android:src="@drawable/android" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/devImage2"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@drawable/human_eyes_closed" />
+
+            <TextView
+                android:id="@+id/devTitle2"
+                style="@style/aboutTextViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage2"
+                android:layout_toRightOf="@+id/devImage2"
+                android:text="Developer" />
+
+            <TextView
+                android:id="@+id/devName2"
+                style="@style/aboutTextViewContent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/devTitle2"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage2"
+                android:layout_toRightOf="@+id/devImage2"
+                android:text="Rishabh Bhardwaj" />
+
+            <ImageView
+                android:id="@+id/devgplus2"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignTop="@+id/devandroid2"
+                android:layout_toEndOf="@+id/devandroid2"
+                android:layout_toRightOf="@+id/devandroid2"
+                android:src="@drawable/gplus" />
+
+            <ImageView
+                android:id="@+id/devandroid2"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_below="@+id/devName2"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage2"
+                android:layout_toRightOf="@+id/devImage2"
+                android:src="@drawable/android" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/devImage3"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@drawable/human_shocked" />
+
+            <TextView
+                android:id="@+id/devTitle3"
+                style="@style/aboutTextViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage3"
+                android:layout_toRightOf="@+id/devImage3"
+                android:text="Developer" />
+
+            <TextView
+                android:id="@+id/devName3"
+                style="@style/aboutTextViewContent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/devTitle3"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage3"
+                android:layout_toRightOf="@+id/devImage3"
+                android:text="Rohan Agarwal" />
+
+            <ImageView
+                android:id="@+id/devgplus3"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignTop="@+id/devandroid3"
+                android:layout_toEndOf="@+id/devandroid3"
+                android:layout_toRightOf="@+id/devandroid3"
+                android:src="@drawable/gplus" />
+
+            <ImageView
+                android:id="@+id/devandroid3"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_below="@+id/devName3"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage3"
+                android:layout_toRightOf="@+id/devImage3"
+                android:src="@drawable/android" />
+        </RelativeLayout>
+
+        <TextView
+            style="@style/aboutTextViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:text="Attributions" />
+
+        <TextView
+            android:id="@+id/about_freepik"
+            style="@style/aboutTextViewContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp"
+            android:text="FreePik Images" />
+
+        <TextView
+            android:id="@+id/about_icons"
+            style="@style/aboutTextViewContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp"
+            android:text="Icons8 Images" />
+
+        <TextView
+            android:id="@+id/about_butterknife"
+            style="@style/aboutTextViewContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp"
+            android:text="ButterKnife" />
+
+        <TextView
+            android:id="@+id/about_sugar"
+            style="@style/aboutTextViewContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp"
+            android:text="Satyan Sugar" />
+
+        <TextView
+            android:id="@+id/about_dialog"
+            style="@style/aboutTextViewContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp"
+            android:text="Orhanobut DialogPlus" />
+
+        <TextView
+            android:id="@+id/about_switch"
+            style="@style/aboutTextViewContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp"
+            android:text="Kyleduo SwitchButton" />
+
+    </LinearLayout>
+</ScrollView>

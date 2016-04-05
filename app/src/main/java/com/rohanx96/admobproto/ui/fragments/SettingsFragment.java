@@ -1,28 +1,26 @@
 package com.rohanx96.admobproto.ui.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kyleduo.switchbutton.SwitchButton;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
-import com.rohanx96.admobproto.ui.QuestionsActivity;
+import com.rohanx96.admobproto.ui.AboutActivity;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.SoundManager;
 
@@ -128,8 +126,7 @@ public class SettingsFragment extends Fragment {
 
     @OnClick(R.id.settings_info)
     public void onClick_info() {
-        // TODO: MORE INFO ACTIVITY
         SoundManager.playButtonClickSound(getActivity());
-        Toast.makeText(getContext(), "A new activity", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(), AboutActivity.class));
     }
 }
