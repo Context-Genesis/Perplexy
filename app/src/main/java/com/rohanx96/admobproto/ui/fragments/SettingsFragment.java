@@ -26,6 +26,7 @@ import com.orhanobut.dialogplus.ViewHolder;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.AboutActivity;
+import com.rohanx96.admobproto.ui.MainActivity;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.SoundManager;
 
@@ -125,6 +126,17 @@ public class SettingsFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+    }
+
+    @OnClick(R.id.settings_rate_us)
+    public void rateUs(){
+        Uri uri = Uri.parse("market://details?id=" + getActivity().getPackageName());
+        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(myAppLinkToMarket);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getActivity(), "Unable to find market app", Toast.LENGTH_LONG).show();
+        }
     }
 
     @OnClick(R.id.settings_info)

@@ -148,7 +148,6 @@ public class MainActivity extends FragmentActivity {
                 DialogPlusBuilder dialogPlus = DialogPlus.newDialog(this);
                 dialogPlus.setContentHolder(new ViewHolder(R.layout.dialog_rate_us));
                 final DialogPlus dialog = dialogPlus.create();
-                dialog.show();
                 View holder = dialog.getHolderView();
                 holder.findViewById(R.id.rate_us_confirm).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -178,6 +177,7 @@ public class MainActivity extends FragmentActivity {
                         dialog.dismiss();
                     }
                 });
+                dialog.show();
             } else prefs.edit().putInt(Constants.PREF_SHOW_RATE_US, prefCount + 1).apply();
         }
     }

@@ -10,3 +10,7 @@
 .idea/encodings.xml
 .idea/modules.xml
 .idea/modules.xml
+app/src/main/res/raw/logic.json
+app/src/main/res/raw/riddles.json
+app/src/main/res/raw/sequences.json
+

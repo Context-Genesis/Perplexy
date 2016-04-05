@@ -357,7 +357,7 @@ public class QuestionWordFragment extends Fragment {
         answerTV.setText("" + jumbledCharacters.get(answer.length() + i));
         answerTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, tvWidth / 2);
         answerTV.setTextColor(Color.WHITE);
-        answerTV.setBackgroundResource(R.drawable.circle_filled);
+        answerTV.setBackgroundResource(R.drawable.pad_character_background);
         answerTV.setLayoutParams(new ViewGroup.LayoutParams(tvWidth, tvWidth));
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(tvWidth, tvWidth);
         layoutParams.setMargins(tvMargin, tvMargin, tvMargin, tvMargin);

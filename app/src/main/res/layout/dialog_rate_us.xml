@@ -2,12 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp">
+    android:layout_margin="16dp"
+    android:background="@color/white">
     <TextView
         android:id="@+id/dialog_rate_us_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="RATE US"
+        android:textColor="@color/black_d_material"
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"/>
     <ImageView
         android:id="@+id/dialog_rate_us_character"
@@ -23,6 +25,7 @@
         android:layout_toRightOf="@id/dialog_rate_us_character"
         android:layout_below="@id/dialog_rate_us_heading"
         android:layout_margin="8dp"
+        android:textColor="@color/black_d_material"
         android:text="Your feedback is important to us. Please take the time to rate this application"/>
     <TextView
         android:id="@+id/rate_us_confirm"
