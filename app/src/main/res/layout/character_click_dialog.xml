@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#F0F0F0">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -19,239 +17,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="8dp"
             card_view:cardCornerRadius="4dp">
 
-            <RelativeLayout
+            <ImageView
+                android:id="@+id/character_msg_image"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/hint" />
+
+            <TextView
+                android:id="@+id/char_q_clicked_feedback_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/character_msg_image"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_margin="5dp"
-                    android:padding="5dp"
-                    android:src="@drawable/hint" />
-
-                <TextView
-                    android:id="@+id/char_q_clicked_feedback_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/character_msg_image"
-                    android:layout_toRightOf="@+id/character_msg_image"
-                    android:gravity="left"
-                    android:padding="5dp"
-                    android:text="Hey There! Are you stuck?\nHere's how I can help you."
-                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/charactersubheading"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
+                android:layout_height="match_parent"
+                android:layout_marginLeft="55dp"
+                android:layout_marginStart="55dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/charactersubheading"
+                android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            card_view:cardCornerRadius="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <LinearLayout
-                    android:id="@+id/char_q_clicked_ll_hint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/char_q_clicked_showhint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.7"
-                        android:gravity="left|center"
-                        android:text="Buy Hint"
-                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                        android:textColor="@color/blue_l_steel_blue"
-                        android:textSize="@dimen/characterheading" />
-
-                    <LinearLayout
-                        android:id="@+id/char_q_clicked_ll_confirmhint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.7"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/char_q_clicked_nohint"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="NO"
-                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                            android:textColor="@color/red_l_poppy"
-                            android:textSize="@dimen/characterheading" />
-
-                        <TextView
-                            android:id="@+id/char_q_clicked_yeshint"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="YES"
-                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                            android:textColor="@color/green_l_jade"
-                            android:textSize="@dimen/characterheading" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/char_q_clicked_hintprice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="4.9"
-                        android:gravity="center|right"
-                        android:text="50"
-                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                        android:textColor="@color/blue_l_steel_blue"
-                        android:textSize="@dimen/characterheading" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="4.9"
-                        android:src="@drawable/coin_gold_silver" />
-
-                </LinearLayout>
-
-                <ScrollView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/char_q_clicked_showhiddenhint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxHeight="1500dp"
-                        android:paddingTop="4dp"
-                        android:text="This is the hint. This could get real big and fuck the layout. Just like this"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/charactersubheading"
-                        android:visibility="gone" />
-
-                </ScrollView>
-
-                <LinearLayout
-                    android:id="@+id/char_feedback_incorrect_ll_solution"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="8dp">
-
-                    <TextView
-                        android:id="@+id/char_q_clicked_showsolution"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.7"
-                        android:gravity="center|left"
-                        android:text="Buy Solution"
-                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                        android:textColor="@color/orange_d_zest"
-                        android:textSize="@dimen/characterheading" />
-
-                    <LinearLayout
-                        android:id="@+id/char_q_clicked_ll_confirmsolution"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.7"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/char_q_clicked_nosolution"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="NO"
-                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                            android:textColor="@color/red_l_poppy"
-                            android:textSize="@dimen/characterheading" />
-
-                        <TextView
-                            android:id="@+id/char_q_clicked_yessolution"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="YES"
-                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                            android:textColor="@color/green_l_jade"
-                            android:textSize="@dimen/characterheading" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/char_q_clicked_solutionprice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="4.9"
-                        android:gravity="center|right"
-                        android:text="100"
-                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                        android:textColor="@color/orange_d_zest"
-                        android:textSize="@dimen/characterheading" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="4.9"
-                        android:src="@drawable/coin_gold_silver" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/char_q_clicked_showhiddensolution"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="4dp"
-                    android:text="This is the solution. This could get real big and fuck the layout. Just like this"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/charactersubheading"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/char_q_clicked_ad_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -261,15 +53,170 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:orientation="vertical"
+                android:padding="8dp"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:id="@+id/char_q_clicked_showhint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Buy Hint"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/blue_l_steel_blue"
+                    android:textSize="@dimen/characterheading" />
+
+                <LinearLayout
+                    android:id="@+id/char_q_clicked_ll_confirmhint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/char_q_clicked_nohint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
+                        android:text="NO"
+                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                        android:textColor="@color/red_l_poppy"
+                        android:textSize="@dimen/characterheading" />
+
+                    <TextView
+                        android:id="@+id/char_q_clicked_yeshint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:text="YES"
+                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                        android:textColor="@color/green_l_jade"
+                        android:textSize="@dimen/characterheading" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/char_q_clicked_hintprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/blue_l_steel_blue"
+                    android:textSize="@dimen/characterheading" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignBottom="@id/char_q_clicked_hintprice"
+                    android:layout_toLeftOf="@id/char_q_clicked_hintprice"
+                    android:src="@drawable/coin_gold_silver" />
+
+                <TextView
+                    android:id="@+id/char_q_clicked_showhiddenhint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/char_q_clicked_hintprice"
+                    android:paddingTop="4dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/charactersubheading"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/char_q_clicked_showsolution"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/char_q_clicked_showhiddenhint"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/character_element_margin_top"
+                    android:text="Buy Solution"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/orange_d_zest"
+                    android:textSize="@dimen/characterheading" />
+
+                <LinearLayout
+                    android:id="@+id/char_q_clicked_ll_confirmsolution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/character_element_margin_top"
+                    android:layout_below="@id/char_q_clicked_showhiddenhint"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/char_q_clicked_nosolution"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
+                        android:text="NO"
+                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                        android:textColor="@color/red_l_poppy"
+                        android:textSize="@dimen/characterheading" />
+
+                    <TextView
+                        android:id="@+id/char_q_clicked_yessolution"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:text="YES"
+                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                        android:textColor="@color/green_l_jade"
+                        android:textSize="@dimen/characterheading" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/char_q_clicked_solutionprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/character_element_margin_top"
+                    android:layout_below="@id/char_q_clicked_showhiddenhint"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/orange_d_zest"
+                    android:textSize="@dimen/characterheading" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignBottom="@id/char_q_clicked_solutionprice"
+                    android:layout_toLeftOf="@id/char_q_clicked_solutionprice"
+                    android:src="@drawable/coin_gold_silver" />
+
+
+                <TextView
+                    android:id="@+id/char_q_clicked_showhiddensolution"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/char_q_clicked_solutionprice"
+                    android:paddingTop="4dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/charactersubheading"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/char_q_clicked_ad_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            card_view:cardCornerRadius="4dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_margin="5dp"
                     android:padding="5dp"
                     android:src="@drawable/ads" />
 
@@ -278,8 +225,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/imageView3"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
                     android:layout_toRightOf="@id/imageView3"
                     android:gravity="center"
                     android:text="Do not have enough coins ?"
@@ -293,8 +238,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/char_q_clicked_title_ad"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
                     android:layout_toRightOf="@id/imageView3"
                     android:gravity="center"
                     android:text="Watch A Video"
@@ -339,7 +282,6 @@
                 android:layout_toRightOf="@id/char_q_clicked_normal_share"
                 android:scaleType="fitCenter"
                 android:src="@drawable/whatsapp" />
-
         </RelativeLayout>
 
     </LinearLayout>

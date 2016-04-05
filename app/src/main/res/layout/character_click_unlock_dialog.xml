@@ -195,6 +195,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
+                    android:layout_below="@id/char_unlock_title_ad_unlock"
                     android:layout_toRightOf="@id/imageView2"
                     android:gravity="center"
                     android:paddingBottom="8dp"

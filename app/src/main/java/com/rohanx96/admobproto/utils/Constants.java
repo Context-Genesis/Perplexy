@@ -38,6 +38,8 @@ public class Constants {
     public static final String PREF_SHOW_AD = "ShowAd";
     public static final int AD_DISPLAY_LIMIT = 3;
 
+    public static final String PREF_SHOW_RATE_US = "RateUs";
+
     public static final long INITIAL_COINS = 1500;
     public static final int HINT_PRICE = 75;
     public static final int CORRECT_PRICE = 100;

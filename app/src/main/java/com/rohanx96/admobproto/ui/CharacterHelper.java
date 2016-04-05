@@ -65,7 +65,7 @@ public class CharacterHelper {
         final ImageView favourite = (ImageView) mParentActivity.findViewById(R.id.char_q_clicked_favourite_question);
 
         showhint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_showhint);
-        hint = (LinearLayout) mParentActivity.findViewById(R.id.char_q_clicked_ll_hint);
+        //hint = (LinearLayout) mParentActivity.findViewById(R.id.char_q_clicked_ll_hint);
         hintprice = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_hintprice);
         confirmhint = (LinearLayout) mParentActivity.findViewById(R.id.char_q_clicked_ll_confirmhint);
         nohint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_nohint);

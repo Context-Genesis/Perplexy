@@ -1,14 +1,10 @@
 package com.rohanx96.admobproto.utils;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.rohanx96.admobproto.elements.GenericQuestion;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,7 +20,11 @@ import java.util.ArrayList;
  */
 public class JSONUtils {
 
-    public String TAG = JSONUtils.this.getClass().getSimpleName();
+    public static String TAG = JSONUtils.class.getClass().getSimpleName();
+
+    private static QuestionArray cachedQuestionArray_LOGIC = null;
+    private static QuestionArray cachedQuestionArray_RIDDLES = null;
+    private static QuestionArray cachedQuestionArray_SEQUENCES = null;
 
     public boolean writeToFile(String fileName, String fileContent) {
         try {
@@ -73,138 +73,106 @@ public class JSONUtils {
         return response;
     }
 
-    private static String loadJSONFromAsset(Context context, String WHICH_FILE) {
-        String json = null;
+    private static QuestionArray loadJSONFromAsset(Context context, String WHICH_FILE) {
+        QuestionArray questionArray = null;
         try {
-            InputStream is = context.getResources().openRawResource
-                    (context.getResources().getIdentifier(WHICH_FILE, "raw", context.getPackageName()));
-            //InputStream is = context.getAssets().open(WHICH_FILE);
+            InputStream is = context.getResources().openRawResource(context.getResources().getIdentifier(WHICH_FILE, "raw", context.getPackageName()));
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
+            String json = new String(buffer, "UTF-8");
+
+            questionArray = LoganSquare.parse(json, QuestionArray.class);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return json;
+        return questionArray;
+
     }
 
     public static ArrayList<GenericQuestion> getQuestionsFromJSONString(Context context, int category) {
         ArrayList<GenericQuestion> genericQuestions = new ArrayList<>();
-        try {
-            JSONObject listObject = null;
-            switch (category) {
-                case Constants.GAME_TYPE_LOGIC:
-                    listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
-                    break;
-                case Constants.GAME_TYPE_SEQUENCES:
-                    listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
-                    break;
-                case Constants.GAME_TYPE_RIDDLE:
-                    listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
-                    break;
-                default:
-                    listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
-                    break;
-            }
-            Log.i("jSOnUNTILS",listObject.getJSONArray("questions").length()+"");
-
-            for (int i = 0; i < listObject.getJSONArray("questions").length(); i++) {
-                JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(i);
-
-                int question_number = questionObj.getInt("question_number");
-                int layout_type = questionObj.getInt("layout_type");
-                int category_string = questionObj.getInt("category");
-                String question_name = questionObj.getString("question_name");
-                String question_string = questionObj.getString("question");
-                String answer = questionObj.getString("answer");
-                String hint = questionObj.getString("hint");
-                String message = questionObj.getString("message");
-                String explanation = questionObj.getString("explanation");
-                String pad_characters = questionObj.getString("pad_characters");
-//                JSONArray options = questionObj.getJSONArray("options");
-                String options = questionObj.getString("options");
-
-                GenericQuestion genericQuestion = new GenericQuestion(question_number, layout_type, category_string, question_name, question_string, answer, hint, message, explanation, pad_characters, options);
-                genericQuestions.add(genericQuestion);
-
-                Log.i("questions total ", genericQuestion.question_number+" "+genericQuestion.question + "");
-            }
-            Log.i("questions total ", genericQuestions.size() + "");
-            return genericQuestions;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
+        QuestionArray questionArray = null;
+        switch (category) {
+            case Constants.GAME_TYPE_LOGIC:
+                if (cachedQuestionArray_LOGIC == null)
+                    cachedQuestionArray_LOGIC = loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE);
+                questionArray = cachedQuestionArray_LOGIC;
+                break;
+            case Constants.GAME_TYPE_SEQUENCES:
+                if (cachedQuestionArray_SEQUENCES == null)
+                    cachedQuestionArray_SEQUENCES = loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE);
+                questionArray = cachedQuestionArray_SEQUENCES;
+                break;
+            case Constants.GAME_TYPE_RIDDLE:
+                if (cachedQuestionArray_RIDDLES == null)
+                    cachedQuestionArray_RIDDLES = loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE);
+                questionArray = cachedQuestionArray_RIDDLES;
+                break;
+            default:
+                Log.wtf(TAG, "ERROR IN getQuestionsFromJSONString");
+                break;
         }
+
+        for (GenericQuestion question : questionArray.questionsArray) {
+            GenericQuestion genericQuestion = new GenericQuestion(question.question_number, question.layout_type, question.category, question.question_name, question.question, question.answer, question.hint, question.message, question.explanation, question.pad_characters, question.options);
+            genericQuestions.add(genericQuestion);
+        }
+        Log.i("questions total ", genericQuestions.size() + "");
+        return genericQuestions;
     }
 
     public static int getTotalQuestions(Context context, int category) {
-        try {
-            JSONObject listObject = null;
-            if (category == Constants.GAME_TYPE_RIDDLE)
-                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
-            else if (category == Constants.GAME_TYPE_SEQUENCES)
-                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
-            else if (category == Constants.GAME_TYPE_LOGIC)
-                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
-
-            if (listObject == null)
-                Log.d("JSONUtils", category + " " + listObject);
-            else
-                Log.d("JSONUtils | ", category + " " + listObject);
-
-            return listObject.getJSONArray("questions").length();
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return -1;
+        QuestionArray questionArray = null;
+        switch (category) {
+            case Constants.GAME_TYPE_LOGIC:
+                if (cachedQuestionArray_LOGIC == null)
+                    cachedQuestionArray_LOGIC = loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE);
+                questionArray = cachedQuestionArray_LOGIC;
+                break;
+            case Constants.GAME_TYPE_SEQUENCES:
+                if (cachedQuestionArray_SEQUENCES == null)
+                    cachedQuestionArray_SEQUENCES = loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE);
+                questionArray = cachedQuestionArray_SEQUENCES;
+                break;
+            case Constants.GAME_TYPE_RIDDLE:
+                if (cachedQuestionArray_RIDDLES == null)
+                    cachedQuestionArray_RIDDLES = loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE);
+                questionArray = cachedQuestionArray_RIDDLES;
+                break;
+            default:
+                Log.wtf(TAG, "ERROR IN getQuestionsFromJSONString");
+                break;
         }
+        return questionArray.questionsArray.size();
     }
 
     /* The index here is not question number but question position */
     public static GenericQuestion getQuestionAt(Context context, int category, int index) {
-        try {
-            JSONObject listObject = null;
-            if (category == Constants.GAME_TYPE_RIDDLE)
-                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE));
-            else if (category == Constants.GAME_TYPE_SEQUENCES)
-                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE));
-            else if (category == Constants.GAME_TYPE_LOGIC)
-                listObject = new JSONObject(loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE));
-
-            JSONObject questionObj = listObject.getJSONArray("questions").getJSONObject(index);
-
-            int question_number = questionObj.getInt("question_number");
-            int layout_type = questionObj.getInt("layout_type");
-            int category_string = questionObj.getInt("category");
-            String question_name = questionObj.getString("question_name");
-            String question_string = questionObj.getString("question");
-            String answer = questionObj.getString("answer");
-            String hint = questionObj.getString("hint");
-            String message = questionObj.getString("message");
-            String explanation = questionObj.getString("explanation");
-            String pad_characters = questionObj.getString("pad_characters");
-            String options = questionObj.getString("options");
-
-//            JSONArray options = questionObj.getJSONArray("options");
-
-            GenericQuestion genericQuestion = new GenericQuestion(question_number, layout_type, category_string, question_name, question_string, answer, hint, message, explanation, pad_characters, options);
-            return genericQuestion;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
+        QuestionArray questionArray = null;
+        switch (category) {
+            case Constants.GAME_TYPE_LOGIC:
+                if (cachedQuestionArray_LOGIC == null)
+                    cachedQuestionArray_LOGIC = loadJSONFromAsset(context, Constants.JSON_LOGIC_FILE);
+                questionArray = cachedQuestionArray_LOGIC;
+                break;
+            case Constants.GAME_TYPE_SEQUENCES:
+                if (cachedQuestionArray_SEQUENCES == null)
+                    cachedQuestionArray_SEQUENCES = loadJSONFromAsset(context, Constants.JSON_SEQUENCES_FILE);
+                questionArray = cachedQuestionArray_SEQUENCES;
+                break;
+            case Constants.GAME_TYPE_RIDDLE:
+                if (cachedQuestionArray_RIDDLES == null)
+                    cachedQuestionArray_RIDDLES = loadJSONFromAsset(context, Constants.JSON_RIDDLES_FILE);
+                questionArray = cachedQuestionArray_RIDDLES;
+                break;
+            default:
+                Log.wtf(TAG, "ERROR IN getQuestionsFromJSONString");
+                break;
         }
-    }
-
-    /*This shall be used to fetch images for the QuestionImageFragment*/
-    public static Uri getQuestionImageURI(String URL) {
-        if (URL.split(":")[0].toLowerCase().trim().equals("resource")) {
-            return Uri.parse(URL.split(":")[1]);
-        } else if (URL.split(":")[0].toLowerCase().trim().equals("web")) {
-            return Uri.parse(URL.split(":")[1]);
-        } else {
-            return null;
-        }
+        GenericQuestion question = questionArray.questionsArray.get(index);
+        GenericQuestion genericQuestion = new GenericQuestion(question.question_number, question.layout_type, question.category, question.question_name, question.question, question.answer, question.hint, question.message, question.explanation, question.pad_characters, question.options);
+        return genericQuestion;
     }
 }

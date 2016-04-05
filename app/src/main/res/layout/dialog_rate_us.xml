@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp">
+    <TextView
+        android:id="@+id/dialog_rate_us_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RATE US"
+        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"/>
+    <ImageView
+        android:id="@+id/dialog_rate_us_character"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/character_eyes_closed_128"
+        android:scaleType="fitXY"
+        android:layout_margin="8dp"
+        android:layout_below="@id/dialog_rate_us_heading"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/dialog_rate_us_character"
+        android:layout_below="@id/dialog_rate_us_heading"
+        android:layout_margin="8dp"
+        android:text="Your feedback is important to us. Please take the time to rate this application"/>
+    <TextView
+        android:id="@+id/rate_us_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="YEAH! SURE"
+        android:layout_below="@id/dialog_rate_us_character"
+        android:layout_alignParentRight="true"
+        android:layout_margin="8dp"
+        android:textColor="@color/green_d_sea"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/rate_us_remind_later"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REMIND LATER"
+        android:layout_below="@id/dialog_rate_us_character"
+        android:layout_toLeftOf="@id/rate_us_confirm"
+        android:layout_margin="8dp"/>
+    <TextView
+        android:id="@+id/rate_us_never"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DO NOT ASK AGAIN"
+        android:layout_below="@id/dialog_rate_us_character"
+        android:layout_toLeftOf="@id/rate_us_remind_later"
+        android:layout_margin="8dp"/>
+</RelativeLayout>
