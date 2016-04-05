@@ -62,8 +62,8 @@ public class GenericAnswerDetails extends SugarRecord {
         ArrayList<GenericQuestion> allQuestions = new ArrayList<>();
 //        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_RIDDLE));
 //        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
-        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_LOGIC));
 
+        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_LOGIC));
         for (int i = 0; i < allQuestions.size(); i++) {
             int question_number = allQuestions.get(i).question_number;
             int category = allQuestions.get(i).category;

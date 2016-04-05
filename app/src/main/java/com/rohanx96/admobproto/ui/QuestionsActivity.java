@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,6 +83,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     @Bind(R.id.questions_activity_coin_text)
     TextView coins_display;
 
+    @Bind(R.id.linearLayout)
+    RelativeLayout appbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +131,8 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             actionBar.hide();
         }
         setUpViewPager();
+        mContainer.setBackgroundColor(FallingDrawables.getLightBackgroundColor(mCurrentPage, getApplicationContext()));
+        appbar.setBackgroundColor(FallingDrawables.getLightBackgroundColor(mCurrentPage, getApplicationContext()));
     }
 
     @Override
@@ -163,7 +169,6 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         pager.setPageMargin(convertDip2Pixels(this, 16));
         pager.setPageTransformer(true, new DepthPageTransformer());
 
-        mContainer.setBackgroundColor(FallingDrawables.getLightBackgroundColor(mCurrentPage, getApplicationContext()));
         pager.setCurrentItem(mCurrentPage);
         tvLevel.setText("Level " + (mCurrentPage + 1));
 
@@ -189,7 +194,17 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                         mContainer.setBackgroundColor((int) animation.getAnimatedValue());
                     }
                 });
+                ValueAnimator colorAnimator2 = ValueAnimator.ofObject(new ArgbEvaluator(),
+                        FallingDrawables.getLightBackgroundColor(mCurrentPage % NO_OF_COLORS, QuestionsActivity.this),
+                        FallingDrawables.getLightBackgroundColor(position % NO_OF_COLORS, QuestionsActivity.this));
+                colorAnimator.setDuration(500).addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        appbar.setBackgroundColor((int) animation.getAnimatedValue());
+                    }
+                });
                 colorAnimator.start();
+                colorAnimator2.start();
                 mCurrentPage = position;
                 tvLevel.setText("Level " + (mCurrentPage + 1));
                 hideCorrectAnswerFeedback();
@@ -550,7 +565,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     public void startCharacterDialogShowAnimation(final View characterDialog) {
         /* Animation for post Lollipop devices*/
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             characterDialog.post(new Runnable() {
                 @Override
                 public void run() {
@@ -563,18 +578,18 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                     characterDialog.setVisibility(View.VISIBLE);
                 }
             });
-        } else {
+        } else {*/
             ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
             scaleAnimation.setDuration(500);
             scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
             characterDialog.setVisibility(View.VISIBLE);
             characterDialog.startAnimation(scaleAnimation);
-        }
+        //}
     }
 
     public void startCharacterDialogHideAnimation(final View characterDialog) {
         /* Animation for post Lollipop devices */
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             characterDialog.post(new Runnable() {
                 @Override
                 public void run() {
@@ -593,13 +608,13 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                     animator.start();
                 }
             });
-        } else {
+        } else {*/
             characterDialog.setVisibility(View.GONE);
             ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
             scaleAnimation.setDuration(500);
             scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
             characterDialog.startAnimation(scaleAnimation);
-        }
+       // }
     }
 
     private void setupAd(){
@@ -627,7 +642,10 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     private void requestNewInterstitial(boolean isVideoAd) {
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("A63B0CDF9A759A19A47A01100878B546")
+                .addTestDevice("A63B0CDF9A759A19A47A01100878B546") //Rohan
+                .addTestDevice("CDCEF54FDF7F3A4DEC120209B12D78C6") // Rishab
+                .addTestDevice("mydevice")
+                .addTestDevice("mydevice")
                 .build();
         if (isVideoAd)
             mVideoAd.loadAd(adRequest);

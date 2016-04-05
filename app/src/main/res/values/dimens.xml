@@ -13,4 +13,6 @@
 
     <dimen name="characterheading">20sp</dimen>
     <dimen name="charactersubheading">15sp</dimen>
+
+    <dimen name="character_element_margin_top">8dp</dimen>
 </resources>

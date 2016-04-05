@@ -1,6 +1,9 @@
 package com.rohanx96.admobproto.ui;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,9 +11,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.DialogPlusBuilder;
+import com.orhanobut.dialogplus.Holder;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.fragments.SettingsFragment;
 import com.rohanx96.admobproto.utils.FallingDrawables;
@@ -49,6 +59,8 @@ public class MainActivity extends FragmentActivity {
         circlePageIndicator.setViewPager(mPager);
         mPager.setCurrentItem(1, false);
         fallingDrawables = new FallingDrawables(this, mContainer);
+        showRateDialog();
+
     }
 
     @Override
@@ -124,6 +136,50 @@ public class MainActivity extends FragmentActivity {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putLong(Constants.PREF_COINS, Constants.INITIAL_COINS).apply();
             editor.putBoolean(Constants.VOLUME, true).apply();
+        }
+    }
+
+    private void showRateDialog(){
+        final SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
+        int prefCount = prefs.getInt(Constants.PREF_SHOW_RATE_US,-1);
+        Log.i("show rate", " " + prefCount);
+        if (prefCount != -2) {
+            if (prefCount > 3) {
+                DialogPlusBuilder dialogPlus = DialogPlus.newDialog(this);
+                dialogPlus.setContentHolder(new ViewHolder(R.layout.dialog_rate_us));
+                final DialogPlus dialog = dialogPlus.create();
+                View holder = dialog.getHolderView();
+                holder.findViewById(R.id.rate_us_confirm).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                        try {
+                            startActivity(myAppLinkToMarket);
+                        } catch (ActivityNotFoundException e) {
+                            Toast.makeText(MainActivity.this, " unable to find market app", Toast.LENGTH_LONG).show();
+                        }
+                        prefs.edit().putInt(Constants.PREF_SHOW_RATE_US, -2).apply();
+                        dialog.dismiss();
+                    }
+                });
+                holder.findViewById(R.id.rate_us_remind_later).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        prefs.edit().putInt(Constants.PREF_SHOW_RATE_US, 0).apply();
+                        dialog.dismiss();
+                    }
+                });
+                holder.findViewById(R.id.rate_us_never).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        prefs.edit().putInt(Constants.PREF_SHOW_RATE_US, -2).apply();
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+            else prefs.edit().putInt(Constants.PREF_SHOW_RATE_US, prefCount + 1).apply();
         }
     }
 

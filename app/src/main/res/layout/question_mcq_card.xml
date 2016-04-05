@@ -10,7 +10,9 @@
         cardElevation="@dimen/elevation_large"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp">
 
         <RelativeLayout
             android:id="@+id/question_card_content"
@@ -50,6 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="bottom"
+                    android:layout_marginBottom="4dp"
                     android:orientation="vertical">
 
                     <TextView
