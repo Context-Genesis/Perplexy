@@ -92,7 +92,6 @@ public class QuestionMCQFragment extends Fragment {
             this.prevQuestion.setVisibility(View.GONE);
         }
 
-        // TODO: replace 14 by count of question in that particular category
         if (genericQuestion.question_number == Constants.RIDDLE_COUNT && genericQuestion.category == Constants.GAME_TYPE_RIDDLE) {
             this.nextQuestion.setVisibility(View.GONE);
         }

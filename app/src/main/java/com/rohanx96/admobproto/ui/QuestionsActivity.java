@@ -644,6 +644,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("A63B0CDF9A759A19A47A01100878B546") //Rohan
                 .addTestDevice("CDCEF54FDF7F3A4DEC120209B12D78C6") // Rishab
+                .addTestDevice("D40CA2BD5C7E81CF7B1F9C31DFE05BE6")  // Dhruv
                 .addTestDevice("mydevice")
                 .addTestDevice("mydevice")
                 .build();

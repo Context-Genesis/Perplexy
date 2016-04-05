@@ -87,7 +87,6 @@ public class SettingsFragment extends Fragment {
         SoundManager.playButtonClickSound(getActivity());
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
-
         final DialogPlus dialog = DialogPlus.newDialog(getContext())
                 .setGravity(Gravity.BOTTOM)
                 .setOverlayBackgroundResource(Color.TRANSPARENT)
@@ -102,7 +101,6 @@ public class SettingsFragment extends Fragment {
 
         TextView yes = (TextView) dialogView.findViewById(R.id.yes_reset);
         TextView no = (TextView) dialogView.findViewById(R.id.no_reset);
-
 
         yes.setOnClickListener(new View.OnClickListener() {
             @Override

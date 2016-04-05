@@ -139,15 +139,16 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    private void showRateDialog(){
+    private void showRateDialog() {
         final SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
-        int prefCount = prefs.getInt(Constants.PREF_SHOW_RATE_US,-1);
+        int prefCount = prefs.getInt(Constants.PREF_SHOW_RATE_US, -1);
         Log.i("show rate", " " + prefCount);
         if (prefCount != -2) {
             if (prefCount > 3) {
                 DialogPlusBuilder dialogPlus = DialogPlus.newDialog(this);
                 dialogPlus.setContentHolder(new ViewHolder(R.layout.dialog_rate_us));
                 final DialogPlus dialog = dialogPlus.create();
+                dialog.show();
                 View holder = dialog.getHolderView();
                 holder.findViewById(R.id.rate_us_confirm).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -157,7 +158,7 @@ public class MainActivity extends FragmentActivity {
                         try {
                             startActivity(myAppLinkToMarket);
                         } catch (ActivityNotFoundException e) {
-                            Toast.makeText(MainActivity.this, " unable to find market app", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "Unable to find market app", Toast.LENGTH_LONG).show();
                         }
                         prefs.edit().putInt(Constants.PREF_SHOW_RATE_US, -2).apply();
                         dialog.dismiss();
@@ -177,9 +178,7 @@ public class MainActivity extends FragmentActivity {
                         dialog.dismiss();
                     }
                 });
-                dialog.show();
-            }
-            else prefs.edit().putInt(Constants.PREF_SHOW_RATE_US, prefCount + 1).apply();
+            } else prefs.edit().putInt(Constants.PREF_SHOW_RATE_US, prefCount + 1).apply();
         }
     }
 
@@ -187,11 +186,11 @@ public class MainActivity extends FragmentActivity {
         return fallingDrawables;
     }
 
-    public void goToSettings(){
-        mPager.setCurrentItem(0,true);
+    public void goToSettings() {
+        mPager.setCurrentItem(0, true);
     }
 
-    public void goToStats(){
-        mPager.setCurrentItem(2,true);
+    public void goToStats() {
+        mPager.setCurrentItem(2, true);
     }
 }
