@@ -15,8 +15,8 @@
 
     <!-- Question already answered correctly -->
     <string name="characterAlreadyAnsweredRight1">You\'ve already answered this question correctly. You can view the solution in case you\'d like to see it.</string>
-    <string name="characterAlreadyAnsweredRight2">This question has already been answered correctly!. (Protip) If you\'re running low on coins, watch a video.</string>
-    <string name="characterAlreadyAnsweredRight3">You\'ve already got this one right! (Protip) Watch a video to help the poor questionmaker eat tonight. He\'s a liberal arts student. Just saying.</string>
+    <string name="characterAlreadyAnsweredRight2">This question has already been answered correctly!. (Protip) If you\'re running low on coins, watch an ad.</string>
+    <string name="characterAlreadyAnsweredRight3">You\'ve already got this one right! (Protip) Watch an ad to help the poor questionmaker eat tonight. He\'s a liberal arts student. Just saying.</string>
     <string name="characterAlreadyAnsweredRight4">You had already solved this question. (Protip) Solve this question again and maybe you'll experience deja vu.</string>
 
     <!-- Question already answered wrongly, is locked-->
