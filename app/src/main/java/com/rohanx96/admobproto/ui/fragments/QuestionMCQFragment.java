@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +68,9 @@ public class QuestionMCQFragment extends Fragment {
     @Bind(R.id.qcard_mcq_option4)
     TextView tvOption4;
 
+    @Bind(R.id.textAreaScroller)
+    ScrollView scroll;
+
     private boolean isUIVisibleToUser = false;
     private RelativeLayout cardContent;
 
@@ -85,6 +90,12 @@ public class QuestionMCQFragment extends Fragment {
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
         genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION - 1);
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int height = displaymetrics.heightPixels;
+
+        scroll.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height/4));
 
         tvQuestion.setText(genericQuestion.question);
 
@@ -110,6 +121,12 @@ public class QuestionMCQFragment extends Fragment {
                     tvOption1.setText(option[0]);
                     tvOption2.setText(option[1]);
                     tvOption3.setVisibility(View.GONE);
+                    tvOption4.setVisibility(View.GONE);
+                    break;
+                case 3:
+                    tvOption1.setText(option[0]);
+                    tvOption2.setText(option[1]);
+                    tvOption3.setText(option[2]);
                     tvOption4.setVisibility(View.GONE);
                     break;
                 case 4:

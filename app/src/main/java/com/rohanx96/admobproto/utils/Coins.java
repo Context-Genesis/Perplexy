@@ -62,6 +62,7 @@ public class Coins {
         }
     }
 
+    // TODO: Test when coins = unlock price
     public static void unlock_unavailable(Context context) {
         pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, context.MODE_PRIVATE);
         editor = pref.edit();
@@ -107,6 +108,7 @@ public class Coins {
         editor.putLong(Constants.PREF_COINS, coins + Constants.AD_VALUE_COINS).apply();
 
         long earned_coins = pref.getLong(Constants.PREF_COINS_EARNED, 0);
+
         editor.putLong(Constants.PREF_COINS_EARNED, earned_coins + Constants.AD_VALUE_COINS).apply();
     }
 }
