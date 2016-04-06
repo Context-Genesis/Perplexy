@@ -1,7 +1,5 @@
 package com.rohanx96.admobproto.ui;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -20,7 +18,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
@@ -29,7 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.FacebookSdk;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -391,11 +387,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 mVideoAd.show();
             } else
                 Snackbar.make(mContainer, "Cannot load add at this time. Please try again later.", Snackbar.LENGTH_LONG).show();
-        }
-        else if (mInterstitialAd.isLoaded()) {
+        } else if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
-        }
-        else
+        } else
             requestNewInterstitial(false);
     }
 
@@ -538,7 +532,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                                 //Dialog is reinitialised based on question every time character is clicked
                                 setupCharacterDialog();
                             }
+                            SoundManager.playCharacterOpenedSound(getApplicationContext());
                         } else {
+                            SoundManager.playCharacterClosedSound(getApplicationContext());
                             if (isLocked) {
                                 hideCharacterUnlockDialog();
                                 hideIncorrectAnswerFeedback();
@@ -579,11 +575,11 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 }
             });
         } else {*/
-            ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
-            scaleAnimation.setDuration(500);
-            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-            characterDialog.setVisibility(View.VISIBLE);
-            characterDialog.startAnimation(scaleAnimation);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        characterDialog.setVisibility(View.VISIBLE);
+        characterDialog.startAnimation(scaleAnimation);
         //}
     }
 
@@ -609,15 +605,15 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 }
             });
         } else {*/
-            characterDialog.setVisibility(View.GONE);
-            ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
-            scaleAnimation.setDuration(500);
-            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-            characterDialog.startAnimation(scaleAnimation);
-       // }
+        characterDialog.setVisibility(View.GONE);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        characterDialog.startAnimation(scaleAnimation);
+        // }
     }
 
-    private void setupAd(){
+    private void setupAd() {
         mVideoAd = new InterstitialAd(this);
         mVideoAd.setAdUnitId(getString(R.string.video_ad_id));
         mVideoAd.setAdListener(new AdListener() {
@@ -633,7 +629,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                pref.edit().putInt(Constants.PREF_SHOW_AD,0).apply();
+                pref.edit().putInt(Constants.PREF_SHOW_AD, 0).apply();
                 super.onAdClosed();
             }
         });
@@ -654,9 +650,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             mInterstitialAd.loadAd(adRequest);
     }
 
-    public void afterAdWatched(){
+    public void afterAdWatched() {
         Coins.addCoinsFromAd(this);
         SoundManager.playCorrectAnswerSound(this);
-        coins_display.setText(String.format("%d",Coins.getCurrentCoins(this)));
+        coins_display.setText(String.format("%d", Coins.getCurrentCoins(this)));
     }
 }

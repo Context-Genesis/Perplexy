@@ -1,6 +1,7 @@
 package com.rohanx96.admobproto.elements;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.orm.SugarRecord;
@@ -49,64 +50,8 @@ public class GenericAnswerDetails extends SugarRecord {
                 '}';
     }
 
-    public static void initializeDatabase(Context context) {
-        /*
-         *Initialize database with total number of answered questions with default value as that in the JSON question
-         * question_id : from JSON File
-         * status : UNAVAILABLE
-         * hint : false
-         * answer : false
-         * number_incorrect : 0
-         */
-        GenericAnswerDetails.deleteAll(GenericAnswerDetails.class);
-        ArrayList<GenericQuestion> allQuestions = new ArrayList<>();
-//        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_RIDDLE));
-//        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
-
-        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_LOGIC));
-        for (int i = 0; i < allQuestions.size(); i++) {
-            int question_number = allQuestions.get(i).question_number;
-            int category = allQuestions.get(i).category;
-            GenericAnswerDetails genericAnswerDetails;
-
-            if (i < 3)
-                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
-            else
-                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
-            genericAnswerDetails.save();
-        }
-
-        allQuestions = new ArrayList<>();
-
-        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_RIDDLE));
-
-        for (int i = 0; i < allQuestions.size(); i++) {
-            int question_number = allQuestions.get(i).question_number;
-            int category = allQuestions.get(i).category;
-            GenericAnswerDetails genericAnswerDetails;
-
-            if (i < 3)
-                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
-            else
-                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
-            genericAnswerDetails.save();
-        }
-
-        allQuestions = new ArrayList<>();
-
-        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
-
-        for (int i = 0; i < allQuestions.size(); i++) {
-            int question_number = allQuestions.get(i).question_number;
-            int category = allQuestions.get(i).category;
-            GenericAnswerDetails genericAnswerDetails;
-
-            if (i < 3)
-                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
-            else
-                genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
-            genericAnswerDetails.save();
-        }
+    public static void initializeDatabase(final Context context) {
+        new LoadDatabaseInBackgroundThread(context).execute();
     }
 
     public static ArrayList<GenericAnswerDetails> listAll(int category) {
@@ -191,6 +136,87 @@ public class GenericAnswerDetails extends SugarRecord {
         List<GenericAnswerDetails> genericAnswerDetails = Select.from(GenericAnswerDetails.class).list();
         for (GenericAnswerDetails g : genericAnswerDetails) {
             Log.d("PRINTDB", g.toString());
+        }
+    }
+
+    private static class LoadDatabaseInBackgroundThread extends AsyncTask<Void, Void, Void> {
+
+        Context context;
+
+        public LoadDatabaseInBackgroundThread(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            /*
+         *Initialize database with total number of answered questions with default value as that in the JSON question
+         * question_id : from JSON File
+         * status : UNAVAILABLE
+         * hint : false
+         * answer : false
+         * number_incorrect : 0
+         */
+            GenericAnswerDetails.deleteAll(GenericAnswerDetails.class);
+            ArrayList<GenericQuestion> allQuestions = new ArrayList<>();
+//        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_RIDDLE));
+//        allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
+            allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_LOGIC));
+            for (int i = 0; i < allQuestions.size(); i++) {
+                int question_number = allQuestions.get(i).question_number;
+                int category = allQuestions.get(i).category;
+                GenericAnswerDetails genericAnswerDetails;
+
+                if (i < 3)
+                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
+                else
+                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
+                genericAnswerDetails.save();
+            }
+
+            allQuestions = new ArrayList<>();
+
+            allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_RIDDLE));
+
+            for (int i = 0; i < allQuestions.size(); i++) {
+                int question_number = allQuestions.get(i).question_number;
+                int category = allQuestions.get(i).category;
+                GenericAnswerDetails genericAnswerDetails;
+
+                if (i < 3)
+                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
+                else
+                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
+                genericAnswerDetails.save();
+            }
+
+            allQuestions = new ArrayList<>();
+
+            allQuestions.addAll(JSONUtils.getQuestionsFromJSONString(context, Constants.GAME_TYPE_SEQUENCES));
+
+            for (int i = 0; i < allQuestions.size(); i++) {
+                int question_number = allQuestions.get(i).question_number;
+                int category = allQuestions.get(i).category;
+                GenericAnswerDetails genericAnswerDetails;
+
+                if (i < 3)
+                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
+                else
+                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
+                genericAnswerDetails.save();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
         }
     }
 }

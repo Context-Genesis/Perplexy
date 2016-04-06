@@ -58,13 +58,13 @@ public class SoundManager {
             /* Randomly chose one sound */
             switch (new Random().nextInt(3)) {
                 case 0:
-                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_a);
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
                     break;
                 case 1:
-                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_b);
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
                     break;
                 case 2:
-                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
                     break;
             }
 
@@ -86,13 +86,13 @@ public class SoundManager {
             /* Randomly chose one sound */
             switch (new Random().nextInt(3)) {
                 case 0:
-                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_a);
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
                     break;
                 case 1:
-                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_b);
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
                     break;
                 case 2:
-                    mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
                     break;
             }
 
@@ -112,7 +112,7 @@ public class SoundManager {
                 mediaPlayer = new MediaPlayer();
             }
 
-            mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
+            mediaPlayer = MediaPlayer.create(context, R.raw.click);
 
 
             mediaPlayer.start();
@@ -130,7 +130,7 @@ public class SoundManager {
                 mediaPlayer = new MediaPlayer();
             }
 
-            mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
+            mediaPlayer = MediaPlayer.create(context, R.raw.click);
 
             mediaPlayer.start();
         } catch (Exception e) {
@@ -147,7 +147,7 @@ public class SoundManager {
                 mediaPlayer = new MediaPlayer();
             }
 
-            mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
+            mediaPlayer = MediaPlayer.create(context, R.raw.sound_flick_a);
 
             mediaPlayer.start();
         } catch (Exception e) {
@@ -164,7 +164,7 @@ public class SoundManager {
                 mediaPlayer = new MediaPlayer();
             }
 
-            mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
+            mediaPlayer = MediaPlayer.create(context, R.raw.sound_flick_c);
 
             mediaPlayer.start();
         } catch (Exception e) {
@@ -181,7 +181,7 @@ public class SoundManager {
                 mediaPlayer = new MediaPlayer();
             }
 
-            mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
+            mediaPlayer = MediaPlayer.create(context, R.raw.click);
 
             mediaPlayer.start();
         } catch (Exception e) {
