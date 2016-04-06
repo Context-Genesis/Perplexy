@@ -63,6 +63,18 @@ public class SoundManager {
                 }
             /* Randomly chose one sound */
             /* Randomly chose one sound */
+<<<<<<< HEAD
+            switch (new Random().nextInt(3)) {
+                case 0:
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
+                    break;
+                case 1:
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
+                    break;
+                case 2:
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
+                    break;
+=======
                 switch (new Random().nextInt(3)) {
                     case 0:
                         mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_a);
@@ -78,6 +90,7 @@ public class SoundManager {
                 mediaPlayer.start();
             } catch (Exception e) {
                 e.printStackTrace();
+>>>>>>> 2552387ecf93ad419d8ea11bd6b859e341f0396d
             }
         }
     }
@@ -93,6 +106,18 @@ public class SoundManager {
                 }
             /* Randomly chose one sound */
             /* Randomly chose one sound */
+<<<<<<< HEAD
+            switch (new Random().nextInt(3)) {
+                case 0:
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
+                    break;
+                case 1:
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
+                    break;
+                case 2:
+                    mediaPlayer = MediaPlayer.create(context, R.raw.click);
+                    break;
+=======
                 switch (new Random().nextInt(3)) {
                     case 0:
                         mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_a);
@@ -108,6 +133,7 @@ public class SoundManager {
                 mediaPlayer.start();
             } catch (Exception e) {
                 e.printStackTrace();
+>>>>>>> 2552387ecf93ad419d8ea11bd6b859e341f0396d
             }
         }
     }
@@ -127,6 +153,16 @@ public class SoundManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+<<<<<<< HEAD
+
+            mediaPlayer = MediaPlayer.create(context, R.raw.click);
+
+
+            mediaPlayer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+=======
+>>>>>>> 2552387ecf93ad419d8ea11bd6b859e341f0396d
         }
     }
 
@@ -146,6 +182,15 @@ public class SoundManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+<<<<<<< HEAD
+
+            mediaPlayer = MediaPlayer.create(context, R.raw.click);
+
+            mediaPlayer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+=======
+>>>>>>> 2552387ecf93ad419d8ea11bd6b859e341f0396d
         }
     }
 
@@ -165,6 +210,15 @@ public class SoundManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+<<<<<<< HEAD
+
+            mediaPlayer = MediaPlayer.create(context, R.raw.sound_flick_a);
+
+            mediaPlayer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+=======
+>>>>>>> 2552387ecf93ad419d8ea11bd6b859e341f0396d
         }
     }
 
@@ -184,6 +238,15 @@ public class SoundManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+<<<<<<< HEAD
+
+            mediaPlayer = MediaPlayer.create(context, R.raw.sound_flick_c);
+
+            mediaPlayer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+=======
+>>>>>>> 2552387ecf93ad419d8ea11bd6b859e341f0396d
         }
     }
 
@@ -206,6 +269,13 @@ public class SoundManager {
         }
     }
 
+<<<<<<< HEAD
+            mediaPlayer = MediaPlayer.create(context, R.raw.click);
+
+            mediaPlayer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+=======
     public static void playCoinSound(Context context){
         if (shouldPlaySound.equals("Y")) {
             mediaPlayer = setupSound(context);
@@ -222,6 +292,7 @@ public class SoundManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+>>>>>>> 2552387ecf93ad419d8ea11bd6b859e341f0396d
         }
     }
 

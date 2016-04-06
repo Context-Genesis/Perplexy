@@ -240,7 +240,7 @@
                     android:layout_below="@+id/char_q_clicked_title_ad"
                     android:layout_toRightOf="@id/imageView3"
                     android:gravity="center"
-                    android:text="Watch A Video"
+                    android:text="@string/char_watch_ad"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/characterheading" />

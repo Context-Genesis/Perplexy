@@ -312,6 +312,7 @@ public class QuestionMCQFragment extends Fragment {
                 correctIndicator.setImageResource(R.drawable.tick_green);
 
                 display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
+                SoundManager.playCoinSound(getActivity());
                 int next = mCallback.unlockNextQuestion(CATEGORY);
                 mCallback.showCorrectAnswerFeedback(next);
                 mCallback.refreshAdapter();
@@ -335,7 +336,6 @@ public class QuestionMCQFragment extends Fragment {
                 lockQuestionIfRequired();
             }
             mCallback.showIncorrectAnswerFeedback();
-            Toast.makeText(getActivity(), "Clicked option " + check + " INCORRECT", Toast.LENGTH_SHORT).show();
         }
     }
 

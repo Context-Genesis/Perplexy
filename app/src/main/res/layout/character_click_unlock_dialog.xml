@@ -197,7 +197,7 @@
                     android:layout_toRightOf="@id/imageView2"
                     android:gravity="center"
                     android:paddingBottom="8dp"
-                    android:text="Watch A Video"
+                    android:text="@string/char_watch_ad"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/characterheading" />

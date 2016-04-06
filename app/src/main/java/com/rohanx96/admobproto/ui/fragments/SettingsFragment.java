@@ -66,15 +66,17 @@ public class SettingsFragment extends Fragment {
     public void setupSoundSwitch() {
         SoundManager.playSwipeSound(getActivity());
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        volume.setChecked(pref.getBoolean(Constants.VOLUME, true));
+        volume.setChecked(pref.getString(Constants.VOLUME, "Y").equals("Y"));
         final SharedPreferences.Editor editor = pref.edit();
         volume.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    editor.putBoolean(Constants.VOLUME, true).apply();
+                    editor.putString(Constants.VOLUME, "Y").apply();
+                    SoundManager.setShouldPlaySound("Y");
                 } else {
-                    editor.putBoolean(Constants.VOLUME, false).apply();
+                    editor.putString(Constants.VOLUME, "N").apply();
+                    SoundManager.setShouldPlaySound("N");
                 }
             }
         });
@@ -108,7 +110,7 @@ public class SettingsFragment extends Fragment {
 
                 editor.putLong(Constants.PREF_COINS, Constants.INITIAL_COINS).apply();
                 editor.putLong(Constants.PREF_COINS_SPENT, 0).apply();
-                editor.putLong(Constants.PREF_COINS_EARNED, 0).apply();
+                editor.putLong(Constants.PREF_COINS_EARNED, Constants.INITIAL_COINS).apply();
 
                 editor.putInt(Constants.CORRECT_COUNT, 0).apply();
                 editor.putInt(Constants.INCORRECT_COUNT, 0).apply();

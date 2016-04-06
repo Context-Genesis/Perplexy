@@ -311,6 +311,7 @@ public class QuestionWordFragment extends Fragment {
 
             TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);
             display_coins.setText(pref.getLong(Constants.PREF_COINS, 0) + "");
+            SoundManager.playCoinSound(getActivity());
             int next = mCallback.unlockNextQuestion(CATEGORY);
             mCallback.showCorrectAnswerFeedback(next);
             mCallback.refreshAdapter();

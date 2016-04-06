@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Trying to answer question, clicks guy -->
+    <string-array name="characterTrying">
+        <item>Hey there! Are you stuck? Here\'s how I can help you.</item>
+        <item>Are you stuck? Buy a hint, or (Protip) go do some meditation.</item>
+        <item>Hi! Unable to solve this question? (Protip) Earn some coins and unlock another question.</item>
+        <item>Having difficulties? (Protip) Praying to the one true god, Thor, might solve the question.</item>
+    </string-array>
+
+    <!-- Question already answered correctly -->
+    <string-array name="characterAlreadyAnsweredRight">
+        <item>You\'ve already answered this question correctly. You can view the solution in case you\'d like to see it.</item>
+        <item>This question has already been answered correctly!. (Protip) If you\'re running low on coins, watch an ad.</item>
+        <item>You\'ve already got this one right! (Protip) Watch an ad to help the poor questionmaker eat tonight. He\'s a liberal arts student. Just saying.</item>
+        <item>You had already solved this question. (Protip) Solve this question again and maybe you\'ll experience deja vu.</item>
+    </string-array>
+
+    <!-- Question already answered wrongly, is locked-->
+    <string-array name="characterAlreadyAnsweredWrong">
+        <item>Aw, Snap! You answered this question wrong. (Protip) Magic is known to unlock questions. Just kidding, coins will do the trick.</item>
+        <item>You had previously answered this question wrong. (Protip) It costs less to unlock a wrong question than an unattempted one.</item>
+        <item>Did the question perplex you? Hmm. No wonder the app is named Perplexy.</item>
+        <item>Seems like you were unable to answer this correctly. (Protip) Answer all questions correctly to avoid seeing this suggestion.</item>
+    </string-array>
+
+    <!-- Question answered correctly right now-->
+    <string-array name="characterAnsweredNowRight">
+        <item>Awesome! You answered this right. Move ahead to the next unlocked question. Remember, you always have a minimum of 3 unlocked questions.</item>
+        <item>Great work! (Protip) The more questions you answer, the faster your brain thinks, the easier it is to kill mosquitoes.</item>
+        <item>Amazing! If you loved this question, would you consider watching an ad? *puppy eyes*</item>
+    </string-array>
+
+    <!-- Question answered wrong right now-->
+    <string-array name="characterAnsweredNowWrong">
+        <item>This question is locked because you answered it wrong. (Protip) Don\'t answer it wrong next time.</item>
+        <item>Oops! That wasn\'t quite right. (Protip) Instead of trying another question, unlock this one and try again!</item>
+        <item>Perplexed! You got this wrong. (Protip) Unlock and try again. Or. Watch an ad and stay blessed.</item>
+    </string-array>
+
+    <!-- Already Answered Right But Wrong Now -->
+    <string-array name="characterAlreadyAnsweredRightButWrongNow">
+        <item>You\'ve already answered this question right, but got this wrong this time. Don\'t worry, your precious coins don\'t get deducted.</item>
+    </string-array>
+
+    <!-- Question not yet unlocked -->
+    <string-array name="characterQuestionLocked">
+        <item>This question hasn\'t been unlocked yet. Till then, keep calm and be a ninja.</item>
+        <item>This question hasn\'t been unlocked yet. Till then, keep calm and go to hogwarts</item>
+        <item>This question hasn\'t been unlocked yet. Till then, keep calm and kill zombies.</item>
+        <item>This question hasn\'t been unlocked yet. Till then, keep calm and freak out.</item>
+        <item>This question hasn\'t been unlocked yet. Till then, keep calm and snatch the snitch.</item>
+        <item>This question hasn\'t been unlocked yet. Till then, keep calm and stay sherlocked.</item>
+        <item>This question hasn\'t been unlocked yet. Till then, keep calm and stop crushing candies.</item>
+    </string-array>
+
+</resources>
