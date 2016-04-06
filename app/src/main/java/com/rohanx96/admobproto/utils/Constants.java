@@ -40,21 +40,21 @@ public class Constants {
 
     public static final String PREF_SHOW_RATE_US = "RateUs";
 
-    public static final long INITIAL_COINS = 1500;
-    public static final int HINT_PRICE = 75;
+    public static final long INITIAL_COINS = 250;
+    public static final int HINT_PRICE = 100;
     public static final int CORRECT_PRICE = 100;
-    public static final int INCORRECT_PRICE = 50;
-    public static final int SOLUTION_PRICE = 150;
-    public static final int UNLOCK_INCORRECT_PRICE = 100;
-    public static final int UNLOCK_UNAVAILABLE_PRICE = 120;
-    public static final int AD_VALUE_COINS = 100;
+    public static final int INCORRECT_PRICE = 0;
+    public static final int SOLUTION_PRICE = 200;
+    public static final int UNLOCK_INCORRECT_PRICE = 125;
+    public static final int UNLOCK_UNAVAILABLE_PRICE = 150;
+    public static final int AD_VALUE_COINS = 75;
 
     public static final String CORRECT_COUNT = "correctcount";
     public static final String INCORRECT_COUNT = "incorrectcount";
     public static final String ACCURACY = "accuracy";
     public static final String ERROR = null;
 
-    public static final int RIDDLE_COUNT = 52;
+    public static final int RIDDLE_COUNT = 50;
     public static final int SEQUENCE_COUNT = 50;
     public static final int LOGIC_QUESTION = 50;
 }

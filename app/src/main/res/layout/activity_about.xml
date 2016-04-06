@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="16dp"
-            android:text="Developers" />
+            android:text="Our Team" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -36,17 +36,6 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage1"
                 android:layout_toRightOf="@+id/devImage1"
-                android:text="Developer" />
-
-            <TextView
-                android:id="@+id/devName1"
-                style="@style/aboutTextViewContent"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/devTitle1"
-                android:layout_marginLeft="5dp"
-                android:layout_toEndOf="@+id/devImage1"
-                android:layout_toRightOf="@+id/devImage1"
                 android:text="Dhruv Bhutani" />
 
             <ImageView
@@ -62,7 +51,7 @@
                 android:id="@+id/devandroid1"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_below="@+id/devName1"
+                android:layout_below="@+id/devTitle1"
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage1"
                 android:layout_toRightOf="@+id/devImage1"
@@ -90,37 +79,17 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage4"
                 android:layout_toRightOf="@+id/devImage4"
-                android:text="Developer" />
-
-            <TextView
-                android:id="@+id/devName4"
-                style="@style/aboutTextViewContent"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/devTitle4"
-                android:layout_marginLeft="5dp"
-                android:layout_toEndOf="@+id/devImage4"
-                android:layout_toRightOf="@+id/devImage4"
                 android:text="Gaurav Bansal" />
 
             <ImageView
                 android:id="@+id/devgplus4"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_alignTop="@+id/devandroid4"
-                android:layout_toEndOf="@+id/devandroid4"
-                android:layout_toRightOf="@+id/devandroid4"
-                android:src="@drawable/gplus" />
-
-            <ImageView
-                android:id="@+id/devandroid4"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_below="@+id/devName4"
+                android:layout_below="@+id/devTitle4"
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage4"
                 android:layout_toRightOf="@+id/devImage4"
-                android:src="@drawable/android" />
+                android:src="@drawable/gplus" />
 
         </RelativeLayout>
 
@@ -144,18 +113,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage2"
                 android:layout_toRightOf="@+id/devImage2"
-                android:text="Developer" />
+                android:text="Rishab Bhardwaj" />
 
-            <TextView
-                android:id="@+id/devName2"
-                style="@style/aboutTextViewContent"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/devTitle2"
-                android:layout_marginLeft="5dp"
-                android:layout_toEndOf="@+id/devImage2"
-                android:layout_toRightOf="@+id/devImage2"
-                android:text="Rishabh Bhardwaj" />
 
             <ImageView
                 android:id="@+id/devgplus2"
@@ -170,7 +129,7 @@
                 android:id="@+id/devandroid2"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_below="@+id/devName2"
+                android:layout_below="@+id/devTitle2"
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage2"
                 android:layout_toRightOf="@+id/devImage2"
@@ -198,17 +157,6 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage3"
                 android:layout_toRightOf="@+id/devImage3"
-                android:text="Developer" />
-
-            <TextView
-                android:id="@+id/devName3"
-                style="@style/aboutTextViewContent"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/devTitle3"
-                android:layout_marginLeft="5dp"
-                android:layout_toEndOf="@+id/devImage3"
-                android:layout_toRightOf="@+id/devImage3"
                 android:text="Rohan Agarwal" />
 
             <ImageView
@@ -224,7 +172,7 @@
                 android:id="@+id/devandroid3"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_below="@+id/devName3"
+                android:layout_below="@+id/devTitle3"
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage3"
                 android:layout_toRightOf="@+id/devImage3"

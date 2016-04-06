@@ -100,10 +100,6 @@ public class AboutActivity extends Activity {
         openWeb("https://github.com/kyleduo/SwitchButton");
     }
 
-    @OnClick(R.id.devandroid4)
-    public void setAndDev4() {
-        openWeb("https://play.google.com/store/apps/details?id=com.Dhruv.MemoryMaze");
-    }
 
     @OnClick(R.id.devgplus4)
     public void setgplus4() {
