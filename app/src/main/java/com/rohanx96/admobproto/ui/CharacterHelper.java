@@ -154,7 +154,12 @@ public class CharacterHelper {
         showsolution.setVisibility(View.VISIBLE);
         confirmsolution.setVisibility(View.GONE);
         showhiddensolution.setVisibility(View.GONE);
-        showhiddensolution.setText(question.answer + "\n" + question.explanation);
+
+        if (question.layout_type != 0) {
+            showhiddensolution.setText(question.answer + "\n" + question.explanation);
+        } else {
+            showhiddensolution.setText(question.options.split(";")[Integer.parseInt(question.answer) - 1] + "\n" + question.explanation);
+        }
 
         if (ansDetails.get(mCurrentPage).answer_displayed == true) {
             solutionprice.setText("0");
@@ -351,11 +356,15 @@ public class CharacterHelper {
     }
 
     public void setupCorrectAnswerFeedback(int category, int currentPage, final int nextQuestion, final Context context) {
-        if (nextQuestion != -1) {
-            TextView solution = (TextView) mParentActivity.findViewById(R.id.char_feedback_solution_details);
-            GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, category, currentPage);
+        GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, category, currentPage);
+        TextView solution = (TextView) mParentActivity.findViewById(R.id.char_feedback_solution_details);
+        Log.wtf("CorrectFeedback",question.explanation);
+        if (question.layout_type != 0) {
             solution.setText(question.answer + "\n" + question.explanation);
+        } else
+            solution.setText(question.options.split(";")[Integer.parseInt(question.answer) - 1] + "\n" + question.explanation);
 
+        if (nextQuestion != -1) {
             TextView nextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_next_question);
             nextLevel.setText(String.format("Question %d is now unlocked", nextQuestion));
             nextLevel.setVisibility(View.VISIBLE);
@@ -522,7 +531,11 @@ public class CharacterHelper {
         confirmsolution.setVisibility(View.GONE);
         showhiddensolution.setVisibility(View.GONE);
 
-        showhiddensolution.setText(question.answer + "\n" + question.explanation);
+        if (question.layout_type != 0) {
+            showhiddensolution.setText(question.answer + "\n" + question.explanation);
+        } else {
+            showhiddensolution.setText(question.options.split(";")[Integer.parseInt(question.answer) - 1] + "\n" + question.explanation);
+        }
 
         if (ansDetails.get(currentPage).answer_displayed == true) {
             solutionprice.setText("0");
@@ -587,9 +600,9 @@ public class CharacterHelper {
         setupShowAd(CHARACTER_TYPE_FEEDBACK_INCORRECT);
     }
 
-    private void setupShowAd(int characterType){
+    private void setupShowAd(int characterType) {
         TextView adText;
-        switch (characterType){
+        switch (characterType) {
             case CHARACTER_TYPE_LOCKED:
                 adText = (TextView) mParentActivity.findViewById(R.id.char_unlock_videoad_unlock);
                 break;
@@ -605,10 +618,11 @@ public class CharacterHelper {
         adText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((QuestionsActivity)mParentActivity).showAd(true);
+                ((QuestionsActivity) mParentActivity).showAd(true);
             }
         });
     }
+
     public void animateAdView(int type) {
         View adView = null;
         if (type == CHARACTER_TYPE_UNLOCKED)
