@@ -147,7 +147,7 @@ public class QuestionMCQFragment extends Fragment {
     @OnClick(R.id.canvas_pull)
     public void canvasClick() {
         if (isUIVisibleToUser) {
-            DrawingView.setUpCanvas(getContext(), QuestionsActivity.convertDip2Pixels(getContext(), tvQuestion.getHeight() + 80));
+            DrawingView.setUpCanvas(getContext(), QuestionsActivity.convertDip2Pixels(getContext(),70) + tvQuestion.getHeight());
             SoundManager.playButtonClickSound(getActivity());
         }
     }
