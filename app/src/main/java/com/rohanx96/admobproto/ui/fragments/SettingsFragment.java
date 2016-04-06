@@ -113,7 +113,7 @@ public class SettingsFragment extends Fragment {
 
                 editor.putLong(Constants.PREF_COINS, Constants.INITIAL_COINS).apply();
                 editor.putLong(Constants.PREF_COINS_SPENT, 0).apply();
-                editor.putLong(Constants.PREF_COINS_EARNED, 0).apply();
+                editor.putLong(Constants.PREF_COINS_EARNED, Constants.INITIAL_COINS).apply();
 
                 editor.putInt(Constants.CORRECT_COUNT, 0).apply();
                 editor.putInt(Constants.INCORRECT_COUNT, 0).apply();

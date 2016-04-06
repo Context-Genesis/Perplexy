@@ -136,6 +136,7 @@ public class MainActivity extends FragmentActivity {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putLong(Constants.PREF_COINS, Constants.INITIAL_COINS).apply();
             editor.putString(Constants.VOLUME, "Y").apply();
+            editor.putLong(Constants.PREF_COINS_EARNED,Constants.INITIAL_COINS).apply();
         }
     }
 

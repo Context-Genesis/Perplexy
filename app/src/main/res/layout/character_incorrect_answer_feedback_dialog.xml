@@ -150,7 +150,6 @@
                     android:id="@+id/char_feedback_incorrect_showhiddensolution"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This is the solution. This could get real big and fuck the layout. Just like this"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/charactersubheading"
@@ -279,7 +278,7 @@
                     android:layout_gravity="center"
                     android:layout_toRightOf="@id/imageView3"
                     android:gravity="center"
-                    android:text="Watch A Video"
+                    android:text="@string/char_watch_ad"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/characterheading" />

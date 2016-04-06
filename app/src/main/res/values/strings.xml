@@ -48,4 +48,5 @@
 
     <string name="video_ad_id" translatable="false">ca-app-pub-7975954632775689/9254755453</string>
     <string name="interstitial_ad_id" translatable="false">ca-app-pub-7975954632775689/1452287051</string>
+    <string name="char_watch_ad">Watch an Ad</string>
 </resources>

@@ -77,7 +77,7 @@ public class AboutActivity extends Activity {
 
     @OnClick(R.id.devgplus1)
     public void setgplus1() {
-        openWeb("https://github.com/kyleduo/SwitchButton");
+        openWeb("https://plus.google.com/u/0/115993146711231228746/about");
     }
 
     @OnClick(R.id.devandroid2)
@@ -87,22 +87,22 @@ public class AboutActivity extends Activity {
 
     @OnClick(R.id.devgplus2)
     public void setgplus2() {
-        openWeb("https://github.com/kyleduo/SwitchButton");
+        openWeb("https://plus.google.com/u/0/114245670419614057385");
     }
 
     @OnClick(R.id.devandroid3)
     public void setAndDev3() {
-        openWeb("https://play.google.com/store/apps/details?id=com.rOse.playful&hl=en");
+        openWeb("https://play.google.com/store/apps/details?id=com.rose.quickwallet");
     }
 
     @OnClick(R.id.devgplus3)
     public void setgplus3() {
-        openWeb("https://github.com/kyleduo/SwitchButton");
+        openWeb("https://plus.google.com/u/0/117317494206385274738/about");
     }
 
 
     @OnClick(R.id.devgplus4)
     public void setgplus4() {
-        openWeb("https://github.com/kyleduo/SwitchButton");
+        openWeb("https://plus.google.com/112784156774948582788/about");
     }
 }

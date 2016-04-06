@@ -206,6 +206,25 @@ public class SoundManager {
         }
     }
 
+    public static void playCoinSound(Context context){
+        if (shouldPlaySound.equals("Y")) {
+            mediaPlayer = setupSound(context);
+            try {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    mediaPlayer = new MediaPlayer();
+                }
+
+                mediaPlayer = MediaPlayer.create(context, R.raw.coins);
+
+                mediaPlayer.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void setShouldPlaySound(String value){
         shouldPlaySound = value;
     }

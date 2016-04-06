@@ -36,7 +36,7 @@ public class Constants {
     public static final String PREF_COINS_SPENT = "Spent";
 
     public static final String PREF_SHOW_AD = "ShowAd";
-    public static final int AD_DISPLAY_LIMIT = 3;
+    public static final int AD_DISPLAY_LIMIT = 2;
 
     public static final String PREF_SHOW_RATE_US = "RateUs";
 

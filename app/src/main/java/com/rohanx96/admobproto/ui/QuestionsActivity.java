@@ -390,7 +390,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             if (mVideoAd.isLoaded()) {
                 mVideoAd.show();
             } else
-                Snackbar.make(mContainer, "Cannot load add at this time. Please try again later.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(mContainer, "Cannot load ad at this time. Please try again later.", Snackbar.LENGTH_LONG).show();
         }
         else if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
@@ -543,6 +543,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                                 hideCharacterUnlockDialog();
                                 hideIncorrectAnswerFeedback();
                             } else {
+                                hideIncorrectAnswerFeedback();
                                 hideCharacterDialog();
                                 hideCorrectAnswerFeedback();
                             }
