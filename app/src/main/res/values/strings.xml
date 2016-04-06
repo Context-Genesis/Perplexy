@@ -35,6 +35,9 @@
     <string name="characterAnsweredNowWrong2">Oops! That wasn\'t quite right. (Protip) Instead of trying another question, unlock this one and try again!</string>
     <string name="characterAnsweredNowWrong3">Perplexed! You got this wrong. (Protip) Unlock and try again. Or. Watch an ad and stay blessed.</string>
 
+    <!-- Already Answered Right But Wrong Now -->
+    <string name="characterAlreadyAnsweredRightButWrongNow1">You\'ve already answered this question right, but got this wrong this time. Don\'t worry, your precious coins don\'t get deducted.</string>
+
     <!-- Question not yet unlocked -->
     <string name="characterQuestionLocked1">This question hasn\'t been unlocked yet. Till then, keep calm and be a ninja.</string>
     <string name="characterQuestionLocked2">This question hasn\'t been unlocked yet. Till then, keep calm and go to hogwarts</string>

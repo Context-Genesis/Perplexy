@@ -105,6 +105,17 @@ public class CharacterStrings {
         }
     }
 
+    public static String getStringAlreadyAnsweredRightButWrongNow(Context context) {
+        String charText1 = context.getString(R.string.characterAlreadyAnsweredRightButWrongNow1);
+
+        switch (new Random().nextInt(1)) {
+            case 0:
+                return charText1;
+            default:
+                return charText1;
+        }
+    }
+
     public static String getStringQuestionLocked(Context context) {
         String charText1 = context.getString(R.string.characterQuestionLocked1);
         String charText2 = context.getString(R.string.characterQuestionLocked2);
