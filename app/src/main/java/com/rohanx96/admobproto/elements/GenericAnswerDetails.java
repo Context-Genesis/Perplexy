@@ -121,6 +121,10 @@ public class GenericAnswerDetails extends SugarRecord {
                 .where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category))
                 .where(Condition.prop(NamingHelper.toSQLNameDefault("status")).eq(Constants.UNAVAILABLE))
                 .first(); // Note this may need to change if question numbers are not ascending
+        if (genericAnswerDetail == null)
+            genericAnswerDetail = Select.from(GenericAnswerDetails.class)
+                    .where(Condition.prop(NamingHelper.toSQLNameDefault("category")).eq(category))
+                    .first();
         Log.i("First Locked position", " " + genericAnswerDetail.question_number);
         return genericAnswerDetail;
     }
@@ -178,10 +182,10 @@ public class GenericAnswerDetails extends SugarRecord {
                 int category = allQuestions.get(i).category;
                 GenericAnswerDetails genericAnswerDetails;
 
-//                if (i < 3)
+                if (i < 3)
                     genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
-//                else
-//                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
+                else
+                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
                 genericAnswerDetails.save();
             }
 
@@ -194,10 +198,10 @@ public class GenericAnswerDetails extends SugarRecord {
                 int category = allQuestions.get(i).category;
                 GenericAnswerDetails genericAnswerDetails;
 
-//                if (i < 3)
+                if (i < 3)
                     genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
-//                else
-//                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
+                else
+                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
                 genericAnswerDetails.save();
             }
 
@@ -210,10 +214,10 @@ public class GenericAnswerDetails extends SugarRecord {
                 int category = allQuestions.get(i).category;
                 GenericAnswerDetails genericAnswerDetails;
 
-//                if (i < 3)
+                if (i < 3)
                     genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.AVAILABLE, false, false, 0);
-//                else
-//                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
+                else
+                    genericAnswerDetails = new GenericAnswerDetails(question_number, category, Constants.UNAVAILABLE, false, false, 0);
                 genericAnswerDetails.save();
             }
             return null;

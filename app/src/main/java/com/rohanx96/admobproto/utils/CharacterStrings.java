@@ -15,14 +15,17 @@ public class CharacterStrings {
         String charText1 = context.getString(R.string.characterTrying1);
         String charText2 = context.getString(R.string.characterTrying2);
         String charText3 = context.getString(R.string.characterTrying3);
+        String charText4 = context.getString(R.string.characterTrying4);
 
-        switch (new Random().nextInt(3)) {
+        switch (new Random().nextInt(4)) {
             case 0:
                 return charText1;
             case 1:
                 return charText2;
             case 2:
                 return charText3;
+            case 3:
+                return charText4;
             default:
                 return charText1;
         }
@@ -32,14 +35,17 @@ public class CharacterStrings {
         String charText1 = context.getString(R.string.characterAlreadyAnsweredRight1);
         String charText2 = context.getString(R.string.characterAlreadyAnsweredRight2);
         String charText3 = context.getString(R.string.characterAlreadyAnsweredRight3);
+        String charText4 = context.getString(R.string.characterAlreadyAnsweredRight4);
 
-        switch (new Random().nextInt(3)) {
+        switch (new Random().nextInt(4)) {
             case 0:
                 return charText1;
             case 1:
                 return charText2;
             case 2:
                 return charText3;
+            case 3:
+                return charText4;
             default:
                 return charText1;
         }
@@ -49,14 +55,17 @@ public class CharacterStrings {
         String charText1 = context.getString(R.string.characterAlreadyAnsweredWrong1);
         String charText2 = context.getString(R.string.characterAlreadyAnsweredWrong2);
         String charText3 = context.getString(R.string.characterAlreadyAnsweredWrong3);
+        String charText4 = context.getString(R.string.characterAlreadyAnsweredWrong4);
 
-        switch (new Random().nextInt(3)) {
+        switch (new Random().nextInt(4)) {
             case 0:
                 return charText1;
             case 1:
                 return charText2;
             case 2:
                 return charText3;
+            case 3:
+                return charText4;
             default:
                 return charText1;
         }
