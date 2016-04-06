@@ -25,7 +25,6 @@ import com.rohanx96.admobproto.ui.QuestionsActivity;
  * Created by bhutanidhruv16 on 24-Mar-16.
  */
 
-
 public class DrawingView extends View {
 
     public static Paint mPaint;
@@ -52,6 +51,7 @@ public class DrawingView extends View {
         DisplayMetrics displaymetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int height = displaymetrics.heightPixels;
+
 
         final DialogPlus dialog = DialogPlus.newDialog(context)
                 .setGravity(Gravity.BOTTOM)
