@@ -130,7 +130,7 @@ public class MainActivity extends FragmentActivity {
         if (prefs.getBoolean(Constants.FIRST_RUN, true)) {
             //TODO: On uninstalling and reinstalling the questions are not reinitialised
 //            GenericAnswerDetails.initializeDatabase(getApplicationContext());
-            GenericAnswerDetails.initializeDatabase(getApplicationContext());
+            GenericAnswerDetails.initializeDatabase(MainActivity.this);
             prefs.edit().putBoolean(Constants.FIRST_RUN, false).apply();
             SharedPreferences.Editor editor = prefs.edit();
             editor.putLong(Constants.PREF_COINS, Constants.INITIAL_COINS).apply();
