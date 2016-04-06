@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FrontPageFragment extends Fragment {
+
     @Bind(R.id.home_tv_heading)
     TextView heading;
 
@@ -206,8 +207,8 @@ public class FrontPageFragment extends Fragment {
     }
 
     @OnClick(R.id.home_statistics_button)
-    public void openStats(){
-        ((MainActivity)getActivity()).goToStats();
+    public void openStats() {
+        ((MainActivity) getActivity()).goToStats();
     }
 
     public static int convertDip2Pixels(Context context, int dip) {

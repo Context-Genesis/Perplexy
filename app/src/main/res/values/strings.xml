@@ -11,16 +11,19 @@
     <string name="characterTrying1">Hey there! Are you stuck? Here\'s how I can help you.</string>
     <string name="characterTrying2">Are you stuck? Buy a hint, or (Protip) go do some meditation.</string>
     <string name="characterTrying3">Hi! Unable to solve this question? (Protip) Earn some coins and unlock another question.</string>
+    <string name="characterTrying4">Having difficulties? (Protip) Praying to the one true god, Thor, might solve the question.</string>
 
     <!-- Question already answered correctly -->
     <string name="characterAlreadyAnsweredRight1">You\'ve already answered this question correctly. You can view the solution in case you\'d like to see it.</string>
     <string name="characterAlreadyAnsweredRight2">This question has already been answered correctly!. (Protip) If you\'re running low on coins, watch a video.</string>
     <string name="characterAlreadyAnsweredRight3">You\'ve already got this one right! (Protip) Watch a video to help the poor questionmaker eat tonight. He\'s a liberal arts student. Just saying.</string>
+    <string name="characterAlreadyAnsweredRight4">You had already solved this question. (Protip) Solve this question again and maybe you\'ll experience deja vu.</string>
 
     <!-- Question already answered wrongly, is locked-->
     <string name="characterAlreadyAnsweredWrong1">Aw, Snap! You answered this question wrong. (Protip) Magic is known to unlock questions. Just kidding, coins will do the trick.</string>
     <string name="characterAlreadyAnsweredWrong2">You had previously answered this question wrong. (Protip) It costs less to unlock a wrong question than an unattempted one.</string>
     <string name="characterAlreadyAnsweredWrong3">Did the question perplex you? Hmm. No wonder the app is named Perplexy.</string>
+    <string name="characterAlreadyAnsweredWrong4">Seems like you were unable to answer this correctly. (Protip) Answer all questions correctly to avoid seeing this suggestion.</string>
 
     <!-- Question answered correctly right now-->
     <string name="characterAnsweredNowRight1">Awesome! You answered this right. Move ahead to the next unlocked question. Remember, you always have a minimum of 3 unlocked questions.</string>

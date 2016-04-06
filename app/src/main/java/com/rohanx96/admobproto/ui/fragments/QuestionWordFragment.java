@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
@@ -23,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.rohanx96.admobproto.R;
@@ -77,6 +79,9 @@ public class QuestionWordFragment extends Fragment {
     @Bind(R.id.word_canvas_pull)
     Button canvas;
 
+    @Bind(R.id.textAreaScroller)
+    ScrollView scroll;
+
     ArrayList<Character> jumbledCharacters;
 
     String answer, answerPadCharacters;
@@ -94,6 +99,12 @@ public class QuestionWordFragment extends Fragment {
         POSITION = args.getInt(Constants.BUNDLE_QUESTION_NUMBER);
         CATEGORY = args.getInt(Constants.BUNDLE_QUESTION_CATEGORY);
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int height = displaymetrics.heightPixels;
+
+        scroll.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height / 4));
 
         genericQuestion = JSONUtils.getQuestionAt(getActivity(), CATEGORY, POSITION - 1);
         tvQuestion.setText(genericQuestion.question);

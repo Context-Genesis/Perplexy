@@ -52,17 +52,15 @@ public class DrawingView extends View {
         DisplayMetrics displaymetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int height = displaymetrics.heightPixels;
-        int width = displaymetrics.widthPixels;
 
-        // TODO: Set expanded height such that anything below options is covered
         final DialogPlus dialog = DialogPlus.newDialog(context)
                 .setGravity(Gravity.BOTTOM)
-                .setExpanded(true, height - questionHeight)                        // Change here
+                .setExpanded(true, 3 * height / 4)                        // Change here
                 .setOverlayBackgroundResource(Color.TRANSPARENT)
                 .setContentHolder(new ViewHolder(R.layout.dialog_canvas))
                 .setContentWidth(ViewGroup.LayoutParams.WRAP_CONTENT)
                 .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-                .setMargin(QuestionsActivity.convertDip2Pixels(context, 16), 0, QuestionsActivity.convertDip2Pixels(context, 16), QuestionsActivity.convertDip2Pixels(context, 16))
+                .setMargin(QuestionsActivity.convertDip2Pixels(context, 16), QuestionsActivity.convertDip2Pixels(context, 16), QuestionsActivity.convertDip2Pixels(context, 16), QuestionsActivity.convertDip2Pixels(context, 16))
                 .create();
         dialog.show();
 

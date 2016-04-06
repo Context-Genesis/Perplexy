@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
@@ -22,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +78,9 @@ public class QuestionTextBoxFragment extends Fragment {
     @Bind(R.id.textbox_canvas_pull)
     Button canvas;
 
+    @Bind(R.id.textAreaScroller)
+    ScrollView scroll;
+
     ArrayList<Character> jumbledCharacters;
     String enteredCharacters = "";
 
@@ -97,6 +102,12 @@ public class QuestionTextBoxFragment extends Fragment {
         tvQuestion.setText(genericQuestion.question);
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int height = displaymetrics.heightPixels;
+
+        scroll.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height / 4));
+
         answer = genericQuestion.answer;
         lockQuestionIfRequired();
         answerPadCharacters = genericQuestion.pad_characters;
@@ -105,7 +116,6 @@ public class QuestionTextBoxFragment extends Fragment {
             this.prevQuestion.setVisibility(View.GONE);
         }
 
-        // TODO: replace 14 by count of question in that particular category
         if (genericQuestion.question_number == Constants.RIDDLE_COUNT && genericQuestion.category == Constants.GAME_TYPE_RIDDLE) {
             this.nextQuestion.setVisibility(View.GONE);
         }
