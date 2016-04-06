@@ -7,22 +7,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
             style="@style/aboutTextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
+            android:layout_margin="16dp"
             android:text="Developers" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_margin="16dp">
 
             <ImageView
                 android:id="@+id/devImage1"
@@ -76,7 +73,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_margin="16dp">
 
             <ImageView
                 android:id="@+id/devImage4"
@@ -130,7 +127,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_margin="16dp">
 
             <ImageView
                 android:id="@+id/devImage2"
@@ -184,7 +181,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_margin="16dp">
 
             <ImageView
                 android:id="@+id/devImage3"
@@ -238,8 +235,7 @@
             style="@style/aboutTextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
+            android:layout_margin="16dp"
             android:text="Attributions" />
 
         <TextView
@@ -248,7 +244,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
             android:text="FreePik Images" />
@@ -259,7 +255,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
             android:text="Icons8 Images" />
@@ -270,7 +266,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
             android:text="ButterKnife" />
@@ -281,7 +277,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
             android:text="Satyan Sugar" />
@@ -292,7 +288,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
             android:text="Orhanobut DialogPlus" />
@@ -303,7 +299,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
             android:text="Kyleduo SwitchButton" />

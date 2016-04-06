@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -25,7 +26,7 @@ public class FallingDrawables {
     private ViewGroup mParentView;
     private int mNoOfDrawables = 15;
     private int mDrawablesInRow;
-    private int mDrawableSize = 40;
+    private int mDrawableSize = 30;
     public static final int NO_OF_COLORS = 9;
     public static final int NO_OF_LIGHT_COLORS = 7;
     private int mWindowWidth;
@@ -40,6 +41,7 @@ public class FallingDrawables {
         mContext = context;
         mParentView = view;
         mainThread = new Handler(context.getMainLooper());
+        mDrawableSize = convertDip2Pixels(mContext,30);
     }
 
     public void createAnimation() {
@@ -57,7 +59,7 @@ public class FallingDrawables {
                         return;
                     createDrawablesForRow();
                     try {
-                        Thread.sleep(1400);
+                        Thread.sleep(1500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -116,7 +118,8 @@ public class FallingDrawables {
                 else position = generateRandomInt(mDrawableSize/2,80);
             }
             else
-                position = previousPosition + generateRandomInt(50,100);
+                position = previousPosition +
+                        generateRandomInt(convertDip2Pixels(mContext,40),convertDip2Pixels(mContext,80));
             if (position>=mWindowWidth)
                 break;
             addImageView(createImageView(position));
@@ -143,7 +146,7 @@ public class FallingDrawables {
             @Override
             public void run() {
                 mParentView.addView(drawable);
-                drawable.animate().alpha(0).rotation(760).translationY(mWindowHeight/2.5f).setDuration(20000).setInterpolator(new DecelerateInterpolator())
+                drawable.animate().alpha(0).rotation(760).translationY(mWindowHeight/2.5f).setDuration(19000).setInterpolator(new DecelerateInterpolator())
                         .withEndAction(new Runnable() {
                             @Override
                             public void run() {
@@ -250,5 +253,9 @@ public class FallingDrawables {
 
     public boolean getIsRunning(){
         return isRunning;
+    }
+
+    public static int convertDip2Pixels(Context context, int dip) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.getResources().getDisplayMetrics());
     }
 }

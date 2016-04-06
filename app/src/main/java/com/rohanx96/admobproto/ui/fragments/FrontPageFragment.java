@@ -1,9 +1,11 @@
 package com.rohanx96.admobproto.ui.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,29 +165,29 @@ public class FrontPageFragment extends Fragment {
 
     private void resetLevelSizes(int lvl) {
         gameType1.requestLayout();
-        gameType1.getLayoutParams().height = 40;
-        gameType1.getLayoutParams().width = 40;
+        gameType1.getLayoutParams().height = convertDip2Pixels(getActivity(),36);
+        gameType1.getLayoutParams().width = convertDip2Pixels(getActivity(),36);
         gameType2.requestLayout();
-        gameType2.getLayoutParams().height = 40;
-        gameType2.getLayoutParams().width = 40;
+        gameType2.getLayoutParams().height = convertDip2Pixels(getActivity(),36);
+        gameType2.getLayoutParams().width = convertDip2Pixels(getActivity(),36);
         gameType3.requestLayout();
-        gameType3.getLayoutParams().height = 40;
-        gameType3.getLayoutParams().width = 40;
+        gameType3.getLayoutParams().height = convertDip2Pixels(getActivity(),36);
+        gameType3.getLayoutParams().width = convertDip2Pixels(getActivity(),36);
         switch (lvl) {
             case 0:
                 gameType1.requestLayout();
-                gameType1.getLayoutParams().height = 50;
-                gameType1.getLayoutParams().width = 50;
+                gameType1.getLayoutParams().height = convertDip2Pixels(getActivity(),44);
+                gameType1.getLayoutParams().width = convertDip2Pixels(getActivity(),44);
                 return;
             case 1:
                 gameType2.requestLayout();
-                gameType2.getLayoutParams().height = 50;
-                gameType2.getLayoutParams().width = 50;
+                gameType2.getLayoutParams().height = convertDip2Pixels(getActivity(),44);
+                gameType2.getLayoutParams().width = convertDip2Pixels(getActivity(),44);
                 return;
             case 2:
                 gameType3.requestLayout();
-                gameType3.getLayoutParams().height = 50;
-                gameType3.getLayoutParams().width = 50;
+                gameType3.getLayoutParams().height = convertDip2Pixels(getActivity(),44);
+                gameType3.getLayoutParams().width = convertDip2Pixels(getActivity(),44);
                 return;
             /*case 3:
                 gameType4.requestLayout();
@@ -199,12 +201,16 @@ public class FrontPageFragment extends Fragment {
 
     @OnClick(R.id.home_settings_button)
     public void openSettings() {
-//        ((MainActivity) getActivity()).goToSettings();
-        startActivity(new Intent(getActivity(), CharacterStore.class));
+        ((MainActivity) getActivity()).goToSettings();
+        //startActivity(new Intent(getActivity(), CharacterStore.class));
     }
 
     @OnClick(R.id.home_statistics_button)
     public void openStats(){
         ((MainActivity)getActivity()).goToStats();
+    }
+
+    public static int convertDip2Pixels(Context context, int dip) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.getResources().getDisplayMetrics());
     }
 }
