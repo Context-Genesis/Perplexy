@@ -3,18 +3,21 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/black_d_material">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             style="@style/aboutTextViewTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="16dp"
-            android:text="Our Team" />
+            android:background="@color/red_d_pomegranate"
+            android:padding="16dp"
+            android:text="OUR TEAM"
+            android:textColor="@color/white" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,7 +28,7 @@
                 android:id="@+id/devImage1"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:src="@drawable/human_happy_open" />
+                android:src="@drawable/human_sad_closed" />
 
             <TextView
                 android:id="@+id/devTitle1"
@@ -36,7 +39,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage1"
                 android:layout_toRightOf="@+id/devImage1"
-                android:text="Dhruv Bhutani" />
+                android:text="Dhruv Bhutani"
+                android:textColor="@color/white" />
 
             <ImageView
                 android:id="@+id/devgplus1"
@@ -79,7 +83,18 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage4"
                 android:layout_toRightOf="@+id/devImage4"
-                android:text="Gaurav Bansal" />
+                android:text="Gaurav Bansal"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:id="@+id/devandroid4"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_below="@+id/devTitle4"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/devImage4"
+                android:layout_toRightOf="@+id/devImage4"
+                android:src="@drawable/android" />
 
             <ImageView
                 android:id="@+id/devgplus4"
@@ -87,8 +102,9 @@
                 android:layout_height="36dp"
                 android:layout_below="@+id/devTitle4"
                 android:layout_marginLeft="5dp"
-                android:layout_toEndOf="@+id/devImage4"
-                android:layout_toRightOf="@+id/devImage4"
+                android:layout_alignTop="@+id/devandroid4"
+                android:layout_toEndOf="@+id/devandroid4"
+                android:layout_toRightOf="@+id/devandroid4"
                 android:src="@drawable/gplus" />
 
         </RelativeLayout>
@@ -113,7 +129,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage2"
                 android:layout_toRightOf="@+id/devImage2"
-                android:text="Rishab Bhardwaj" />
+                android:text="Rishab Bhardwaj"
+                android:textColor="@color/white" />
 
 
             <ImageView
@@ -146,7 +163,7 @@
                 android:id="@+id/devImage3"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:src="@drawable/human_shocked" />
+                android:src="@drawable/human_happy_open" />
 
             <TextView
                 android:id="@+id/devTitle3"
@@ -157,7 +174,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage3"
                 android:layout_toRightOf="@+id/devImage3"
-                android:text="Rohan Agarwal" />
+                android:text="Rohan Agarwal"
+                android:textColor="@color/white" />
 
             <ImageView
                 android:id="@+id/devgplus3"
@@ -181,10 +199,12 @@
 
         <TextView
             style="@style/aboutTextViewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp"
-            android:text="Attributions" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/red_d_pomegranate"
+            android:padding="16dp"
+            android:text="ATTRIBUTIONS"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/about_freepik"
@@ -195,7 +215,8 @@
             android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
-            android:text="FreePik Images" />
+            android:text="FreePik Images"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/about_icons"
@@ -206,7 +227,8 @@
             android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
-            android:text="Icons8 Images" />
+            android:text="Icons8 Images"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/about_butterknife"
@@ -217,7 +239,8 @@
             android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
-            android:text="ButterKnife" />
+            android:text="ButterKnife"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/about_sugar"
@@ -228,7 +251,8 @@
             android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
-            android:text="Satyan Sugar" />
+            android:text="Satyan Sugar"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/about_dialog"
@@ -239,7 +263,8 @@
             android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
-            android:text="Orhanobut DialogPlus" />
+            android:text="Orhanobut DialogPlus"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/about_switch"
@@ -250,7 +275,8 @@
             android:paddingLeft="16dp"
             android:paddingRight="5dp"
             android:paddingTop="10dp"
-            android:text="Kyleduo SwitchButton" />
+            android:text="Kyleduo SwitchButton"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </ScrollView>

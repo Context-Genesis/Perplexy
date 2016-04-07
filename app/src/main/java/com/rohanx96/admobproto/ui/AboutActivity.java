@@ -100,7 +100,10 @@ public class AboutActivity extends Activity {
         openWeb("https://plus.google.com/u/0/117317494206385274738/about");
     }
 
-
+    @OnClick(R.id.devandroid4)
+    public void setAndroid4(){
+        openWeb("https://plus.google.com/112784156774948582788/about");
+    }
     @OnClick(R.id.devgplus4)
     public void setgplus4() {
         openWeb("https://plus.google.com/112784156774948582788/about");

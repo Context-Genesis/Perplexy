@@ -130,7 +130,6 @@ public class MainActivity extends FragmentActivity {
          */
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
         if (prefs.getBoolean(Constants.FIRST_RUN, true)) {
-            //TODO: On uninstalling and reinstalling the questions are not reinitialised
             GenericAnswerDetails.initializeDatabase(getApplicationContext());
             prefs.edit().putBoolean(Constants.FIRST_RUN, false).apply();
             SharedPreferences.Editor editor = prefs.edit();

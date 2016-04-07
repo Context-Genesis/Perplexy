@@ -78,7 +78,6 @@ public class NumberLineActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        //TODO: This brakes the return animation by scrolling to beginning
         /* Adapter list needs to be initialised here because we need to refresh list after returning to activity */
         ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(CATEGORY);
         ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);

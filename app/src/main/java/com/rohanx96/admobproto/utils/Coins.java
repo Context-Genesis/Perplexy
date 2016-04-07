@@ -9,7 +9,7 @@ import android.widget.Toast;
  */
 
 public class Coins {
-    // TODO: Coins can go negative?
+
     private static SharedPreferences pref;
     private static SharedPreferences.Editor editor;
 
@@ -62,7 +62,6 @@ public class Coins {
         }
     }
 
-    // TODO: Test when coins = unlock price
     public static void unlock_unavailable(Context context) {
         pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, context.MODE_PRIVATE);
         editor = pref.edit();
