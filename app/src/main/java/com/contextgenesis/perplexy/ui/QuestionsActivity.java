@@ -387,11 +387,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 mVideoAd.show();
             } else
                 Snackbar.make(mContainer, "Cannot load add at this time. Please try again later.", Snackbar.LENGTH_LONG).show();
-        }
-        else if (mInterstitialAd.isLoaded()) {
+        } else if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
-        }
-        else
+        } else
             requestNewInterstitial(false);
     }
 
@@ -523,12 +521,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                         isLocked = (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT)
                                 || (GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.UNAVAILABLE);
                         if (!isCharacterDialogOpen) {
-                            if (isLocked && GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) != Constants.INCORRECT) {
+                            if (isLocked) {
                                 showCharacterUnlockDialog();
                                 setupCharacterUnlockDialog();
-                            } else if (isLocked && GenericAnswerDetails.getStatus(mCurrentPage + 1, CATEGORY) == Constants.INCORRECT) {
-                                showIncorrectAnswerFeedback();
-                                setupIncorrectAnswerFeedback();
                             } else {
                                 showCharacterDialog();
                                 //Dialog is reinitialised based on question every time character is clicked
@@ -578,11 +573,11 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 }
             });
         } else {*/
-            ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
-            scaleAnimation.setDuration(500);
-            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-            characterDialog.setVisibility(View.VISIBLE);
-            characterDialog.startAnimation(scaleAnimation);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0f, 1f, 0f, 1f, character.getX(), character.getY());
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        characterDialog.setVisibility(View.VISIBLE);
+        characterDialog.startAnimation(scaleAnimation);
         //}
     }
 
@@ -608,12 +603,12 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 }
             });
         } else {*/
-            characterDialog.setVisibility(View.GONE);
-            ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
-            scaleAnimation.setDuration(500);
-            scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-            characterDialog.startAnimation(scaleAnimation);
-       // }
+        characterDialog.setVisibility(View.GONE);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, character.getX(), character.getY());
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        characterDialog.startAnimation(scaleAnimation);
+        // }
     }
 
     private void setupAd() {
@@ -644,7 +639,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 .addTestDevice("A63B0CDF9A759A19A47A01100878B546") //Rohan
                 .addTestDevice("CDCEF54FDF7F3A4DEC120209B12D78C6") // Rishab
                 .addTestDevice("D40CA2BD5C7E81CF7B1F9C31DFE05BE6")  // Dhruv
-                .addTestDevice("mydevice")
+                .addTestDevice("9975DC9A27F0D1B042C31A65D01EEB04") // Gaurav
                 .addTestDevice("mydevice")
                 .build();
         if (isVideoAd)

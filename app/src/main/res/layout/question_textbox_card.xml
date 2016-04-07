@@ -64,8 +64,9 @@
 
                 <ImageView
                     android:id="@+id/qcard_textbox_im_backspace"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="fitXY"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/qcard_textbox_im_done"
                     android:layout_toStartOf="@+id/qcard_textbox_im_done"
@@ -74,8 +75,8 @@
 
                 <ImageView
                     android:id="@+id/qcard_textbox_im_done"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"

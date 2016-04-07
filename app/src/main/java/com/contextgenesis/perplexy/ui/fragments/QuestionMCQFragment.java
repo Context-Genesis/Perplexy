@@ -303,6 +303,7 @@ public class QuestionMCQFragment extends Fragment {
             if (details.status == Constants.AVAILABLE) {
                 Coins.correct_answer(getContext());
                 details.status = Constants.CORRECT;
+                details.answer_displayed = true;
                 details.save();
 
                 TextView display_coins = (TextView) getActivity().findViewById(R.id.questions_activity_coin_text);

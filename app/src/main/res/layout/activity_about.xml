@@ -28,7 +28,7 @@
                 android:id="@+id/devImage1"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:src="@drawable/human_sad_closed" />
+                android:src="@drawable/dhruv" />
 
             <TextView
                 android:id="@+id/devTitle1"
@@ -129,7 +129,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toEndOf="@+id/devImage2"
                 android:layout_toRightOf="@+id/devImage2"
-                android:text="Rishab Bhardwaj"
+                android:text="Rishabh Bhardwaj"
                 android:textColor="@color/white" />
 
 

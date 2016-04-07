@@ -86,8 +86,10 @@ public class CharacterHelper {
 
         if (ansDetails.get(mCurrentPage).hint_displayed == true) {
             hintprice.setText("0");
+            showhint.setText("Show Hint");
         } else {
             hintprice.setText(Constants.HINT_PRICE + "");
+            showhint.setText("Buy Hint");
         }
 
         showhint.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +117,7 @@ public class CharacterHelper {
                     showhiddenhint.startAnimation(in);
                     showhiddenhint.setVisibility(View.VISIBLE);
 
-                    if (!ansDetails.get(mCurrentPage).hint_displayed && ansDetails.get(mCurrentPage).status != Constants.CORRECT) {
+                    if (!ansDetails.get(mCurrentPage).hint_displayed) {
                         ansDetails.get(mCurrentPage).hint_displayed = true;
                         ansDetails.get(mCurrentPage).save();
                         Coins.hint_access(mParentActivity);
@@ -162,13 +164,12 @@ public class CharacterHelper {
         }
 
         if (ansDetails.get(mCurrentPage).answer_displayed == true) {
+            Log.d("CharacterHelper", "Entering here");
+            showsolution.setText("Show Solution");
             solutionprice.setText("0");
         } else {
+            showsolution.setText("Buy Solution");
             solutionprice.setText(Constants.SOLUTION_PRICE + "");
-        }
-
-        if (ansDetails.get(mCurrentPage).status == Constants.CORRECT) {
-            solutionprice.setText("0");
         }
 
         showsolution.setOnClickListener(new View.OnClickListener() {
@@ -197,7 +198,7 @@ public class CharacterHelper {
                     showhiddensolution.startAnimation(in);
                     showhiddensolution.setVisibility(View.VISIBLE);
 
-                    if (!ansDetails.get(mCurrentPage).answer_displayed && ansDetails.get(mCurrentPage).status != Constants.CORRECT) {
+                    if (!ansDetails.get(mCurrentPage).answer_displayed) {
                         ansDetails.get(mCurrentPage).answer_displayed = true;
                         ansDetails.get(mCurrentPage).save();
                         Coins.solution_access(mParentActivity);
@@ -358,7 +359,7 @@ public class CharacterHelper {
     public void setupCorrectAnswerFeedback(int category, int currentPage, final int nextQuestion, final Context context) {
         GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, category, currentPage);
         TextView solution = (TextView) mParentActivity.findViewById(R.id.char_feedback_solution_details);
-        Log.wtf("CorrectFeedback", question.explanation);
+        //Log.wtf("CorrectFeedback", question.explanation);
         if (question.layout_type != 0) {
             solution.setText(question.answer + "\n" + question.explanation);
         } else
@@ -373,15 +374,21 @@ public class CharacterHelper {
             TextView congratulate = (TextView) mParentActivity.findViewById(R.id.char_feedback_congratulate);
             congratulate.setVisibility(View.VISIBLE);
             TextView gotoNextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_goto_next);
-            gotoNextLevel.setText("PROCEED TO UNLOCKED QUESTION");
-            gotoNextLevel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mParentActivity instanceof QuestionsActivity)
-                        ((QuestionsActivity) mParentActivity).gotoQuestion(nextQuestion);
-                    SoundManager.playButtonClickSound(context);
-                }
-            });
+            if (nextQuestion == -2){
+                nextLevel.setText("You have unlocked all questions of this game type");
+                gotoNextLevel.setVisibility(View.GONE);
+            }
+            else {
+                gotoNextLevel.setText("PROCEED TO UNLOCKED QUESTION");
+                gotoNextLevel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mParentActivity instanceof QuestionsActivity)
+                            ((QuestionsActivity) mParentActivity).gotoQuestion(nextQuestion);
+                        SoundManager.playButtonClickSound(context);
+                    }
+                });
+            }
         } else {
             TextView nextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_next_question);
             nextLevel.setVisibility(View.GONE);
@@ -409,14 +416,13 @@ public class CharacterHelper {
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(category);
 
         TextView feebackTv = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_title_text);
-
+        LinearLayout ll_unlock = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_unlock);
         /**
          * If user has already answered question right before but reattempts and gets it wrong this time, else display answered wrong this time
          */
-        if (GenericAnswerDetails.getStatus(currentPage + 1, category) == Constants.CORRECT)
-            feebackTv.setText(CharacterStrings.getStringAlreadyAnsweredRightButWrongNow(context));
-        else
-            feebackTv.setText(CharacterStrings.getStringNowAnsweredWrong(context));
+
+//        ll_unlock.setVisibility(View.GONE);
+
 
         TextView unlockPrice = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_unlock_price);
         unlockPrice.setText(String.format("%d", Constants.UNLOCK_INCORRECT_PRICE));
@@ -537,6 +543,16 @@ public class CharacterHelper {
         showsolution.setVisibility(View.VISIBLE);
         confirmsolution.setVisibility(View.GONE);
         showhiddensolution.setVisibility(View.GONE);
+        solution.setVisibility(View.VISIBLE);
+
+        if (GenericAnswerDetails.getStatus(currentPage + 1, category) == Constants.CORRECT) {
+            feebackTv.setText(CharacterStrings.getStringAlreadyAnsweredRightButWrongNow(context));
+            ll_unlock.setVisibility(View.GONE);
+        } else {
+            feebackTv.setText(CharacterStrings.getStringNowAnsweredWrong(context));
+            ll_unlock.setVisibility(View.VISIBLE);
+            solution.setVisibility(View.GONE);
+        }
 
         if (question.layout_type != 0) {
             showhiddensolution.setText(question.answer + "\n" + question.explanation);
@@ -545,9 +561,11 @@ public class CharacterHelper {
         }
 
         if (ansDetails.get(currentPage).answer_displayed == true) {
+            showsolution.setText("Show Solution");
             solutionprice.setText("0");
         } else {
             solutionprice.setText(Constants.SOLUTION_PRICE + "");
+            showsolution.setText("Buy Solution");
         }
 
         showsolution.setOnClickListener(new View.OnClickListener() {
