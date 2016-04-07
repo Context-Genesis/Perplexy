@@ -22,12 +22,14 @@ import com.orhanobut.dialogplus.DialogPlusBuilder;
 import com.orhanobut.dialogplus.Holder;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
+import com.rohanx96.admobproto.ui.fragments.FrontPageFragment;
 import com.rohanx96.admobproto.ui.fragments.SettingsFragment;
 import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.rohanx96.admobproto.ui.fragments.FrontPageFragment;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.ui.fragments.StatisticsFragment;
 import com.rohanx96.admobproto.utils.Constants;
+import com.rohanx96.admobproto.utils.FallingDrawables;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.ButterKnife;
@@ -125,7 +127,7 @@ public class MainActivity extends FragmentActivity {
 
     private void onFirstRun() {
         /*
-        * check if app is run for the first time.
+        * Check if app is run for the first time.
         * Initialize SequenceAnswersDetails database with default values
          */
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);

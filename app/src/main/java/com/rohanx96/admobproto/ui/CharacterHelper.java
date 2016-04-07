@@ -358,7 +358,7 @@ public class CharacterHelper {
     public void setupCorrectAnswerFeedback(int category, int currentPage, final int nextQuestion, final Context context) {
         GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, category, currentPage);
         TextView solution = (TextView) mParentActivity.findViewById(R.id.char_feedback_solution_details);
-        Log.wtf("CorrectFeedback",question.explanation);
+        Log.wtf("CorrectFeedback", question.explanation);
         if (question.layout_type != 0) {
             solution.setText(question.answer + "\n" + question.explanation);
         } else
@@ -409,7 +409,14 @@ public class CharacterHelper {
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(category);
 
         TextView feebackTv = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_title_text);
-        feebackTv.setText(CharacterStrings.getStringNowAnsweredWrong(context));
+
+        /**
+         * If user has already answered question right before but reattempts and gets it wrong this time, else display answered wrong this time
+         */
+        if (GenericAnswerDetails.getStatus(currentPage + 1, category) == Constants.CORRECT)
+            feebackTv.setText(CharacterStrings.getStringAlreadyAnsweredRightButWrongNow(context));
+        else
+            feebackTv.setText(CharacterStrings.getStringNowAnsweredWrong(context));
 
         TextView unlockPrice = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_unlock_price);
         unlockPrice.setText(String.format("%d", Constants.UNLOCK_INCORRECT_PRICE));

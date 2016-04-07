@@ -12,116 +12,47 @@ import java.util.Random;
 public class CharacterStrings {
 
     public static String getStringCharacterTrying(Context context) {
-        String charText1 = context.getString(R.string.characterTrying1);
-        String charText2 = context.getString(R.string.characterTrying2);
-        String charText3 = context.getString(R.string.characterTrying3);
-
-        switch (new Random().nextInt(3)) {
-            case 0:
-                return charText1;
-            case 1:
-                return charText2;
-            case 2:
-                return charText3;
-            default:
-                return charText1;
-        }
+        String charText[] = context.getResources().getStringArray(R.array.characterTrying);
+        return charText[new Random().nextInt(charText.length)];
     }
 
     public static String getStringAlreadyAnsweredRight(Context context) {
-        String charText1 = context.getString(R.string.characterAlreadyAnsweredRight1);
-        String charText2 = context.getString(R.string.characterAlreadyAnsweredRight2);
-        String charText3 = context.getString(R.string.characterAlreadyAnsweredRight3);
-
-        switch (new Random().nextInt(3)) {
-            case 0:
-                return charText1;
-            case 1:
-                return charText2;
-            case 2:
-                return charText3;
-            default:
-                return charText1;
-        }
+        String charText[] = context.getResources().getStringArray(R.array.characterAlreadyAnsweredRight);
+        return charText[new Random().nextInt(charText.length)];
     }
 
     public static String getStringAlreadyAnsweredWrong(Context context) {
-        String charText1 = context.getString(R.string.characterAlreadyAnsweredWrong1);
-        String charText2 = context.getString(R.string.characterAlreadyAnsweredWrong2);
-        String charText3 = context.getString(R.string.characterAlreadyAnsweredWrong3);
 
-        switch (new Random().nextInt(3)) {
-            case 0:
-                return charText1;
-            case 1:
-                return charText2;
-            case 2:
-                return charText3;
-            default:
-                return charText1;
-        }
+        String charText[] = context.getResources().getStringArray(R.array.characterAlreadyAnsweredWrong);
+        return charText[new Random().nextInt(charText.length)];
+
     }
 
     public static String getStringNowAnsweredRight(Context context) {
-        String charText1 = context.getString(R.string.characterAnsweredNowRight1);
-        String charText2 = context.getString(R.string.characterAnsweredNowRight2);
-        String charText3 = context.getString(R.string.characterAnsweredNowRight3);
 
-        switch (new Random().nextInt(3)) {
-            case 0:
-                return charText1;
-            case 1:
-                return charText2;
-            case 2:
-                return charText3;
-            default:
-                return charText1;
-        }
+        String charText[] = context.getResources().getStringArray(R.array.characterAnsweredNowRight);
+        return charText[new Random().nextInt(charText.length)];
+
     }
 
     public static String getStringNowAnsweredWrong(Context context) {
-        String charText1 = context.getString(R.string.characterAnsweredNowWrong1);
-        String charText2 = context.getString(R.string.characterAnsweredNowWrong2);
-        String charText3 = context.getString(R.string.characterAnsweredNowWrong3);
 
-        switch (new Random().nextInt(3)) {
-            case 0:
-                return charText1;
-            case 1:
-                return charText2;
-            case 2:
-                return charText3;
-            default:
-                return charText1;
-        }
+
+        String charText[] = context.getResources().getStringArray(R.array.characterAnsweredNowWrong);
+        return charText[new Random().nextInt(charText.length)];
+
+    }
+
+    public static String getStringAlreadyAnsweredRightButWrongNow(Context context) {
+
+        String charText[] = context.getResources().getStringArray(R.array.characterAlreadyAnsweredRightButWrongNow);
+        return charText[new Random().nextInt(charText.length)];
     }
 
     public static String getStringQuestionLocked(Context context) {
-        String charText1 = context.getString(R.string.characterQuestionLocked1);
-        String charText2 = context.getString(R.string.characterQuestionLocked2);
-        String charText3 = context.getString(R.string.characterQuestionLocked3);
-        String charText4 = context.getString(R.string.characterQuestionLocked4);
-        String charText5 = context.getString(R.string.characterQuestionLocked5);
-        String charText6 = context.getString(R.string.characterQuestionLocked6);
-        String charText7 = context.getString(R.string.characterQuestionLocked7);
 
-        switch (new Random().nextInt(7)) {
-            case 0:
-                return charText1;
-            case 1:
-                return charText2;
-            case 2:
-                return charText3;
-            case 3:
-                return charText4;
-            case 4:
-                return charText5;
-            case 5:
-                return charText6;
-            case 6:
-                return charText7;
-            default:
-                return charText1;
-        }
+        String charText[] = context.getResources().getStringArray(R.array.characterQuestionLocked);
+        return charText[new Random().nextInt(charText.length)];
+
     }
 }

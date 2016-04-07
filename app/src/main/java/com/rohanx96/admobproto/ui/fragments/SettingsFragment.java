@@ -2,7 +2,6 @@ package com.rohanx96.admobproto.ui.fragments;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +24,6 @@ import com.orhanobut.dialogplus.ViewHolder;
 import com.rohanx96.admobproto.R;
 import com.rohanx96.admobproto.elements.GenericAnswerDetails;
 import com.rohanx96.admobproto.ui.AboutActivity;
-import com.rohanx96.admobproto.ui.MainActivity;
 import com.rohanx96.admobproto.utils.Constants;
 import com.rohanx96.admobproto.utils.SoundManager;
 
@@ -108,7 +105,7 @@ public class SettingsFragment extends Fragment {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GenericAnswerDetails.initializeDatabase(getContext());
+                GenericAnswerDetails.initializeDatabase(getActivity());
                 SharedPreferences.Editor editor = pref.edit();
 
                 editor.putLong(Constants.PREF_COINS, Constants.INITIAL_COINS).apply();
@@ -131,7 +128,7 @@ public class SettingsFragment extends Fragment {
     }
 
     @OnClick(R.id.settings_rate_us)
-    public void rateUs(){
+    public void rateUs() {
         Uri uri = Uri.parse("market://details?id=" + getActivity().getPackageName());
         Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
         try {
