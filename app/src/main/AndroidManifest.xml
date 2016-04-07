@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rohanx96.admobproto" >
+    package="com.contextgenesis.perplexy" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,10 +23,10 @@
             android:value="true" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="com.rohanx96.admobproto.elements" />
+            android:value="com.contextgenesis.perplexy.elements" />
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.contextgenesis.perplexy.ui.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
@@ -37,18 +37,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.QuestionsActivity"
+            android:name="com.contextgenesis.perplexy.ui.QuestionsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/QuestionsActivityTheme" />
         <activity
-            android:name=".ui.NumberLineActivity"
+            android:name="com.contextgenesis.perplexy.ui.NumberLineActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NumberLineTheme" />
-        <activity android:name=".ui.CharacterStore" >
+        <activity android:name="com.contextgenesis.perplexy.ui.CharacterStore" >
         </activity>
-        <activity android:name=".ui.AboutActivity" >
+        <activity android:name="com.contextgenesis.perplexy.ui.AboutActivity" >
         </activity>
-        <activity android:name=".ui.LoadingActivity" >
+        <activity android:name="com.contextgenesis.perplexy.ui.LoadingActivity" >
         </activity>
     </application>
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_d_grey"
-    tools:context="com.rohanx96.admobproto.ui.CharacterStore">
+    tools:context="com.contextgenesis.perplexy.ui.CharacterStore">
 
     <RelativeLayout
         android:id="@+id/store_rl"

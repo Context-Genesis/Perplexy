@@ -23,7 +23,7 @@
             android:value="true" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="com.rohanx96.admobproto.elements" />
+            android:value="com.contextgenesis.perplexy.elements" />
 
         <activity
             android:name=".ui.MainActivity"
