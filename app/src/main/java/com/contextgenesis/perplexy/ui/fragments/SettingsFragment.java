@@ -35,7 +35,6 @@ import butterknife.OnClick;
  * Created by rose on 10/3/16.
  */
 
-
 public class SettingsFragment extends Fragment {
 
     SharedPreferences pref;
@@ -49,6 +48,9 @@ public class SettingsFragment extends Fragment {
 
     @Bind(R.id.settings_info)
     TextView info;
+
+    @Bind(R.id.settings_tutorial)
+    TextView tutorial;
 
     @Nullable
     @Override
@@ -142,5 +144,10 @@ public class SettingsFragment extends Fragment {
     public void onClick_info() {
         SoundManager.playButtonClickSound(getActivity());
         startActivity(new Intent(getActivity(), AboutActivity.class));
+    }
+
+    @OnClick(R.id.settings_tutorial)
+    public void onClick_tutorial() {
+        SoundManager.playButtonClickSound(getActivity());
     }
 }

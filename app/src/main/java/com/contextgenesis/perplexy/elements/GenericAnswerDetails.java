@@ -139,10 +139,10 @@ public class GenericAnswerDetails extends SugarRecord {
                 nextQuestion.save();
             }
             return nextQuestion.question_number;
-        }
-        else
+        } else
             return -2;
     }
+
     public static void printAll() {
         List<GenericAnswerDetails> genericAnswerDetails = Select.from(GenericAnswerDetails.class).list();
         for (GenericAnswerDetails g : genericAnswerDetails) {
