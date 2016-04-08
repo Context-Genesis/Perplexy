@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.contextgenesis.perplexy.R;
+import com.contextgenesis.perplexy.ui.HelpActivity;
 import com.contextgenesis.perplexy.ui.MainActivity;
 import com.contextgenesis.perplexy.ui.NumberLineActivity;
 import com.contextgenesis.perplexy.utils.Constants;
@@ -165,29 +166,29 @@ public class FrontPageFragment extends Fragment {
 
     private void resetLevelSizes(int lvl) {
         gameType1.requestLayout();
-        gameType1.getLayoutParams().height = convertDip2Pixels(getActivity(),36);
-        gameType1.getLayoutParams().width = convertDip2Pixels(getActivity(),36);
+        gameType1.getLayoutParams().height = convertDip2Pixels(getActivity(), 36);
+        gameType1.getLayoutParams().width = convertDip2Pixels(getActivity(), 36);
         gameType2.requestLayout();
-        gameType2.getLayoutParams().height = convertDip2Pixels(getActivity(),36);
-        gameType2.getLayoutParams().width = convertDip2Pixels(getActivity(),36);
+        gameType2.getLayoutParams().height = convertDip2Pixels(getActivity(), 36);
+        gameType2.getLayoutParams().width = convertDip2Pixels(getActivity(), 36);
         gameType3.requestLayout();
-        gameType3.getLayoutParams().height = convertDip2Pixels(getActivity(),36);
-        gameType3.getLayoutParams().width = convertDip2Pixels(getActivity(),36);
+        gameType3.getLayoutParams().height = convertDip2Pixels(getActivity(), 36);
+        gameType3.getLayoutParams().width = convertDip2Pixels(getActivity(), 36);
         switch (lvl) {
             case 0:
                 gameType1.requestLayout();
-                gameType1.getLayoutParams().height = convertDip2Pixels(getActivity(),44);
-                gameType1.getLayoutParams().width = convertDip2Pixels(getActivity(),44);
+                gameType1.getLayoutParams().height = convertDip2Pixels(getActivity(), 44);
+                gameType1.getLayoutParams().width = convertDip2Pixels(getActivity(), 44);
                 return;
             case 1:
                 gameType2.requestLayout();
-                gameType2.getLayoutParams().height = convertDip2Pixels(getActivity(),44);
-                gameType2.getLayoutParams().width = convertDip2Pixels(getActivity(),44);
+                gameType2.getLayoutParams().height = convertDip2Pixels(getActivity(), 44);
+                gameType2.getLayoutParams().width = convertDip2Pixels(getActivity(), 44);
                 return;
             case 2:
                 gameType3.requestLayout();
-                gameType3.getLayoutParams().height = convertDip2Pixels(getActivity(),44);
-                gameType3.getLayoutParams().width = convertDip2Pixels(getActivity(),44);
+                gameType3.getLayoutParams().height = convertDip2Pixels(getActivity(), 44);
+                gameType3.getLayoutParams().width = convertDip2Pixels(getActivity(), 44);
                 return;
             /*case 3:
                 gameType4.requestLayout();
@@ -202,7 +203,7 @@ public class FrontPageFragment extends Fragment {
     @OnClick(R.id.home_settings_button)
     public void openSettings() {
         ((MainActivity) getActivity()).goToSettings();
-        //startActivity(new Intent(getActivity(), CharacterStore.class));
+        startActivity(new Intent(getActivity(), HelpActivity.class));
     }
 
     @OnClick(R.id.home_statistics_button)

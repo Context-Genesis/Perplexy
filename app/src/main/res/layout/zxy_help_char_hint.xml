@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/questions_activity_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/first_light_background_color"
+    android:clipChildren="false"
+    tools:context="link.fls.swipestacksample.MainActivity">
+
+    <include
+        android:id="@+id/questions_activity_character_feedback_correct"
+        layout="@layout/character_click_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/questions_activity_bubble"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:visibility="visible"></include>
+
+    <RelativeLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/first_light_background_color"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <ImageView
+            android:id="@+id/questions_activity_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="5dp"
+            android:src="@drawable/back" />
+
+        <LinearLayout
+            android:id="@+id/ll_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/questions_activity_coin_text"
+            android:layout_toRightOf="@id/questions_activity_back"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/questions_activity_correct_indicator"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/questions_activity_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="Level 10"
+                android:textColor="#FFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/questions_activity_coin_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/questions_activity_coin_image"
+            android:layout_alignRight="@+id/questions_activity_coin_image"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/white_oval"
+            android:gravity="center_vertical"
+            android:paddingEnd="35dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="35dp"
+            android:paddingStart="8dp"
+            android:text="500"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/questions_activity_coin_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/coin" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/questions_activity_bubble"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="10dp"
+        android:elevation="7dp"
+        android:src="@drawable/character_happy_closed_128" />
+
+</RelativeLayout>
