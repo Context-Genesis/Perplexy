@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.contextgenesis.perplexy.ui.HelpActivity;
 import com.orm.SugarRecord;
 import com.orm.query.Condition;
 import com.orm.query.Select;
@@ -231,6 +232,7 @@ public class GenericAnswerDetails extends SugarRecord {
             if (LoadingActivity.thisActivity != null)
                 LoadingActivity.thisActivity.finish();
             activity.startActivity(new Intent(activity, MainActivity.class));
+            activity.startActivity(new Intent(activity, HelpActivity.class));
         }
     }
 }

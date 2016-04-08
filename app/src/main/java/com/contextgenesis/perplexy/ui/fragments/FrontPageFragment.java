@@ -152,9 +152,9 @@ public class FrontPageFragment extends Fragment {
     private String getGameTypeText(int lvl) {
         switch (lvl) {
             case 0:
-                return "Do you have the logic in you?";
+                return "Do you have the LOGIC in you?";
             case 1:
-                return "Riddle Me This";
+                return "RIDDLE me this";
             case 2:
                 return "S,E,Q,U,E,N,C,E,S";
             case 3:
@@ -203,7 +203,6 @@ public class FrontPageFragment extends Fragment {
     @OnClick(R.id.home_settings_button)
     public void openSettings() {
         ((MainActivity) getActivity()).goToSettings();
-        startActivity(new Intent(getActivity(), HelpActivity.class));
     }
 
     @OnClick(R.id.home_statistics_button)

@@ -4,39 +4,39 @@
     <!-- Trying to answer question, clicks guy -->
     <string-array name="characterTrying">
         <item>Hey there! Are you stuck? Here\'s how I can help you.</item>
-        <item>Are you stuck? Buy a hint, or (Tip) go do some meditation.</item>
-        <item>Hi! Unable to solve this question? (Tip) Earn some coins and unlock another question.</item>
-        <item>Having difficulties? (Tip) Praying to the one true god, Thor, might solve the question.</item>
+        <item>Are you stuck? Buy a hint, or (Protip) go do some meditation.</item>
+        <item>Hi! Unable to solve this question? (Protip) Earn some coins and unlock another question.</item>
+        <item>Having difficulties? (Protip) Praying to the one true god, Thor, might solve the question.</item>
     </string-array>
 
     <!-- Question already answered correctly -->
     <string-array name="characterAlreadyAnsweredRight">
         <item>You\'ve already answered this question correctly. You can view the solution in case you\'d like to see it.</item>
-        <item>This question has already been answered correctly!. (Tip) If you\'re running low on coins, watch an ad.</item>
-        <item>You\'ve already got this one right! (Tip) Watch an ad to help the poor questionmaker eat tonight. He\'s a liberal arts student. Just saying.</item>
-        <item>You had already solved this question. (Tip) Solve this question again and maybe you\'ll experience deja vu.</item>
+        <item>This question has already been answered correctly!. (Protip) If you\'re running low on coins, watch an ad.</item>
+        <item>You\'ve already got this one right! (Protip) Watch an ad to help the poor questionmaker eat tonight. He\'s a liberal arts student. Just saying.</item>
+        <item>You had already solved this question. (Protip) Solve this question again and maybe you\'ll experience deja vu.</item>
     </string-array>
 
     <!-- Question already answered wrongly, is locked-->
     <string-array name="characterAlreadyAnsweredWrong">
-        <item>Aw, Snap! You answered this question wrong. (Tip) Magic is known to unlock questions. Just kidding, coins will do the trick.</item>
-        <item>You had previously answered this question wrong. (Tip) It costs less to unlock a wrong question than an unattempted one.</item>
+        <item>Aw, Snap! You answered this question wrong. (Protip) Magic is known to unlock questions. Just kidding, coins will do the trick.</item>
+        <item>You had previously answered this question wrong. (Protip) It costs less to unlock a wrong question than an unattempted one.</item>
         <item>Did the question perplex you? Hmm. No wonder the app is named Perplexy.</item>
-        <item>Seems like you were unable to answer this correctly. (Tip) Answer all questions correctly to avoid seeing this suggestion.</item>
+        <item>Seems like you were unable to answer this correctly. (Protip) Answer all questions correctly to avoid seeing this suggestion.</item>
     </string-array>
 
     <!-- Question answered correctly right now-->
     <string-array name="characterAnsweredNowRight">
         <item>Awesome! You answered this right. Move ahead to the next unlocked question. Remember, you always have a minimum of 3 unlocked questions.</item>
-        <item>Great work! Correctly answered! (Tip) The more questions you answer, the faster your brain thinks, the easier it is to kill mosquitoes.</item>
+        <item>Great work! Correctly answered! (Protip) The more questions you answer, the faster your brain thinks, the easier it is to kill mosquitoes.</item>
         <item>Amazing! You answered this one right! If you loved this question, would you consider watching an ad? *puppy eyes*</item>
     </string-array>
 
     <!-- Question answered wrong right now-->
     <string-array name="characterAnsweredNowWrong">
-        <item>This question is locked because you answered it wrong. (Tip) Don\'t answer it wrong next time.</item>
-        <item>Oops! That wasn\'t quite right. (Tip) Instead of trying another question, unlock this one and try again!</item>
-        <item>Perplexed! You got this wrong. (Tip) Unlock and try again. Or. Watch an ad and stay blessed.</item>
+        <item>This question is locked because you answered it wrong. (Protip) Don\'t answer it wrong next time.</item>
+        <item>Oops! That wasn\'t quite right. (Protip) Instead of trying another question, unlock this one and try again!</item>
+        <item>Perplexed! You got this wrong. (Protip) Unlock and try again. Or. Watch an ad and stay blessed.</item>
     </string-array>
 
     <!-- Already Answered Right But Wrong Now -->
@@ -56,12 +56,12 @@
     </string-array>
 
     <string-array name="helpText">
-        <item>Hi! I\'m Mr Oldman. I\'ll help you through this app.</item>
+        <item>Hi! M\'r Perplexy and I will guide you through this app.</item>
         <item>Logic, Riddles, or Sequences? Select a category</item>
         <item>Select a level from here. The colors help indicate status of question!</item>
         <item>Whenever you\'re stuck, I\'ll be there for you. Click on me to interact with me.</item>
         <item>I always have hints and answers to questions!</item>
-        <item>Read what I have to say, here. You\'ll understand the game better, and get awesome tips!</item>
+        <item>Read what I have to say here. You\'ll understand the game better, and get awesome tips!</item>
         <item>On answering a question correctly, a new question is unlocked. Click here to go to it.</item>
         <item>If you answer a question wrong, it gets locked.</item>
         <item>You can unlock it to answer it, or skip and come back later</item>

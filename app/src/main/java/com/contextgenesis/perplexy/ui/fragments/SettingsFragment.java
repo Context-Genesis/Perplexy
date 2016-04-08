@@ -18,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.contextgenesis.perplexy.ui.HelpActivity;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
@@ -149,5 +150,6 @@ public class SettingsFragment extends Fragment {
     @OnClick(R.id.settings_tutorial)
     public void onClick_tutorial() {
         SoundManager.playButtonClickSound(getActivity());
+        startActivity(new Intent(getActivity(), HelpActivity.class));
     }
 }

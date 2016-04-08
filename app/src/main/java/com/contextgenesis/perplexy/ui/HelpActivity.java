@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -73,11 +74,12 @@ public class HelpActivity extends Activity {
     @OnClick(R.id.help_next)
     public void onNext() {
         SoundManager.playSwipeSound(getApplicationContext());
-        animateImage(++COUNTER);
-        setButtonVisibility();
-        if (COUNTER >= 11) {
+        if (++COUNTER >= 11) {
             finish();
+            return;
         }
+        animateImage(COUNTER);
+        setButtonVisibility();
         setBackground();
     }
 
@@ -95,7 +97,13 @@ public class HelpActivity extends Activity {
     }
 
     public void setCharText(int COUNTER) {
-        charText.setText("" + charTextArray[COUNTER]);
+        try {
+            charText.setText("" + charTextArray[COUNTER]);
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            Log.e("Tutorial",e.getMessage());
+        }
+
     }
 
     public void setImage(int COUNTER) {
