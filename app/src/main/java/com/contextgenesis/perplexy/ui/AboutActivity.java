@@ -42,7 +42,7 @@ public class AboutActivity extends Activity {
 
     @OnClick(R.id.about_butterknife)
     public void setButterknife() {
-        openWeb("jakewharton.github.io/butterknife/");
+        openWeb("https://github.com/JakeWharton/butterknife");
     }
 
     @OnClick(R.id.about_dialog)

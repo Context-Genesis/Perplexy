@@ -379,6 +379,7 @@ public class CharacterHelper {
                 gotoNextLevel.setVisibility(View.GONE);
             }
             else {
+                gotoNextLevel.setVisibility(View.VISIBLE);
                 gotoNextLevel.setText("PROCEED TO UNLOCKED QUESTION");
                 gotoNextLevel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -397,6 +398,7 @@ public class CharacterHelper {
             TextView congratulate = (TextView) mParentActivity.findViewById(R.id.char_feedback_congratulate);
             congratulate.setVisibility(View.GONE);
             TextView gotoNextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_goto_next);
+            gotoNextLevel.setVisibility(View.VISIBLE);
             gotoNextLevel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -626,19 +628,19 @@ public class CharacterHelper {
     }
 
     private void setupShowAd(int characterType) {
-        TextView adText;
+        View adText;
         switch (characterType) {
             case CHARACTER_TYPE_LOCKED:
-                adText = (TextView) mParentActivity.findViewById(R.id.char_unlock_videoad_unlock);
+                adText =  mParentActivity.findViewById(R.id.char_unlock_clicked_ad_video);
                 break;
             case CHARACTER_TYPE_UNLOCKED:
-                adText = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_videoad);
+                adText =  mParentActivity.findViewById(R.id.char_q_clicked_ad_video);
                 break;
             case CHARACTER_TYPE_FEEDBACK_INCORRECT:
-                adText = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_videoad);
+                adText = mParentActivity.findViewById(R.id.char_feedback_incorrect_ad_video);
                 break;
             default:
-                adText = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_videoad);
+                adText = mParentActivity.findViewById(R.id.char_q_clicked_ad_video);
         }
         adText.setOnClickListener(new View.OnClickListener() {
             @Override

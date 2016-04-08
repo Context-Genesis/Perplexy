@@ -42,7 +42,7 @@ public class Constants {
 
     public static final long INITIAL_COINS = 250;
     public static final int HINT_PRICE = 100;
-    public static final int CORRECT_PRICE = 100;
+    public static final int CORRECT_PRICE = 75;
     public static final int INCORRECT_PRICE = 0;
     public static final int SOLUTION_PRICE = 200;
     public static final int UNLOCK_INCORRECT_PRICE = 125;

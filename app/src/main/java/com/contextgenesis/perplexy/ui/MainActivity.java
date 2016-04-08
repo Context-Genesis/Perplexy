@@ -128,6 +128,7 @@ public class MainActivity extends FragmentActivity {
          */
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
         if (prefs.getBoolean(Constants.FIRST_RUN, true)) {
+//            Log.d("MainActivity","ENTERED HERE");
             GenericAnswerDetails.initializeDatabase(MainActivity.this);
             prefs.edit().putBoolean(Constants.FIRST_RUN, false).apply();
             SharedPreferences.Editor editor = prefs.edit();

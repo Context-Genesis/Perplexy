@@ -28,7 +28,8 @@
                 android:layout_height="20px"
                 android:layout_x="0px"
                 android:layout_y="25px"
-                android:scrollbars="vertical">
+                android:scrollbars="vertical"
+                android:fadeScrollbars="false">
 
                 <TextView
                     android:id="@+id/qcard_textbox_question"

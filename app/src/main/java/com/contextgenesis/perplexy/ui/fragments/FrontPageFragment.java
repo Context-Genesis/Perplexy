@@ -155,7 +155,7 @@ public class FrontPageFragment extends Fragment {
             case 1:
                 return "Riddle Me This";
             case 2:
-                return "If a:b and c:d, then x: ?";
+                return "S,E,Q,U,E,N,C,E,S";
             case 3:
                 return "4 Pictures 1 Word";
             default:
