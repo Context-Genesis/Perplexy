@@ -54,12 +54,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="8dp"
-                android:layout_margin="8dp">
+                android:padding="8dp">
 
                 <TextView
                     android:id="@+id/char_q_clicked_showhint"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Buy Hint"
@@ -100,17 +99,18 @@
                     android:id="@+id/char_q_clicked_hintprice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_gravity="center"
+                    android:layout_toLeftOf="@+id/char_q_hint_coins"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/blue_l_steel_blue"
                     android:textSize="@dimen/characterheading" />
 
                 <ImageView
+                    android:id="@+id/char_q_hint_coins"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_alignBottom="@id/char_q_clicked_hintprice"
-                    android:layout_toLeftOf="@id/char_q_clicked_hintprice"
+                    android:layout_alignParentRight="true"
                     android:src="@drawable/coin_gold_silver" />
 
                 <TextView
@@ -140,8 +140,8 @@
                     android:id="@+id/char_q_clicked_ll_confirmsolution"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/character_element_margin_top"
                     android:layout_below="@id/char_q_clicked_showhiddenhint"
+                    android:layout_marginTop="@dimen/character_element_margin_top"
                     android:orientation="horizontal"
                     android:visibility="gone">
 
@@ -171,18 +171,19 @@
                     android:id="@+id/char_q_clicked_solutionprice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="@dimen/character_element_margin_top"
                     android:layout_below="@id/char_q_clicked_showhiddenhint"
+                    android:layout_marginTop="@dimen/character_element_margin_top"
+                    android:layout_toLeftOf="@+id/char_q_solution_coins"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/orange_d_zest"
                     android:textSize="@dimen/characterheading" />
 
                 <ImageView
+                    android:id="@+id/char_q_solution_coins"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_alignBottom="@id/char_q_clicked_solutionprice"
-                    android:layout_toLeftOf="@id/char_q_clicked_solutionprice"
+                    android:layout_alignParentRight="true"
                     android:src="@drawable/coin_gold_silver" />
 
 
