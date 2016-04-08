@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +66,7 @@ public class CharacterHelper {
         final ImageView favourite = (ImageView) mParentActivity.findViewById(R.id.char_q_clicked_favourite_question);
 
         showhint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_showhint);
-        //hint = (LinearLayout) mParentActivity.findViewById(R.id.char_q_clicked_ll_hint);
+//        hint = (LinearLayout) mParentActivity.findViewById(R.id.char_q_clicked_ll_hint);
         hintprice = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_hintprice);
         confirmhint = (LinearLayout) mParentActivity.findViewById(R.id.char_q_clicked_ll_confirmhint);
         nohint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_nohint);
@@ -288,8 +289,11 @@ public class CharacterHelper {
         int unlockPriceValue = Constants.UNLOCK_UNAVAILABLE_PRICE;
 
         TextView feedbackText = (TextView) mParentActivity.findViewById(R.id.char_unlock_feeback_text);
-
         TextView unlockPrice = (TextView) mParentActivity.findViewById(R.id.char_unlock_price);
+
+        LinearLayout ll_unlock = (LinearLayout) mParentActivity.findViewById(R.id.char_unlock_ll_unlock);
+
+
         if (status == Constants.INCORRECT) {
             unlockPriceValue = Constants.UNLOCK_INCORRECT_PRICE;
             feedbackText.setText(CharacterStrings.getStringAlreadyAnsweredWrong(context));
@@ -300,7 +304,11 @@ public class CharacterHelper {
         unlockPrice.setText(String.format("%d", unlockPriceValue));
         final TextView unlock = (TextView) mParentActivity.findViewById(R.id.char_unlock_tv_unlock);
         final LinearLayout confirmUnlock = (LinearLayout) mParentActivity.findViewById(R.id.char_unlock_ll_confirm_unlock);
-        unlock.setOnClickListener(new View.OnClickListener() {
+
+        unlock.setVisibility(View.VISIBLE);
+        confirmUnlock.setVisibility(View.GONE);
+
+        ll_unlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 unlock.setVisibility(View.GONE);
@@ -353,7 +361,72 @@ public class CharacterHelper {
             }
         });
 
+        final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(category);
+        final GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, category, currentPage);
+        final ImageView favourite = (ImageView) mParentActivity.findViewById(R.id.char_unlock_q_clicked_favourite_question);
+
         setupShowAd(CHARACTER_TYPE_LOCKED);
+
+        RelativeLayout rl_fav_share = (RelativeLayout) mParentActivity.findViewById(R.id.char_unlock_q_clicked_ll_drawable);
+        rl_fav_share.setVisibility(View.VISIBLE);
+
+        if (ansDetails.get(currentPage).status == Constants.UNAVAILABLE) {
+            rl_fav_share.setVisibility(View.GONE);
+        }
+
+        if (!ansDetails.get(currentPage).bookmarked) {
+            favourite.setImageResource(R.drawable.favorite);  // color
+        } else {
+            favourite.setImageResource(R.drawable.favourite_filled);
+        }
+
+        favourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!ansDetails.get(currentPage).bookmarked) {
+                    ansDetails.get(currentPage).bookmarked = true;
+                    ansDetails.get(currentPage).save();
+                    favourite.setImageResource(R.drawable.favourite_filled);  // color
+                    SoundManager.playButtonClickSound(context);
+                } else {
+                    ansDetails.get(currentPage).bookmarked = false;
+                    ansDetails.get(currentPage).save();
+                    favourite.setImageResource(R.drawable.favorite);
+                    SoundManager.playButtonClickSound(context);
+                }
+            }
+        });
+
+        mParentActivity.findViewById(R.id.char_unlock_q_clicked_whatsapp_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((QuestionsCallback) mParentActivity).hideCharacterUnlockDialog();
+                final Handler handler = new Handler();          // delay to give time to dialog to close
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        ShareQuestion.shareImageWhatsapp(mParentActivity);
+                    }
+                }, 600);
+                SoundManager.playButtonClickSound(context);
+            }
+        });
+
+        mParentActivity.findViewById(R.id.char_unlock_q_clicked_normal_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((QuestionsCallback) mParentActivity).hideCharacterUnlockDialog();
+                final Handler handler = new Handler();          // delay to give time to dialog to close
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ShareQuestion.shareIt(mParentActivity, question.question);
+                    }
+                }, 600);
+                SoundManager.playButtonClickSound(context);
+            }
+        });
     }
 
     public void setupCorrectAnswerFeedback(int category, int currentPage, final int nextQuestion, final Context context) {
@@ -379,6 +452,7 @@ public class CharacterHelper {
                 gotoNextLevel.setVisibility(View.GONE);
             }
             else {
+                gotoNextLevel.setVisibility(View.VISIBLE);
                 gotoNextLevel.setText("PROCEED TO UNLOCKED QUESTION");
                 gotoNextLevel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -397,6 +471,7 @@ public class CharacterHelper {
             TextView congratulate = (TextView) mParentActivity.findViewById(R.id.char_feedback_congratulate);
             congratulate.setVisibility(View.GONE);
             TextView gotoNextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_goto_next);
+            gotoNextLevel.setVisibility(View.VISIBLE);
             gotoNextLevel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -417,6 +492,7 @@ public class CharacterHelper {
 
         TextView feebackTv = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_title_text);
         LinearLayout ll_unlock = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_unlock);
+
         /**
          * If user has already answered question right before but reattempts and gets it wrong this time, else display answered wrong this time
          */
@@ -428,7 +504,8 @@ public class CharacterHelper {
         unlockPrice.setText(String.format("%d", Constants.UNLOCK_INCORRECT_PRICE));
         final TextView unlock = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_tv_unlock);
         final LinearLayout confirmUnlock = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_confirm_unlock);
-        unlock.setOnClickListener(new View.OnClickListener() {
+
+        ll_unlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 unlock.setVisibility(View.GONE);
@@ -504,7 +581,7 @@ public class CharacterHelper {
         mParentActivity.findViewById(R.id.char_feedback_incorrect_char_q_clicked_whatsapp_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((QuestionsCallback) mParentActivity).hideCharacterDialog();
+                ((QuestionsCallback) mParentActivity).hideIncorrectAnswerFeedback();
                 final Handler handler = new Handler();          // delay to give time to dialog to close
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -520,7 +597,7 @@ public class CharacterHelper {
         mParentActivity.findViewById(R.id.char_feedback_incorrect_char_q_clicked_normal_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((QuestionsCallback) mParentActivity).hideCharacterDialog();
+                ((QuestionsCallback) mParentActivity).hideIncorrectAnswerFeedback();
                 final Handler handler = new Handler();          // delay to give time to dialog to close
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -568,7 +645,7 @@ public class CharacterHelper {
             showsolution.setText("Buy Solution");
         }
 
-        showsolution.setOnClickListener(new View.OnClickListener() {
+        solution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (showhiddensolution.getVisibility() == View.GONE) {
@@ -626,19 +703,19 @@ public class CharacterHelper {
     }
 
     private void setupShowAd(int characterType) {
-        TextView adText;
+        View adText;
         switch (characterType) {
             case CHARACTER_TYPE_LOCKED:
-                adText = (TextView) mParentActivity.findViewById(R.id.char_unlock_videoad_unlock);
+                adText =  mParentActivity.findViewById(R.id.char_unlock_clicked_ad_video);
                 break;
             case CHARACTER_TYPE_UNLOCKED:
-                adText = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_videoad);
+                adText =  mParentActivity.findViewById(R.id.char_q_clicked_ad_video);
                 break;
             case CHARACTER_TYPE_FEEDBACK_INCORRECT:
-                adText = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_videoad);
+                adText = mParentActivity.findViewById(R.id.char_feedback_incorrect_ad_video);
                 break;
             default:
-                adText = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_videoad);
+                adText = mParentActivity.findViewById(R.id.char_q_clicked_ad_video);
         }
         adText.setOnClickListener(new View.OnClickListener() {
             @Override
