@@ -17,16 +17,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.contextgenesis.perplexy.PerplexyApplication;
 import com.contextgenesis.perplexy.R;
 import com.contextgenesis.perplexy.callbacks.QuestionsCallback;
 import com.contextgenesis.perplexy.elements.GenericAnswerDetails;
 import com.contextgenesis.perplexy.elements.GenericQuestion;
+import com.contextgenesis.perplexy.utils.Analytics;
 import com.contextgenesis.perplexy.utils.CharacterStrings;
 import com.contextgenesis.perplexy.utils.Coins;
 import com.contextgenesis.perplexy.utils.Constants;
 import com.contextgenesis.perplexy.utils.JSONUtils;
 import com.contextgenesis.perplexy.utils.ShareQuestion;
 import com.contextgenesis.perplexy.utils.SoundManager;
+import com.google.android.gms.analytics.HitBuilders;
 
 import java.util.ArrayList;
 
@@ -51,7 +54,7 @@ public class CharacterHelper {
      * by Dhruv
      */
 
-    public void setupCharacterDialog(int CATEGORY, final int mCurrentPage, final Context context) {
+    public void setupCharacterDialog(final int CATEGORY, final int mCurrentPage, final Context context) {
         final GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, CATEGORY, mCurrentPage);
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(CATEGORY);
 
@@ -109,6 +112,7 @@ public class CharacterHelper {
         yeshint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Analytics.sendShowHint(mParentActivity,CATEGORY,mCurrentPage);
                 confirmhint.setVisibility(View.GONE);
                 showhint.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -127,6 +131,7 @@ public class CharacterHelper {
                     hintprice.setText("0");
                     SoundManager.playButtonClickSound(context);
                 } else {
+                    Analytics.sendNoCoins(mParentActivity,coins);
                     animateAdView(CHARACTER_TYPE_UNLOCKED);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
@@ -189,6 +194,7 @@ public class CharacterHelper {
         yessolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Analytics.sendShowSolution(mParentActivity,CATEGORY,mCurrentPage);
                 confirmsolution.setVisibility(View.GONE);
                 showsolution.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -208,6 +214,7 @@ public class CharacterHelper {
                     solutionprice.setText("0");
                     SoundManager.playButtonClickSound(context);
                 } else {
+                    Analytics.sendNoCoins(mParentActivity,coins);
                     animateAdView(CHARACTER_TYPE_UNLOCKED);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
@@ -324,6 +331,7 @@ public class CharacterHelper {
         yesUnlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Analytics.sendUnlockQuestion(mParentActivity,category,currentPage);
                 confirmUnlock.setVisibility(View.GONE);
                 unlock.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -341,6 +349,7 @@ public class CharacterHelper {
                     coins_display.setText(String.format("%d", coins - finalUnlockPriceValue));
                     SoundManager.playButtonClickSound(context);
                 } else {
+                    Analytics.sendNoCoins(mParentActivity,coins);
                     animateAdView(CHARACTER_TYPE_LOCKED);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
@@ -520,6 +529,7 @@ public class CharacterHelper {
         yesUnlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Analytics.sendUnlockQuestion(mParentActivity,category,currentPage);
                 confirmUnlock.setVisibility(View.GONE);
                 unlock.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -534,6 +544,7 @@ public class CharacterHelper {
                     coins_display.setText(String.format("%d", coins - Constants.UNLOCK_INCORRECT_PRICE));
                     SoundManager.playButtonClickSound(context);
                 } else {
+                    Analytics.sendNoCoins(mParentActivity,coins);
                     animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
@@ -661,6 +672,7 @@ public class CharacterHelper {
         yessolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Analytics.sendShowSolution(mParentActivity,category,currentPage);
                 confirmsolution.setVisibility(View.GONE);
                 showsolution.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -679,8 +691,9 @@ public class CharacterHelper {
                     }
                     solutionprice.setText("0");
                 } else {
+                    Analytics.sendNoCoins(mParentActivity,coins);
                     animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
-                    Toast.makeText(mParentActivity, "Donot have enough coins",
+                    Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
                     SoundManager.playButtonClickSound(context);
                 }
@@ -720,6 +733,7 @@ public class CharacterHelper {
         adText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Analytics.sendWatchAd(mParentActivity,Integer.parseInt(coins_display.getText().toString()));
                 ((QuestionsActivity) mParentActivity).showAd(true);
             }
         });

@@ -15,12 +15,16 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.contextgenesis.perplexy.PerplexyApplication;
 import com.contextgenesis.perplexy.R;
 import com.contextgenesis.perplexy.ui.HelpActivity;
 import com.contextgenesis.perplexy.ui.MainActivity;
 import com.contextgenesis.perplexy.ui.NumberLineActivity;
+import com.contextgenesis.perplexy.utils.Analytics;
 import com.contextgenesis.perplexy.utils.Constants;
 import com.contextgenesis.perplexy.utils.SoundManager;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -141,10 +145,11 @@ public class FrontPageFragment extends Fragment {
         /*Implement switch case here once we set up code and questions*/
         questionsActivity.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, selectedGameType);
         startActivity(questionsActivity);
-
+        PerplexyApplication application = (PerplexyApplication) getActivity().getApplication();
+        application.getDefaultTracker().send(new HitBuilders.EventBuilder()
+                .setCategory(Analytics.CATEGORY_UI).setAction(Analytics.ACTION_PLAY_CATEGORY).setValue(selectedGameType).build());
         /* This will stop the falling drawables animation when the activity has been left. Improves performance */
         ((MainActivity) getActivity()).getFallingDrawables().stopAnimation();
-
         SoundManager.playButtonClickSound(getActivity());
     }
 
