@@ -54,6 +54,7 @@ public class Constants {
     public static final String ACCURACY = "accuracy";
     public static final String ERROR = null;
 
+    // TODO: Update when question number changes for category
     public static final int RIDDLE_COUNT = 50;
     public static final int SEQUENCE_COUNT = 50;
     public static final int LOGIC_QUESTION = 50;

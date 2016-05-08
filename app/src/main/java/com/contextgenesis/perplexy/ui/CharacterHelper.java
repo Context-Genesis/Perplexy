@@ -733,8 +733,10 @@ public class CharacterHelper {
         adText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Analytics.sendWatchAd(mParentActivity,Integer.parseInt(coins_display.getText().toString()));
+                Analytics.sendWatchAd(mParentActivity,Integer.parseInt(coins_display.getText().toString().replaceAll(" ","")));
                 ((QuestionsActivity) mParentActivity).showAd(true);
+                // TODO: Remove when admob account is enabled
+                ((QuestionsActivity)mParentActivity).afterAdWatched();
             }
         });
     }

@@ -232,7 +232,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 // The above method also does not work because the view cardContent used in unlockQuestion method is always null.
                 // So currently this issue is resolved by calling notifyDataSetChanged every time user correctly answers a question
                 // or unlocks a new question
-                // TODO: Another possible solution could be to display the lock image in the activity instead of fragments
+                // Another possible solution could be to display the lock image in the activity instead of fragments
             }
 
             @Override
@@ -386,7 +386,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             if (mVideoAd.isLoaded()) {
                 mVideoAd.show();
             } else
-                Snackbar.make(mContainer, "Cannot load add at this time. Please try again later.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(mContainer, "We are currently unable to serve ads. You get your coins though.", Snackbar.LENGTH_LONG).show();
         } else if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         } else
