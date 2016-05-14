@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.contextgenesis.perplexy.utils.FallingDrawables;
 import com.contextgenesis.perplexy.utils.ShareQuestion;
+import com.google.ads.mediation.admob.AdMobAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -42,6 +43,10 @@ import com.contextgenesis.perplexy.utils.Coins;
 import com.contextgenesis.perplexy.utils.Constants;
 import com.contextgenesis.perplexy.utils.JSONUtils;
 import com.contextgenesis.perplexy.utils.SoundManager;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,7 +55,7 @@ import butterknife.ButterKnife;
  * Created by rose on 6/3/16.
  */
 
-public class QuestionsActivity extends AppCompatActivity implements QuestionsCallback {
+public class QuestionsActivity extends AppCompatActivity implements QuestionsCallback,RewardedVideoAdListener {
 
     private ScreenSlidePagerAdapter pagerAdapter;
     private final int NO_OF_COLORS = 7;
@@ -58,7 +63,12 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     private int mCurrentPage;
     private boolean isCharacterDialogOpen = false;
     private boolean isLocked = false;
-    InterstitialAd mVideoAd;
+    //InterstitialAd mVideoAd;
+
+    RewardedVideoAd mVideoAd;
+    private boolean mIsRewardedVideoLoading;
+    private final Object mLock = new Object();
+
     InterstitialAd mInterstitialAd;
     SharedPreferences pref;
 
@@ -386,7 +396,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
             if (mVideoAd.isLoaded()) {
                 mVideoAd.show();
             } else
-                Snackbar.make(mContainer, "We are currently unable to serve ads. You get your coins though.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(mContainer, "Unable to load ad. Please try again later", Snackbar.LENGTH_LONG).show();
         } else if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         } else
@@ -612,7 +622,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     }
 
     private void setupAd() {
-        mVideoAd = new InterstitialAd(this);
+        /*mVideoAd = new InterstitialAd(this);
         mVideoAd.setAdUnitId(getString(R.string.video_ad_id));
         mVideoAd.setAdListener(new AdListener() {
             @Override
@@ -620,8 +630,10 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 afterAdWatched();
                 requestNewInterstitial(true);
             }
-        });
-        requestNewInterstitial(true);
+        });*/
+        mVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mVideoAd.setRewardedVideoAdListener(this);
+        requestNewVideoAd();
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_id));
         mInterstitialAd.setAdListener(new AdListener() {
@@ -642,15 +654,82 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 .addTestDevice("9975DC9A27F0D1B042C31A65D01EEB04") // Gaurav
                 .addTestDevice("mydevice")
                 .build();
-        if (isVideoAd)
-            mVideoAd.loadAd(adRequest);
+        if (isVideoAd) {
+            //    mVideoAd.loadAd(adRequest);
+            requestNewVideoAd();
+        }
         else
             mInterstitialAd.loadAd(adRequest);
+    }
+
+    private void requestNewVideoAd(){
+        synchronized (mLock) {
+            if (!mIsRewardedVideoLoading) {
+                mIsRewardedVideoLoading = true;
+                Bundle extras = new Bundle();
+                extras.putBoolean("_noRefresh", true);
+                AdRequest adRequest = new AdRequest.Builder()
+                        .addNetworkExtrasBundle(AdMobAdapter.class, extras)
+                        .addTestDevice("A63B0CDF9A759A19A47A01100878B546") //Rohan
+                        .addTestDevice("CDCEF54FDF7F3A4DEC120209B12D78C6") // Rishab
+                        .addTestDevice("D40CA2BD5C7E81CF7B1F9C31DFE05BE6")  // Dhruv
+                        .addTestDevice("9975DC9A27F0D1B042C31A65D01EEB04") // Gaurav
+                        .build();
+                mVideoAd.loadAd(getString(R.string.reward_video_ad_id), adRequest);
+            }
+        }
     }
 
     public void afterAdWatched() {
         Coins.addCoinsFromAd(this);
         SoundManager.playCorrectAnswerSound(this);
         coins_display.setText(String.format("%d", Coins.getCurrentCoins(this)));
+    }
+
+    @Override
+    public void onRewarded(RewardItem reward) {
+        Toast.makeText(this, "onRewarded! currency: " + reward.getType() + "  amount: " +
+                reward.getAmount(), Toast.LENGTH_SHORT).show();
+        Coins.addCoinsFromAd(this);
+        SoundManager.playCorrectAnswerSound(this);
+        coins_display.setText(String.format("%d", Coins.getCurrentCoins(this)));
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+        Toast.makeText(this, "onRewardedVideoAdLeftApplication",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        Toast.makeText(this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
+        requestNewVideoAd();
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int errorCode) {
+        synchronized (mLock) {
+            mIsRewardedVideoLoading = false;
+        }
+        Toast.makeText(this, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+        synchronized (mLock) {
+            mIsRewardedVideoLoading = false;
+        }
+        Toast.makeText(this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+        Toast.makeText(this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+        Toast.makeText(this, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
     }
 }

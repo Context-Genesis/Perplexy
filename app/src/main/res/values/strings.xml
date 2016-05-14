@@ -9,6 +9,7 @@
 
     <string name="video_ad_id" translatable="false">ca-app-pub-7975954632775689/9254755453</string>
     <string name="interstitial_ad_id" translatable="false">ca-app-pub-7975954632775689/1452287051</string>
+    <string name="reward_video_ad_id" translatable="false">ca-app-pub-7975954632775689/8549210657</string>
     <string name="char_watch_ad">Watch an Ad</string>
 
     <string name="dummy_question_1">What number do you get when you add 2 with 2?</string>

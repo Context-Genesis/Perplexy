@@ -736,7 +736,7 @@ public class CharacterHelper {
                 Analytics.sendWatchAd(mParentActivity,Integer.parseInt(coins_display.getText().toString().replaceAll(" ","")));
                 ((QuestionsActivity) mParentActivity).showAd(true);
                 // TODO: Remove when admob account is enabled
-                ((QuestionsActivity)mParentActivity).afterAdWatched();
+                //((QuestionsActivity)mParentActivity).afterAdWatched();
             }
         });
     }
