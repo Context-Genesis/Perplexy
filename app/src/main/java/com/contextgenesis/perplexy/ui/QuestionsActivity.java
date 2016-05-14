@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.contextgenesis.perplexy.utils.FallingDrawables;
 import com.contextgenesis.perplexy.utils.ShareQuestion;
 import com.google.ads.mediation.admob.AdMobAdapter;
+import com.google.ads.mediation.unity.UnityAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -395,8 +396,10 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         if (isVideoAd) {
             if (mVideoAd.isLoaded()) {
                 mVideoAd.show();
-            } else
+            } else {
                 Snackbar.make(mContainer, "Unable to load ad. Please try again later", Snackbar.LENGTH_LONG).show();
+                requestNewVideoAd();
+            }
         } else if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         } else
@@ -648,7 +651,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     private void requestNewInterstitial(boolean isVideoAd) {
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("A63B0CDF9A759A19A47A01100878B546") //Rohan
+                .addTestDevice("C40E23EA84B9F2235B07CE0531A253AB") //Rohan
                 .addTestDevice("CDCEF54FDF7F3A4DEC120209B12D78C6") // Rishab
                 .addTestDevice("D40CA2BD5C7E81CF7B1F9C31DFE05BE6")  // Dhruv
                 .addTestDevice("9975DC9A27F0D1B042C31A65D01EEB04") // Gaurav
@@ -670,7 +673,8 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 extras.putBoolean("_noRefresh", true);
                 AdRequest adRequest = new AdRequest.Builder()
                         .addNetworkExtrasBundle(AdMobAdapter.class, extras)
-                        .addTestDevice("A63B0CDF9A759A19A47A01100878B546") //Rohan
+                        .addNetworkExtrasBundle(UnityAdapter.class, extras)
+                        .addTestDevice("C40E23EA84B9F2235B07CE0531A253AB") //Rohan
                         .addTestDevice("CDCEF54FDF7F3A4DEC120209B12D78C6") // Rishab
                         .addTestDevice("D40CA2BD5C7E81CF7B1F9C31DFE05BE6")  // Dhruv
                         .addTestDevice("9975DC9A27F0D1B042C31A65D01EEB04") // Gaurav
@@ -688,8 +692,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     @Override
     public void onRewarded(RewardItem reward) {
-        Toast.makeText(this, "onRewarded! currency: " + reward.getType() + "  amount: " +
-                reward.getAmount(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "You earned 150 coins", Toast.LENGTH_SHORT).show();
         Coins.addCoinsFromAd(this);
         SoundManager.playCorrectAnswerSound(this);
         coins_display.setText(String.format("%d", Coins.getCurrentCoins(this)));
@@ -697,13 +700,12 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     @Override
     public void onRewardedVideoAdLeftApplication() {
-        Toast.makeText(this, "onRewardedVideoAdLeftApplication",
-                Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onRewardedVideoAdLeftApplication",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoAdClosed() {
-        Toast.makeText(this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
         requestNewVideoAd();
     }
 
@@ -712,7 +714,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         synchronized (mLock) {
             mIsRewardedVideoLoading = false;
         }
-        Toast.makeText(this, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -720,16 +722,16 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         synchronized (mLock) {
             mIsRewardedVideoLoading = false;
         }
-        Toast.makeText(this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoAdOpened() {
-        Toast.makeText(this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoStarted() {
-        Toast.makeText(this, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
     }
 }
