@@ -18,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.contextgenesis.perplexy.ui.ContributeActivity;
 import com.contextgenesis.perplexy.ui.HelpActivity;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -53,6 +54,9 @@ public class SettingsFragment extends Fragment {
     @Bind(R.id.settings_tutorial)
     TextView tutorial;
 
+    @Bind(R.id.settings_contribute)
+    TextView contribute;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,6 +87,12 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @OnClick(R.id.settings_contribute)
+    public void onClick_contribute() {
+        SoundManager.playButtonClickSound(getActivity());
+        startActivity(new Intent(getActivity(), ContributeActivity.class));
     }
 
     @OnClick(R.id.settings_reset)
