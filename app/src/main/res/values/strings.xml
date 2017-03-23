@@ -11,8 +11,15 @@
     <string name="interstitial_ad_id" translatable="false">ca-app-pub-7975954632775689/1452287051</string>
     <string name="reward_video_ad_id" translatable="false">ca-app-pub-7975954632775689/8549210657</string>
     <string name="char_watch_ad">Watch an Ad</string>
+    <string name="char_buy_coins">Buy Coins</string>
 
     <string name="dummy_question_1">What number do you get when you add 2 with 2?</string>
     <string name="dummy_question_2">What did Neils Bohr do?</string>
+
+    <string name="dollar_stack_of_coins">1$</string>
+    <string name="dollar_pile_of_coins">2$</string>
+    <string name="dollar_bag_of_coins">5$</string>
+    <string name="dollar_chest_of_coins">10$</string>
+    <string name="dollar_vault_of_coins">50$</string>
 
 </resources>

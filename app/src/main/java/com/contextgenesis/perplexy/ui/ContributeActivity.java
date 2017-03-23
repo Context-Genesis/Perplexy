@@ -5,10 +5,11 @@ package com.contextgenesis.perplexy.ui;
  */
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.contextgenesis.perplexy.R;
@@ -44,7 +45,6 @@ public class ContributeActivity extends Activity {
 
     @OnClick(R.id.contribute_submit)
     public void onClick_submit() {
-        System.out.println("Cshabdjabsabdjsabdj "+question.getText().toString());
         if (question.getText().toString().length() != 0 && hint.getText().toString().length() != 0
                 && category.getText().toString().length() != 0 && solution.getText().toString().length() != 0) {
             Intent email = new Intent(Intent.ACTION_SEND);
@@ -61,13 +61,13 @@ public class ContributeActivity extends Activity {
             startActivity(Intent.createChooser(email, "Choose an Email client :"));
         }
         else{
-            if(question.getText().toString().length() != 0)
+            if(question.getText().toString().length() == 0)
                 Toast.makeText(getApplicationContext(), "Question Field is required", Toast.LENGTH_LONG).show();
-            else if(category.getText().toString().length() != 0)
+            else if(category.getText().toString().length() == 0)
                 Toast.makeText(getApplicationContext(), "Category Field is required", Toast.LENGTH_LONG).show();
-            else if(hint.getText().toString().length() != 0)
+            else if(hint.getText().toString().length() == 0)
                 Toast.makeText(getApplicationContext(), "Hint Field is required", Toast.LENGTH_LONG).show();
-            else if(solution.getText().toString().length() != 0)
+            else if(solution.getText().toString().length() == 0)
                 Toast.makeText(getApplicationContext(), "Solution Field is required", Toast.LENGTH_LONG).show();
         }
     }

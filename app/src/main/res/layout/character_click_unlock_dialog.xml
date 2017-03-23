@@ -162,6 +162,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -170,7 +171,8 @@
                     android:layout_height="48dp"
                     android:layout_margin="5dp"
                     android:padding="8dp"
-                    android:src="@drawable/ads" />
+                    android:src="@drawable/ads"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/char_unlock_title_ad_unlock"
@@ -189,15 +191,41 @@
 
                 <TextView
                     android:id="@+id/char_unlock_videoad_unlock"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/char_unlock_title_ad_unlock"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_toRightOf="@id/imageView2"
                     android:gravity="center"
-                    android:paddingBottom="8dp"
                     android:text="@string/char_watch_ad"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/characterheading" />
+
+                <TextView
+                    android:id="@+id/char_unlock_clicked_or"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/char_unlock_videoad_unlock"
+                    android:layout_toRightOf="@id/imageView3"
+                    android:gravity="center"
+                    android:text="or"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/charactersubheading" />
+
+                <TextView
+                    android:id="@+id/char_unlock_clicked_buycoins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/char_unlock_clicked_or"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="4dp"
+                    android:layout_toRightOf="@id/imageView3"
+                    android:gravity="center"
+                    android:text="@string/char_buy_coins"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/characterheading" />

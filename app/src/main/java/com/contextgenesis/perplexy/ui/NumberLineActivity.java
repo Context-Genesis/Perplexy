@@ -2,6 +2,7 @@ package com.contextgenesis.perplexy.ui;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,12 +10,14 @@ import android.os.Looper;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.contextgenesis.perplexy.R;
 import com.contextgenesis.perplexy.adapters.NumberLineAdapter;
 import com.contextgenesis.perplexy.elements.GenericAnswerDetails;
+import com.contextgenesis.perplexy.ui.dialogs.BankDialog;
 import com.contextgenesis.perplexy.utils.Constants;
 import com.contextgenesis.perplexy.utils.FallingDrawables;
 import com.contextgenesis.perplexy.utils.SoundManager;
@@ -137,6 +140,16 @@ public class NumberLineActivity extends AppCompatActivity {
     public void goBack() {
         SoundManager.playButtonClickSound(getApplicationContext());
         onBackPressed();
+    }
+
+    @OnClick(R.id.activity_coin_text)
+    public void onClick_contribute() {
+        new BankDialog(this).show();
+    }
+
+    @OnClick(R.id.activity_coin_image)
+    public void onClick_contribute2() {
+        new BankDialog(this).show();
     }
 
    /* @OnClick(R.id.activity_number_line_bubble_im)

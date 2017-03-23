@@ -22,6 +22,7 @@ import com.contextgenesis.perplexy.R;
 import com.contextgenesis.perplexy.callbacks.QuestionsCallback;
 import com.contextgenesis.perplexy.elements.GenericAnswerDetails;
 import com.contextgenesis.perplexy.elements.GenericQuestion;
+import com.contextgenesis.perplexy.ui.dialogs.BankDialog;
 import com.contextgenesis.perplexy.utils.Analytics;
 import com.contextgenesis.perplexy.utils.CharacterStrings;
 import com.contextgenesis.perplexy.utils.Coins;
@@ -50,7 +51,7 @@ public class CharacterHelper {
     }
 
     /**
-     * This sets up the click listeners for various options in character dialog. Implementation copied from DialogSpeakingMan
+     * This sets up the click listeners for various options in character dialog. Implementation
      * by Dhruv
      */
 
@@ -67,6 +68,14 @@ public class CharacterHelper {
         final TextView nosolution, yessolution, showhiddensolution;
 
         final ImageView favourite = (ImageView) mParentActivity.findViewById(R.id.char_q_clicked_favourite_question);
+
+        TextView buycoins = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_buycoins);
+        buycoins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new BankDialog(mParentActivity).show();
+            }
+        });
 
         showhint = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_showhint);
 //        hint = (LinearLayout) mParentActivity.findViewById(R.id.char_q_clicked_ll_hint);
@@ -112,7 +121,7 @@ public class CharacterHelper {
         yeshint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Analytics.sendShowHint(mParentActivity,CATEGORY,mCurrentPage);
+                Analytics.sendShowHint(mParentActivity, CATEGORY, mCurrentPage);
                 confirmhint.setVisibility(View.GONE);
                 showhint.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -131,7 +140,7 @@ public class CharacterHelper {
                     hintprice.setText("0");
                     SoundManager.playButtonClickSound(context);
                 } else {
-                    Analytics.sendNoCoins(mParentActivity,coins);
+                    Analytics.sendNoCoins(mParentActivity, coins);
                     animateAdView(CHARACTER_TYPE_UNLOCKED);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
@@ -194,7 +203,7 @@ public class CharacterHelper {
         yessolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Analytics.sendShowSolution(mParentActivity,CATEGORY,mCurrentPage);
+                Analytics.sendShowSolution(mParentActivity, CATEGORY, mCurrentPage);
                 confirmsolution.setVisibility(View.GONE);
                 showsolution.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -214,7 +223,7 @@ public class CharacterHelper {
                     solutionprice.setText("0");
                     SoundManager.playButtonClickSound(context);
                 } else {
-                    Analytics.sendNoCoins(mParentActivity,coins);
+                    Analytics.sendNoCoins(mParentActivity, coins);
                     animateAdView(CHARACTER_TYPE_UNLOCKED);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
@@ -300,6 +309,13 @@ public class CharacterHelper {
 
         LinearLayout ll_unlock = (LinearLayout) mParentActivity.findViewById(R.id.char_unlock_ll_unlock);
 
+        TextView buycoins = (TextView) mParentActivity.findViewById(R.id.char_unlock_clicked_buycoins);
+        buycoins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new BankDialog(mParentActivity).show();
+            }
+        });
 
         if (status == Constants.INCORRECT) {
             unlockPriceValue = Constants.UNLOCK_INCORRECT_PRICE;
@@ -331,7 +347,7 @@ public class CharacterHelper {
         yesUnlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Analytics.sendUnlockQuestion(mParentActivity,category,currentPage);
+                Analytics.sendUnlockQuestion(mParentActivity, category, currentPage);
                 confirmUnlock.setVisibility(View.GONE);
                 unlock.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -349,7 +365,7 @@ public class CharacterHelper {
                     coins_display.setText(String.format("%d", coins - finalUnlockPriceValue));
                     SoundManager.playButtonClickSound(context);
                 } else {
-                    Analytics.sendNoCoins(mParentActivity,coins);
+                    Analytics.sendNoCoins(mParentActivity, coins);
                     animateAdView(CHARACTER_TYPE_LOCKED);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
@@ -456,11 +472,10 @@ public class CharacterHelper {
             TextView congratulate = (TextView) mParentActivity.findViewById(R.id.char_feedback_congratulate);
             congratulate.setVisibility(View.VISIBLE);
             TextView gotoNextLevel = (TextView) mParentActivity.findViewById(R.id.char_feedback_goto_next);
-            if (nextQuestion == -2){
+            if (nextQuestion == -2) {
                 nextLevel.setText("You have unlocked all questions of this game type");
                 gotoNextLevel.setVisibility(View.GONE);
-            }
-            else {
+            } else {
                 gotoNextLevel.setVisibility(View.VISIBLE);
                 gotoNextLevel.setText("PROCEED TO UNLOCKED QUESTION");
                 gotoNextLevel.setOnClickListener(new View.OnClickListener() {
@@ -508,6 +523,13 @@ public class CharacterHelper {
 
 //        ll_unlock.setVisibility(View.GONE);
 
+        TextView buycoins = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_buycoins);
+        buycoins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new BankDialog(mParentActivity).show();
+            }
+        });
 
         TextView unlockPrice = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_unlock_price);
         unlockPrice.setText(String.format("%d", Constants.UNLOCK_INCORRECT_PRICE));
@@ -529,7 +551,7 @@ public class CharacterHelper {
         yesUnlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Analytics.sendUnlockQuestion(mParentActivity,category,currentPage);
+                Analytics.sendUnlockQuestion(mParentActivity, category, currentPage);
                 confirmUnlock.setVisibility(View.GONE);
                 unlock.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -544,7 +566,7 @@ public class CharacterHelper {
                     coins_display.setText(String.format("%d", coins - Constants.UNLOCK_INCORRECT_PRICE));
                     SoundManager.playButtonClickSound(context);
                 } else {
-                    Analytics.sendNoCoins(mParentActivity,coins);
+                    Analytics.sendNoCoins(mParentActivity, coins);
                     animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
@@ -672,7 +694,7 @@ public class CharacterHelper {
         yessolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Analytics.sendShowSolution(mParentActivity,category,currentPage);
+                Analytics.sendShowSolution(mParentActivity, category, currentPage);
                 confirmsolution.setVisibility(View.GONE);
                 showsolution.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
@@ -691,7 +713,7 @@ public class CharacterHelper {
                     }
                     solutionprice.setText("0");
                 } else {
-                    Analytics.sendNoCoins(mParentActivity,coins);
+                    Analytics.sendNoCoins(mParentActivity, coins);
                     animateAdView(CHARACTER_TYPE_FEEDBACK_INCORRECT);
                     Toast.makeText(mParentActivity, "Do not have enough coins",
                             Toast.LENGTH_LONG).show();
@@ -719,21 +741,21 @@ public class CharacterHelper {
         View adText;
         switch (characterType) {
             case CHARACTER_TYPE_LOCKED:
-                adText =  mParentActivity.findViewById(R.id.char_unlock_clicked_ad_video);
+                adText = mParentActivity.findViewById(R.id.char_unlock_videoad_unlock);
                 break;
             case CHARACTER_TYPE_UNLOCKED:
-                adText =  mParentActivity.findViewById(R.id.char_q_clicked_ad_video);
+                adText = mParentActivity.findViewById(R.id.char_q_clicked_videoad);
                 break;
             case CHARACTER_TYPE_FEEDBACK_INCORRECT:
-                adText = mParentActivity.findViewById(R.id.char_feedback_incorrect_ad_video);
+                adText = mParentActivity.findViewById(R.id.char_feedback_incorrect_videoad);
                 break;
             default:
-                adText = mParentActivity.findViewById(R.id.char_q_clicked_ad_video);
+                adText = mParentActivity.findViewById(R.id.char_q_clicked_videoad);
         }
         adText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Analytics.sendWatchAd(mParentActivity,Integer.parseInt(coins_display.getText().toString().replaceAll(" ","")));
+                Analytics.sendWatchAd(mParentActivity, Integer.parseInt(coins_display.getText().toString().replaceAll(" ", "")));
                 ((QuestionsActivity) mParentActivity).showAd(true);
                 // TODO: Remove when admob account is enabled
                 //((QuestionsActivity)mParentActivity).afterAdWatched();

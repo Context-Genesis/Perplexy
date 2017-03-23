@@ -253,7 +253,8 @@
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
                     android:padding="5dp"
-                    android:src="@drawable/ads" />
+                    android:src="@drawable/ads"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/char_feedback_incorrect_title_ad"
@@ -271,14 +272,41 @@
 
                 <TextView
                     android:id="@+id/char_feedback_incorrect_videoad"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/char_feedback_incorrect_title_ad"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
                     android:layout_toRightOf="@id/imageView3"
                     android:gravity="center"
                     android:text="@string/char_watch_ad"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/characterheading" />
+
+                <TextView
+                    android:id="@+id/char_feedback_incorrect_or"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/char_feedback_incorrect_videoad"
+                    android:layout_toRightOf="@id/imageView3"
+                    android:gravity="center"
+                    android:text="or"
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/charactersubheading" />
+
+                <TextView
+                    android:id="@+id/char_feedback_incorrect_buycoins"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/char_feedback_incorrect_or"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_toRightOf="@id/imageView3"
+                    android:gravity="center"
+                    android:text="@string/char_buy_coins"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/characterheading" />

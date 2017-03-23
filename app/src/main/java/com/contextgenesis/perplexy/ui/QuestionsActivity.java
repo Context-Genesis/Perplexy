@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.contextgenesis.perplexy.ui.dialogs.BankDialog;
 import com.contextgenesis.perplexy.utils.FallingDrawables;
 import com.contextgenesis.perplexy.utils.ShareQuestion;
 import com.google.ads.mediation.admob.AdMobAdapter;
@@ -51,12 +52,13 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by rose on 6/3/16.
  */
 
-public class QuestionsActivity extends AppCompatActivity implements QuestionsCallback,RewardedVideoAdListener {
+public class QuestionsActivity extends AppCompatActivity implements QuestionsCallback, RewardedVideoAdListener {
 
     private ScreenSlidePagerAdapter pagerAdapter;
     private final int NO_OF_COLORS = 7;
@@ -122,6 +124,17 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         setupCharacter();
         setupAd();
     }
+
+    @OnClick(R.id.questions_activity_coin_text)
+    public void onClick_contribute() {
+        new BankDialog(this).show();
+    }
+
+    @OnClick(R.id.questions_activity_coin_image)
+    public void onClick_contribute2() {
+        new BankDialog(this).show();
+    }
+
 
     @Override
     protected void onResume() {
@@ -660,12 +673,11 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         if (isVideoAd) {
             //    mVideoAd.loadAd(adRequest);
             requestNewVideoAd();
-        }
-        else
+        } else
             mInterstitialAd.loadAd(adRequest);
     }
 
-    private void requestNewVideoAd(){
+    private void requestNewVideoAd() {
         synchronized (mLock) {
             if (!mIsRewardedVideoLoading) {
                 mIsRewardedVideoLoading = true;

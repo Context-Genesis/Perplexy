@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- For in-app purchases -->
+    <uses-permission android:name="com.android.vending.BILLING" />
+
     <application
         android:name=".PerplexyApplication"
         android:allowBackup="true"
