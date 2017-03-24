@@ -58,4 +58,6 @@ public class Constants {
     public static final int RIDDLE_COUNT = 50;
     public static final int SEQUENCE_COUNT = 50;
     public static final int LOGIC_QUESTION = 50;
+
+    public static final String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3La4iMo4yx4oS+txP9k7dngPWjAgrC+4lLIn9udkhsM73iEzK7+kT6zTkGRnAku7ij/iogDe+LXuD/XFDjsxmHG6TOQsYS8u43t2I/fmirE5r4fEyvQXI/ETcgHevFqReGT5SUQveOuyk2UrkrcAGSpP8kSAw37Ylpf3UzHFylp5syE+nTiMV9kMlcVhu+zaJlmozLtxN0LC64/f0ShupH0+chpI4E/GU1dkTgVM1oY7C8/TPriNGihsMpB2/B+cpzNdCRd5FYvHZN0BKCUdMNUQ7onKW/4vFN3nAMhmsOjsX5ZoopCqAxJT6UxGaAV+q9u76YLKMgEhmi+0xvFwiQIDAQAB";
 }

@@ -690,6 +690,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                         .addTestDevice("CDCEF54FDF7F3A4DEC120209B12D78C6") // Rishab
                         .addTestDevice("D40CA2BD5C7E81CF7B1F9C31DFE05BE6")  // Dhruv
                         .addTestDevice("9975DC9A27F0D1B042C31A65D01EEB04") // Gaurav
+                        .addTestDevice("08BEF4E2E5265F493ABAEC3DDD496048") // Sarthak
                         .build();
                 mVideoAd.loadAd(getString(R.string.reward_video_ad_id), adRequest);
             }

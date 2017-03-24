@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 
 import com.contextgenesis.perplexy.R;
 import com.contextgenesis.perplexy.adapters.NumberLineAdapter;
+import com.contextgenesis.perplexy.billingUtils.IabHelper;
+import com.contextgenesis.perplexy.billingUtils.IabResult;
+import com.contextgenesis.perplexy.billingUtils.Inventory;
 import com.contextgenesis.perplexy.elements.GenericAnswerDetails;
 import com.contextgenesis.perplexy.ui.dialogs.BankDialog;
 import com.contextgenesis.perplexy.utils.Constants;
@@ -23,6 +27,7 @@ import com.contextgenesis.perplexy.utils.FallingDrawables;
 import com.contextgenesis.perplexy.utils.SoundManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,6 +51,8 @@ public class NumberLineActivity extends AppCompatActivity {
      * @Bind(R.id.activity_number_line_bubble_im) ImageView bubble;
      */
 
+    IabHelper mHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +68,7 @@ public class NumberLineActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.activity_number_line_listview);
         NumberLineAdapter adapter = new NumberLineAdapter(this, new ArrayList<GenericAnswerDetails>());
         listView.setAdapter(adapter);
+
     }
 
     @Override
