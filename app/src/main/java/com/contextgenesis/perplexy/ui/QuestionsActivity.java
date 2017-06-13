@@ -5,6 +5,8 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -127,12 +129,14 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
 
     @OnClick(R.id.questions_activity_coin_text)
     public void onClick_contribute() {
-        new BankDialog(this).show();
+//     TODO: in app include later
+//     new BankDialog(this).show();
     }
 
     @OnClick(R.id.questions_activity_coin_image)
     public void onClick_contribute2() {
-        new BankDialog(this).show();
+//     TODO: in app include later
+//     new BankDialog(this).show();
     }
 
 

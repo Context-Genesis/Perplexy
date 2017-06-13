@@ -50,7 +50,7 @@ public class ContributeActivity extends Activity {
             Intent email = new Intent(Intent.ACTION_SEND);
             email.putExtra(Intent.EXTRA_EMAIL, new String[]{"contextgenesis@gmail.com"});
             email.putExtra(Intent.EXTRA_SUBJECT, "Perplexy Question Contribution");
-            email.putExtra(Intent.EXTRA_TEXT, "Hi,\n Question: " + question.getText().toString() +
+            email.putExtra(Intent.EXTRA_TEXT, "Hi,\n    I would like to contribute a question for app Perplexy.\n\nQuestion: " + question.getText().toString() +
                     "\nCategory: " + category.getText().toString() +
                     "\nHint: " + hint.getText().toString() +
                     "\nSolution: " + solution.getText().toString() +
@@ -58,6 +58,8 @@ public class ContributeActivity extends Activity {
 
             //need this to prompts email client only
             email.setType("message/rfc822");
+
+            Toast.makeText(this, "You earned 200 coins! :)", Toast.LENGTH_SHORT);
             startActivity(Intent.createChooser(email, "Choose an Email client :"));
         }
         else{

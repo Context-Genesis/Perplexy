@@ -261,7 +261,8 @@
                     android:text="or"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/charactersubheading" />
+                    android:textSize="@dimen/charactersubheading"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/char_q_clicked_buycoins"
@@ -275,7 +276,8 @@
                     android:text="@string/char_buy_coins"
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/characterheading" />
+                    android:textSize="@dimen/characterheading"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 

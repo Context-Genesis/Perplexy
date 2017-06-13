@@ -152,12 +152,14 @@ public class NumberLineActivity extends AppCompatActivity {
 
     @OnClick(R.id.activity_coin_text)
     public void onClick_contribute() {
-        new BankDialog(this).show();
+        //  TODO: In app include later
+//        new BankDialog(this).show();
     }
 
     @OnClick(R.id.activity_coin_image)
     public void onClick_contribute2() {
-        new BankDialog(this).show();
+        //  TODO: In app include later
+//        new BankDialog(this).show();
     }
 
    /* @OnClick(R.id.activity_number_line_bubble_im)

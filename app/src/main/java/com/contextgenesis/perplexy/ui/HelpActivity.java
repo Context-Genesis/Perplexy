@@ -40,6 +40,9 @@ public class HelpActivity extends Activity {
     @Bind(R.id.help_main)
     RelativeLayout main;
 
+    @Bind(R.id.help_skip)
+    ImageView skip_tutorial;
+
     String charTextArray[];
 
     int COUNTER = 0;
@@ -82,6 +85,13 @@ public class HelpActivity extends Activity {
         setButtonVisibility();
         setBackground();
     }
+
+    @OnClick(R.id.help_skip)
+    public void onSkip() {
+        finish();
+        return;
+    }
+
 
     private void setButtonVisibility() {
         if (COUNTER <= 0) {
