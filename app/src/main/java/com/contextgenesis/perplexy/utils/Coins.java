@@ -99,6 +99,17 @@ public class Coins {
         QuestionFacts.increment_incorrect(context);
     }
 
+    public static void contribute_question(Context context) {
+        pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, context.MODE_PRIVATE);
+        editor = pref.edit();
+
+        long earned_coins = pref.getLong(com.contextgenesis.perplexy.utils.Constants.PREF_COINS_EARNED, 0);
+        editor.putLong(com.contextgenesis.perplexy.utils.Constants.PREF_COINS_EARNED, earned_coins + com.contextgenesis.perplexy.utils.Constants.CONTRIBUTION_PRICE).apply();
+
+        long coins = pref.getLong(Constants.PREF_COINS, 0);
+        editor.putLong(Constants.PREF_COINS, coins + Constants.CONTRIBUTION_PRICE).apply();
+    }
+
     public static void addCoinsFromAd(Context context){
         pref = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
         editor = pref.edit();

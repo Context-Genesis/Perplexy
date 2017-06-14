@@ -12,7 +12,7 @@ public class Constants {
     public static final String JSON_RIDDLES_FILE = "riddles";
     public static final String JSON_LOGIC_FILE = "logic";
 
-    public static final String JSON_ALL_QUESTIONS_FILE = "all_questions";
+//    public static final String JSON_ALL_QUESTIONS_FILE = "all_questions";
 
     public static final int GAME_TYPE_SEQUENCES = 0;
     public static final int GAME_TYPE_RIDDLE = 1;
@@ -45,6 +45,7 @@ public class Constants {
     public static final int CORRECT_PRICE = 75;
     public static final int INCORRECT_PRICE = 0;
     public static final int SOLUTION_PRICE = 200;
+    public static final int CONTRIBUTION_PRICE = 200;
     public static final int UNLOCK_INCORRECT_PRICE = 125;
     public static final int UNLOCK_UNAVAILABLE_PRICE = 150;
     public static final int AD_VALUE_COINS = 150;

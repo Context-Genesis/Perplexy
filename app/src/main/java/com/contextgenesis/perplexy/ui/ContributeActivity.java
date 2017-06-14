@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.contextgenesis.perplexy.R;
+import com.contextgenesis.perplexy.utils.Coins;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -59,7 +60,9 @@ public class ContributeActivity extends Activity {
             //need this to prompts email client only
             email.setType("message/rfc822");
 
-            Toast.makeText(this, "You earned 200 coins! :)", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "You have earned 200 coins! :)", Toast.LENGTH_LONG).show();
+            Coins.contribute_question(this);
+
             startActivity(Intent.createChooser(email, "Choose an Email client :"));
         }
         else{
