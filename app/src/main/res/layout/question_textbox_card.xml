@@ -116,11 +116,11 @@
             <Button
                 android:id="@+id/textbox_canvas_pull"
                 android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/textAreaScroller"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/palette" />
+                android:background="@drawable/rough_pad" />
 
             <ImageButton
                 android:id="@+id/qcard_textbox_previous"

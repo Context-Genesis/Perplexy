@@ -4,8 +4,7 @@
     android:id="@+id/activity_number_line_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/first_background_color"
-    tools:context="com.example.bhutanidhruv16.logic.NumberLine">
+    android:background="@color/first_background_color">
 
     <ImageView
         android:id="@+id/activity_number_line_back"

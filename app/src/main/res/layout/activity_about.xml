@@ -10,14 +10,33 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            style="@style/aboutTextViewTitle"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/red_d_pomegranate"
-            android:padding="16dp"
-            android:text="OUR TEAM"
-            android:textColor="@color/white" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/aboutTextViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/red_d_pomegranate"
+                android:padding="16dp"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:text="OUR TEAM"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:id="@+id/about_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="8dp"
+                android:layout_centerVertical="true"
+                android:contentDescription="Back"
+                android:padding="5dp"
+                android:src="@drawable/back" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -203,6 +222,7 @@
             android:layout_height="wrap_content"
             android:background="@color/red_d_pomegranate"
             android:padding="16dp"
+            android:gravity="center"
             android:text="ATTRIBUTIONS"
             android:textColor="@color/white" />
 

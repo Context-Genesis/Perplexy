@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.contextgenesis.perplexy.R;
+import com.contextgenesis.perplexy.utils.SoundManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,6 +34,12 @@ public class AboutActivity extends Activity {
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
 
+    }
+
+    @OnClick(R.id.about_back)
+    public void goBack() {
+        SoundManager.playButtonClickSound(getApplicationContext());
+        onBackPressed();
     }
 
     private void openWeb(String link) {

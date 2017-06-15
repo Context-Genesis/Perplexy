@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.contextgenesis.perplexy.R;
 import com.contextgenesis.perplexy.utils.Coins;
+import com.contextgenesis.perplexy.utils.SoundManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,6 +45,12 @@ public class ContributeActivity extends Activity {
         ButterKnife.bind(this);
     }
 
+    @OnClick(R.id.contribute_back)
+    public void goBack() {
+        SoundManager.playButtonClickSound(getApplicationContext());
+        onBackPressed();
+    }
+
     @OnClick(R.id.contribute_submit)
     public void onClick_submit() {
         if (question.getText().toString().length() != 0 && hint.getText().toString().length() != 0
@@ -64,16 +71,20 @@ public class ContributeActivity extends Activity {
             Coins.contribute_question(this);
 
             startActivity(Intent.createChooser(email, "Choose an Email client :"));
-        }
-        else{
-            if(question.getText().toString().length() == 0)
+        } else {
+            if (question.getText().toString().length() == 0) {
+                question.requestFocus();
                 Toast.makeText(getApplicationContext(), "Question Field is required", Toast.LENGTH_LONG).show();
-            else if(category.getText().toString().length() == 0)
+            } else if (category.getText().toString().length() == 0) {
+                category.requestFocus();
                 Toast.makeText(getApplicationContext(), "Category Field is required", Toast.LENGTH_LONG).show();
-            else if(hint.getText().toString().length() == 0)
-                Toast.makeText(getApplicationContext(), "Hint Field is required", Toast.LENGTH_LONG).show();
-            else if(solution.getText().toString().length() == 0)
+            } else if (solution.getText().toString().length() == 0) {
+                solution.requestFocus();
                 Toast.makeText(getApplicationContext(), "Solution Field is required", Toast.LENGTH_LONG).show();
+            } else if (hint.getText().toString().length() == 0) {
+                hint.requestFocus();
+                Toast.makeText(getApplicationContext(), "Hint Field is required", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

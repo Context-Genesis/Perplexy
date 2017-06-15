@@ -1,205 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@color/blue_d_grey">
 
-    <LinearLayout
-        android:id="@+id/rl_question"
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/blue_d_grey">
+
+        <RelativeLayout
+            android:id="@+id/rl_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/contribute_title"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    style="@style/aboutTextViewTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/teal_dark"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:layout_centerInParent="true"
+                    android:text="CONTRIBUTE"
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:id="@+id/contribute_back"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="Back"
+                    android:padding="5dp"
+                    android:src="@drawable/back" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/contribute_title"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:id="@+id/contribute_qbutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Question: "
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/contribute_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/contribute_qbutton"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/settings_round_corners"
+                    android:gravity="left"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_question"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:id="@+id/contribute_categorybutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Category: "
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/contribute_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/contribute_categorybutton"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/settings_round_corners"
+                    android:gravity="left"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_options"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_category"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:id="@+id/contribute_optionsbutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Options: "
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/white"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/contribute_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/contribute_optionsbutton"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/settings_round_corners"
+                    android:gravity="left"
+                    android:hint="If any"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/colorTextSecondary"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_solution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_options"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:id="@+id/contribute_ansbutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Solution: "
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/contribute_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/contribute_ansbutton"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/settings_round_corners"
+                    android:gravity="left"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_solution"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:id="@+id/contribute_hintbutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Hint: "
+                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/contribute_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/contribute_hintbutton"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/settings_round_corners"
+                    android:gravity="left"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/contribute_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp"
+        android:background="@drawable/contribute_submitbutton"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="Submit"
+        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+        android:textColor="@color/white" />
 
-        <TextView
-            style="@style/aboutTextViewTitle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/teal_dark"
-            android:padding="16dp"
-            android:text="CONTRIBUTE"
-            android:textColor="@color/white" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp">
-
-            <TextView
-                android:id="@+id/contribute_qbutton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="Question: "
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/contribute_question"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@id/contribute_qbutton"
-                android:layout_weight="0.5"
-                android:background="@drawable/settings_round_corners"
-                android:gravity="left"
-                android:text=""
-                android:textColor="@color/white"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp">
-
-            <TextView
-                android:id="@+id/contribute_categorybutton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="Category: "
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/contribute_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@id/contribute_categorybutton"
-                android:layout_weight="0.5"
-                android:background="@drawable/settings_round_corners"
-                android:gravity="left"
-                android:text=""
-                android:textColor="@color/white"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp">
-
-            <TextView
-                android:id="@+id/contribute_optionsbutton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="Options: "
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/white"
-                android:textStyle="normal" />
-
-            <EditText
-                android:id="@+id/contribute_options"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@id/contribute_optionsbutton"
-                android:layout_weight="0.5"
-                android:background="@drawable/settings_round_corners"
-                android:gravity="left"
-                android:hint="If any"
-                android:textColor="@color/white"
-                android:textColorHint="@color/colorTextSecondary"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp">
-
-            <TextView
-                android:id="@+id/contribute_ansbutton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="Solution: "
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/contribute_answer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@id/contribute_ansbutton"
-                android:layout_weight="0.5"
-                android:background="@drawable/settings_round_corners"
-                android:gravity="left"
-                android:text=""
-                android:textColor="@color/white"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp">
-
-            <TextView
-                android:id="@+id/contribute_hintbutton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="Hint: "
-                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/contribute_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@id/contribute_hintbutton"
-                android:layout_weight="0.5"
-                android:background="@drawable/settings_round_corners"
-                android:gravity="left"
-                android:text=""
-                android:textColor="@color/white"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/contribute_submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="16dp"
-            android:background="@drawable/contribute_submitbutton"
-            android:gravity="center"
-            android:padding="12dp"
-            android:text="Submit"
-            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-            android:textColor="@color/white" />
-
-    </LinearLayout>
-
-</ScrollView>
+</RelativeLayout>

@@ -10,9 +10,9 @@
         cardElevation="@dimen/elevation_large"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp">
+        android:layout_marginRight="16dp">
 
         <RelativeLayout
             android:id="@+id/question_card_content"
@@ -27,8 +27,8 @@
                 android:layout_height="200px"
                 android:layout_x="0px"
                 android:layout_y="25px"
-                android:scrollbars="vertical"
-                android:fadeScrollbars="false">
+                android:fadeScrollbars="false"
+                android:scrollbars="vertical">
 
                 <TextView
                     android:id="@+id/qcard_word_question"
@@ -83,11 +83,11 @@
             <Button
                 android:id="@+id/word_canvas_pull"
                 android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/textAreaScroller"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/palette" />
+                android:background="@drawable/rough_pad" />
 
             <ImageButton
                 android:id="@+id/qcard_word_previous"
