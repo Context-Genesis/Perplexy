@@ -457,6 +457,10 @@ public class CharacterHelper {
     public void setupCorrectAnswerFeedback(int category, int currentPage, final int nextQuestion, final Context context) {
         GenericQuestion question = JSONUtils.getQuestionAt(mParentActivity, category, currentPage);
         TextView solution = (TextView) mParentActivity.findViewById(R.id.char_feedback_solution_details);
+
+        TextView coins_earned = (TextView) mParentActivity.findViewById(R.id.char_feedback_coins_earned);
+        coins_earned.setText("You earned "+Constants.CORRECT_PRICE+" coins");
+
         //Log.wtf("CorrectFeedback", question.explanation);
         if (question.layout_type != 0) {
             solution.setText(question.answer + "\n" + question.explanation);

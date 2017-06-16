@@ -12,15 +12,15 @@
     <!-- Question already answered correctly -->
     <string-array name="characterAlreadyAnsweredRight">
         <item>You\'ve already answered this question correctly. You can view the solution in case you\'d like to see it.</item>
-        <item>This question has already been answered correctly!. (Protip) If you\'re running low on coins, watch an ad.</item>
-        <item>You\'ve already got this one right! (Protip) Watch an ad to help the poor questionmaker eat tonight. He\'s a liberal arts student. Just saying.</item>
+        <item>This question has already been answered correctly!. (Protip) You can bookmark this question for future references.</item>
+        <item>You\'ve already got this one right! (Protip) Write a good review, help the questionmaker sleep well tonight. </item>
         <item>You had already solved this question. (Protip) Solve this question again and maybe you\'ll experience deja vu.</item>
     </string-array>
 
     <!-- Question already answered wrongly, is locked-->
     <string-array name="characterAlreadyAnsweredWrong">
         <item>Aw, Snap! You answered this question wrong. (Protip) Magic is known to unlock questions. Just kidding, coins will do the trick.</item>
-        <item>You had previously answered this question wrong. (Protip) It costs less to unlock a wrong question than an unattempted one.</item>
+        <item>You had previously answered this question wrong. (Protip) It costs the same to unlock a wrong question or an unattempted one.</item>
         <item>Did the question perplex you? Hmm. No wonder the app is named Perplexy.</item>
         <item>Seems like you were unable to answer this correctly. (Protip) Answer all questions correctly to avoid seeing this suggestion.</item>
     </string-array>
@@ -29,14 +29,14 @@
     <string-array name="characterAnsweredNowRight">
         <item>Awesome! You answered this right. Move ahead to the next unlocked question. Remember, you always have a minimum of 3 unlocked questions.</item>
         <item>Great work! Correctly answered! (Protip) The more questions you answer, the faster your brain thinks, the easier it is to kill mosquitoes.</item>
-        <item>Amazing! You answered this one right! If you loved this question, would you consider watching an ad? *puppy eyes*</item>
+        <item>Amazing! You answered this one right! If you loved this question, would you consider writing a good review? *puppy eyes*</item>
     </string-array>
 
     <!-- Question answered wrong right now-->
     <string-array name="characterAnsweredNowWrong">
         <item>This question is locked because you answered it wrong. (Protip) Don\'t answer it wrong next time.</item>
         <item>Oops! That wasn\'t quite right. (Protip) Instead of trying another question, unlock this one and try again!</item>
-        <item>Perplexed! You got this wrong. (Protip) Unlock and try again. Or. Watch an ad and stay blessed.</item>
+        <item>Perplexed! You got this wrong. (Protip) Unlock and try again.</item>
     </string-array>
 
     <!-- Already Answered Right But Wrong Now -->

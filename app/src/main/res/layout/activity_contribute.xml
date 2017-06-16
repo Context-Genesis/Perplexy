@@ -6,11 +6,13 @@
     android:background="@color/blue_d_grey">
 
     <ScrollView
+        android:id="@+id/scroll_contribute"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_above="@+id/contribute_submit"
         android:background="@color/blue_d_grey">
 
         <RelativeLayout
@@ -228,6 +230,7 @@
         </RelativeLayout>
 
     </ScrollView>
+
 
     <TextView
         android:id="@+id/contribute_submit"
