@@ -66,11 +66,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:paddingBottom="8dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="8dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/char_feedback_incorrect_ll_solution"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -80,9 +81,6 @@
                         android:id="@+id/char_feedback_incorrect_showsolution"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.7"
-                        android:gravity="center|left"
                         android:text="Buy Solution"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                         android:textColor="@color/orange_d_zest"
@@ -90,21 +88,16 @@
 
                     <LinearLayout
                         android:id="@+id/char_feedback_incorrect_ll_confirmsolution"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.7"
-                        android:gravity="center"
                         android:orientation="horizontal"
                         android:visibility="gone">
 
                         <TextView
                             android:id="@+id/char_feedback_incorrect_nosolution"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
+                            android:layout_marginRight="20dp"
                             android:text="NO"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                             android:textColor="@color/red_l_poppy"
@@ -112,38 +105,36 @@
 
                         <TextView
                             android:id="@+id/char_feedback_incorrect_yessolution"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
+                            android:layout_marginLeft="20dp"
                             android:text="YES"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                            android:textColor="@color/green_l_carribean"
+                            android:textColor="@color/green_l_jade"
                             android:textSize="@dimen/characterheading" />
 
                     </LinearLayout>
 
                     <TextView
                         android:id="@+id/char_feedback_incorrect_solutionprice"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="4.9"
-                        android:gravity="center|right"
+                        android:layout_toLeftOf="@+id/coins_incorrect_ans_feedback"
                         android:text="100"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                         android:textColor="@color/orange_d_zest"
                         android:textSize="@dimen/characterheading" />
 
                     <ImageView
-                        android:layout_width="match_parent"
+                        android:id="@+id/coins_incorrect_ans_feedback"
+                        android:layout_width="wrap_content"
                         android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="4.9"
-                        android:src="@drawable/coin_stack" />
+                        android:layout_alignBottom="@id/char_feedback_incorrect_solutionprice"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/coin_gold_silver" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
 
                 <TextView
@@ -156,7 +147,7 @@
                     android:visibility="gone" />
 
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/char_feedback_incorrect_ll_unlock"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -167,9 +158,6 @@
                         android:id="@+id/char_feedback_incorrect_tv_unlock"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.7"
-                        android:gravity="left|center"
                         android:text="Unlock Question"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                         android:textColor="@color/blue_d_chambray"
@@ -179,19 +167,14 @@
                         android:id="@+id/char_feedback_incorrect_ll_confirm_unlock"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1.7"
-                        android:gravity="center"
                         android:orientation="horizontal"
                         android:visibility="gone">
 
                         <TextView
                             android:id="@+id/char_feedback_incorrect_no_unlock"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
+                            android:layout_marginRight="20dp"
                             android:text="NO"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                             android:textColor="@color/red_l_poppy"
@@ -199,11 +182,9 @@
 
                         <TextView
                             android:id="@+id/char_feedback_incorrect_yes_unlock"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
+                            android:layout_marginLeft="20dp"
                             android:text="YES"
                             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                             android:textColor="@color/green_l_carribean"
@@ -213,24 +194,24 @@
 
                     <TextView
                         android:id="@+id/char_feedback_incorrect_unlock_price"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="4.9"
-                        android:gravity="center|right"
+                        android:layout_toLeftOf="@+id/coins_incorrect_ans_feedback_unlock"
                         android:text="200"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                         android:textColor="@color/blue_d_chambray"
                         android:textSize="@dimen/characterheading" />
 
                     <ImageView
-                        android:layout_width="match_parent"
+                        android:id="@+id/coins_incorrect_ans_feedback_unlock"
+                        android:layout_width="wrap_content"
                         android:layout_height="25dp"
+                        android:layout_alignBottom="@+id/char_feedback_incorrect_unlock_price"
+                        android:layout_alignParentRight="true"
                         android:layout_gravity="center"
-                        android:layout_weight="4.9"
                         android:src="@drawable/coin_gold_silver" />
 
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

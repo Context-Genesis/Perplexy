@@ -161,7 +161,6 @@ public class CharacterHelper {
         });
 
         showsolution = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_showsolution);
-        solution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_solution);
         solutionprice = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_solutionprice);
         confirmsolution = (LinearLayout) mParentActivity.findViewById(R.id.char_q_clicked_ll_confirmsolution);
         nosolution = (TextView) mParentActivity.findViewById(R.id.char_q_clicked_nosolution);
@@ -307,7 +306,7 @@ public class CharacterHelper {
         TextView feedbackText = (TextView) mParentActivity.findViewById(R.id.char_unlock_feeback_text);
         TextView unlockPrice = (TextView) mParentActivity.findViewById(R.id.char_unlock_price);
 
-        LinearLayout ll_unlock = (LinearLayout) mParentActivity.findViewById(R.id.char_unlock_ll_unlock);
+        RelativeLayout rl_unlock = (RelativeLayout) mParentActivity.findViewById(R.id.char_unlock_ll_unlock);
 
         TextView buycoins = (TextView) mParentActivity.findViewById(R.id.char_unlock_clicked_buycoins);
         buycoins.setOnClickListener(new View.OnClickListener() {
@@ -331,7 +330,7 @@ public class CharacterHelper {
         unlock.setVisibility(View.VISIBLE);
         confirmUnlock.setVisibility(View.GONE);
 
-        ll_unlock.setOnClickListener(new View.OnClickListener() {
+        rl_unlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 unlock.setVisibility(View.GONE);
@@ -459,7 +458,7 @@ public class CharacterHelper {
         TextView solution = (TextView) mParentActivity.findViewById(R.id.char_feedback_solution_details);
 
         TextView coins_earned = (TextView) mParentActivity.findViewById(R.id.char_feedback_coins_earned);
-        coins_earned.setText("You earned "+Constants.CORRECT_PRICE+" coins");
+        coins_earned.setText("You earned " + Constants.CORRECT_PRICE + " coins");
 
         //Log.wtf("CorrectFeedback", question.explanation);
         if (question.layout_type != 0) {
@@ -519,7 +518,7 @@ public class CharacterHelper {
         final ArrayList<GenericAnswerDetails> ansDetails = GenericAnswerDetails.listAll(category);
 
         TextView feebackTv = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_title_text);
-        LinearLayout ll_unlock = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_unlock);
+        RelativeLayout rl_unlock = (RelativeLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_unlock);
 
         /**
          * If user has already answered question right before but reattempts and gets it wrong this time, else display answered wrong this time
@@ -540,7 +539,7 @@ public class CharacterHelper {
         final TextView unlock = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_tv_unlock);
         final LinearLayout confirmUnlock = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_confirm_unlock);
 
-        ll_unlock.setOnClickListener(new View.OnClickListener() {
+        rl_unlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 unlock.setVisibility(View.GONE);
@@ -647,7 +646,7 @@ public class CharacterHelper {
         });
 
         final TextView showsolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_showsolution);
-        LinearLayout solution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_solution);
+        RelativeLayout solution = (RelativeLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_solution);
         final TextView solutionprice = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_solutionprice);
         final LinearLayout confirmsolution = (LinearLayout) mParentActivity.findViewById(R.id.char_feedback_incorrect_ll_confirmsolution);
         TextView nosolution = (TextView) mParentActivity.findViewById(R.id.char_feedback_incorrect_nosolution);
@@ -661,10 +660,10 @@ public class CharacterHelper {
 
         if (GenericAnswerDetails.getStatus(currentPage + 1, category) == Constants.CORRECT) {
             feebackTv.setText(CharacterStrings.getStringAlreadyAnsweredRightButWrongNow(context));
-            ll_unlock.setVisibility(View.GONE);
+            rl_unlock.setVisibility(View.GONE);
         } else {
             feebackTv.setText(CharacterStrings.getStringNowAnsweredWrong(context));
-            ll_unlock.setVisibility(View.VISIBLE);
+            rl_unlock.setVisibility(View.VISIBLE);
             solution.setVisibility(View.GONE);
         }
 
