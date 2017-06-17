@@ -351,7 +351,7 @@ public class CharacterHelper {
                 unlock.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
                 long coins = pref.getLong(Constants.PREF_COINS, 0);
-                if (coins - finalUnlockPriceValue > 0) {
+                if (coins - finalUnlockPriceValue >= 0) {
                     GenericAnswerDetails.updateStatus(currentPage + 1, category, Constants.AVAILABLE);
                     Log.i("unlock", "unlocking question");
                     ((QuestionsCallback) mParentActivity).setIsQuestionLocked(false);
@@ -559,7 +559,7 @@ public class CharacterHelper {
                 unlock.setVisibility(View.VISIBLE);
                 pref = mParentActivity.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
                 final long coins = pref.getLong(Constants.PREF_COINS, 0);
-                if (coins - Constants.UNLOCK_INCORRECT_PRICE > 0) {
+                if (coins - Constants.UNLOCK_INCORRECT_PRICE >= 0) {
                     GenericAnswerDetails.updateStatus(currentPage + 1, category, Constants.AVAILABLE);
                     Log.i("unlock", "unlocking question");
                     ((QuestionsCallback) mParentActivity).setIsQuestionLocked(false);
