@@ -16,7 +16,7 @@
         android:layout_marginBottom="16dp"
         android:background="@color/colorTransparent" />
 
-    <include
+    <FrameLayout
         android:id="@+id/questions_activity_character_dialog"
         layout="@layout/character_click_dialog"
         android:layout_width="match_parent"
@@ -26,7 +26,331 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:visibility="gone"></include>
+        android:visibility="gone">
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F0F0F0">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    card_view:cardCornerRadius="4dp">
+
+                    <ImageView
+                        android:id="@+id/character_msg_image"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:src="@drawable/hint" />
+
+                    <TextView
+                        android:id="@+id/char_q_clicked_feedback_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="55dp"
+                        android:layout_marginStart="55dp"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/charactersubheading"
+                        android:textStyle="bold" />
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    card_view:cardCornerRadius="4dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="8dp">
+
+                        <TextView
+                            android:id="@+id/char_q_clicked_showhint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Buy Hint"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/blue_l_steel_blue"
+                            android:textSize="@dimen/characterheading" />
+
+                        <LinearLayout
+                            android:id="@+id/char_q_clicked_ll_confirmhint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/char_q_clicked_nohint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="20dp"
+                                android:text="NO"
+                                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                android:textColor="@color/red_l_poppy"
+                                android:textSize="@dimen/characterheading" />
+
+                            <TextView
+                                android:id="@+id/char_q_clicked_yeshint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="20dp"
+                                android:text="YES"
+                                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                android:textColor="@color/green_l_jade"
+                                android:textSize="@dimen/characterheading" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/char_q_clicked_hintprice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_toLeftOf="@+id/char_q_hint_coins"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/blue_l_steel_blue"
+                            android:textSize="@dimen/characterheading" />
+
+                        <ImageView
+                            android:id="@+id/char_q_hint_coins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_alignBottom="@id/char_q_clicked_hintprice"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/coin_gold_silver" />
+
+                        <TextView
+                            android:id="@+id/char_q_clicked_showhiddenhint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/char_q_clicked_hintprice"
+                            android:paddingTop="4dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/charactersubheading"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/char_q_clicked_showsolution"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/char_q_clicked_showhiddenhint"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/character_element_margin_top"
+                            android:text="Buy Solution"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/orange_d_zest"
+                            android:textSize="@dimen/characterheading" />
+
+                        <LinearLayout
+                            android:id="@+id/char_q_clicked_ll_confirmsolution"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/char_q_clicked_showhiddenhint"
+                            android:layout_marginTop="@dimen/character_element_margin_top"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/char_q_clicked_nosolution"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="20dp"
+                                android:text="NO"
+                                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                android:textColor="@color/red_l_poppy"
+                                android:textSize="@dimen/characterheading" />
+
+                            <TextView
+                                android:id="@+id/char_q_clicked_yessolution"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="20dp"
+                                android:text="YES"
+                                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                android:textColor="@color/green_l_jade"
+                                android:textSize="@dimen/characterheading" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/char_q_clicked_solutionprice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/char_q_clicked_showhiddenhint"
+                            android:layout_marginTop="@dimen/character_element_margin_top"
+                            android:layout_toLeftOf="@+id/char_q_solution_coins"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/orange_d_zest"
+                            android:textSize="@dimen/characterheading" />
+
+                        <ImageView
+                            android:id="@+id/char_q_solution_coins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_alignBottom="@id/char_q_clicked_solutionprice"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/coin_gold_silver" />
+
+
+                        <TextView
+                            android:id="@+id/char_q_clicked_showhiddensolution"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/char_q_clicked_solutionprice"
+                            android:paddingTop="4dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/charactersubheading"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/char_q_clicked_ad_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    card_view:cardCornerRadius="4dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ads"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/char_q_clicked_title_ad"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/imageView3"
+                            android:layout_toRightOf="@id/imageView3"
+                            android:gravity="center"
+                            android:text="Do not have enough coins ?"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/charactersubheading"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/char_q_clicked_videoad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/char_q_clicked_title_ad"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="6dp"
+                            android:layout_toRightOf="@id/imageView3"
+                            android:gravity="center"
+                            android:text="@string/char_watch_ad"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/characterheading" />
+
+                        <TextView
+                            android:id="@+id/char_q_clicked_or"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/char_q_clicked_videoad"
+                            android:layout_toRightOf="@id/imageView3"
+                            android:gravity="center"
+                            android:text="or"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/charactersubheading"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/char_q_clicked_buycoins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/char_q_clicked_or"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_toRightOf="@id/imageView3"
+                            android:gravity="center"
+                            android:text="@string/char_buy_coins"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/characterheading"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <RelativeLayout
+                    android:id="@+id/char_q_clicked_ll_drawable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/char_q_clicked_favourite_question"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_margin="8dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/favorite" />
+
+                    <ImageView
+                        android:id="@+id/char_q_clicked_normal_share"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_margin="8dp"
+                        android:layout_toRightOf="@+id/char_q_clicked_favourite_question"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/share" />
+
+                    <ImageView
+                        android:id="@+id/char_q_clicked_whatsapp_share"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_margin="8dp"
+                        android:layout_toRightOf="@id/char_q_clicked_normal_share"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/whatsapp" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+    </FrameLayout>
 
     <include
         android:id="@+id/questions_activity_character_dialog_unlock"
@@ -38,11 +362,10 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:visibility="gone"></include>
+        android:visibility="gone" />
 
-    <include
+    <FrameLayout
         android:id="@+id/questions_activity_character_feedback_correct"
-        layout="@layout/character_correct_answer_feedback_dialog"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_above="@+id/questions_activity_bubble"
@@ -50,11 +373,181 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:visibility="gone"></include>
+        android:visibility="gone">
 
-    <include
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F0F0F0">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:paddingEnd="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="10dp"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/char_feedback_title_card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    card_view:cardCornerRadius="4dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            android:src="@drawable/hint" />
+
+                        <TextView
+                            android:id="@+id/char_feedback_title_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_toEndOf="@+id/imageView4"
+                            android:layout_toRightOf="@+id/imageView4"
+                            android:gravity="left"
+                            android:padding="5dp"
+                            android:text=" Good. You got it right ! "
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/charactersubheading"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    card_view:cardCornerRadius="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/char_feedback_solution"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1.7"
+                            android:gravity="center|left"
+                            android:text="Explanation"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/orange_d_zest"
+                            android:textSize="@dimen/characterheading" />
+
+                        <TextView
+                            android:id="@+id/char_feedback_solution_details"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/charactersubheading" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/char_feedback_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:padding="4dp"
+                    card_view:cardCornerRadius="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/char_feedback_congratulate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="Congratulations"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/charactersubheading"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/char_feedback_coins_earned"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="You earned some coins"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/characterheading" />
+
+                        <TextView
+                            android:id="@+id/char_feedback_next_question"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="Question 21 is now unlocked"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/charactersubheading"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/char_feedback_goto_next"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="PROCEED TO NEXT QUESTION"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/characterheading" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"></LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/questions_activity_character_feedback_incorrect"
-        layout="@layout/character_incorrect_answer_feedback_dialog"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_above="@+id/questions_activity_bubble"
@@ -62,16 +555,353 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:visibility="gone"></include>
+        android:visibility="gone">
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F0F0F0">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:animateLayoutChanges="true"
+                android:background="#F0F0F0"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:paddingEnd="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    card_view:cardCornerRadius="4dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/incorrect_ans_feedback_text_image"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:padding="5dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/hint" />
+
+                        <TextView
+                            android:id="@+id/char_feedback_incorrect_title_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_toRightOf="@id/incorrect_ans_feedback_text_image"
+                            android:gravity="left"
+                            android:padding="5dp"
+                            android:text="You didn't get this one quite right"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/charactersubheading"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    card_view:cardCornerRadius="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="8dp">
+
+                        <RelativeLayout
+                            android:id="@+id/char_feedback_incorrect_ll_solution"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/char_feedback_incorrect_showsolution"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Buy Solution"
+                                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                android:textColor="@color/orange_d_zest"
+                                android:textSize="@dimen/characterheading" />
+
+                            <LinearLayout
+                                android:id="@+id/char_feedback_incorrect_ll_confirmsolution"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/char_feedback_incorrect_nosolution"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="20dp"
+                                    android:text="NO"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                    android:textColor="@color/red_l_poppy"
+                                    android:textSize="@dimen/characterheading" />
+
+                                <TextView
+                                    android:id="@+id/char_feedback_incorrect_yessolution"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="YES"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                    android:textColor="@color/green_l_jade"
+                                    android:textSize="@dimen/characterheading" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/char_feedback_incorrect_solutionprice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_toLeftOf="@+id/coins_incorrect_ans_feedback"
+                                android:text="100"
+                                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                android:textColor="@color/orange_d_zest"
+                                android:textSize="@dimen/characterheading" />
+
+                            <ImageView
+                                android:id="@+id/coins_incorrect_ans_feedback"
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp"
+                                android:layout_alignBottom="@id/char_feedback_incorrect_solutionprice"
+                                android:layout_alignParentRight="true"
+                                android:src="@drawable/coin_gold_silver" />
+
+                        </RelativeLayout>
+
+
+                        <TextView
+                            android:id="@+id/char_feedback_incorrect_showhiddensolution"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/charactersubheading"
+                            android:visibility="gone" />
+
+
+                        <RelativeLayout
+                            android:id="@+id/char_feedback_incorrect_ll_unlock"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="8dp">
+
+                            <TextView
+                                android:id="@+id/char_feedback_incorrect_tv_unlock"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Unlock Question"
+                                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                android:textColor="@color/blue_d_chambray"
+                                android:textSize="@dimen/characterheading" />
+
+                            <LinearLayout
+                                android:id="@+id/char_feedback_incorrect_ll_confirm_unlock"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/char_feedback_incorrect_no_unlock"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="20dp"
+                                    android:text="NO"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                    android:textColor="@color/red_l_poppy"
+                                    android:textSize="@dimen/characterheading" />
+
+                                <TextView
+                                    android:id="@+id/char_feedback_incorrect_yes_unlock"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="YES"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                    android:textColor="@color/green_l_carribean"
+                                    android:textSize="@dimen/characterheading" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/char_feedback_incorrect_unlock_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toLeftOf="@+id/coins_incorrect_ans_feedback_unlock"
+                                android:text="200"
+                                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                                android:textColor="@color/blue_d_chambray"
+                                android:textSize="@dimen/characterheading" />
+
+                            <ImageView
+                                android:id="@+id/coins_incorrect_ans_feedback_unlock"
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp"
+                                android:layout_alignBottom="@+id/char_feedback_incorrect_unlock_price"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="center"
+                                android:src="@drawable/coin_gold_silver" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/char_feedback_incorrect_ad_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    card_view:cardCornerRadius="4dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            android:src="@drawable/ads"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/char_feedback_incorrect_title_ad"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_toRightOf="@id/imageView2"
+                            android:gravity="center"
+                            android:text="Do not have enough coins ?"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/charactersubheading"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/char_feedback_incorrect_videoad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/char_feedback_incorrect_title_ad"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/imageView2"
+                            android:gravity="center"
+                            android:text="@string/char_watch_ad"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/characterheading" />
+
+                        <TextView
+                            android:id="@+id/char_feedback_incorrect_or"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/char_feedback_incorrect_videoad"
+                            android:layout_toRightOf="@id/imageView2"
+                            android:gravity="center"
+                            android:text="or"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/charactersubheading"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/char_feedback_incorrect_buycoins"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/char_feedback_incorrect_or"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_toRightOf="@id/imageView2"
+                            android:gravity="center"
+                            android:text="@string/char_buy_coins"
+                            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/characterheading"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <RelativeLayout
+                    android:id="@+id/char_feedback_incorrect_char_q_clicked_ll_drawable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/char_feedback_incorrect_char_q_clicked_favourite_question"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_margin="8dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/favorite" />
+
+                    <ImageView
+                        android:id="@+id/char_feedback_incorrect_char_q_clicked_normal_share"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_margin="8dp"
+                        android:layout_toRightOf="@+id/char_feedback_incorrect_char_q_clicked_favourite_question"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/share" />
+
+                    <ImageView
+                        android:id="@+id/char_feedback_incorrect_char_q_clicked_whatsapp_share"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_margin="8dp"
+                        android:layout_toRightOf="@id/char_feedback_incorrect_char_q_clicked_normal_share"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/whatsapp" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
         android:background="@color/first_light_background_color"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
 
         <ImageView
             android:id="@+id/questions_activity_back"
