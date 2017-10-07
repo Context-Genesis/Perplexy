@@ -39,10 +39,10 @@ public class NumberLineAdapter extends BaseAdapter {
         this.answerDetails.add(0, new GenericAnswerDetails(-1, Constants.CORRECT, Constants.UNAVAILABLE, false, false, 0));
         this.answerDetails.add(answerDetails.size(), new GenericAnswerDetails(-1, Constants.CORRECT, Constants.UNAVAILABLE, false, false, 0));
     }
-    
+
     @Override
     public int getCount() {
-        Log.i("number line"," " + answerDetails.size());
+        Log.i("number line", " " + answerDetails.size());
         return answerDetails.size();
     }
 
@@ -164,10 +164,11 @@ public class NumberLineAdapter extends BaseAdapter {
                 intent.putExtra(Constants.BUNDLE_QUESTION_NUMBER, getItem(position).question_number);
                 intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (Build.VERSION.SDK_INT >= 21)
-                    context.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(context, holder.tv, "character").toBundle());
-                else
-                    context.startActivity(intent);
+                // TODO: Bug here
+//                if (Build.VERSION.SDK_INT >= 21)
+//                    context.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(context, holder.tv, "character").toBundle());
+//                else
+                context.startActivity(intent);
                 context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
             }
         });

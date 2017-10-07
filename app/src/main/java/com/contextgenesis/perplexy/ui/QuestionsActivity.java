@@ -671,6 +671,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                 .addTestDevice("C40E23EA84B9F2235B07CE0531A253AB") //Rohan
                 .addTestDevice("CDCEF54FDF7F3A4DEC120209B12D78C6") // Rishab
                 .addTestDevice("D40CA2BD5C7E81CF7B1F9C31DFE05BE6")  // Dhruv
+                .addTestDevice("8A2C1665B62A2ED7A01F6628CC2094A4")  // Dhruv N
                 .addTestDevice("9975DC9A27F0D1B042C31A65D01EEB04") // Gaurav
                 .addTestDevice("mydevice")
                 .build();
@@ -693,6 +694,7 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
                         .addTestDevice("C40E23EA84B9F2235B07CE0531A253AB") //Rohan
                         .addTestDevice("CDCEF54FDF7F3A4DEC120209B12D78C6") // Rishab
                         .addTestDevice("D40CA2BD5C7E81CF7B1F9C31DFE05BE6")  // Dhruv
+                        .addTestDevice("8A2C1665B62A2ED7A01F6628CC2094A4")  // Dhruv N
                         .addTestDevice("9975DC9A27F0D1B042C31A65D01EEB04") // Gaurav
                         .addTestDevice("08BEF4E2E5265F493ABAEC3DDD496048") // Sarthak
                         .build();

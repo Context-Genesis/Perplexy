@@ -17,15 +17,19 @@ public class SoundManager {
     public static String shouldPlaySound = null;
 
     public static MediaPlayer setupSound(Context context) {
+        mediaPlayer.stop();
+        mediaPlayer.release();
+        mediaPlayer = new MediaPlayer();
+
         mediaPlayer.setVolume(1, 1);
-        if(shouldPlaySound == null)
-            shouldPlaySound = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE).getString(Constants.VOLUME,"Y");
+        if (shouldPlaySound == null)
+            shouldPlaySound = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE).getString(Constants.VOLUME, "Y");
         return mediaPlayer;
     }
 
     public static void playSwipeSound(Context context) {
         mediaPlayer = setupSound(context);
-        if(shouldPlaySound.equals("Y")) {
+        if (shouldPlaySound.equals("Y")) {
             try {
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.stop();
@@ -141,7 +145,6 @@ public class SoundManager {
                 }
 
                 mediaPlayer = MediaPlayer.create(context, R.raw.sound_click_c);
-
                 mediaPlayer.start();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -206,7 +209,7 @@ public class SoundManager {
         }
     }
 
-    public static void playCoinSound(Context context){
+    public static void playCoinSound(Context context) {
         if (shouldPlaySound.equals("Y")) {
             mediaPlayer = setupSound(context);
             try {
@@ -225,7 +228,7 @@ public class SoundManager {
         }
     }
 
-    public static void setShouldPlaySound(String value){
+    public static void setShouldPlaySound(String value) {
         shouldPlaySound = value;
     }
 }
