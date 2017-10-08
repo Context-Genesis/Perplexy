@@ -21,6 +21,7 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
@@ -101,6 +102,10 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setAllowEnterTransitionOverlap(false);
+//            getWindow().setAllowReturnTransitionOverlap(false);
+        }
         ButterKnife.bind(this);
 
         /* The page position is one less than question number. Note question number is passed to activity instead of position */
@@ -111,6 +116,9 @@ public class QuestionsActivity extends AppCompatActivity implements QuestionsCal
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    getWindow().setAllowEnterTransitionOverlap(false);
+//                }
                 SoundManager.playButtonClickSound(getApplicationContext());
                 onBackPressed();
             }
