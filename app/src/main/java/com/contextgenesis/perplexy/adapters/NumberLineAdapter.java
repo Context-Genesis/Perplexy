@@ -165,10 +165,10 @@ public class NumberLineAdapter extends BaseAdapter {
                 intent.putExtra(Constants.BUNDLE_QUESTION_CATEGORY, getItem(position).category);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 // TODO: Bug here
-//                if (Build.VERSION.SDK_INT >= 21)
-//                    context.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(context, holder.tv, "character").toBundle());
-//                else
-                context.startActivity(intent);
+                if (Build.VERSION.SDK_INT >= 21)
+                    context.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(context, holder.tv, "character").toBundle());
+                else
+                    context.startActivity(intent);
                 context.setAnimationRunning(false); // Stop the background color change animation on leaving activity
             }
         });
