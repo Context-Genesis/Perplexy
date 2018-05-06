@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorTransparent"
     android:orientation="vertical">
 
@@ -36,7 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/linearLayout"
         android:layout_alignRight="@id/linearLayout"
-        android:layout_below="@+id/home_tv_lvl_text"
         android:layout_gravity="center"
         android:layout_marginLeft="38dp"
         android:layout_marginRight="38dp"
@@ -44,47 +44,100 @@
         android:padding="10dp"
         android:progress="0"
         android:progressDrawable="@drawable/seekbar_progress"
-        android:thumb="@drawable/thumb_image"></SeekBar>
+        android:thumb="@drawable/thumb_image"
+        android:visibility="gone"></SeekBar>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/home_seekbar"
+        android:layout_below="@+id/home_tv_lvl_text"
         android:layout_marginBottom="35dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/game_1"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:src="@drawable/game_type_logic" />
+            android:gravity="center"
+            android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/game_2"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:src="@drawable/game_type_riddle" />
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/game_1"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                app:cpb_progress="10"
+                app:cpb_background_progressbar_color="@color/white_progress"
+                app:cpb_progressbar_color="@color/white"
+                android:background="@drawable/game_type_logic"
+                app:cpb_progressbar_width="2dp"
+                app:cpb_background_progressbar_width="2dp" />
 
-        <ImageView
-            android:id="@+id/game_3"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:src="@drawable/game_type_sequence" />
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/game_2"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                app:cpb_progress="10"
+                app:cpb_background_progressbar_color="@color/white_progress"
+                app:cpb_progressbar_color="@color/white"
+                android:background="@drawable/game_type_riddle"
+                app:cpb_progressbar_width="2dp"
+                app:cpb_background_progressbar_width="2dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/game_3"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                app:cpb_progress="10"
+                app:cpb_background_progressbar_color="@color/white_progress"
+                app:cpb_progressbar_color="@color/white"
+                android:background="@drawable/game_type_sequence"
+                app:cpb_progressbar_width="2dp"
+                app:cpb_background_progressbar_width="2dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:cpb_progress="10"
+        app:cpb_background_progressbar_color="@color/white_progress"
+        app:cpb_background_progressbar_width="3dp"
+        app:cpb_progressbar_color="@color/white"
+        android:background="@drawable/game_type_logic"
+        android:visibility="gone"
+        app:cpb_progressbar_width="3dp" />
 
     <ImageView
         android:id="@+id/home_play"
         android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"

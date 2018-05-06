@@ -71,7 +71,7 @@
 
         <ImageView
             android:id="@+id/help_next"
-            android:layout_width="32dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
@@ -80,7 +80,7 @@
 
         <ImageView
             android:id="@+id/help_prev"
-            android:layout_width="32dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toEndOf="@+id/imageView5"

@@ -2,9 +2,14 @@ package com.contextgenesis.perplexy.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +17,13 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.contextgenesis.perplexy.PerplexyApplication;
 import com.contextgenesis.perplexy.R;
+import com.contextgenesis.perplexy.elements.GenericAnswerDetails;
 import com.contextgenesis.perplexy.ui.HelpActivity;
 import com.contextgenesis.perplexy.ui.MainActivity;
 import com.contextgenesis.perplexy.ui.NumberLineActivity;
@@ -25,6 +32,9 @@ import com.contextgenesis.perplexy.utils.Constants;
 import com.contextgenesis.perplexy.utils.SoundManager;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,13 +55,13 @@ public class FrontPageFragment extends Fragment {
     ImageView playButton;
 
     @Bind(R.id.game_1)
-    ImageView gameType1;
+    CircularProgressBar gameType1;
     @Bind(R.id.game_2)
-    ImageView gameType2;
+    CircularProgressBar gameType2;
     @Bind(R.id.game_3)
-    ImageView gameType3;
+    CircularProgressBar gameType3;
 
-    private int selectedGameType = 0;
+    private int selectedGameType = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,15 +71,38 @@ public class FrontPageFragment extends Fragment {
 
         ButterKnife.bind(this, rootView);
 
-        gameSeekBar.setProgress(0);
-        gameType1.performClick();
-        gameTypeText.setText(getGameTypeText(0));
-        resetLevelSizes(0);
+        gameSeekBar.setProgress(1);
+        gameType2.performClick();
+        gameTypeText.setText(getGameTypeText(1));
+        resetLevelSizes(1);
 
-        setUpSeekBar();
+//        setUpSeekBar();
 
         Typeface typeFace = Typeface.createFromAsset(getActivity().getAssets(), "tagus.ttf");
         heading.setTypeface(typeFace);
+
+        for (int category = 0; category < 3; category++) {
+            ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(category);
+            float correctCount = 0;
+            for (GenericAnswerDetails answerDetail : answerDetails) {
+                if (answerDetail.status == Constants.CORRECT) {
+                    correctCount++;
+                }
+            }
+
+            if ((int)correctCount == 0) {
+                correctCount = 1;
+            }
+            if (category == Constants.GAME_TYPE_LOGIC) {
+                gameType1.setProgress(correctCount / answerDetails.size() * 100);
+            }
+            if (category == Constants.GAME_TYPE_RIDDLE) {
+                gameType2.setProgress(correctCount / answerDetails.size() * 100);
+            }
+            if (category == Constants.GAME_TYPE_SEQUENCES) {
+                gameType3.setProgress(correctCount / answerDetails.size() * 100);
+            }
+        }
 
         return rootView;
     }
@@ -115,25 +148,55 @@ public class FrontPageFragment extends Fragment {
         });
     }
 
+    public void statusChanges(final int progress) {
+        if (selectedGameType == progress) {
+            return;
+        }
+
+        final Animation slideOut = AnimationUtils.loadAnimation(getActivity(), android.R.anim.slide_out_right);
+        final Animation slideIn = AnimationUtils.loadAnimation(getActivity(), android.R.anim.slide_in_left);
+
+        slideOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                gameTypeText.setText(getGameTypeText(progress));
+                gameTypeText.startAnimation(slideIn);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        selectedGameType = progress;
+        resetLevelSizes(progress);
+        gameTypeText.startAnimation(slideOut);
+    }
+
     @OnClick(R.id.game_1)
     public void onClickGame1() {
         gameSeekBar.setProgress(0);
-        selectedGameType = Constants.GAME_TYPE_LOGIC;
         SoundManager.playSwipeSound(getActivity());
+        statusChanges(0);
     }
 
     @OnClick(R.id.game_2)
     public void onClickGame2() {
         gameSeekBar.setProgress(1);
-        selectedGameType = Constants.GAME_TYPE_RIDDLE;
         SoundManager.playSwipeSound(getActivity());
+        statusChanges(1);
     }
 
     @OnClick(R.id.game_3)
     public void onClickGame3() {
         gameSeekBar.setProgress(2);
-        selectedGameType = Constants.GAME_TYPE_SEQUENCES;
         SoundManager.playSwipeSound(getActivity());
+        statusChanges(2);
     }
 
     @OnClick(R.id.home_play)
@@ -171,34 +234,42 @@ public class FrontPageFragment extends Fragment {
 
     private void resetLevelSizes(int lvl) {
         gameType1.requestLayout();
-        gameType1.getLayoutParams().height = convertDip2Pixels(getActivity(), 36);
-        gameType1.getLayoutParams().width = convertDip2Pixels(getActivity(), 36);
+        gameType1.getLayoutParams().height = convertDip2Pixels(getActivity(), 38);
+        gameType1.getLayoutParams().width = convertDip2Pixels(getActivity(), 38);
         gameType2.requestLayout();
-        gameType2.getLayoutParams().height = convertDip2Pixels(getActivity(), 36);
-        gameType2.getLayoutParams().width = convertDip2Pixels(getActivity(), 36);
+        gameType2.getLayoutParams().height = convertDip2Pixels(getActivity(), 38);
+        gameType2.getLayoutParams().width = convertDip2Pixels(getActivity(), 38);
         gameType3.requestLayout();
-        gameType3.getLayoutParams().height = convertDip2Pixels(getActivity(), 36);
-        gameType3.getLayoutParams().width = convertDip2Pixels(getActivity(), 36);
+        gameType3.getLayoutParams().height = convertDip2Pixels(getActivity(), 38);
+        gameType3.getLayoutParams().width = convertDip2Pixels(getActivity(), 38);
+
+        gameType1.setColor(getResources().getColor(R.color.white));
+        gameType2.setColor(getResources().getColor(R.color.white));
+        gameType3.setColor(getResources().getColor(R.color.white));
+
         switch (lvl) {
             case 0:
                 gameType1.requestLayout();
-                gameType1.getLayoutParams().height = convertDip2Pixels(getActivity(), 44);
-                gameType1.getLayoutParams().width = convertDip2Pixels(getActivity(), 44);
+                gameType1.getLayoutParams().height = convertDip2Pixels(getActivity(), 55);
+                gameType1.getLayoutParams().width = convertDip2Pixels(getActivity(), 55);
+                gameType1.setColor(getResources().getColor(R.color.green_progress));
                 return;
             case 1:
                 gameType2.requestLayout();
-                gameType2.getLayoutParams().height = convertDip2Pixels(getActivity(), 44);
-                gameType2.getLayoutParams().width = convertDip2Pixels(getActivity(), 44);
+                gameType2.getLayoutParams().height = convertDip2Pixels(getActivity(), 55);
+                gameType2.getLayoutParams().width = convertDip2Pixels(getActivity(), 55);
+                gameType2.setColor(getResources().getColor(R.color.green_progress));
                 return;
             case 2:
                 gameType3.requestLayout();
-                gameType3.getLayoutParams().height = convertDip2Pixels(getActivity(), 44);
-                gameType3.getLayoutParams().width = convertDip2Pixels(getActivity(), 44);
+                gameType3.getLayoutParams().height = convertDip2Pixels(getActivity(), 55);
+                gameType3.getLayoutParams().width = convertDip2Pixels(getActivity(), 55);
+                gameType3.setColor(getResources().getColor(R.color.green_progress));
                 return;
             /*case 3:
                 gameType4.requestLayout();
-                gameType4.getLayoutParams().height = 50;
-                gameType4.getLayoutParams().width = 50;
+                gameType4.getLayoutParams().height = 55;
+                gameType4.getLayoutParams().width = 55;
                 return;*/
             default:
                 return;
@@ -217,5 +288,33 @@ public class FrontPageFragment extends Fragment {
 
     public static int convertDip2Pixels(Context context, int dip) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.getResources().getDisplayMetrics());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        /* Make the activity fullscreen */
+        for (int category = 0; category < 3; category++) {
+            ArrayList<GenericAnswerDetails> answerDetails = GenericAnswerDetails.listAll(category);
+            float correctCount = 0;
+            for (GenericAnswerDetails answerDetail : answerDetails) {
+                if (answerDetail.status == Constants.CORRECT) {
+                    correctCount++;
+                }
+            }
+            if ((int)correctCount == 0) {
+                correctCount = 1;
+            }
+            if (category == Constants.GAME_TYPE_LOGIC) {
+                gameType1.setProgress(correctCount / answerDetails.size() * 100);
+            }
+            if (category == Constants.GAME_TYPE_RIDDLE) {
+                gameType2.setProgress(correctCount / answerDetails.size() * 100);
+            }
+            if (category == Constants.GAME_TYPE_SEQUENCES) {
+                gameType3.setProgress(correctCount / answerDetails.size() * 100);
+            }
+        }
+
     }
 }

@@ -60,15 +60,16 @@ public class StatisticsFragment extends Fragment {
 
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
-        totalcoins.setText("COINS " + pref.getLong(Constants.PREF_COINS, 0));
+        totalcoins.setText("Coins " + pref.getLong(Constants.PREF_COINS, 0));
         spentcoins.setText("SPENT\n" + pref.getLong(Constants.PREF_COINS_SPENT, 0));
         earnedcoins.setText("EARNED\n" + pref.getLong(Constants.PREF_COINS_EARNED, 0));
 
-        answeredcount.setText("ANSWERED " + (pref.getInt(Constants.CORRECT_COUNT, 0) + pref.getInt(Constants.INCORRECT_COUNT, 0)));
+        answeredcount.setText("Answered " + (pref.getInt(Constants.CORRECT_COUNT, 0) + pref.getInt(Constants.INCORRECT_COUNT, 0)));
         correctcount.setText("CORRECT\n" + pref.getInt(Constants.CORRECT_COUNT, 0));
         incorrectcount.setText("INCORRECT\n" + pref.getInt(Constants.INCORRECT_COUNT, 0));
 
-        accuracy.setText("ACCURACY " + pref.getFloat(Constants.ACCURACY, 0f));
+        DecimalFormat df = new DecimalFormat("#.##");
+        accuracy.setText("Accuracy " + df.format(pref.getFloat(Constants.ACCURACY, 0f)*100f) + "%");
 
         return rootView;
     }
@@ -79,15 +80,15 @@ public class StatisticsFragment extends Fragment {
 
         pref = getContext().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
-        totalcoins.setText("COINS " + pref.getLong(Constants.PREF_COINS, 0));
+        totalcoins.setText("Coins " + pref.getLong(Constants.PREF_COINS, 0));
         spentcoins.setText("SPENT\n" + pref.getLong(Constants.PREF_COINS_SPENT, 0));
         earnedcoins.setText("EARNED\n" + pref.getLong(Constants.PREF_COINS_EARNED, 0));
 
-        answeredcount.setText("ANSWERED " + (pref.getInt(Constants.CORRECT_COUNT, 0) + pref.getInt(Constants.INCORRECT_COUNT, 0)));
+        answeredcount.setText("Answered " + (pref.getInt(Constants.CORRECT_COUNT, 0) + pref.getInt(Constants.INCORRECT_COUNT, 0)));
         correctcount.setText("CORRECT\n" + pref.getInt(Constants.CORRECT_COUNT, 0));
         incorrectcount.setText("INCORRECT\n" + pref.getInt(Constants.INCORRECT_COUNT, 0));
 
         DecimalFormat df = new DecimalFormat("#.##");
-        accuracy.setText("ACCURACY " + df.format(pref.getFloat(Constants.ACCURACY, 0f)*100f));
+        accuracy.setText("Accuracy " + df.format(pref.getFloat(Constants.ACCURACY, 0f)*100f) + "%");
     }
 }

@@ -10,10 +10,13 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import com.contextgenesis.perplexy.BuildConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -116,7 +119,7 @@ public class ShareQuestion {
 
     private static void shareImage(Activity activity) {
         File imageFile = takeScreenshot(activity);
-        Uri uri = Uri.fromFile(imageFile);
+        Uri uri = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".provider",imageFile);
         Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
         whatsappIntent.setDataAndType(uri, "image/*");
         whatsappIntent.putExtra(Intent.EXTRA_TEXT, "Perplexed! Help me answer this question! " + "https://play.google.com/store/apps/details?id=" + activity.getPackageName());
@@ -125,7 +128,7 @@ public class ShareQuestion {
         try {
             activity.startActivity(whatsappIntent);
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(activity, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Whatsapp has not been installed.", Toast.LENGTH_SHORT).show();
         }
     }
 

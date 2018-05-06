@@ -88,7 +88,7 @@ public class DrawingView extends View {
             @Override
             public void onClick(View v) {
                 mPaint.setColor(ContextCompat.getColor(context, R.color.canvas_bg));
-                mPaint.setStrokeWidth(6);
+                mPaint.setStrokeWidth(20);
                 if (eraser_s == 0) {
                     pen.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple));
                     eraser.setBackground(ContextCompat.getDrawable(context, R.drawable.button_ripple_selected));
