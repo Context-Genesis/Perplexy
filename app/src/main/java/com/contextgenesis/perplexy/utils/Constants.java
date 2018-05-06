@@ -14,9 +14,9 @@ public class Constants {
 
 //    public static final String JSON_ALL_QUESTIONS_FILE = "all_questions";
 
-    public static final int GAME_TYPE_SEQUENCES = 0;
+    public static final int GAME_TYPE_SEQUENCES = 2;
     public static final int GAME_TYPE_RIDDLE = 1;
-    public static final int GAME_TYPE_LOGIC = 2;
+    public static final int GAME_TYPE_LOGIC = 0;
 
     // status
 

@@ -67,8 +67,7 @@
                     android:gravity="right"
                     android:text="Question: "
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textColor="@color/white"/>
 
                 <EditText
                     android:id="@+id/contribute_question"
@@ -80,6 +79,7 @@
                     android:layout_weight="0.5"
                     android:background="@drawable/settings_round_corners"
                     android:gravity="left"
+                    android:minHeight="80dp"
                     android:text=""
                     android:textColor="@color/white"
                     android:textStyle="normal" />
@@ -102,8 +102,7 @@
                     android:gravity="right"
                     android:text="Category: "
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textColor="@color/white"/>
 
                 <EditText
                     android:id="@+id/contribute_category"
@@ -173,8 +172,7 @@
                     android:gravity="right"
                     android:text="Solution: "
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textColor="@color/white" />
 
                 <EditText
                     android:id="@+id/contribute_answer"
@@ -187,6 +185,7 @@
                     android:background="@drawable/settings_round_corners"
                     android:gravity="left"
                     android:text=""
+                    android:minHeight="80dp"
                     android:textColor="@color/white"
                     android:textStyle="normal" />
 
@@ -208,8 +207,7 @@
                     android:gravity="right"
                     android:text="Hint: "
                     android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textColor="@color/white" />
 
                 <EditText
                     android:id="@+id/contribute_hint"
@@ -222,6 +220,7 @@
                     android:background="@drawable/settings_round_corners"
                     android:gravity="left"
                     android:text=""
+                    android:minHeight="80dp"
                     android:textColor="@color/white"
                     android:textStyle="normal" />
 

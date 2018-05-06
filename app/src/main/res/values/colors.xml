@@ -6,7 +6,7 @@
     <color name="colorTextPrimary">#ddFFFFFF</color>
     <color name="colorTextSecondary">#88ffffff</color>
     <color name="colorTransparent">#00FFFFFF</color>
-    <color name="black_overlay">#66000000</color>
+    <color name="black_overlay">#40000000</color>
     <color name="blue">#2980b9</color>
     <color name="red">#e74c3c</color>
     <color name="black_d_material_black">#131418</color>
@@ -51,5 +51,8 @@
     <color name="color_pen">@color/white</color>
 
     <color name="color_canvas">#303030</color>
+
+    <color name="green_progress">#76FF03</color>
+    <color name="white_progress">#40ffffff</color>
 
 </resources>
