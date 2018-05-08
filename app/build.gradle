@@ -18,8 +18,8 @@ android {
         applicationId "com.contextgenesis.perplexy"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 7
-        versionName "1.4.pY.7"
+        versionCode 8
+        versionName "1.5.pY.8"
     }
     buildTypes {
         release {
